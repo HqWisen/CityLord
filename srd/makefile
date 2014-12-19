@@ -1,5 +1,3 @@
-
-
 DOC = srd
 
 all: $(DOC).pdf
@@ -9,5 +7,5 @@ $(DOC).pdf: $(DOC).tex
 	pdflatex $(DOC).tex
 
 clean:
-	$(RM) srd.aux srd.log
+	$(RM) $(DOC).aux $(DOC).toc $(DOC).log $(DOC).out
 
