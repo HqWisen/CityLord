@@ -1,0 +1,8 @@
+## latex:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
