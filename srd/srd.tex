@@ -171,7 +171,7 @@ pseudo et mot de passe associés ceux entrés dans les zones appropriées, et co
  perceptible, et indique à l'utilisateur que le pseudo demandé est déjà utilisé. La fenêtre de création reste ouverte
  et demande à l'utilisateur de réentrer un nouveau pseudo.
  \item \textit{Aucun pseudo et/ou mot de passe entré:} Dans les deux cas - de connexion ou de création - si l'utilisateur
- manque d'entrer une information, après du bonton associé à la fenêtre en premier plan, ,sur la même vue,
+ manque d'entrer une information, après du bonton associé à la fenêtre en premier plan, sur la même vue,
  une remarque apparait, en une couleur fortement perceptible, et indique à l'utilisateur l'information manquante. La
  fenêtre reste ouvert et demande à l'utilisateur d'entrer cette information pour continuer la connexion ou la création.
 \end{itemize}
@@ -261,12 +261,12 @@ sont réunis [pour plus d'informations, voir Host Game], la carte est chargée.
 \paragraph{Exceptions} Néant.
 
 \newpage
-\subsection{Premiers achats}
+\subsection{Achats libres}
 \begin{figure}[ht]
     \makebox[\linewidth]{
         \includegraphics[width=550pt]{uml/useCaseDiagrams/buyUseCase.png}
     }
-    \caption{Use Case First Buy}
+    \caption{Use Case Open Market}
 \end{figure}
 \subsubsection{Faire une offre}
 \paragraph{Préconditions}
@@ -349,6 +349,7 @@ Dès qu'un bâtiment n'as pas de prioritaire, le catalogue le met en vente libre
 \begin{itemize}
  \item La partie est en cours.
 \end{itemize}
+\newpage
 \paragraph{Postconditions}
 \begin{itemize}
  \item Un bâtiment est construit.
@@ -418,6 +419,8 @@ Un joueur peut également détruire un de ses bâtiments. Il lui suffit de cliqu
 \paragraph{Cas général}
 Un "catalogue" de types prédéfinis de bâtiment(bar,magasin,night-club,...) apparait, pour chaque type les statistiques (prix, coûts, capacité, heures,..) sont affichés. Il suffit au joueur alors de cliquer sur le type désiré.
 \paragraph{Exceptions} Néant.
+
+\newpage
 \subsubsection{Select Location}
 \paragraph{Obligations spéciales}
 \begin{itemize}
@@ -549,15 +552,10 @@ Sans cela, la communication avec le serveur et entre les joueurs serait endommag
 \chapter{Besoins du système}
 \section{Exigences fonctionnelles}
 \section{Exigences non fonctionnelles}
-\begin{itemize}
- \item Le client et le serveur doit etre ecrit en C++ et compilé avec \textbf{g++}.
-\end{itemize}
-
-
 \section{Design et fonctionnement du système}
 \begin{figure}[ht]
     \makebox[\linewidth]{
-        \includegraphics[width=550pt]{uml/classDiagrams/base.png}
+        \includegraphics[width=550pt]{uml/classDiagrams/CD.png}
     }
     \caption{Diagramme de classe : Base du système}
 \end{figure}
