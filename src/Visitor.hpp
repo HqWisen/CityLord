@@ -1,10 +1,13 @@
 #ifndef VISITOR_HPP_
 #define VISITOR_HPP_
 
+#include <list>
+
+
 class Visitor{
-	//currentLocation
-	//path
-	//preference
+	Location currentLocation;
+	std::list<Location> path;
+	std::list<BuildingType> preference;
 	public:
 		Visitor() = default;
 		void advance();

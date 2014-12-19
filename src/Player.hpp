@@ -4,6 +4,9 @@
 class Player{
 	const int INITIALBUDGET;
 	int money;
+	std::list<Building*> buildingList;
+	std::list<Field*> fieldList;
+	City* city;
 	public:
 		Player() = default;
 		void buildBuilding();

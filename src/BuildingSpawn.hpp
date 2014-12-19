@@ -2,7 +2,7 @@
 #define BUILDINGSPAWN_HPP_
 
 class BuildingSpawn : public Spawnable, public Building{
-	Road spawnRoad;
+	Road* spawnRoad;
 	public:
 		BuildingSpawn() = default;
 };

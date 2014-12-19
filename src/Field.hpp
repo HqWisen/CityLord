@@ -2,9 +2,10 @@
 #define FIELD_HPP_
 
 class Field : public Case{
+	Building* building;
 	public:
 		Field() = default;
-		void buildBuilding();
+		Building buildBuilding();
 		void destroyBuilding();
 };
 

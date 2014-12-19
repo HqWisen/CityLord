@@ -3,6 +3,7 @@
 
 class Neigborhood{
 	int dimension;
+	Case cases[];
 	public:
 		Neigborhood() = default;
 		void display();

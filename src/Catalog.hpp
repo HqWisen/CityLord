@@ -2,6 +2,9 @@
 #define CATALOG_HPP_
 
 class Catalog{
+
+	std::list<Building> buildingList;
+	std::list<Field> fieldList;
 	
 	public:
 		Catalog() = default;
