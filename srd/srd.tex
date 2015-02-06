@@ -93,16 +93,23 @@ Cours : INFO-F-209 – Projet d'année 2
 \chapter{Introduction}
 \section{But du projet}
 \paragraph{}
-Le but de ce projet est de créer, et de coder le jeu CityLord.
-CityLord est un jeu du type \textit{point and click} en ligne, dans lequel 2 à 8 joueurs sont propriétaires de bâtiments dans une même ville.
-Le but du jeu étant d’être le dernier propriétaire, les joueurs doivent, tout-au-long de la partie, acheter et vendre des terrains afin de maximiser son capital et son profit.
-Au cours de ce projet, notre groupe sera en contact avec les différents concepts vus aux cours de Système d’exploitation (tels que la programmation réseau)
-et d’Analyse et méthode informatique (tels que la programmation orienté Objet ou l’utilisation de diagramme de classe).
-\paragraph{}
-Nous allons également connaître l’expérience d’un travail de groupe plus nombreux, dont les membres ont été choisis au hasard – et que, par conséquent,
-ne sont pas ceux avec qui nous voulions travailler- et cela nous donnera l’expérience des conditions de travail dans une entreprise.
-À la fin de la réalisation de celui-ci, nous apprendrons la sensation du travail bien fait, le sens des responsabilités et de la ponctualité ainsi que l’expérience du lien entre le programmeur
-et le client.
+Nous allons implémenter CityLord, un jeu de gestion de ville multi-joueur.
+Celui-ci se jouera entre 2 à 8 joueurs différents qui pourront acheter, vendre, ou améliorer des bâtiments, dans une même villes.
+Le but du jeu est le même pour chaque joueur, être le dernier propriétaire dans la villes, ou bien être celui avec le plus grand capital (argent+valeur des bâtiments) à la fin du temps imparti.
+
+Au départ, chaque joeur commence avec une parcelle prise au hasard, et un somme modeste lui permettant d'acheter un nombre limité de propriété (1 voir 2 parcelles ou bâtiments).
+
+Pour gagner de l'argent, des visiteurs doivent entrer dans un de leur établissement, y rester une durée déterminée, leur donner l'argent adapté à l'établissement où il se trouve, et disparaitra ensuite de la partie.
+Un visiteur ne peut apparaitre qu'à des endroits prédéfini sur la carte (ex: station de métro), il suivra alors un chemin également prédéfini (ex: vers la sortie de la ville), et entrera dans un établissement qu'il croise, si celui-ci l'interesse.
+Ce sera donc aux joueurs de bien positionner leurs bâtiments là où ils ont le plus de chances d'attirer un grand nombre de visiteur.
+
+Les bâtiments ne peuvent accueuillir qu'un nombre limité de visiteur, accepter la même somme par visiteur, et se débarasser d'un visiteur qu'après une certaine durée.
+Un joeur peut alors, pour un certain coût, amélioré son bâtiment, et alros augmenter la capacité maximale, la recette par visiteur et diminuer la durée d'occupation par un visiteur.
+
+Si un joueur est en faillite, à cause d'un coût d'entretien trop élévé par rapport aux recettes, il sera alors obligé de vendre des propriétés. Il mettra alors sa propriété (parcelle+bâtiment) dans le catalogue de vente, ouvert à tous les joueurs.
+Il peut également s'il le souhaite, supprimer son bâtiment, ce qui réduira grandement les coût d'entretien, mais rendera les recettes nulles. (Une parcelle vide à un coût d'entretien, mais pas de revenu, ceci est pour éviter qu'un joeur achète tous les emplacements simplement pour empêcher les autres de construire).
+
+\newpage
 \section{Glossaire}
 \begin{itemize}
  \item \textbf{Système:} Un système est un ensemble d'éléments interagissant entre eux selon certains principes ou règles. Dans ce cas, il s’agit du programme.
@@ -112,12 +119,15 @@ puis il appuie sur un bouton du dispositif pour déclencher l'action .
  \item \textbf{Serveur:} Un serveur est ordinateur dédié à l'administration d'un réseau informatique. Il gère l'accès aux ressources et aux périphériques et les connexions des différents utilisateurs.
  \item \textbf{Réseau informatique:}Ensemble des moyens matériels et logiciels mis en œuvre pour assurer les communications entre ordinateurs.
  \item \textbf{Pseudo:}Un pseudonyme est un nom d'emprunt qu'une personne porte pour exercer une activité sous un autre nom que celui de son identité officielle.
+ \item \textbf{Map:}Carte prédéfinie, représentant une ville.
+ \item \textbf{Catalogue:}Liste reprenant toutes les propriétés mises en vente par les joueurs ou par la villes.
 \end{itemize}
 
 \newpage
 \section{Historique du document}
 \begin{description}
-	\item[1.8] (15/12/14) : Mise à jour des exigences de domaine -Cédric
+	\item[1.9] (06/02/15) : Modification du But du projet, ajout au glossaire et index  - David
+	\item[1.8] (15/12/14) : Mise à jour des exigences de domaine - Cédric
     \item[1.7] (14/12/14) : Ajout des déscriptions textuelles des uses cases (Premiers achats,Construire-Améliorer-Détruire,Achats entre joueurs) - David
     \item[1.6] (12/12/14) : Rajout et correction des déscriptions textuelles des use case, et ajout des exigences de domaine - Hakim
     \item[1.5] (11/12/14) : Déscriptions textuelles de l'interface de connexion - Kaio
@@ -564,6 +574,8 @@ Sans cela, la communication avec le serveur et entre les joueurs serait endommag
 \newpage
 \chapter{Index des termes utilisés}
 \begin{itemize}
+ \item \textbf{Catalogue}
+ \item \textbf{Map}
  \item \textbf{Point-and-click}
  \item \textbf{Pseudo}
  \item \textbf{Réseau informatique}
