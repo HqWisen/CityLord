@@ -95,18 +95,18 @@ Cours : INFO-F-209 – Projet d'année 2
 \paragraph{}
 Nous allons implémenter CityLord, un jeu de gestion de ville multi-joueur.
 Celui-ci se jouera entre 2 à 8 joueurs différents qui pourront acheter, vendre, ou améliorer des bâtiments, dans une même villes.
-Le but du jeu est le même pour chaque joueur, être le dernier propriétaire dans la villes, ou bien être celui avec le plus grand capital (argent+valeur des bâtiments) à la fin du temps imparti.
+Le but du jeu est le même pour chaque joueur, être le dernier propriétaire dans la ville, ou bien être celui avec le plus grand capital (argent+valeur des bâtiments) à la fin du temps imparti.
 
-Au départ, chaque joeur commence avec une parcelle prise au hasard, et un somme modeste lui permettant d'acheter un nombre limité de propriété (1 voir 2 parcelles ou bâtiments).
+Au départ, chaque joueur commence avec une parcelle prise au hasard, et une somme modeste lui permettant d'acheter un nombre limité de propriété (1 voir 2 parcelles ou bâtiments).
 
-Pour gagner de l'argent, des visiteurs doivent entrer dans un de leur établissement, y rester une durée déterminée, leur donner l'argent adapté à l'établissement où il se trouve, et disparaitra ensuite de la partie.
+Pour gagner de l'argent, des visiteurs (non-controlé par les joueurs) doivent entrer dans un de leur établissement, y rester une durée déterminée, leur donner l'argent adapté à l'établissement où il se trouve, et disparaitra ensuite de la partie.
 Un visiteur ne peut apparaitre qu'à des endroits prédéfini sur la carte (ex: station de métro), il suivra alors un chemin également prédéfini (ex: vers la sortie de la ville), et entrera dans un établissement qu'il croise, si celui-ci l'interesse.
 Ce sera donc aux joueurs de bien positionner leurs bâtiments là où ils ont le plus de chances d'attirer un grand nombre de visiteur.
 
-Les bâtiments ne peuvent accueuillir qu'un nombre limité de visiteur, accepter la même somme par visiteur, et se débarasser d'un visiteur qu'après une certaine durée.
-Un joeur peut alors, pour un certain coût, amélioré son bâtiment, et alros augmenter la capacité maximale, la recette par visiteur et diminuer la durée d'occupation par un visiteur.
+Les bâtiments ne peuvent accueuillir qu'un nombre limité de visiteur en même temps, accepter une même somme par visiteur, et se débarasser d'un visiteur qu'après une certaine durée.
+Un joueur peut, s'il le souhaite et pour un certain coût, amélioré son bâtiment, et alors augmenter la capacité maximale, la recette par visiteur et diminuer la durée d'occupation d'un visiteur.
 
-Si un joueur est en faillite, à cause d'un coût d'entretien trop élévé par rapport aux recettes, il sera alors obligé de vendre des propriétés. Il mettra alors sa propriété (parcelle+bâtiment) dans le catalogue de vente, ouvert à tous les joueurs.
+Si un joueur est en faillite, à cause d'un coût d'entretien trop élévé face aux recettes, il sera alors obligé de vendre des propriétés. Il mettra alors sa propriété (parcelle+bâtiment) dans le catalogue de vente, ouvert à tous les joueurs.
 Il peut également s'il le souhaite, supprimer son bâtiment, ce qui réduira grandement les coût d'entretien, mais rendera les recettes nulles. (Une parcelle vide à un coût d'entretien, mais pas de revenu, ceci est pour éviter qu'un joeur achète tous les emplacements simplement pour empêcher les autres de construire).
 
 \newpage
@@ -126,7 +126,7 @@ puis il appuie sur un bouton du dispositif pour déclencher l'action .
 \newpage
 \section{Historique du document}
 \begin{description}
-	\item[1.9] (06/02/15) : Modification du But du projet, ajout au glossaire et index  - David
+	\item[1.9] (06/02/15) : Modification du But du projet, ajout au glossaire \& index +précondition "Construire"  - David
 	\item[1.8] (15/12/14) : Mise à jour des exigences de domaine - Cédric
     \item[1.7] (14/12/14) : Ajout des déscriptions textuelles des uses cases (Premiers achats,Construire-Améliorer-Détruire,Achats entre joueurs) - David
     \item[1.6] (12/12/14) : Rajout et correction des déscriptions textuelles des use case, et ajout des exigences de domaine - Hakim
@@ -358,6 +358,7 @@ Dès qu'un bâtiment n'as pas de prioritaire, le catalogue le met en vente libre
 \paragraph{Préconditions}
 \begin{itemize}
  \item La partie est en cours.
+ \item Le joeur possède au moins 1 parcelles vides.
 \end{itemize}
 \newpage
 \paragraph{Postconditions}
