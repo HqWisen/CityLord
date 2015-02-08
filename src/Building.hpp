@@ -4,7 +4,7 @@
 #include <list>
 
 class Building{
-	const int MAXCAPACITY;
+	int maxcapacity;
 	int capacity;
 	int price;
 	int openTime;
