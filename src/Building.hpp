@@ -2,6 +2,8 @@
 #define BUILDING_HPP_
 
 #include <list>
+#include "Visitor.hpp"
+#include "Building.hpp"
 
 class Building{
 	int maxcapacity;
@@ -16,10 +18,10 @@ class Building{
 	int level;
 	int constructionCost;
 	int destructionCost;
-	BuildingType type;
+	//BuildingType type;
 	
 	public:
-		Building() = default;
+		Building();
 		void deleteVisitor(Visitor&);
 		void receiveVisitor(Visitor&);
 		void upgrade();
