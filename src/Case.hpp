@@ -3,8 +3,8 @@
 
 class Case{
 	public:
-		Case() = default;
-  		virtual void display() = 0;
+		Case();
+  		void display();
 };
 
 #endif // CASE_HPP_
