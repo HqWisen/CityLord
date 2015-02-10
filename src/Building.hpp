@@ -3,7 +3,6 @@
 
 #include <list>
 #include "Visitor.hpp"
-#include "Building.hpp"
 
 class Building{
 	int maxcapacity;
