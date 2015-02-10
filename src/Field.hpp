@@ -3,8 +3,9 @@
 
 #include "Case.hpp"
 #include "Building.hpp"
+#include "Map.hpp"
 
-class Field : public Case{
+class Field{			// public Case
 	Building* building;
 	public:
 		Field();

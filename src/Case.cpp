@@ -3,6 +3,7 @@
 #include<iostream>
 #include "Case.hpp"
 
+
 using namespace std;
 
 void Case::display(){
@@ -11,6 +12,5 @@ void Case::display(){
 
 int main( int argc, const char* argv[] )
 {
-	cout<<"Hello World"<<endl;
 	return 0;
 }
