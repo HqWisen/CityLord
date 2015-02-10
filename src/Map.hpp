@@ -21,7 +21,7 @@ class Map{
 	int dimensionX;
 	int dimensionY;
 	Neighborhood neighborhoods[];
-	Case matrice[tailleMaxLong][tailleMaxLarg];
+	//Case matrice[tailleMaxLong][tailleMaxLarg];
 	public:
 		Map();		
 		void display();

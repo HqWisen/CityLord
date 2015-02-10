@@ -21,8 +21,8 @@ Map::Map(): dimensionX(tailleMaxLong), dimensionY(tailleMaxLarg){}
 void Map::display(){
 	for(int i=0;i<tailleMaxLong;i++) {
     	for(int j=0;j<tailleMaxLarg;j++) {
-        	Case caseCourante = matrice[i][j];
-        	caseCourante.display();
+        	//Case caseCourante = matrice[i][j];
+        	//caseCourante.display();
         }    
 		cout<<endl;
 	}
