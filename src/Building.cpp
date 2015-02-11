@@ -7,3 +7,7 @@ using namespace std;
 void Building::display(){
 	cout<<endl;
 }
+
+void receiveVisitor(Visitor&){
+	//Player.money += buildingType.income;
+}

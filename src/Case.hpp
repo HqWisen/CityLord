@@ -10,7 +10,6 @@ class Case{
 	public:
 		Case();
   		void display();	
-
 };
 
 #endif // CASE_HPP_

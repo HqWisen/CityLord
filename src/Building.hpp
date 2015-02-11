@@ -17,6 +17,7 @@ class Building{
 	int level;
 	int constructionCost;
 	int destructionCost;
+	int owner; // peut etre string
 	//BuildingType type;
 	
 	public:
