@@ -8,7 +8,7 @@ class Field{			// public Case
 	Building* building;
 	public:
 		Field();
-		Building buildBuilding();
+		void buildBuilding(Building build); // type Building
 		void destroyBuilding();
 		void display();
 };

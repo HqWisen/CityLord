@@ -24,6 +24,7 @@ class Building{
 		void deleteVisitor(Visitor&);
 		void receiveVisitor(Visitor&);
 		void upgrade();
+		void display();
 };
 
 #endif // BUILDING_HPP_
