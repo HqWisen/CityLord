@@ -6,6 +6,6 @@
 *.fls
 *.out
 *.toc
-## c++:
+## c++ objects:
 *.hpp.gch
 *.o
