@@ -7,13 +7,16 @@ Matrice dans laquelle sera stockée la carte et les éléments de la ville (bati
 */
 
 #include<iostream>
+#include <fstream>
 #include "Map.hpp"
 
-
+ 
 using namespace std;
 
-
-Map::Map(): dimensionX(tailleMaxLong), dimensionY(tailleMaxLarg){}
+Map::Map(char* nomDeLaMap){ // metrre un fichier txt en paramètre
+	dimensionX = tailleMaxLong;
+	dimensionY = tailleMaxLarg;
+}
 
 //Map::~Map(){}
 
