@@ -3,10 +3,10 @@
 
 #include <list>
 #include "Visitor.hpp"
+#include "BuildingType.hpp"
 
 class Building{
 	int maxcapacity;
-	int capacity;
 	int price;
 	int openTime;
 	int closeTime;
@@ -15,15 +15,15 @@ class Building{
 	int dailyCost;
 	std::list<Visitor*> visitorList;
 	int level;
-	int constructionCost;
 	int destructionCost;
 	int owner; // peut etre string
-	//BuildingType type;
+	BuildingType type;
 	
 	public:
-		Building();
-		void deleteVisitor(Visitor&);
-		void receiveVisitor(Visitor&);
+		Building(BuildingType, int);
+		~Building();
+		void receiveVisitor(Visitor);
+		void deleteVisitor(Visitor);
 		void upgrade();
 		void display();
 };
