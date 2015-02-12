@@ -37,5 +37,3 @@ Socket.o :  Socket.hpp Socket.cpp
 clean:
 	$(RM) $(TARGET)
 	$(RM) $(OBJECTS)
-
-

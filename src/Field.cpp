@@ -4,8 +4,10 @@
 
 using namespace std;
 
-Field::Field(Location coord){
-	this.coord=coord;
+Field::Field(Location coords){
+	this->coord=coord;
+	//coord.setX(coords.getX());
+	//coord.setY(coords.getY());
 	price=200; //default price ?
 }
 

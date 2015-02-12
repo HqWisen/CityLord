@@ -1,8 +1,21 @@
 #include "Location.hpp"
 
+Location::Location(){
+	x=0; y=0;
+}
+
 Location::Location(int a,int b){
 	x=a; y=b;
 }
+
+Location::Location(const Location  &s){this.x=s.x; this.y=s.y;}
+
+Location& operator=(const Location &s){
+	this.x=s.x; this.y=s.y;
+	return *this;
+}
+
+
 
 //getters & setters
 int Location::getX(){return x;}
