@@ -1,6 +1,8 @@
 #ifndef SOCKET_HPP_
 #define SOCKET_HPP_
 
+// FIXME nettoyer les includes
+
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,6 +27,7 @@
 class Socket{
   public:
 		Socket();
+		Socket(int fd);
 		int write(std::string);
 		int read(std::string&);
   protected:

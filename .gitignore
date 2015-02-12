@@ -6,3 +6,6 @@
 *.fls
 *.out
 *.toc
+## c++:
+*.hpp.gch
+*.o

@@ -10,14 +10,23 @@ Socket::Socket(){
 	}
 }
 
-int Socket::write(std::string message){
-  message += EOM;
-  void sending(int* sock_pt, char* message, int length){
-  if(send(*sock_pt, message, length, 0) == -1){
-    exitbecause("chat", "sending");
-  }
+Socket::Socket(int fd){
+	sockfd = fd;
 }
 
+int Socket::write(std::string message){
+	const char* mess = message.c_str();
+	unsigned int len = message.size();
+	while(len > 0){
+		if(send(sockfd, mess, MAXBUFSIZE-1, 0) == -1){
+			perror("send :");
+    }
+    len -= MAXBUFSIZE-1;
+    mess += MAXBUFSIZE-1;
+  }
+  if(send(sockfd, EOM, strlen(EOM), 0) == -1){
+			perror("send :");
+  }
 	return 0;
 }
 
