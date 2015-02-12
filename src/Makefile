@@ -37,5 +37,3 @@ ServerSocket.o :  ServerSocket.hpp ServerSocket.cpp
 clean:
 	$(RM) $(TARGET)
 	$(RM) $(OBJECTS)
-
-

@@ -10,6 +10,7 @@ Matrice dans laquelle sera stockée la carte et les éléments de la ville (bati
 #ifndef MAP_HPP_
 #define MAP_HPP_
 
+#include <string>
 #include "Case.hpp"
 #include "Neighborhood.hpp"
 #include "Field.hpp"
@@ -24,7 +25,7 @@ class Map{
 	Neighborhood neighborhoods[];
 	Case *matrice[tailleMaxLong][tailleMaxLarg];
 	public:
-		Map();		
+		Map(char* nomDeLaMap); // metrre un fichier txt en paramètre		
 		void display();
 };
 

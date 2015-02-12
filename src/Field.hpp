@@ -4,13 +4,16 @@
 #include "Case.hpp"
 #include "Building.hpp"
 
-class Field{			// public Case
+class Field : public Case{			// public Case
 	Building* building;
+	int price;
 	public:
-		Field();
-		Building buildBuilding();
+		Field(Location);
+		void buildBuilding(Building build); // type Building
 		void destroyBuilding();
 		void display();
+		int getPrice();
+		void setPrice(int);
 };
 
 #endif // FIELD_HPP_

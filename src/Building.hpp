@@ -17,6 +17,7 @@ class Building{
 	int level;
 	int constructionCost;
 	int destructionCost;
+	int owner; // peut etre string
 	//BuildingType type;
 	
 	public:
@@ -24,6 +25,7 @@ class Building{
 		void deleteVisitor(Visitor&);
 		void receiveVisitor(Visitor&);
 		void upgrade();
+		void display();
 };
 
 #endif // BUILDING_HPP_

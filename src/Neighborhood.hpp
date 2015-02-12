@@ -6,7 +6,7 @@
 
 class Neighborhood{
 	//const int nombreDeCase;
-	Case cases[];
+	//Case cases[];
 	public:
 		Neighborhood();
 		void display();
