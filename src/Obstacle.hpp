@@ -1,7 +1,9 @@
 #ifndef OBSTACLE_HPP_
 #define OBSTACLE_HPP_
 
-class Obstacle{  // : public Case
+#include "Case.hpp"
+
+class Obstacle: public Case{  // : public Case
 	public:
 		Obstacle() = default;
 };

@@ -1,10 +1,13 @@
-
-
 #include<iostream>
 #include "Field.hpp"
 
 
 using namespace std;
+
+Field::Field(Location coord){
+	this.coord=coord;
+	price=200; //default price ?
+}
 
 void Field::display(){
 	if(building){
@@ -19,9 +22,7 @@ void Field::buildBuilding(Building build){
 	this->building = &build;
 }
 
-/*
-int main( int argc, const char* argv[] )
-{
-	return 0;
-}
-*/
+
+//getters & setters
+void Field::setPrice(int amount){price=amount;}
+int Field::getPrice(){return price;}

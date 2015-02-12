@@ -15,8 +15,9 @@ class Case{
 		//Case(Obstacle obs);
 		//Case(Field field);
 		//Case(Road road);
-  		void display();
+  		virtual void display();
   		Location getCoord();
+  		void setCoord(int,int);
 };
 
 #endif // CASE_HPP_
