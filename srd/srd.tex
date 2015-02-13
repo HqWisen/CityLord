@@ -113,24 +113,23 @@ Il peut également s'il le souhaite, supprimer son bâtiment, ce qui réduira gr
 \section{Glossaire}
 \begin{itemize}
  \item \textbf{Système:} Un système est un ensemble d'éléments interagissant entre eux selon certains principes ou règles. Dans ce cas, il s’agit du programme.
- \item \textbf{Point-and-click:} se dit d’une des actions qu'un utilisateur peut effectuer sur une interface utilisateur graphique avec pointeur.
-L'utilisateur déplace le pointeur avec un dispositif de pointage (souris, manette de jeu) sur un emplacement particulier de l'écran d'ordinateur,
-puis il appuie sur un bouton du dispositif pour déclencher l'action .
  \item \textbf{Serveur:} Un serveur est ordinateur dédié à l'administration d'un réseau informatique. Il gère l'accès aux ressources et aux périphériques et les connexions des différents utilisateurs.
  \item \textbf{Réseau informatique:}Ensemble des moyens matériels et logiciels mis en œuvre pour assurer les communications entre ordinateurs.
  \item \textbf{Pseudo:}Un pseudonyme est un nom d'emprunt qu'une personne porte pour exercer une activité sous un autre nom que celui de son identité officielle.
  \item \textbf{Map:}Carte prédéfinie, représentant une ville.
  \item \textbf{Catalogue:}Liste reprenant toutes les propriétés mises en vente par les joueurs ou par la villes.
+ \item \textbf{Upgrade:}Action d'améliorer un bâtiment.
 \end{itemize}
 
 \newpage
 \section{Historique du document}
 \begin{description}
-	\item[1.9] (06/02/15) : Modification du But du projet, ajout au glossaire \& index +précondition "Construire"  - David
+	\item[2.1] (13/02/15) : Modification du glossaire, enrichissement des pré et post condition. - David - Cédric
+	\item[2.0] (06/02/15) : Modification du But du projet, ajout au glossaire \& index +précondition "Construire"  - David
 	\item[1.8] (15/12/14) : Mise à jour des exigences de domaine - Cédric
     \item[1.7] (14/12/14) : Ajout des déscriptions textuelles des uses cases (Premiers achats,Construire-Améliorer-Détruire,Achats entre joueurs) - David
     \item[1.6] (12/12/14) : Rajout et correction des déscriptions textuelles des use case, et ajout des exigences de domaine - Hakim
-    \item[1.5] (11/12/14) : Déscriptions textuelles de l'interface de connexion - Kaio
+    \item[1.5] (11/12/14) : Déscriptions de Use Case interface de connexion - Kaio
     \item[1.4] (11/12/14) : Exigences fonctionnelles (Besoins de l'utilisateur) et ajout dans le glossaire et l'index de termes - David
     \item[1.3] (11/02/14) : Ajout du diagramme de classe - Equipe
     \item[1.2] (10/02/14) : Ajout des premières \textit{use case} - Zakaria
@@ -381,10 +380,12 @@ Lorsque un joueur veut construire un nouveau bâtiment, il lui faudra simplement
 \paragraph{Préconditions}
 \begin{itemize}
  \item La partie est en cours.
+ \item Le joueur possède au moins un bâtiment.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
  \item Un bâtiment est amélioré d'un niveau.
+ \item Le joueur a dépensé de l'argent pour l'Upgrade.
 \end{itemize}
 \paragraph{Cas général}
 Un joueur peut à tout moment améliorer un de ses bâtiments. Il lui suffit de cliquer sur l'option \og \textit{Améliorer} \fg, il entre alors en mode Amélioration. Il peut à tout moment quitter ce mode et annuler l'amélioration, en appuyant sur \og \textit{-ESC-} \fg ou en cliquant sur \og \textit{annuler} \fg. Et ensuite séléctionner une de ses propriétés.[Exception : Bâtiment amélioré au max]Des informations sur l'amélioration sont affichés, le prix de celle-ci, et les stats du bâtiments après celle-ci.Il ne reste plus qu'au joueur de confirmer l'amélioration en cliquant sur \og \textit{Ok} \fg ou annuler en cliquant sur \og \textit{Annuler} \fg.[Exception : Le joueur n'as pas assez d'argent][Exception : Propriété séléctionnée non-valide]
@@ -402,13 +403,15 @@ Un joueur peut à tout moment améliorer un de ses bâtiments. Il lui suffit de 
 \paragraph{Préconditions}
 \begin{itemize}
  \item La partie est en cours.
+ \item Le joueur possède au moins un bâtiment.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
  \item Un bâtiment est détruit et n'éxiste plus.
+ \item Le propriétaire gagne une somme d'argent équivalente à la moitié de la valeur du bâtiment détruit.
 \end{itemize}
 \paragraph{Cas général}
-Un joueur peut également détruire un de ses bâtiments. Il lui suffit de cliquer sur l'option \og \textit{Détruire} \fg, il entre alors en mode Destruction. Il peut à tout moment quitter ce mode et annuler la destruction, en appuyant sur \og \textit{-ESC-} \fg ou en cliquant sur \og \textit{annuler} \fg. Et ensuite séléctionner le bâtiment qu'il désire détruire.[Exception : Le joueur n'as pas assez d'argent] [Exception : Propriété séléctionnée non-valide]
+Un joueur peut également détruire un de ses bâtiments. Il lui suffit de cliquer sur l'option \og \textit{Détruire} \fg, il entre alors en mode Destruction. Il peut à tout moment quitter ce mode et annuler la destruction, en appuyant sur \og \textit{-ESC-} \fg ou en cliquant sur \og \textit{annuler} \fg. Et ensuite séléctionner le bâtiment qu'il désire détruire. Une fois détruit, le bâtiment rapporte la moitié de la valuer de celui-ci à son propriétaire. [Exception : Propriété séléctionnée non-valide]
 \paragraph{Exceptions}
 \begin{itemize}
  \item \textit{Le joueur n'as pas assez d'argent:}  Une fenètre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
