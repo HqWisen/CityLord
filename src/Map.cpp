@@ -23,10 +23,19 @@ Map::Map(char* nomDeLaMap){ // metrre un fichier txt en paramètre
 //Map::Map(const Map &s);
 
 void Map::display(){
+	for(int j=0;j<tailleMaxLarg;j++) {
+    	cout<<"-----";
+    }  
 	for(int i=0;i<tailleMaxLong;i++) {
+		cout<<"| ";
     	for(int j=0;j<tailleMaxLarg;j++) {
         	Case *caseCourante = matrice[i][j];
         	caseCourante->display();
+        	cout<<" | ";
+        }    
+		cout<<endl;
+    	for(int j=0;j<tailleMaxLarg;j++) {
+        	cout<<"-----";
         }    
 		cout<<endl;
 	}
