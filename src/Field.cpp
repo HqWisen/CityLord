@@ -13,11 +13,11 @@ Field::Field(Location coords){
 
 void Field::display(){
 	if(building){
-		cout<<"B";
+		cout<<" B \033[0m\n";
 		//building->display();
 	}
 	else{
-		cout<<"P";
+		cout<<" P \033[0m\n";
 	}
 }
 
