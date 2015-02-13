@@ -6,7 +6,7 @@ Matrice dans laquelle sera stockée la carte et les éléments de la ville (bati
 
 */
 
-#include<iostream>
+#include <iostream>
 #include <fstream>
 #include "Map.hpp"
 

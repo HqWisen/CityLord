@@ -6,6 +6,7 @@
 class Obstacle: public Case{  // : public Case
 	public:
 		Obstacle() = default;
+		void display();
 };
 
 #endif // OBSTACLE_HPP_

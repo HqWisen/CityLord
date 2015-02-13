@@ -24,9 +24,9 @@ class Map{
 	int dimensionY;
 	Neighborhood neighborhoods[];
 	Case *matrice[tailleMaxLong][tailleMaxLarg];
-	public:
-		Map(char* nomDeLaMap); // metrre un fichier txt en paramètre		
-		void display();
+public:
+	Map(char* nomDeLaMap); // metrre un fichier txt en paramètre		
+	void display();
 };
 
 #endif // MAP_HPP_

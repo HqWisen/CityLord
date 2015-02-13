@@ -13,10 +13,11 @@ Field::Field(Location coords){
 
 void Field::display(){
 	if(building){
-		building->display();
+		cout<<"B";
+		//building->display();
 	}
 	else{
-		cout<<" ";
+		cout<<"P";
 	}
 }
 
@@ -25,6 +26,8 @@ void Field::buildBuilding(Building build){
 }
 
 
-//getters & setters
+//----getters & setters----
 void Field::setPrice(int amount){price=amount;}
 int Field::getPrice(){return price;}
+//int-char-string ? getOwner(){return owner;};
+//void setOwner(int-char-string ? owner){this.owner=owner};
