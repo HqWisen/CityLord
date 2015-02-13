@@ -1,6 +1,8 @@
 #include "ServerSocket.hpp"
 
 ServerSocket::ServerSocket(int port) : Socket() {
+	
+	struct sockaddr_in server_addr;
 
 	server_addr.sin_family = AF_INET;
 	server_addr.sin_port = htons(port);     // short, network byte order

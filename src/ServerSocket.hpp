@@ -3,11 +3,11 @@
 
 #include <string>
 #include "Socket.hpp"
+#include "ClientSocket.hpp"
 
 #define BACKLOG 10
 
 class ServerSocket : public Socket{
-	struct sockaddr_in server_addr;
 	public:
 		ServerSocket(int port);
 		void listen_clients();
