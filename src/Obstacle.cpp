@@ -5,5 +5,5 @@ include<iostream>
 using namespace std;
 
 void obstacle::display(){
-	cout<<"X";
+	cout<<" X ";
 }

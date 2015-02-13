@@ -1,8 +1,10 @@
-#include<iostream>
+#include <iostream>
+#include <string>
+
 #include "Field.hpp"
 
-
 using namespace std;
+
 
 Field::Field(Location coords){
 	this->coord=coord;
@@ -12,11 +14,18 @@ Field::Field(Location coords){
 }
 
 void Field::display(){
+	string color;
+	if(this.asOwner()){
+		color=this.owner.getColor();
+	}
+	else{color="\033[0m"}
+
 	if(building){
-		building->display();
+		cout<<color<<" B \033[0m\n";
+		//building->display();
 	}
 	else{
-		cout<<" ";
+		cout<<color<<"   \033[0m\n";
 	}
 }
 
@@ -25,6 +34,8 @@ void Field::buildBuilding(Building build){
 }
 
 
-//getters & setters
+//----getters & setters----
 void Field::setPrice(int amount){price=amount;}
 int Field::getPrice(){return price;}
+//int-char-string ? getOwner(){return owner;};
+//void setOwner(int-char-string ? owner){this.owner=owner};
