@@ -10,8 +10,6 @@ SOURCES=$(wildcard *.cpp)
 HEADERS=$(wildcard *.hpp)
 OBJECTS=$(addprefix  $(BIN_DIR)/$(NAME)/, $(subst .cpp,.o,$(SOURCES)))
 
-
-
 build: $(BIN_DIR)/$(NAME).a $(OBJECTS)
 
 $(BIN_DIR)/$(NAME)/%.o: %.cpp $(HEADERS) $(BIN_DIR)/$(NAME)/

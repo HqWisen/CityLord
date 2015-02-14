@@ -1,4 +1,4 @@
-TARGETS = clientexe serverexe
+TARGETS = clientexe serverexe testexe
 default: $(TARGETS)
 
 include rules.mk
