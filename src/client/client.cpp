@@ -1,6 +1,6 @@
-#include "Socket.hpp"
-#include "ServerSocket.hpp"
-#include "ClientSocket.hpp"
+#include "../common/socket/Socket.hpp"
+#include "../common/socket/ServerSocket.hpp"
+#include "../common/socket/ClientSocket.hpp"
 
 #include <iostream>
 

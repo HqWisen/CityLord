@@ -15,10 +15,10 @@ Field::Field(Location coords){
 
 void Field::display(){
 	string color;
-	if(this.asOwner()){
-		color=this.owner.getColor();
+	if(this->asOwner()){
+		color=this->owner.getColor();
 	}
-	else{color="\033[0m"}
+	else{color="\033[0m";}
 
 	if(building){
 		cout<<color<<" B \033[0m\n";

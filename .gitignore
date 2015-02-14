@@ -6,6 +6,13 @@
 *.fls
 *.out
 *.toc
+
 ## c++ objects:
 *.hpp.gch
 *.o
+
+## execution files:
+bin
+clientexe
+serverexe
+testexe
