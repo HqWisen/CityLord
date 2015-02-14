@@ -22,7 +22,7 @@ class Socket{
   public:
 		Socket();
 		Socket(int fd);
-		int write(std::string);
+		void write(std::string);
 		std::string read();
   protected:
     int sockfd;

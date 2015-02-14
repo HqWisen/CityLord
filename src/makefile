@@ -7,7 +7,7 @@ DEPC = client socket
 
 # -- server
 SERVER = citylordserver
-DEPS = server socket
+DEPS = server socket thread
 # -- test
 TEST = testexe
 DEPT = test socket lib
@@ -38,6 +38,8 @@ $(TEST): $(DEPTA)
 
 $(BIN_DIR)/socket.a:	
 	$(MAKE) -C common/socket
+$(BIN_DIR)/thread.a:	
+	$(MAKE) -C common/thread
 $(BIN_DIR)/lib.a:	
 	$(MAKE) -C common/lib
 $(BIN_DIR)/client.a:

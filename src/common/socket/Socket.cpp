@@ -16,7 +16,7 @@ Socket::Socket(int fd){
 	sockfd = fd;
 }
 
-int Socket::write(std::string message){
+void Socket::write(std::string message){
 	message += EOM;
 	const char* mess = message.c_str();
 	int len = message.size();
@@ -27,7 +27,6 @@ int Socket::write(std::string message){
     len -= MAXBUFSIZE-1;
     mess += MAXBUFSIZE-1;
   }
-	return 0;
 }
 
 std::string Socket::read(){
@@ -37,11 +36,10 @@ std::string Socket::read(){
    	numbytes = recv(sockfd, buffer, MAXBUFSIZE-1, 0);
     if(numbytes == -1){
 			perror("recv");
-			exit(-1); // Error
     }
     else if(numbytes == 0){
 			perror("recv connection");
-			exit(-1); // FIXME Connection problem
+			// FIXME handle disconnection
     }
     buffer[numbytes] = '\0';
 		message += buffer;

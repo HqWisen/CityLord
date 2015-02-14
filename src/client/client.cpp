@@ -11,6 +11,7 @@ int main(int argc, char** argv){
   }
   char* hostname = argv[1];
 	ConnectionSocket connectionSocket(hostname, PORT);
+	connectionSocket.connectHost();
   std::cout<<"Server infos = "<<connectionSocket.getServerInfos()<<std::endl;
   connectionSocket.write("Hakim boulahya|");
 	return 0;

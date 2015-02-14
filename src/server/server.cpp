@@ -1,14 +1,14 @@
-#include "../common/socket/Socket.hpp"
-#include "../common/socket/ServerSocket.hpp"
-#include "../common/socket/ClientSocket.hpp"
+#include "CityLordServer.hpp"
 
 #include <iostream>
 
 #define PORT 5555
 
 int main(){
+	CityLordServer server(PORT);
+	server.run();
 	
-	ServerSocket serverSocket(PORT);
+	/*ServerSocket serverSocket(PORT);
   serverSocket.listen_clients();
   ClientSocket* clientSocket;
   std::string message;
@@ -19,7 +19,7 @@ int main(){
   	message = clientSocket->read();
   	std::cout<<message<<std::endl;
   	
-  }
+  }*/
 
 	return 0;
 

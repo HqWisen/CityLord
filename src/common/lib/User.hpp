@@ -3,7 +3,7 @@
 
 class User{
 	//addrIP
-	std::map<int, Player> players; // n° of city is the key
+	//std::map<int, Player> players; // n° of city is the key
 	public:
 		User() = default;
 };

@@ -10,8 +10,8 @@
 class ServerSocket : public Socket{
 	public:
 		ServerSocket(int port);
-		void listen_clients();
-		ClientSocket* accept_client();
+		void listenClients();
+		ClientSocket* acceptClient();
 		
 };
 

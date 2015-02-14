@@ -11,6 +11,9 @@ ConnectionSocket::ConnectionSocket(char* hostname, int port) : Socket(){
 	memset(&(server_addr.sin_zero), '\0', 8); // zero the rest of the struct
 	server_addr.sin_addr = *((struct in_addr*)he->h_addr);
 	
+}
+
+void ConnectionSocket::connectHost(){
 	if(connect(sockfd, (struct sockaddr *)&server_addr, sizeof(struct sockaddr)) == -1){
     printf("Connection to the server is impossible\n");
     perror("connect");

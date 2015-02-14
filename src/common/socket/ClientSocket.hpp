@@ -9,7 +9,7 @@ class ClientSocket : public Socket{
 	public:
 		ClientSocket(int fd, struct sockaddr_in addr);
 		//ClientSocket(char* hostname, int port);
-		std::string getClientInfos();		
+		std::string getClientIP();		
 };
 
 #endif // CLIENT_SOCKET_HPP_

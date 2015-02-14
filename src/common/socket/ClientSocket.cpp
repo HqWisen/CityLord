@@ -4,7 +4,7 @@ ClientSocket::ClientSocket(int fd, struct sockaddr_in addr){
 	client_addr = addr;
 }
 
-std::string ClientSocket::getClientInfos(){
+std::string ClientSocket::getClientIP(){
   std::string result = inet_ntoa(client_addr.sin_addr);
 	return result;
 }

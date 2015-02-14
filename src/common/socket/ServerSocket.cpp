@@ -14,13 +14,13 @@ ServerSocket::ServerSocket(int port) : Socket() {
   }
 
 }
-void ServerSocket::listen_clients(){
+void ServerSocket::listenClients(){
   if(listen(sockfd, BACKLOG) == -1){
     perror("listen");
   }
 }
 
-ClientSocket* ServerSocket::accept_client(){
+ClientSocket* ServerSocket::acceptClient(){
 
   unsigned int sin_size = sizeof(struct sockaddr_in);
 	struct sockaddr_in client_addr;

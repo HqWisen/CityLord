@@ -2,7 +2,7 @@ RM = rm -rf
 
 CC = g++
 AR  = ar
-FLAGS = -g -Wall -std=c++11
+FLAGS = -g -Wall -std=c++11 -pthread
 ROOT=$(shell git rev-parse --show-toplevel)
 BIN_DIR = $(ROOT)/bin
 

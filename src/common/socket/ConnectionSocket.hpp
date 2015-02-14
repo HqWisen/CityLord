@@ -8,6 +8,7 @@ class ConnectionSocket : public Socket{
 	struct sockaddr_in server_addr;
 	public:
 		ConnectionSocket(char* hostname, int port);
+		void connectHost();
 		std::string getServerInfos();		
 };
 
