@@ -6,13 +6,15 @@
 *.fls
 *.out
 *.toc
-
+*.pdf
+*.synctex.gz
 ## c++ objects:
 *.hpp.gch
 *.o
 
 ## execution files:
 bin
-clientexe
-serverexe
+citylord
+citylordserver
 testexe
+

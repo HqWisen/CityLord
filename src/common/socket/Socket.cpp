@@ -4,11 +4,11 @@ const char* Socket::EOM = "\nEOM";
 
 Socket::Socket(){
 	if((sockfd = socket(PF_INET, SOCK_STREAM, 0)) == -1){
-		perror("socket :");
+		perror("socket");
 	}
 	int yes = 1;
 	if(setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1){
-		perror("setsockopt :");
+		perror("setsockopt");
 	}
 }
 
@@ -22,7 +22,7 @@ int Socket::write(std::string message){
 	int len = message.size();
 	while(len > 0){
 		if(send(sockfd, mess, strlen(mess) < MAXBUFSIZE-1 ? strlen(mess) : MAXBUFSIZE-1, 0) == -1){
-			perror("send :");
+			perror("send");
     }
     len -= MAXBUFSIZE-1;
     mess += MAXBUFSIZE-1;
@@ -40,7 +40,7 @@ std::string Socket::read(){
 			exit(-1); // Error
     }
     else if(numbytes == 0){
-			perror("recv");
+			perror("recv connection");
 			exit(-1); // FIXME Connection problem
     }
     buffer[numbytes] = '\0';

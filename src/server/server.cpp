@@ -11,11 +11,11 @@ int main(){
 	ServerSocket serverSocket(PORT);
   serverSocket.listen_clients();
   ClientSocket* clientSocket;
-  std::cout<<"Beginning the server..."<<std::endl;
   std::string message;
+  std::cout<<"Beginning the server..."<<std::endl;
   while(true){
   	clientSocket = serverSocket.accept_client();
-  	std::cout<<clientSocket->getPeerInfos()<<std::endl;
+  	std::cout<<clientSocket->getClientInfos()<<std::endl;
   	message = clientSocket->read();
   	std::cout<<message<<std::endl;
   	

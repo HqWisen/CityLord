@@ -10,13 +10,13 @@ ServerSocket::ServerSocket(int port) : Socket() {
 	memset(&(server_addr.sin_zero), '\0', 8); // zero the rest of the struct
   
 	if(bind(sockfd, (struct sockaddr*)&server_addr, sizeof(struct sockaddr)) == -1){
-		perror("bind :");
+		perror("bind");
   }
 
 }
 void ServerSocket::listen_clients(){
   if(listen(sockfd, BACKLOG) == -1){
-    perror("listen :");
+    perror("listen");
   }
 }
 
@@ -26,7 +26,7 @@ ClientSocket* ServerSocket::accept_client(){
 	struct sockaddr_in client_addr;
   int newfd = accept(sockfd, (struct sockaddr*)&client_addr, &sin_size);
   if(newfd == -1){
-		perror("accept :");
+		perror("accept");
   }
   
   return new ClientSocket(newfd, client_addr);

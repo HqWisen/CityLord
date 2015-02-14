@@ -1,6 +1,4 @@
-#include "../common/socket/Socket.hpp"
-#include "../common/socket/ServerSocket.hpp"
-#include "../common/socket/ClientSocket.hpp"
+#include "../common/socket/ConnectionSocket.hpp"
 
 #include <iostream>
 
@@ -8,13 +6,12 @@
 
 int main(int argc, char** argv){
   if(argc != 2){
-    printf("Hostname not given !");
+    printf("Hostname not given !\n");
     return 1;
   }
   char* hostname = argv[1];
-	ClientSocket clientSocket(hostname, PORT);
-  clientSocket.write("Hakim boulahya|");
-	std::cout<<clientSocket.getPeerInfos()<<std::endl;
+	ConnectionSocket connectionSocket(hostname, PORT);
+  std::cout<<"Server infos = "<<connectionSocket.getServerInfos()<<std::endl;
+  connectionSocket.write("Hakim boulahya|");
 	return 0;
-
 }
