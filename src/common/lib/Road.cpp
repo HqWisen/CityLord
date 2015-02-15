@@ -4,11 +4,12 @@
 using namespace std;
 
 Road::Road(int x, int y){
+	path[4] = {false};
 	coord=Location(x, y);
 }
 
 Road::~Road(){
-	path[4] = {nullptr};
+	path[4] = {false};
 	image="";
 }
 
@@ -17,50 +18,50 @@ void Road::display(){
 }
 
 //getters & setters
-Road* Road::getPath(int i){
+bool Road::getPath(int i){
 	return path[i];
 }
 
-void Road::setPath(int i, Road* newRoad){ // ╬ ╝ ═ ║ ╚ ╠ ╣ ╔ ╗ ╦ ╩ □
+void Road::setPath(int i, bool newRoad){ // ╬ ╝ ═ ║ ╚ ╠ ╣ ╔ ╗ ╦ ╩ □
 	path[i]=newRoad;
 
-	if (path[0] != NULL){
-		if (path[1] != NULL){
-			if (path[2] != NULL){
-				if (path[3] != NULL){
+	if (path[0] != false){
+		if (path[1] != false){
+			if (path[2] != false){
+				if (path[3] != false){
 					image="═╬═";
 				}
 				else {
 					image="═╩═";
 				}
-			}else if (path[3] != NULL){
+			}else if (path[3] != false){
 				image="═╣ ";
 			}else {
 				image="═╝ ";
 			}
-		}else if (path[2] != NULL){
-			if (path[3] != NULL){
+		}else if (path[2] != false){
+			if (path[3] != false){
 				image="═╦═";
 			}else {
 				image="═══"; 
 			}
-		}else if (path[3] != NULL){
+		}else if (path[3] != false){
 			image="═╗ ";
 		}else {
 			image="═□ ";
 		}
-	}else if (path[1] != NULL){
-		if (path[2] != NULL){
-			if (path[3] != NULL){
+	}else if (path[1] != false){
+		if (path[2] != false){
+			if (path[3] != false){
 				image=" ╠═";
 			}else {
 				image=" ╚═";
 			}
-		}else if (path[3] != NULL){
+		}else if (path[3] != false){
 			image=" ║ ";
 		}
-	}else if (path[2] != NULL){
-		if (path[3] != NULL){
+	}else if (path[2] != false){
+		if (path[3] != false){
 			image=" ╔═";
 		}else {
 			image=" □═";
