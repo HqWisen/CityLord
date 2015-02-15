@@ -16,6 +16,9 @@ class UserThread : public Thread{
 		UserThread(CityLordServer*, ClientSocket);
 		void run() override;
 		void beginConnection();
+		void login();
+		void createAccount();
+		
 };
 
 #endif // USERTHREAD_HPP_

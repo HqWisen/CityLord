@@ -53,5 +53,16 @@ std::string Socket::read(){
 	return message;
 }
 
+void Socket::writeInt(int number){
+	std::string message(std::to_string(number));
+	write(message);
+}
+int Socket::readInt(){
+	std::string message = read();
+	int number = std::stoi(message);
+	return number;
+}
+
+
 
 

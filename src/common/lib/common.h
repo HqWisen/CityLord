@@ -8,8 +8,8 @@
 
 // success / fail
 
-#define FAIL "1"
-#define SUCCESS "0"
+#define SUCCESS 0
+#define FAIL 1
 
 
 #endif // COMMON_HPP_

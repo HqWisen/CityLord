@@ -12,13 +12,14 @@
 
 class CityLordClient{
 	ConnectionSocket connectionSocket;
+	std::string nickname;
 	public:
 		CityLordClient(char* hostname, int port);
 		CityLordClient(const CityLordClient&) = default;
 		void run();
 		void beginConnection();
-		void createAccount();
-		void login();
+		std::string login();
+		std::string createAccount();
 		int makeChoice(int min = 1, int max = 1);
 		void LOG(std::string);
 };

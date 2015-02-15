@@ -15,7 +15,8 @@ DEPT = test
 
 # -- Do not edit below this line --
 
-TARGETS = $(CLIENT) $(SERVER) $(TEST)
+TARGETS = $(CLIENT) $(SERVER)
+# $(TEST)
 
 DEPCA = $(addsuffix .a,$(addprefix $(BIN_DIR)/,$(DEPC)))
 DEPSA = $(addsuffix .a,$(addprefix $(BIN_DIR)/,$(DEPS)))

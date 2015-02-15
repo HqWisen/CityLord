@@ -25,6 +25,8 @@ class Socket{
 		Socket(int fd);
 		void write(std::string);
 		std::string read();
+		void writeInt(int);
+		int readInt();
   protected:
     int sockfd;
     char buffer[MAXBUFSIZE];

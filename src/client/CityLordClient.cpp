@@ -11,40 +11,53 @@ void CityLordClient::run(){
 }
 
 void CityLordClient::beginConnection(){
-	LOG("Please make a choice to connect the server");
 	std::cout<<M_LOGIN<<" - Login"<<std::endl;
 	std::cout<<M_ACCOUNT<<" - Create an account"<<std::endl;
 	int choice = makeChoice(1, 2);
 	if(choice == M_LOGIN){
-		login();
+		connectionSocket.writeInt(M_LOGIN);
+		nickname = login();
 	}else if(choice == M_ACCOUNT){
-		createAccount();
+		connectionSocket.writeInt(M_ACCOUNT);
+		nickname = createAccount();
 	}
-	
+	LOG("Your are now connected to the server with nickname : "+nickname);
 }
 
-void CityLordClient::login(){
-	connectionSocket.write(std::to_string(M_LOGIN));
-}
-
-void CityLordClient::createAccount(){
-	// TODO restriction du pseudo (nb max de char etc...)
-	connectionSocket.write(std::to_string(M_ACCOUNT));
-	std::string fail = "1";
+std::string CityLordClient::login(){
 	std::string nickname;
-	LOG("To create an account please enter your nickname");
-	while(fail == "1"){
+	int fail = 1;
+	LOG("Enter your account nickname to log in.");
+	while(fail == 1){
 		std::cout<<"Nickname : ";
 		std::cin>>nickname;
-		LOG("Your have chosen : " + nickname+".");
 		connectionSocket.write(nickname);
-		fail = connectionSocket.read();
-		if(fail == "1"){
+		fail = connectionSocket.readInt();
+		if(fail == 1){
+			LOG("Login failed : this nickname doesn't exist.");
+			LOG("Please enter another one.");
+		}
+	}
+	return nickname;	
+}
+
+std::string CityLordClient::createAccount(){
+	// TODO restriction du pseudo (nb max de char etc...)
+	int fail = 1;
+	std::string nickname;
+	LOG("To create an account enter your nickname.");
+	while(fail == 1){
+		std::cout<<"Nickname : ";
+		std::cin>>nickname;
+		connectionSocket.write(nickname);
+		fail = connectionSocket.readInt();
+		if(fail == 1){
 			LOG("Creation failed : this nickname is already used.");
 			LOG("Please enter another one.");
 		}
 	}
 	LOG("Please save it to keep your account !");
+	return nickname;
 }
 
 int CityLordClient::makeChoice(int min, int max){
