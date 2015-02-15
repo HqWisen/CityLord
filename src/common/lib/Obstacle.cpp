@@ -1,9 +1,8 @@
-
-include<iostream>
-#include "obstacle.hpp"
+#include <iostream>
+#include "Obstacle.hpp"
 
 using namespace std;
 
-void obstacle::display(){
-	cout<<" X ";
+void Obstacle::display(){
+	cout<<" ♦ ";
 }

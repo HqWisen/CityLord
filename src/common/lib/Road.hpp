@@ -1,9 +1,21 @@
 #ifndef ROAD_HPP_
 #define ROAD_HPP_
 
-class Road{  //public Case
+#include <string>
+#include "Case.hpp"
+
+using namespace std;
+
+class Road : public Case{
+	Road* path[4];
+	string image;
+
 	public:
-		Road() = default;
+		Road(int, int);
+		~Road();
+		void display();
+		Road* getPath(int);
+		void setPath(int,Road*);
 };
 
 #endif // ROAD_HPP_
