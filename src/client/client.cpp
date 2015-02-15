@@ -1,7 +1,5 @@
-#include "../common/socket/ConnectionSocket.hpp"
-
 #include <iostream>
-
+#include "CityLordClient.hpp"
 #define PORT 5555
 
 int main(int argc, char** argv){
@@ -10,9 +8,7 @@ int main(int argc, char** argv){
     return 1;
   }
   char* hostname = argv[1];
-	ConnectionSocket connectionSocket(hostname, PORT);
-	connectionSocket.connectHost();
-  std::cout<<"Server infos = "<<connectionSocket.getServerInfos()<<std::endl;
-  connectionSocket.write("Hakim boulahya|");
+  CityLordClient client(hostname, PORT);
+  client.run();
 	return 0;
 }

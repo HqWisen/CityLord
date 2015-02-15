@@ -8,6 +8,7 @@ class ClientSocket : public Socket{
 	struct sockaddr_in client_addr;
 	public:
 		ClientSocket(int fd, struct sockaddr_in addr);
+		ClientSocket(const ClientSocket&) = default;
 		//ClientSocket(char* hostname, int port);
 		std::string getClientIP();		
 };

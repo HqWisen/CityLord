@@ -10,7 +10,7 @@ SERVER = citylordserver
 DEPS = server socket thread
 # -- test
 TEST = testexe
-DEPT = test socket lib
+DEPT = test
 # -- 
 
 # -- Do not edit below this line --

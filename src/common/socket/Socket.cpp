@@ -32,19 +32,24 @@ void Socket::write(std::string message){
 std::string Socket::read(){
 	std::string message;
   int numbytes;
+  // TODO  Probleme quand buffer plus de 1 carateres
   do{
    	numbytes = recv(sockfd, buffer, MAXBUFSIZE-1, 0);
     if(numbytes == -1){
+    	message = "";
 			perror("recv");
     }
     else if(numbytes == 0){
+    	message = "";
 			perror("recv connection");
 			// FIXME handle disconnection
     }
     buffer[numbytes] = '\0';
 		message += buffer;
-	}while(message.find(EOM) == std::string::npos);
-  message.erase(message.end() - strlen(EOM), message.end());
+	}while(message.find(EOM) == std::string::npos and numbytes > 0);
+  if(message != ""){
+  	message.erase(message.end() - strlen(EOM), message.end());
+  }
 	return message;
 }
 

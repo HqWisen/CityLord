@@ -14,8 +14,9 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <arpa/inet.h>
+#include <iostream>
 
-#define MAXBUFSIZE 4
+#define MAXBUFSIZE 2
 
 class Socket{
 	static const char* EOM; // End of message

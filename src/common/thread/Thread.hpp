@@ -2,7 +2,6 @@
 #define THREAD_HPP_
 
 #include <pthread.h>
-#include <iostream>
 
 class Thread{
 	pthread_t thread;

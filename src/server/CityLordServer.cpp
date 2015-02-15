@@ -1,22 +1,35 @@
 #include "CityLordServer.hpp"
 
 
-CityLordServer::CityLordServer(int port) : serverSocket(port){
-}
+CityLordServer::CityLordServer(int port) : serverSocket(port){}
 
 void CityLordServer::run(){
 	
 	ClientSocket* clientSocketPtr;	
+	UserThread* thread;
 	
 	LOG("Server is running...");
 	serverSocket.listenClients();
 	while(true){
 		clientSocketPtr = serverSocket.acceptClient();
-		LOG("Client " + clientSocketPtr->getClientIP() + " is connected to " + SERVERNAME);
-		UserThread thread;
-		thread.start();
-
+		LOG("A client with IP " + clientSocketPtr->getClientIP() + " is connected to " + SERVERNAME);
+		// TODO désalloué quand un client se deconnecte
+		thread = new UserThread(this, *clientSocketPtr);
+		thread->start();
 	}
+}
+
+void CityLordServer::createAccount(std::string nickname){
+	if(!accountExist(nickname)){
+		User user;
+		userMap[nickname] = user;
+	}else{
+		// TODO throw exception
+	}
+}
+
+bool CityLordServer::accountExist(std::string nickname){
+	return userMap.find(nickname) != userMap.end();
 }
 
 void CityLordServer::LOG(std::string info){
