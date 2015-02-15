@@ -5,7 +5,6 @@ using namespace std;
 
 Road::Road(int x, int y){
 	typeName = "Road";
-	path[4] = {false};
 	coord=Location(x, y);
 }
 
@@ -60,6 +59,8 @@ void Road::setPath(int i, bool newRoad){ // ╬ ╝ ═ ║ ╚ ╠ ╣ ╔ ╗ 
 			}
 		}else if (path[3] != false){
 			image=" ║ ";
+		}else {
+			image=" □ ";
 		}
 	}else if (path[2] != false){
 		if (path[3] != false){

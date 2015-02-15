@@ -30,7 +30,8 @@ class Map{
 	//Neighborhood neighborhoods[];
 	Case*** mapMatrice;
 public:
-	Map(string nomDeLaCarte); // metrre un fichier txt en paramètre		
+	Map(string nomDeLaCarte); // metrre un fichier txt en paramètre
+	~Map();
 	void display();
 	Case* getCase(int,int);
 };

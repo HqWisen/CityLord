@@ -7,7 +7,7 @@
 using namespace std;
 
 class Road : public Case{
-	bool path[4];
+	bool path[4] = {false};
 	string image;
 
 	public:

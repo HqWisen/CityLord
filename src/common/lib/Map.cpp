@@ -16,14 +16,12 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
 	dimensionX = atoi(temp_string.c_str());
     getline(file, temp_string);
     dimensionY = atoi(temp_string.c_str());
-
     //initialise la matrice
-    Case* caseBidon = new Case();
     mapMatrice = new Case**[dimensionX];
     for (int i=0; i<dimensionX; i++) { //creates matrix of nodes
         mapMatrice[i] = new Case*[dimensionY];
         for (int j=0; j<dimensionY; j++) {
-            mapMatrice[i][j] = caseBidon;
+            mapMatrice[i][j] = nullptr;
         }
     }
     //parseur
@@ -38,7 +36,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                     ((Road*) (mapMatrice[i][0]))->setPath(1, true);
                 }
             }
-        } else if (j == (dimensionY*2)) {         
+        } else if (j == (dimensionY*2)) { 
             for (int i=0; i<dimensionX; i++) {
                 temp_char = temp_string.at((i*4)+1);
                 if (temp_char == ' ') {
@@ -49,7 +47,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
             for (int i=0; i<dimensionX; i++) {
                 temp_char = temp_string.at((i*4)+1);
                 if (temp_char == ' ') {
-                    if (mapMatrice[i][j/2] == caseBidon) {
+                    if (mapMatrice[i][j/2] == nullptr) {
                         mapMatrice[i][j/2] = new Road(i,j/2);
                     }
                     ((Road*) (mapMatrice[i][j/2]))->setPath(1, true);
@@ -59,19 +57,22 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
         } else {
             temp_char = temp_string.at(0);
             if (temp_char == ' ') {
+                if (mapMatrice[0][j/2] == nullptr) {
+                    mapMatrice[0][j/2] = new Road(0,j/2);
+                }
                 ((Road*) (mapMatrice[0][j/2]))->setPath(0, true);
             } 
-            for (int i=1; i<dimensionX; i++) {
+            for (int i=0; i<dimensionX; i++) {
                 temp_char = temp_string.at((i*4));
                 if (temp_char == ' ') {
-                    if (mapMatrice[i-1][j/2] == caseBidon) {
+                    if (mapMatrice[i-1][j/2] == nullptr) {
                         mapMatrice[i-1][j/2] = new Road(i-1,j/2);
                     }
-                    if (mapMatrice[i][j/2] == caseBidon) {
+                    if (mapMatrice[i][j/2] == nullptr) {
                         mapMatrice[i][j/2] = new Road(i,j/2);
                     }
-                    ((Road*) (mapMatrice[i-1][j/2]))->setPath(0, true);
-                    ((Road*) (mapMatrice[i][j/2]))->setPath(2, true);
+                    ((Road*) (mapMatrice[i-1][j/2]))->setPath(2, true);
+                    ((Road*) (mapMatrice[i][j/2]))->setPath(0, true);
                 }
                 temp_char = temp_string.at((i*4)+2);
                 if (temp_char == 'B') {
@@ -81,7 +82,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                 }else if (temp_char == 'P') {
                     mapMatrice[i][j/2] = new Obstacle(i,j/2);
                 }else {
-                    if (mapMatrice[i][j/2] == caseBidon) {
+                    if (mapMatrice[i][j/2] == nullptr) {
                         mapMatrice[i][j/2] = new Road(i,j/2);
                     }
                 }
@@ -96,12 +97,12 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
 
 void Map::display(){
     for (int j=0; j<((dimensionY*2)+1); j++) { //prints labyrinth in output files
-        if (j == (dimensionY*2))  {               
+        if (j == (dimensionY*2)) {
             for (int i=0; i<dimensionX; i++) {
                 if (((mapMatrice[i][dimensionY-1])->getType() == "Road") && \
                                             (((Road*) (mapMatrice[i][dimensionY-1]))->getPath(3) == true)) {
                     cout<<"+ ║ ";
-                } else {
+                }else {
                     cout<<"+---";
                 }
             }
@@ -111,7 +112,7 @@ void Map::display(){
                 if (((mapMatrice[i][j/2])->getType() == "Road") && \
                                             ((Road*) (mapMatrice[i][j/2]))->getPath(1) == true) {
                     cout<<"+ ║ ";
-                } else {
+                }else {
                     cout<<"+---";
                 }
             }
@@ -122,7 +123,7 @@ void Map::display(){
                                             ((Road*) (mapMatrice[i][j/2]))->getPath(0) == true) {
                     cout<<"═";
                     mapMatrice[i][j/2]->display();
-                } else {
+                }else {
                     cout<<"|";
                     mapMatrice[i][j/2]->display();
                 }
@@ -130,42 +131,23 @@ void Map::display(){
             if (((mapMatrice[dimensionX-1][j/2])->getType() == "Road") && \
                                             ((Road*) (mapMatrice[dimensionX-1][j/2]))->getPath(2) == true) {
                 cout<<"═"<<endl;
-            } else {
+            }else {
                 cout<<"|"<<endl;
             }
         }
     }
 }
 
-/*void Map::display(){
-    for(int j=0;j<tailleMaxLarg;j++) {
-        cout<<"-----";
-    }  
-    for(int i=0;i<tailleMaxLong;i++) {
-        cout<<"|";
-        for(int j=0;j<tailleMaxLarg;j++) {
-            Case *caseCourante = matrice[i][j];
-            caseCourante->display();
-            cout<<"|";
-        }    
-        cout<<endl;
-        for(int j=0;j<tailleMaxLarg;j++) {
-            cout<<"-----";
-        }    
-        cout<<endl;
+Map::~Map(){
+    for (int i=0; i<dimensionX; i++) {
+        for (int j=0; j<dimensionY; j++) {
+            mapMatrice[i][j] = nullptr;
+        }
     }
 }
 
-Map::~Map(){
-    
-}
-
-Map::Map(const Map &s){
-
-}
-
-int main( int argc, const char* argv[] )
-{
+/*int main(int argc, const char* argv[]){
+    Map map1 = Map("Map1.txt");
+    map1.display();
 	return 0;
-}
-*/
+}*/
