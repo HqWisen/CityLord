@@ -27,8 +27,8 @@ class CityLordManager{
 public:
 	CityLordManager();
 	void makePurchase(Player&, int, int); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées
-	void makeTrade(Player&, Player&, int , int, std::string);
-	void buildBuilding(Player&, int, int);
+	void makeTrade(Player&, Player&, int , int);
+	void buildBuilding(Player&, int, int, std::string);
 	void destroyBuilding(Player&, int, int);
 	void upgradeBuilding(Player&, int, int);
 	void showCatalog();
