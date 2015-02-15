@@ -12,7 +12,7 @@ class Case{
 		Location coord;
 
 	public:
-		virtual void display();	//Pure virtuelle, fait de Case une classe abstraite
+		virtual void display() = 0;	//Pure virtuelle, fait de Case une classe abstraite
 		Location getCoord();
 		void setCoord(int,int);
 		string getType();

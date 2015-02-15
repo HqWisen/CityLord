@@ -9,6 +9,11 @@ Road::Road(int x, int y){
 	coord=Location(x, y);
 }
 
+Road::~Road(){
+	typeName = "";
+	path[4] = {false};
+}
+
 void Road::display(){
 	cout<<image;
 }
