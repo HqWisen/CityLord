@@ -4,13 +4,9 @@
 using namespace std;
 
 Road::Road(int x, int y){
+	typeName = "Road";
 	path[4] = {false};
 	coord=Location(x, y);
-}
-
-Road::~Road(){
-	path[4] = {false};
-	image="";
 }
 
 void Road::display(){

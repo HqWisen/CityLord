@@ -2,10 +2,11 @@
 #define BUILDING_HPP_
 
 #include <list>
+#include "Case.hpp"
 #include "Visitor.hpp"
 #include "BuildingType.hpp"
 
-class Building{
+class Building : public Case{
 	int maxcapacity;
 	int price;
 	int openTime;
@@ -20,7 +21,7 @@ class Building{
 	BuildingType type;
 	
 	public:
-		Building(BuildingType, int);
+		Building(int, int, BuildingType, int);
 		~Building();
 		void receiveVisitor(Visitor);
 		void deleteVisitor(Visitor);

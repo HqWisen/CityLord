@@ -9,3 +9,6 @@ void Case::setCoord(int x, int y){
 	coord.setX(x); coord.setY(y);
 }
 
+string Case::getType(){
+	return typeName;
+}

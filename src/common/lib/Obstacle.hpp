@@ -5,7 +5,7 @@
 
 class Obstacle: public Case{  // : public Case
 	public:
-		Obstacle() = default;
+		Obstacle(int, int);
 		void display();
 };
 
