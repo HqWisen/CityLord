@@ -61,8 +61,21 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                     mapMatrice[0][j/2] = new Road(0,j/2);
                 }
                 ((Road*) (mapMatrice[0][j/2]))->setPath(0, true);
+
             } 
-            for (int i=0; i<dimensionX; i++) {
+            temp_char = temp_string.at(2);
+            if (temp_char == 'B') {
+                mapMatrice[0][j/2] = new Obstacle(0,j/2);
+            }else if (temp_char == 'X') {
+                mapMatrice[0][j/2] = new Obstacle(0,j/2);
+            }else if (temp_char == 'P') {
+                mapMatrice[0][j/2] = new Obstacle(0,j/2);
+            }else {
+                if (mapMatrice[0][j/2] == nullptr) {
+                    mapMatrice[0][j/2] = new Road(0,j/2);
+                }
+            }
+            for (int i=1; i<dimensionX; i++) {
                 temp_char = temp_string.at((i*4));
                 if (temp_char == ' ') {
                     if (mapMatrice[i-1][j/2] == nullptr) {
