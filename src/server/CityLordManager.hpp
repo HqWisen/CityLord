@@ -19,19 +19,22 @@
 #include "../common/lib/Player.hpp"
 #include "../common/lib/Road.hpp"
 #include "../common/lib/User.hpp"
+#include "../common/template/SocketMessage.hpp"
 
 class CityLordManager{
-	Catalog _catalog;
-	Map _cityMap;
-	
+	Map _cityMap; 
+    Catalog _catalog;
+
 public:
-	CityLordManager();
-	void makePurchase(Player&, int, int); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées
-	void makeTrade(Player&, Player&, int , int);
-	void buildBuilding(Player&, int, int, std::string);
-	void destroyBuilding(Player&, int, int);
-	void upgradeBuilding(Player&, int, int);
-	void showCatalog();
+    CityLordManager(Map);
+    SocketMessage makePurchase(Player&, int, int); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées
+    SocketMessage makeTrade(Player&, Player&, int , int, int);
+    SocketMessage buildBuilding(Player&, int, int, std::string);
+    SocketMessage destroyBuilding(Player&, int, int);
+    SocketMessage upgradeBuilding(Player&, int, int);
+    std::string showCatalog();
+    std::string showCity();
 }
 
 #endif
+
