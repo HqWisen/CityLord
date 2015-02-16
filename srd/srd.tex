@@ -121,11 +121,13 @@ Il peut également s'il le souhaite, supprimer son bâtiment, ce qui réduira gr
  \item \textbf{Upgrade:}Action d'améliorer un bâtiment.
  \item \textbf{Log In:}se connecter.
  \item \textbf{Log Out:}se déconnecter.
+ \item \textbf{Débugger:} Action de chercher, trouver et retirer un bug d’un programme informatique.
 \end{itemize}
 
 \newpage
 \section{Historique du document}
 \begin{description}
+	\item[2.2] (16/02/15) : Modification du Use Case de "Log In", plus de utilisateur hôte mais un serveur \& modification des besoins non-fonctionels - David
 	\item[2.1] (13/02/15) : Modification du glossaire, enrichissement des pré et post condition. - David - Cédric
 	\item[2.0] (06/02/15) : Modification du But du projet, ajout au glossaire \& index +précondition "Construire"  - David
 	\item[1.8] (15/12/14) : Mise à jour des exigences de domaine - Cédric
@@ -147,7 +149,7 @@ Il peut également s'il le souhaite, supprimer son bâtiment, ce qui réduira gr
 \subsection{Interface de connexion}
 \begin{figure}[ht]
     \makebox[\linewidth]{
-        \includegraphics[width=550pt]{uml/useCaseDiagrams/loginUseCase.png}
+        \includegraphics[width=550pt]{uml/useCaseDiagrams/loginUseCase2.png}
     }
     \caption{Use Case Login/Logout}
 \end{figure}
@@ -230,7 +232,7 @@ Dans le cas où la partie est déjà comencé le joueur reçoit de l'argent.
  Host Game]. 
 \end{itemize}
 
-\subsubsection{Host game}
+\subsubsection{Create game}
 \paragraph{Obligations spéciales}
 \begin{itemize}
  \item Inclut Select Map.
@@ -241,15 +243,13 @@ Dans le cas où la partie est déjà comencé le joueur reçoit de l'argent.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
- \item L'utilisateur hôte et les utilisateurs clients sont dans une partie.
+ \item Une partie est ajoutée sur le serveur.
+ \item Au moins 2 joueurs participent.
 \end{itemize}
 \paragraph{Cas général}
-L'utilisateur hôte est capable de créer une partie en appuyant sur le bouton \og \textit{Host game} \fg du menu principal.
-Une fois créée, l'hôte peut choisir une carte. L'hôte peut également chatter avec les autres utilisateurs.
-L'hôte peut également afermer l'acceuil en appuyer sur le bouton \og \textit{Close lobby} \fg. Tous les clients
-présent dans l'acceuil est renvoyé à l'écran de selection, tandis que l'hôte est renvoyé dans le menu principal.
-Quand il y a assez de joueur - minimum 2 et maximum 8 hôte inclut - le bouton \og \textit{Start game} \fg s'active.
-Quand il est cliqué, chaque utilisateur présent dans l'acceuil est lancé dans la partie et reçoit de l'argent.
+L'utilisateur est capable de créer une partie en appuyant sur le bouton \og \textit{Create game} \fg dans le menu principal.
+Il choisit d'abords une Map et optionellement d'autres options; la partie est alors crée, mais n'est pas lancée tant qu'il n'y a pas au moins 2 joueurs qui participent.
+Quand il y a assez de joueur - minimum 2 et maximum 8 - le bouton \og \textit{Start game} \fg s'active. Quand il est cliqué, la partie démarre.
 \paragraph{Exceptions} Néant.
 
 \newpage
@@ -260,14 +260,14 @@ Quand il est cliqué, chaque utilisateur présent dans l'acceuil est lancé dans
 \end{itemize}
 \paragraph{Préconditions}
 \begin{itemize}
- \item L'hôte doit être dans un acceuil.
+ \item L'utilisateur doit être dans le menu de création de partie.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
  \item La carte choisie est chargée.
 \end{itemize}
 \paragraph{Cas général}
-L'utilisateur hôte peut choisir une carte dans une liste prédéfinie de carte. Quand tous les éléments pour démarrer la partie
+L'utilisateur peut choisir une carte dans une liste prédéfinie de carte. Quand tous les éléments pour démarrer la partie
 sont réunis [pour plus d'informations, voir Host Game], la carte est chargée.
 \paragraph{Exceptions} Néant.
 
@@ -346,7 +346,7 @@ Dès qu'un bâtiment n'as pas de prioritaire, le catalogue le met en vente libre
 \subsection{Construire-Améliorer-Détruire}
 \begin{figure}[ht]
     \makebox[\linewidth]{
-        \includegraphics[width=550pt]{uml/useCaseDiagrams/buildDestroyUseCase.png}
+        \includegraphics[width=550pt]{uml/useCaseDiagrams/buildDestroyUseCase2.png}
     }
     \caption{Use Case Buid/Upgrade/Destroy}
 \end{figure}
@@ -528,18 +528,28 @@ Lorsque un joueur reçoit une offre sur un bâtiment, une fenêtre s'affiche ave
 \newpage
 \section{Exigences non fonctionnelles}
 \subsection{Service}
-\paragraph{}
-Le système fournira en premier lieu, l’assurance de la fonctionnalité du programme, et ce, sans bug ni ruptures.
-\paragraph{}
-Les différents outils du programme accompliront exactement la tâche décrite et demandée.
-\paragraph{}
-De plus, ces dites tâches seront claires et ne laisseront pas place à une ambiguïté quelconque.
-Chaque outil du programme sera représenté par une image explicitant la fonction, et une explication claire sera accompagnée.
-\paragraph{}
+\paragraph{}Ergonomie:  \newline
 Le système sera esthétique et disposera donc d’une apparence conviviale, ludique, mais également professionnelle.
-Celle-ci se distinguera par la qualité des textures utilisées, ainsi que par leur justesse par rapport aux informations qu’elles représentent.
-\paragraph{}
-Enfin, le système jouira d’une utilisabilité et d’une ergonomie agréable.
+La map sera facilement compréhensible, chaque joueur aura sa couleur qui sera afficher sur sa propriété.
+
+L'utilisation sera simple et intuitif grâce à des icones, boutons et aides affichées, clairs et propres.
+
+\paragraph{}Aptitude à la maintenance:  \newline
+Le concept de programation orientée object étant suivit avec rigueur pour l'implementation du jeu, celui-ci sera facilement mis à jour et ou débugger.
+
+
+
+\paragraph{}Compatibilité:  \newline
+Le jeu est implémenté sur et pour un système d'exploitation Linux seulement.
+
+\paragraph{}Rétablissement:  \newline
+Dans le cas d'un crash ou d'arrêt de serveur, il faut faire en sorte que les joueurs puissent reprendre leur partie. Le serveur fera donc une sauvegarde automatique à chaque debut de journée(de la partie en cours, 7h du matin). Vu qu'une seule sauvegarde est nécessaire, la nouvelle remplacera la précédente.
+Si la partie se termine, la sauvegarde lié à celle-ci sera supprimée.
+Quand le serveur re-démarre, il verifie si une partie en cours a été interrompue; si oui, il relance la partie grâce à sa sauvegarde.
+
+\paragraph{}Disponibilité:  \newline
+Le jeu sera disponible 24h/24 7j/7, tant que le serveur tourne. Celui ne sera arrêté que brièvement lors de possible maintenance de débuggage et mise à jour.
+
 \subsection{Contraintes}
 \paragraph{}
 Afin de fonctionner correctement, et d’avoir une expérience de jeu optimale, le système devra être lancé sur un ordinateur possédant la configuration nécessaire.
@@ -547,6 +557,8 @@ En cas d’environnement peu performant, il est possible que des ralentissements
 \paragraph{}
 Il est également nécessaire que le système soit accompagné d’une connexion internet stable et rapide.
 Sans cela, la communication avec le serveur et entre les joueurs serait endommagée, et endommagerait la jouabilité de tous les joueurs.
+
+\newpage
 
 \section{Exigences de domaine}
 \begin{itemize}
