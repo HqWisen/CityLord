@@ -11,19 +11,18 @@ void CityLordClient::run(){
 }
 
 void CityLordClient::beginConnection(){
-	std::cout<<M_LOGIN<<" - Login"<<std::endl;
-	std::cout<<M_ACCOUNT<<" - Create an account"<<std::endl;
+	std::cout<<"1 - Login"<<std::endl;
+	std::cout<<"2 - Create an account"<<std::endl;
 	int choice = makeChoice(1, 2);
-	if(choice == M_LOGIN){
-		connectionSocket.writeInt(M_LOGIN);
-		nickname = login();
-	}else if(choice == M_ACCOUNT){
-		connectionSocket.writeInt(M_ACCOUNT);
-		nickname = createAccount();
+	if(choice == 1){
+		//login();
+	}else if(choice == 2){
+		createAccount();
 	}
-	LOG("Your are now connected to the server with nickname : "+nickname);
+	// TODO print username
+	LOG("Your are now connected to the server with username: ");
 }
-
+/*
 std::string CityLordClient::login(){
 	std::string nickname;
 	int fail = 1;
@@ -40,24 +39,27 @@ std::string CityLordClient::login(){
 	}
 	return nickname;	
 }
+*/
 
-std::string CityLordClient::createAccount(){
+void CityLordClient::createAccount(){
 	// TODO restriction du pseudo (nb max de char etc...)
 	int fail = 1;
-	std::string nickname;
-	LOG("To create an account enter your nickname.");
+	std::string username;
+	SocketMessage request(ACCOUNT_REQUEST);
+	SocketMessage answer;
+	LOG("To create an account enter your username.");
 	while(fail == 1){
-		std::cout<<"Nickname : ";
-		std::cin>>nickname;
-		connectionSocket.write(nickname);
-		fail = connectionSocket.readInt();
-		if(fail == 1){
-			LOG("Creation failed : this nickname is already used.");
-			LOG("Please enter another one.");
-		}
+		std::cout<<"Username : ";
+		std::cin>>username;
+		request.set("username", username);
+		sendRequest(request);
+		/*recvAnswer(answer);
+		if(answer.getTopic() == FAILURE_TOPIC){
+			LOG(answer.get("reason"));
+		}*/
+		fail = 0;
 	}
 	LOG("Please save it to keep your account !");
-	return nickname;
 }
 
 int CityLordClient::makeChoice(int min, int max){
@@ -71,6 +73,14 @@ int CityLordClient::makeChoice(int min, int max){
 	}
 	return choice;
 } 
+
+void CityLordClient::sendRequest(SocketMessage message){
+	connectionSocket.write(message.toString());
+}
+void CityLordClient::recvAnswer(SocketMessage& answer){
+	answer = SocketMessage::parse(connectionSocket.read());
+}
+
 
 void CityLordClient::LOG(std::string info){
 	time_t now = time(0);

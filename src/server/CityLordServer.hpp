@@ -6,12 +6,11 @@
 #include <map>
 #include <time.h>
 
-#include "../common/lib/common.h"
 #include "../common/socket/ServerSocket.hpp"
 #include "../common/socket/ClientSocket.hpp"
 #include "../common/lib/User.hpp"
+#include "../common/template/SocketMessage.hpp"
 #include "UserThread.hpp"
-
 
 #define SERVERNAME "CityLordServer"
 

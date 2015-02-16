@@ -48,3 +48,4 @@ void CityLordManager::makePurchase(Player& player1, int coordX, int coordY){
 void showCatalog(){
 	//Envoie un message avec le statut du catalogue
 }
+

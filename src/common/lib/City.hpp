@@ -2,7 +2,7 @@
 #define CITY_HPP_
 
 #include <string>
-#include <time>
+#include <time.h>
 
 class City{
 	
