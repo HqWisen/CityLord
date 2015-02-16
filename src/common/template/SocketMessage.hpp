@@ -17,6 +17,7 @@
 #define QUIT_REQUEST "quit"
 
 #define FAILURE_TOPIC "failure"
+#define SUCCESS_TOPIC "success"
 
 class SocketMessage{
 	std::string topic;

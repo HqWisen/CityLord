@@ -6,7 +6,7 @@ CityLordServer::CityLordServer(int port) : serverSocket(port){}
 void CityLordServer::run(){
 	
 	ClientSocket* clientSocketPtr;	
-	UserThread* thread;
+	UserManager* userManager;
 	
 	LOG("Server is running...");
 	serverSocket.listenClients();
@@ -14,8 +14,7 @@ void CityLordServer::run(){
 		clientSocketPtr = serverSocket.acceptClient();
 		LOG("A client with IP " + clientSocketPtr->getClientIP() + " is connected to " + SERVERNAME);
 		// TODO désalloué quand un client se deconnecte
-		thread = new UserThread(this, *clientSocketPtr);
-		thread->start();
+		userManager = new UserManager(this, *clientSocketPtr);
 	}
 }
 
