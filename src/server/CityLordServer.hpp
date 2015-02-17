@@ -8,15 +8,15 @@
 
 #include "../common/socket/ServerSocket.hpp"
 #include "../common/socket/ClientSocket.hpp"
-#include "../common/lib/User.hpp"
-#include "../common/template/SocketMessage.hpp"
-#include "UserThread.hpp"
+#include "UserManager.hpp"
 
 #define SERVERNAME "CityLordServer"
 
+class UserManager;
+
 class CityLordServer{
 	ServerSocket serverSocket;
-	std::map<std::string, User> userMap;
+	std::map<std::string, UserManager*> userMap;
 	//std::map<std::string, UserThread> threadMap;
 	//std::list<City> cityList;
 	//std::list<User> userList;

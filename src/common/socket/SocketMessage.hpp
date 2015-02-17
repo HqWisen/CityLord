@@ -10,20 +10,12 @@
 #define KEYSEP ":"
 #define VALUESEP ";"
 
-/* Topics */
-
-#define LOGIN_REQUEST "login"
-#define ACCOUNT_REQUEST "account"
-#define QUIT_REQUEST "quit"
-
-#define FAILURE_TOPIC "failure"
-#define SUCCESS_TOPIC "success"
-
 class SocketMessage{
 	std::string topic;
 	std::map<std::string, std::string> data;
 	public:
 		SocketMessage() = default;
+		SocketMessage(const SocketMessage&) = default;
 		SocketMessage(std::string);
 		void setTopic(std::string);
 		std::string getTopic();

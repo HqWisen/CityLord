@@ -1,8 +1,8 @@
 #include "CityLordManager.hpp"
 
 CityLordManager::CityLordManager(){
-	/*_catalog = Catalog();
-	_cityMap = Map();*/
+	_catalog = Catalog();
+	_cityMap = Map();
 }
 
 SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coordY, BuildingType buildingType){
@@ -13,7 +13,7 @@ SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coo
 	//			Si non, un message est envoyé
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
-	/*SocketMessage message = SocketMessage();
+	SocketMessage message = SocketMessage();
 	Case* concernedCase = _cityMap.getCase(coordX, coordY);
 	if(concernedCase.getOwner() == player){
 		if(!concernedCase.hasBuilding()){
@@ -35,7 +35,7 @@ SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coo
 		message.setTopic(TOPIC_FAILURE);
 		message.set("reason", "You do not own this field!");
 	}
-	return message;*/
+	return message;
 }
 
 SocketMessage CityLordManager::upgradeBuilding(Player& player, int coordX, int coordY){
@@ -46,7 +46,7 @@ SocketMessage CityLordManager::upgradeBuilding(Player& player, int coordX, int c
 	//			Si non, un message est envoyé
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
-	/*SocketMessage message = SocketMessage();
+	SocketMessage message = SocketMessage();
 	Case* concernedCase = _cityMap.getCase(coordX, coordY);
 	if(concernedCase.getOwner() == player){
 		if(concernedCase.hasBuilding()){
@@ -68,7 +68,7 @@ SocketMessage CityLordManager::upgradeBuilding(Player& player, int coordX, int c
 		message.setTopic(TOPIC_FAILURE);
 		message.set("reason", "You do not own this field!");
 	}
-	return message;*/
+	return message;
 }
 
 SocketMessage CityLordManager::destroyBuilding(Player& player, int coordX, int coordY){
@@ -77,7 +77,7 @@ SocketMessage CityLordManager::destroyBuilding(Player& player, int coordX, int c
 	//		Si oui, le building est amélioré et un message est envoyé
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
-	/*SocketMessage message = SocketMessage();
+	SocketMessage message = SocketMessage();
 	Case* concernedCase = _cityMap.getCase(coordX, coordY);
 	if(concernedCase.getOwner() == player){
 		if(concernedCase.hasBuilding()){
@@ -99,14 +99,14 @@ SocketMessage CityLordManager::destroyBuilding(Player& player, int coordX, int c
 		message.setTopic(TOPIC_FAILURE);
 		message.set("reason", "You do not own this field!");
 	}
-	return message;*/
+	return message;
 }
 
 SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, int coordX, int coordY, int offeredMoney){
 	//Regarde si le joueur 1 a assez d'argent
 	//	Si oui, l'échange est effectué et des messages sont envoyés
 	//	Si non, un message est envoyé au joueur 1
-	/*SocketMessage message = SocketMessage();
+	SocketMessage message = SocketMessage();
 	Case* concernedCase = _cityMap.getCase(coordX, coordY);
 	if(concernedCase.getOwner() == player2){
 		if(player1.getMoney() >= offeredMoney){
@@ -123,14 +123,14 @@ SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, int c
 		message.setTopic(TOPIC_FAILURE);
 		message.set("reason", "The offering player does not have this case!");
 	}
-	return message;*/	
+	return message;*
 }
 
 SocketMessage CityLordManager::makePurchase(Player& player, int coordX, int coordY){
 	//Regarde si le joueur 1 a assez d'argent
 	// Si oui, le cataloque est mis a jour, le joueur obtient la parcelle et un message est envoyé
 	// Si non, un message est envoyé
-	/*SocketMessage message = SocketMessage();
+	SocketMessage message = SocketMessage();
 	Case* concernedCase = _cityMap.getCase(coordX, coordY);
 	if(_catalog.isOnMarket(concernedCase)){
 		if(player.getMoney() >= concernedCase.getPrice());
@@ -146,7 +146,7 @@ SocketMessage CityLordManager::makePurchase(Player& player, int coordX, int coor
 		message.setTopic(TOPIC_FAILURE);
 		message.set("reason", "Field is not on the catalog, therefore it was purchased by someone else (might be you =P)");
 	}
-	return message;*/
+	return message;
 }
 
 std::string showCatalog(){
@@ -158,3 +158,4 @@ std::string showCity(){
 	//Envoie la carte de la ville gérée par ce manager
 	//return _cityMap.display();
 }
+

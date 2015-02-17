@@ -6,7 +6,7 @@
 #include <time.h>
 
 #include "../common/socket/ConnectionSocket.hpp"
-#include "../common/template/SocketMessage.hpp"
+#include "../common/socket/SocketMessage.hpp"
 
 
 #define CLIENTNAME "CityLord"

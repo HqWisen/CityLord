@@ -8,6 +8,7 @@ class Thread{
 	public:
 		Thread() = default;
 		void start();
+		virtual ~Thread() = default;
 		//void* join();
 		virtual void run() = 0;
 		

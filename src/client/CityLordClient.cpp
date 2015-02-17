@@ -4,9 +4,12 @@
 CityLordClient::CityLordClient(char* hostname, int port) : connectionSocket(hostname, port){}
 
 void CityLordClient::run(){
+	SocketMessage quitRequest("quit");
 	connectionSocket.connectHost();
 	LOG("You are now connected to the server.");
 	beginConnection();
+	sendRequest(quitRequest);
+	
 
 }
 
@@ -15,49 +18,47 @@ void CityLordClient::beginConnection(){
 	std::cout<<"2 - Create an account"<<std::endl;
 	int choice = makeChoice(1, 2);
 	if(choice == 1){
-		//login();
+		login();
 	}else if(choice == 2){
 		createAccount();
 	}
 	// TODO print username
-	LOG("Your are now connected to the server with username: ");
 }
-/*
-std::string CityLordClient::login(){
-	std::string nickname;
-	int fail = 1;
-	LOG("Enter your account nickname to log in.");
-	while(fail == 1){
-		std::cout<<"Nickname : ";
-		std::cin>>nickname;
-		connectionSocket.write(nickname);
-		fail = connectionSocket.readInt();
-		if(fail == 1){
-			LOG("Login failed : this nickname doesn't exist.");
-			LOG("Please enter another one.");
-		}
-	}
-	return nickname;	
-}
-*/
 
-void CityLordClient::createAccount(){
-	// TODO restriction du pseudo (nb max de char etc...)
-	int fail = 1;
+void CityLordClient::login(){
+	bool fail = true;
 	std::string username;
-	SocketMessage request(ACCOUNT_REQUEST);
-	SocketMessage answer;
-	LOG("To create an account enter your username.");
-	while(fail == 1){
+	SocketMessage request("login"), answer;
+	LOG("Enter your account nickname to log in.");
+	while(fail){
 		std::cout<<"Username : ";
 		std::cin>>username;
 		request.set("username", username);
 		sendRequest(request);
-		/*recvAnswer(answer);
-		if(answer.getTopic() == FAILURE_TOPIC){
+		recvAnswer(answer);
+		fail = (answer.getTopic() == "failure");
+		if(fail){
 			LOG(answer.get("reason"));
-		}*/
-		fail = 0;
+		}
+	}
+}
+
+void CityLordClient::createAccount(){
+	// TODO restriction du pseudo (nb max de char etc...)
+	bool fail = true;
+	std::string username;
+	SocketMessage request("createaccount"), answer;
+	LOG("To create an account enter your username.");
+	while(fail){
+		std::cout<<"Username : ";
+		std::cin>>username;
+		request.set("username", username);
+		sendRequest(request);
+		recvAnswer(answer);
+		fail = (answer.getTopic() == "failure");
+		if (fail){
+			LOG(answer.get("reason"));
+		}
 	}
 	LOG("Please save it to keep your account !");
 }

@@ -3,14 +3,14 @@
 
 # -- client
 CLIENT = citylord
-DEPC = client socket template
+DEPC = client socket
 
 # -- server
 SERVER = citylordserver
-DEPS = server request socket thread template
+DEPS = server request socket thread
 # -- test
 TEST = testexe
-DEPT = test template
+DEPT = test socket
 # -- 
 
 # -- Do not edit below this line --
@@ -41,14 +41,14 @@ $(BIN_DIR)/socket.a:
 	$(MAKE) -C common/socket
 $(BIN_DIR)/thread.a:	
 	$(MAKE) -C common/thread
-$(BIN_DIR)/template.a:	
-	$(MAKE) -C common/template
 $(BIN_DIR)/lib.a:	
 	$(MAKE) -C common/lib
 $(BIN_DIR)/client.a:
 	$(MAKE) -C client
 $(BIN_DIR)/server.a:
 	$(MAKE) -C server
+$(BIN_DIR)/request.a:
+	$(MAKE) -C server/request
 $(BIN_DIR)/test.a:
 	$(MAKE) -C test
 cleanexe:

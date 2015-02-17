@@ -2,17 +2,19 @@
 #define USERTHREAD_HPP_
 
 #include "../common/thread/Thread.hpp"
-#include "request/request.hpp"
+//#include "request/request.hpp"
+//#include "../common/socket/SocketMessage.hpp"
+#include "UserManager.hpp"
 
 #include <iostream>
 #include <map>
 
 class UserManager;
 
-typedef void (* request_ptr)(SocketMessage *, CityLordServer *);
+//typedef void (* request_ptr)(SocketMessage *, CityLordServer *);
 
 class UserThread : public Thread{
-	static const std::map<std::string, request_ptr> requestMap;
+	//static const std::map<std::string, request_ptr> requestMap;
 	UserManager* userManager;
 	public:
 		UserThread(UserManager*);

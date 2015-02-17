@@ -1,17 +1,18 @@
 #include "UserThread.hpp"
-
-const std::map<std::string, std::request_ptr> UserThread::requestMap = {
+/*
+const std::map<std::string, request_ptr> UserThread::requestMap = {
 	{"login", request::login}
 };
-
-UserThread(UserManager* userManager_) : userManager(userManager_){};
+*/
+UserThread::UserThread(UserManager* userManager_) : userManager(userManager_){};
 
 
 void UserThread::run(){
-	SocketMessage request;
+	/*SocketMessage request;
 	//while(request.getTopic() != QUIT_REQUEST){
-		userManager->recvRequest(request);
-		std::cout<<request.toString()<<std::endl;
+		userManager->recvRequest(request);*/
+		std::cout<<"request.toStrilkmjmljkng()"<<std::endl;
+		//userManager->test();
 	//}
 }
 

@@ -6,7 +6,6 @@ CityLordServer::CityLordServer(int port) : serverSocket(port){}
 void CityLordServer::run(){
 	
 	ClientSocket* clientSocketPtr;	
-	UserManager* userManager;
 	
 	LOG("Server is running...");
 	serverSocket.listenClients();
@@ -14,14 +13,13 @@ void CityLordServer::run(){
 		clientSocketPtr = serverSocket.acceptClient();
 		LOG("A client with IP " + clientSocketPtr->getClientIP() + " is connected to " + SERVERNAME);
 		// TODO désalloué quand un client se deconnecte
-		userManager = new UserManager(this, *clientSocketPtr);
+		new UserManager(this, *clientSocketPtr);
 	}
 }
 
 void CityLordServer::createAccount(std::string nickname){
 	if(!accountExist(nickname)){
-		User user;
-		userMap[nickname] = user;
+		userMap[nickname] = NULL;
 	}else{
 		// TODO throw exception
 	}
