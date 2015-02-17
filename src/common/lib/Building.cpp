@@ -3,8 +3,7 @@
 
 using namespace std;
 
-Building::Building(int x, int y, BuildingType building, int player){
-	coord = Location(x,y);
+Building::Building(int x, int y, BuildingType type_, int player) : type(type_){
 	/*
 	owner = player;
 	type = building;
