@@ -12,7 +12,9 @@ class CityLordServer;
 
 namespace request{
 	SocketMessage login(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage createAccount(CityLordServer*, UserManager*, SocketMessage);
+	SocketMessage createaccount(CityLordServer*, UserManager*, SocketMessage);
+	SocketMessage choicemap(CityLordServer*, UserManager*, SocketMessage);
+	SocketMessage createcity(CityLordServer*, UserManager*, SocketMessage);
 }
 
 #endif // REQUEST_HPP_

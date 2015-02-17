@@ -3,14 +3,14 @@
 
 # -- client
 CLIENT = citylord
-DEPC = client socket
+DEPC = client socket lib
 
 # -- server
 SERVER = citylordserver
-DEPS = server request socket thread
+DEPS = server request socket thread lib
 # -- test
 TEST = testexe
-DEPT = test socket
+DEPT = test socket lib
 # -- 
 
 # -- Do not edit below this line --

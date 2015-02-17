@@ -35,6 +35,10 @@ std::string SocketMessage::toString(){
 	return result;
 }
 
+std::map<std::string, std::string> SocketMessage::getMap(){
+	return data;
+}
+
 SocketMessage SocketMessage::parse(std::string source){
 	size_t index;
 	SocketMessage socketMessage;
@@ -53,4 +57,5 @@ SocketMessage SocketMessage::parse(std::string source){
 	}
 	return socketMessage;
 }
+
 

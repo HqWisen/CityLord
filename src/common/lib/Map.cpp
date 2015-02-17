@@ -13,7 +13,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
     string temp_string;
     ifstream file (nomDeLaCarte);
     getline(file, temp_string);
-	dimensionX = atoi(temp_string.c_str());
+		dimensionX = atoi(temp_string.c_str());
     getline(file, temp_string);
     dimensionY = atoi(temp_string.c_str());
     //initialise la matrice
@@ -152,6 +152,7 @@ void Map::display(){
 }
 
 Map::~Map(){
+    // TODO Pas de delete ??????
     for (int i=0; i<dimensionX; i++) {
         for (int j=0; j<dimensionY; j++) {
             mapMatrice[i][j] = nullptr;

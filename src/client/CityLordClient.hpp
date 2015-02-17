@@ -19,8 +19,11 @@ class CityLordClient{
 		CityLordClient(const CityLordClient&) = default;
 		void run();
 		void beginConnection();
-		void login();
+		void chooseCity();
 		void createAccount();
+		void login();
+		void createCity();
+		void joinCity();
 		int makeChoice(int min = 1, int max = 1);
 		void sendRequest(SocketMessage);
 		void recvAnswer(SocketMessage&);

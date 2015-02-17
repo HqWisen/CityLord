@@ -12,7 +12,7 @@ Field::Field(Location coords){
 	//coord.setY(coords.getY());
 	price=200; //default price ?
 }
-
+/*
 void Field::display(){
 	string color;
 	if(this->asOwner()){
@@ -32,7 +32,7 @@ void Field::display(){
 void Field::buildBuilding(Building build){
 	this->building = &build;
 }
-
+*/
 
 //----getters & setters----
 void Field::setPrice(int amount){price=amount;}

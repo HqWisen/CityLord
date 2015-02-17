@@ -1,10 +1,12 @@
-#include "CityLordManager.hpp"
+#include "CityManager.hpp"
 
-CityLordManager::CityLordManager(){
-	_catalog = Catalog();
-	_cityMap = Map();
+
+CityManager::CityManager(std::string mapname) : cityMap(mapname){
+	std::cout<<"CityManager created with MapName "<<mapname<<std::endl;
+	cityMap.display();
+	//_catalog = Catalog();
 }
-
+/*
 SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coordY, BuildingType buildingType){
 	//Regarde si le joueur est le propriétaire de la parcelle:
 	//	Si oui, regarde si la parcelle est vide
@@ -158,4 +160,4 @@ std::string showCity(){
 	//Envoie la carte de la ville gérée par ce manager
 	//return _cityMap.display();
 }
-
+*/

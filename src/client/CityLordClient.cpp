@@ -1,26 +1,62 @@
 #include "CityLordClient.hpp"
 
-
 CityLordClient::CityLordClient(char* hostname, int port) : connectionSocket(hostname, port){}
 
 void CityLordClient::run(){
 	SocketMessage quitRequest("quit");
 	connectionSocket.connectHost();
-	LOG("You are now connected to the server.");
+	LOG("Welcome in CityLord !");
 	beginConnection();
+	chooseCity();
 	sendRequest(quitRequest);
 	
 
 }
 
-void CityLordClient::beginConnection(){
-	std::cout<<"1 - Login"<<std::endl;
-	std::cout<<"2 - Create an account"<<std::endl;
+void CityLordClient::chooseCity(){
+	LOG("Choose your city");
+	std::cout<<"1 - Create a city"<<std::endl;
+	std::cout<<"2 - Join a city"<<std::endl;
 	int choice = makeChoice(1, 2);
 	if(choice == 1){
-		login();
+		createCity();
 	}else if(choice == 2){
+		joinCity();
+	}
+}
+
+void CityLordClient::createCity(){
+	SocketMessage request, answer;
+	request.setTopic("choicemap");
+	sendRequest(request);
+	recvAnswer(answer);
+	std::map<std::string, std::string> map = answer.getMap();
+	int i = 0;
+	LOG("Choose a map for the city");
+	for(std::map<std::string, std::string>::iterator iterator = map.begin(); iterator != map.end(); iterator++) {
+		i++;
+		std::cout<<i<<" - "<<iterator->second<<std::endl;
+	}
+	int choice = makeChoice(1, i);
+	request.setTopic("createcity");
+	request.set("number", std::to_string(choice));
+	sendRequest(request);
+	recvAnswer(answer);
+}
+
+void CityLordClient::joinCity(){
+	
+}
+
+void CityLordClient::beginConnection(){
+	LOG("Connect you to the server");
+	std::cout<<"1 - Create an account"<<std::endl;
+	std::cout<<"2 - Login"<<std::endl;
+	int choice = makeChoice(1, 2);
+	if(choice == 1){
 		createAccount();
+	}else if(choice == 2){
+		login();
 	}
 	// TODO print username
 }

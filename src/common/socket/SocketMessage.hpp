@@ -14,7 +14,7 @@ class SocketMessage{
 	std::string topic;
 	std::map<std::string, std::string> data;
 	public:
-		SocketMessage() = default;
+		SocketMessage() : topic("none"){};
 		SocketMessage(const SocketMessage&) = default;
 		SocketMessage(std::string);
 		void setTopic(std::string);
@@ -22,7 +22,9 @@ class SocketMessage{
 		void set(std::string, std::string);
 		std::string get(std::string);
 		std::string toString();
+		std::map<std::string, std::string> getMap();
 		static SocketMessage parse(std::string);
+		
 };
 
 #endif // SOCKET_MESSAGE_HPP_

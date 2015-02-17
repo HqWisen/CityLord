@@ -31,8 +31,8 @@ class Map{
 	Case*** mapMatrice;
 public:
 	Map(string nomDeLaCarte); // metrre un fichier txt en paramètre
-	~Map();
 	void display();
+	~Map();
 	Case* getCase(int,int);
 };
 

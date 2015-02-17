@@ -3,9 +3,7 @@
 #include <sstream>
 
 #include "Player.hpp"
-
-using namespace std;
-
+/*
 Player::Player(string name,int nbr){
 	userName=name;
 	number=nbr;
@@ -22,5 +20,5 @@ Player::Player(string name,int nbr){
 	//  \033[1;40m   dark grey   \033[1;47m  white  
 
 }
-
-bool Player::isBankrupt(){return money<0;}
+*/
+//bool Player::isBankrupt(){return money<0;}

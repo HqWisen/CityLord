@@ -15,7 +15,7 @@ namespace request{
 		return answer;
 	}
 
-	SocketMessage createAccount(CityLordServer* server, UserManager* userManager, SocketMessage message){
+	SocketMessage createaccount(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
 		if(!server->accountExist(message.get("username"))){
 			server->createAccount(message.get("username"));
@@ -27,4 +27,20 @@ namespace request{
 		}
 		return answer;		
 	}
+	SocketMessage choicemap(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		int i = 0;
+		for (std::vector<std::string>::const_iterator it = CityLordServer::getMapNameVector().begin(); it != CityLordServer::getMapNameVector().end(); it++){
+			answer.set(std::to_string(i), *it);
+			i++;
+		}
+		return answer;		
+	}
+	SocketMessage createcity(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		int number = std::stoi(message.get("number")) - 1;
+		server->createCity(number);
+		return answer;		
+	}
 }
+
