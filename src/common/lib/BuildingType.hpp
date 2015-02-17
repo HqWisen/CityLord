@@ -3,21 +3,34 @@
 
 #include <string>
 
+using namespace std;
+
 class BuildingType{
 public:
-	std::string name;
+	static const BuildingType BAR;
+	static const BuildingType NIGHT_CLUB;
+	static const BuildingType SHOP;
+	static const BuildingType MUSEUM;
+
+	std::string buildingName;
 	int constructionCost;
 	int destructionCost;
-	int capacity;
+	int maxCapacity;
 	int dailyCost;
 	int attractiveness;
+	int stayTime;
 	int openTime;
 	int closeTime;
 	int income;
 	int price;
 	int upgradeCost;
-	BuildingType(){};
+	BuildingType(string ,\
+				int, int, int, int,
+				int, int, int, int,
+				int, int, int\
+				);
 };
+
 
 /*extern BuildingType BAR;
 	BAR.name = "BAR";
@@ -26,6 +39,7 @@ public:
 	BAR.capacity;
 	BAR.dailyCost;
 	BAR.attractiveness;
+	BAR.stayTime = 3 heures;
 	BAR.openTime;
 	BAR.closeTime;
 	BAR.income;
