@@ -24,10 +24,14 @@
 #include "../common/lib/Map.hpp"
 
 class CityManager{
+	std::string mapname;
 	Map cityMap; 
+	int number;
 	//Catalog _catalog;
 	public:
-		CityManager(std::string);
+		CityManager(std::string, int);
+		std::string getMapName();
+		int getNumber();
 	/*CityLordManager(Map);
 	SocketMessage makePurchase(Player&, int, int); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées
 	SocketMessage makeTrade(Player&, Player&, int , int, int);

@@ -42,10 +42,16 @@ void CityLordClient::createCity(){
 	request.set("number", std::to_string(choice));
 	sendRequest(request);
 	recvAnswer(answer);
+	if(answer.getTopic() == "success"){
+		LOG("The server created a new city with the map "+map[std::to_string(choice)]);
+		LOG("You've joined the city n°"+answer.get("citynumber"));
+	}else{
+		// TODO handle creation failure
+	}
 }
 
 void CityLordClient::joinCity(){
-	
+	std::cout<<"NOT IMPLEMENTED YET"<<std::endl;
 }
 
 void CityLordClient::beginConnection(){

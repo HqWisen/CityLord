@@ -109,6 +109,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
 }
 
 void Map::display(){
+
     for (int j=0; j<((dimensionY*2)+1); j++) { //prints labyrinth in output files
         if (j == (dimensionY*2)) {
             for (int i=0; i<dimensionX; i++) {

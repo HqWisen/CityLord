@@ -1,11 +1,18 @@
 #include "CityManager.hpp"
 
 
-CityManager::CityManager(std::string mapname) : cityMap(mapname){
-	std::cout<<"CityManager created with MapName "<<mapname<<std::endl;
-	cityMap.display();
+CityManager::CityManager(std::string mapname_, int number_) : mapname(mapname_), cityMap(mapname_), number(number_){
 	//_catalog = Catalog();
 }
+
+std::string CityManager::getMapName(){
+	return mapname;
+}
+
+int CityManager::getNumber(){
+	return number;
+}
+
 /*
 SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coordY, BuildingType buildingType){
 	//Regarde si le joueur est le propriétaire de la parcelle:

@@ -15,6 +15,9 @@
 
 #define SERVERNAME "CityLordServer"
 
+// Relative path of the executable
+#define MAPFILEPATH "resources/maps/"
+
 class CityLordServer{
 	ServerSocket serverSocket;
 	std::map<std::string, User> userMap;
@@ -27,9 +30,10 @@ class CityLordServer{
 		CityLordServer(int port);
 		CityLordServer(const CityLordServer&) = default;
 		void run();
-		void createAccount(std::string);
-		void createCity(int);
+		User* createAccount(std::string);
+		CityManager* createCity(int);
 		bool accountExist(std::string);
+		User* getUser(std::string);
 
 		//void login();
 		//void logout();

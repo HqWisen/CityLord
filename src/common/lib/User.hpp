@@ -12,7 +12,10 @@ class User{
 	std::string username;
 	std::map<CityManager*, Player> playerMap;
 	public:
+		User() = default;
+		User(const User&) = default;
 		User(std::string);
+		std::string getUserName();
 };
 
 #endif // USER_HPP_

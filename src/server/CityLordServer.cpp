@@ -2,8 +2,7 @@
 
 const std::vector<std::string> CityLordServer::mapNameVector = {
 	"Map1.txt",
-	"Map2.txt",
-	"Map3.txt"
+	"Map2.txt"
 };
 
 CityLordServer::CityLordServer(int port) : serverSocket(port){}
@@ -22,21 +21,30 @@ void CityLordServer::run(){
 	}
 }
 
-void CityLordServer::createAccount(std::string username){
+User* CityLordServer::createAccount(std::string username){
 	if(!accountExist(username)){
 		// TODO delete in destructor
 		userMap.insert(std::map< std::string, User>::value_type(username, User(username)));
 	}else{
 		// TODO throw exception
 	}
+	return &(userMap[username]);
 }
 
-void CityLordServer::createCity(int number){
-	cityManagerVector.push_back(CityManager(mapNameVector[number]));
+CityManager* CityLordServer::createCity(int number){
+	// TODO Accès concurentielle
+	std::string path(MAPFILEPATH);
+	path += mapNameVector[number];
+	cityManagerVector.push_back(CityManager(path, cityManagerVector.size() + 1));
+	return &cityManagerVector.back();
 }
 
 bool CityLordServer::accountExist(std::string username){
 	return userMap.find(username) != userMap.end();
+}
+
+User* CityLordServer::getUser(std::string username){
+	return &(userMap[username]);
 }
 
 void CityLordServer::LOG(std::string info){
