@@ -29,6 +29,7 @@ namespace request{
 		}
 		return answer;		
 	}
+
 	SocketMessage choicemap(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
 		int i = 0;
@@ -38,6 +39,7 @@ namespace request{
 		}
 		return answer;		
 	}
+
 	SocketMessage createcity(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
 		int number = std::stoi(message.get("number")) - 1;
@@ -59,6 +61,7 @@ namespace request{
 		}
 		return answer;		
 	}
+
 	SocketMessage joincity(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
 		int number = std::stoi(message.get("number")) - 1;
@@ -70,5 +73,37 @@ namespace request{
 		// TODO send failure if cannot join the city
 		return answer;
 	}
+
+	SocketMessage showmap(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		CityManager* cityManager = userManager->getActiveCity();
+		//answer.set("map", cityManager->getMap().getMapString());
+		answer.set("map", "NOT IMPLEMENTED");
+		return answer;
+	}
+
+	SocketMessage selectfield(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		int x = std::stoi(message.get("x"));
+		int y = std::stoi(message.get("y"));
+	}
+
+	SocketMessage build(CityLordServer* server, UserManager* userManager, SocketMessage message){
+
+	}
+
+	SocketMessage viewcatalog(CityLordServer* server, UserManager* userManager, SocketMessage message){
+
+	}
+
+	SocketMessage showinfo(CityLordServer* server, UserManager* userManager, SocketMessage message){
+
+	}
+
+	SocketMessage showinfoothersplayers(CityLordServer* server, UserManager* userManager, SocketMessage message){
+
+	}
+
+
+
 }
 

@@ -28,6 +28,12 @@ class CityLordClient{
 		void sendRequest(SocketMessage);
 		void recvAnswer(SocketMessage&);
 		void LOG(std::string);
+		void showMap();
+		//void selectField();
+		//void build();
+		//void showCatalog();
+		//void showInfo();
+		//void showInfoOthersPlayers();
 };
 
 #endif // CITYLORDCLIENT_HPP_

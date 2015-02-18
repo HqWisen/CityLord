@@ -13,6 +13,10 @@ int CityManager::getNumber(){
 	return number;
 }
 
+Map& CityManager::getMap(){
+	return cityMap;
+}
+
 /*
 SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coordY, BuildingType buildingType){
 	//Regarde si le joueur est le propriétaire de la parcelle:
