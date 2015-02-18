@@ -32,6 +32,7 @@ class UserManager : public Thread{
 		void setUser(User*);
 		void setActiveCity(CityManager*);
 		void run() override;
+		CityManager* getActiveCity(){return cityManager;};
 };
 
 #endif // USERMANAGER_HPP_

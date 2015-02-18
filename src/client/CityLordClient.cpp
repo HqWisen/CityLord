@@ -10,7 +10,9 @@ void CityLordClient::run(){
 	chooseCity();
 	bool disconnected = false;
 	while(! disconnected){
-		std::cout<<"1 - Show map"<<std::endl
+		std::cout<<"----------------------------------------"<<std::endl;
+		LOG("Choose an action");
+		std::cout<<"1 - Show map"<<std::endl;
 		std::cout<<"2 - Select field"<<std::endl;
 		std::cout<<"3 - Build"<<std::endl;
 		std::cout<<"4 - Show catalog"<<std::endl;
@@ -22,19 +24,19 @@ void CityLordClient::run(){
 		if(choice == 1){
 			showMap();
 		}else if(choice == 2){
-			selectField();
+			//selectField();
 		}
 		else if(choice == 3){
-			build();
+			//build();
 		}
 		else if(choice == 4){
-			showCatalog();
+			//showCatalog();
 		}
 		else if(choice == 5){
-			showInfo();
+			//showInfo();
 		}
 		else if(choice == 6){
-			showInfoOthersPlayers();
+			//showInfoOthersPlayers();
 		}
 		else if(choice == 7){
 			disconnected= true;
@@ -189,3 +191,15 @@ void CityLordClient::LOG(std::string info){
 	std::cout<<info;
 	std::cout<<std::endl;
 }
+void CityLordClient::showMap(){
+	SocketMessage request("showmap");
+	SocketMessage answer;
+	sendRequest(request);
+	recvAnswer(answer);
+	std::string mapString = answer.get("map");
+	std::cout<<mapString<<std::endl;
+	//Map map = Map::parseMap(mapString);
+	//map.display();
+}
+
+//void CityLordClient::

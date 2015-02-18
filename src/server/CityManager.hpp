@@ -32,6 +32,7 @@ class CityManager{
 		CityManager(std::string, int);
 		std::string getMapName();
 		int getNumber();
+		Map& getMap();
 	/*CityLordManager(Map);
 	SocketMessage makePurchase(Player&, int, int); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées
 	SocketMessage makeTrade(Player&, Player&, int , int, int);

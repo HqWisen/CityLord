@@ -75,7 +75,11 @@ namespace request{
 	}
 
 	SocketMessage showmap(CityLordServer* server, UserManager* userManager, SocketMessage message){
-		
+		SocketMessage answer;
+		CityManager* cityManager = userManager->getActiveCity();
+		//answer.set("map", cityManager->getMap().getMapString());
+		answer.set("map", "NOT IMPLEMENTED");
+		return answer;
 	}
 
 	SocketMessage selectfield(CityLordServer* server, UserManager* userManager, SocketMessage message){
