@@ -8,6 +8,7 @@ void CityLordClient::run(){
 	LOG("Welcome in CityLord !");
 	beginConnection();
 	chooseCity();
+	//while
 	sendRequest(quitRequest);
 	
 
