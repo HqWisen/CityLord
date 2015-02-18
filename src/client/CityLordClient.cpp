@@ -8,11 +8,41 @@ void CityLordClient::run(){
 	LOG("Welcome in CityLord !");
 	beginConnection();
 	chooseCity();
-	//while
-	sendRequest(quitRequest);
-	
+	bool disconnected = false;
+	while(! disconnected){
+		std::cout<<"1 - Show map"<<std::endl
+		std::cout<<"2 - Select field"<<std::endl;
+		std::cout<<"3 - Build"<<std::endl;
+		std::cout<<"4 - Show catalog"<<std::endl;
+		std::cout<<"5 - Show information"<<std::endl;
+		std::cout<<"6 - Show others players's information"<<std::endl;
+		std::cout<<"7 - Disconnection"<<std::endl;
 
+		int choice = makeChoice(1, 7);
+		if(choice == 1){
+			showMap();
+		}else if(choice == 2){
+			selectField();
+		}
+		else if(choice == 3){
+			build();
+		}
+		else if(choice == 4){
+			showCatalog();
+		}
+		else if(choice == 5){
+			showInfo();
+		}
+		else if(choice == 6){
+			showInfoOthersPlayers();
+		}
+		else if(choice == 7){
+			disconnected= true;
+		}
+	}
+	sendRequest(quitRequest);
 }
+
 
 void CityLordClient::chooseCity(){
 	LOG("Choose your city");
