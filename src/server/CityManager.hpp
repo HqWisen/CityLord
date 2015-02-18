@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
 // A être inclus dans le fichier du serveur
 /*
@@ -40,7 +41,8 @@ class CityManager{
 	SocketMessage destroyBuilding(Player&, int, int);
 	SocketMessage upgradeBuilding(Player&, int, int);
 	std::string showCatalog();
-	std::string showCity();*/
+	std::string showCity();
+	void updateBuildings();*/
 };
 
 #endif

@@ -28,7 +28,7 @@ SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coo
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
 	Case* concernedCase = _cityMap.getCase(coordX, coordY);
-	if(concernedCase.getOwner() == player){
+	if(concernedCase.getOwner() == player.number){
 		if(!concernedCase.hasBuilding()){
 			if(player.getMoney() >= buildingType.getPrice()){
 				player.setMoney(player.getMoney() - buildingType.getPrice());
@@ -61,7 +61,7 @@ SocketMessage CityLordManager::upgradeBuilding(Player& player, int coordX, int c
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
 	Case* concernedCase = _cityMap.getCase(coordX, coordY);
-	if(concernedCase.getOwner() == player){
+	if(concernedCase.getOwner() == player.number){
 		if(concernedCase.hasBuilding()){
 			Building concernedBuilding = concernedCase.getBuilding();
 			if(player.getMoney() >= concernedBuilding.getUpgradeCost()){
@@ -92,7 +92,7 @@ SocketMessage CityLordManager::destroyBuilding(Player& player, int coordX, int c
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
 	Case* concernedCase = _cityMap.getCase(coordX, coordY);
-	if(concernedCase.getOwner() == player){
+	if(concernedCase.getOwner() == player.number){
 		if(concernedCase.hasBuilding()){
 			Building concernedBuilding = concernedCase.getBuilding();
 			if(player.getMoney() >= concernedBuilding.getDestructionCost()){
@@ -121,7 +121,7 @@ SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, int c
 	//	Si non, un message est envoyé au joueur 1
 	SocketMessage message = SocketMessage();
 	Case* concernedCase = _cityMap.getCase(coordX, coordY);
-	if(concernedCase.getOwner() == player2){
+	if(concernedCase.getOwner() == player2.number){
 		if(player1.getMoney() >= offeredMoney){
 			player1.setMoney(player1.getMoney() - offeredMoney);
 			player2.setMoney(player2.getMoney() + offeredMoney);
@@ -145,16 +145,27 @@ SocketMessage CityLordManager::makePurchase(Player& player, int coordX, int coor
 	// Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
 	Case* concernedCase = _cityMap.getCase(coordX, coordY);
-	if(_catalog.isOnMarket(concernedCase)){
-		if(player.getMoney() >= concernedCase.getPrice());
-			player.setMoney(player.getMoney() - concernedCase.getPrice()):
-			concernedCase.setOwner(player);
-			message.setTopic(TOPIC_SUCCESS);
-			SocketMessage.set("reason", "Field has been successfully purchased!");
+	if(_catalog.isOnMarket(*concernedCase)){
+		if(*concernedCase.hasBuilding()){
+			if(player.getMoney() >= *concernedCase.getPrice() + *concernedCase.getBuilding().price);
+				player.setMoney(player.getMoney() - (*concernedCase.getPrice() + *concernedCase.getBuilding().price)):
+				_catalog.give(concernedCase, player);
+				message.setTopic(TOPIC_SUCCESS);
+				SocketMessage.set("reason", "Field has been successfully purchased!");
+			}else{
+				message.setTopic(TOPIC_FAILURE);
+				message.set("reason", "You do not own enough money!");
+			}
 		}else{
-			message.setTopic(TOPIC_FAILURE);
-			message.set("reason", "You do not own enough money!");
-		}
+				if(player.getMoney() >= *concernedCase.getPrice());
+				player.setMoney(player.getMoney() - *concernedCase.getPrice()):
+				_catalog.give(concernedCase, player);
+				message.setTopic(TOPIC_SUCCESS);
+				SocketMessage.set("reason", "Field has been successfully purchased!");
+			}else{
+				message.setTopic(TOPIC_FAILURE);
+				message.set("reason", "You do not own enough money!");
+			}
 	}else{
 		message.setTopic(TOPIC_FAILURE);
 		message.set("reason", "Field is not on the catalog, therefore it was purchased by someone else (might be you =P)");
@@ -171,4 +182,6 @@ std::string showCity(){
 	//Envoie la carte de la ville gérée par ce manager
 	//return _cityMap.display();
 }
+
+void 
 */
