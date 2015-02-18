@@ -7,7 +7,7 @@
 class Field : public Case{			// public Case
 	Building* building;
 	int price;
-	//int-char-string ? owner;
+	//int-char-string-user ? owner;
 	public:
 		Field(Location);
 		void buildBuilding(Building build); // type Building
@@ -16,8 +16,8 @@ class Field : public Case{			// public Case
 
 		int getPrice();
 		void setPrice(int);
-		//int-char-string ? getOwner();
-		//void setOwner(int-char-string ?);
+		//int-char-string-user ? getOwner();
+		//void setOwner(int-char-string-user?);
 };
 
 #endif // FIELD_HPP_

@@ -1,16 +1,19 @@
 #ifndef CATALOG_HPP_
 #define CATALOG_HPP_
 
+#include <vector>
+
 class Catalog{
 
-	std::list<Building> buildingList;
-	std::list<Field> fieldList;
+	std::vector<Field*> fieldList;
 	
 	public:
 		Catalog() = default;
-		void putOnMaket();
-		void makeOffer();
-		void acceptOffer();
+		void putOnMarket(Field);
+		void getOffer(Player,Field*,int);
+		void acceptOffer(Player,Field*,int);
+		void give(Player player,Field* field);
+		std::vector<Field*> getBuyable();
 };
 
 #endif // CATALOG_HPP_

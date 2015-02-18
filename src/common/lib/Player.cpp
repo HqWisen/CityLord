@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 #include "Player.hpp"
 /*
@@ -22,3 +23,10 @@ Player::Player(string name,int nbr){
 }
 */
 //bool Player::isBankrupt(){return money<0;}
+
+
+std::vector<Building*> Player::getOwnedBuildings(){return buildingList;}
+std::vector<Field*> Player::getOwnedFields(){return fieldList;}
+void Player::addField(Field field){fieldList.push_back(field);}
+void Player::addBuilding(Building building){BuildingList.push_back(building);}
+void Player::loseMoney(int amount){money-=amount;}
