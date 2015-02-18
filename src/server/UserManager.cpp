@@ -4,7 +4,11 @@ const std::map<std::string, request_ptr> UserManager::requestmap = {
 	{"login", request::login},
 	{"createaccount", request::createaccount},
 	{"choicemap", request::choicemap},
-	{"createcity", request::createcity}
+	{"createcity", request::createcity},
+	{"choicecity", request::choicecity},
+	{"joincity", request::joincity}
+	
+	
 };
 
 UserManager::UserManager(CityLordServer* cserver, ClientSocket socket) : server(cserver), clientSocket(socket){

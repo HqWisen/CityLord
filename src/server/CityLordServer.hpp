@@ -32,6 +32,8 @@ class CityLordServer{
 		void run();
 		User* createAccount(std::string);
 		CityManager* createCity(int);
+		CityManager* getCity(int);
+		int getNumberOfCity();
 		bool accountExist(std::string);
 		User* getUser(std::string);
 

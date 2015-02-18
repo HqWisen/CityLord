@@ -33,7 +33,7 @@ namespace request{
 		SocketMessage answer;
 		int i = 0;
 		for (std::vector<std::string>::const_iterator it = CityLordServer::getMapNameVector().begin(); it != CityLordServer::getMapNameVector().end(); it++){
-			answer.set(std::to_string(i), *it);
+			answer.set(std::to_string(i+1), *it);
 			i++;
 		}
 		return answer;		
@@ -51,8 +51,24 @@ namespace request{
 		return answer;		
 	}
 	
-	SocketMessage joincity(CityLordServer* server, UserManager* userManager, SocketMessage message){
+	SocketMessage choicecity(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		int numberOfCity = server->getNumberOfCity();
+		for (int i = 0; i < numberOfCity; i++){
+			answer.set(std::to_string(i+1), "City n°"+std::to_string(i+1));
+		}
+		return answer;		
 	}
-
+	SocketMessage joincity(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		int number = std::stoi(message.get("number")) - 1;
+		CityManager* cityManager = server->getCity(number);
+		userManager->setActiveCity(cityManager);
+		server->LOG("User " + userManager->getUserName() + " joined the city n° " + std::to_string(cityManager->getNumber()));
+		answer.setTopic("success");
+		answer.set("citynumber", std::to_string(cityManager->getNumber()));
+		// TODO send failure if cannot join the city
+		return answer;
+	}
 }
 

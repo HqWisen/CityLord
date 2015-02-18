@@ -31,12 +31,20 @@ User* CityLordServer::createAccount(std::string username){
 	return &(userMap[username]);
 }
 
-CityManager* CityLordServer::createCity(int number){
+CityManager* CityLordServer::createCity(int numberOfMap){
 	// TODO Accès concurentielle
 	std::string path(MAPFILEPATH);
-	path += mapNameVector[number];
+	path += mapNameVector[numberOfMap];
 	cityManagerVector.push_back(CityManager(path, cityManagerVector.size() + 1));
 	return &cityManagerVector.back();
+}
+
+CityManager* CityLordServer::getCity(int numberOfCity){
+	return &cityManagerVector[numberOfCity];
+}
+
+int CityLordServer::getNumberOfCity(){
+	return cityManagerVector.size();
 }
 
 bool CityLordServer::accountExist(std::string username){

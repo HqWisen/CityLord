@@ -35,7 +35,7 @@ void CityLordClient::createCity(){
 	LOG("Choose a map for the city");
 	for(std::map<std::string, std::string>::iterator iterator = map.begin(); iterator != map.end(); iterator++) {
 		i++;
-		std::cout<<i<<" - "<<iterator->second<<std::endl;
+		std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
 	}
 	int choice = makeChoice(1, i);
 	request.setTopic("createcity");
@@ -44,14 +44,34 @@ void CityLordClient::createCity(){
 	recvAnswer(answer);
 	if(answer.getTopic() == "success"){
 		LOG("The server created a new city with the map "+map[std::to_string(choice)]);
-		LOG("You've joined the city n°"+answer.get("citynumber"));
+		LOG("You've joined the City n°"+answer.get("citynumber"));
 	}else{
 		// TODO handle creation failure
 	}
 }
 
 void CityLordClient::joinCity(){
-	std::cout<<"NOT IMPLEMENTED YET"<<std::endl;
+	SocketMessage request, answer;
+	request.setTopic("choicecity");
+	sendRequest(request);
+	recvAnswer(answer);
+	std::map<std::string, std::string> map = answer.getMap();
+	LOG("Choose a city to play");
+	int i = 0;
+	for(std::map<std::string, std::string>::iterator iterator = map.begin(); iterator != map.end(); iterator++) {
+		i++;
+		std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
+	}
+	int choice = makeChoice(1, i);
+	request.setTopic("joincity");
+	request.set("number", std::to_string(choice));
+	sendRequest(request);
+	recvAnswer(answer);
+	if(answer.getTopic() == "success"){
+		LOG("You've joined the City n°"+answer.get("citynumber"));
+	}else{
+		// TODO handle join failed
+	}
 }
 
 void CityLordClient::beginConnection(){
