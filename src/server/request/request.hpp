@@ -19,6 +19,8 @@ namespace request{
 	SocketMessage joincity(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage showmap(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage selectfield(CityLordServer*, UserManager*, SocketMessage);
+	SocketMessage build1(CityLordServer*, UserManager*, SocketMessage);
+	SocketMessage build2(CityLordServer*, UserManager*, SocketMessage);
 }
 
 #endif // REQUEST_HPP_

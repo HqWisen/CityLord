@@ -24,10 +24,10 @@ void CityLordClient::run(){
 		if(choice == 1){
 			showMap();
 		}else if(choice == 2){
-			//selectField();
+			selectField();
 		}
 		else if(choice == 3){
-			//build();
+			//build();           !!! parcelle non selectionne
 		}
 		else if(choice == 4){
 			//showCatalog();
@@ -216,7 +216,7 @@ void CityLordClient::selectField(){
 
 		int choice = makeChoice(1, 6);
 		if(choice == 1){
-			//build2();
+			//build2();             !!!!!!!!!!! build2 = parcelle déjà selectionne
 		}else if(choice == 2){
 			//sell();
 		}
@@ -250,4 +250,12 @@ void CityLordClient::selectField(){
 		std::cout<<"The field selected is not selectable ! (Tree, road, ...)"<<std::endl;
 		//quit()
 	}
+}
+
+void CityLordClient::build1(){  // La parcelle n'est pas encore selectionnée
+	
+}
+
+void CityLordClient::build2(){ // La parcelle est déjà selectionnée
+	
 }
