@@ -2,7 +2,15 @@
 
 
 CityManager::CityManager(std::string mapname_, int number_) : mapname(mapname_), cityMap(mapname_), number(number_){
-	//_catalog = Catalog();
+	_catalog = Catalog();
+	for(int i = 0; i<=cityMap.dimensionX; i++){
+		for(int j = 0; j<cityMap.dimensionY; j++){
+			if(cityMap.getCase(i,j).getType() == "FIELD"){
+				Field *concernedField = cityMap.getCase(i,j);
+				_catalog.putOnMarket(concernedField);
+			}
+		}
+	}
 }
 
 std::string CityManager::getMapName(){
@@ -17,7 +25,7 @@ Map& CityManager::getMap(){
 	return cityMap;
 }
 
-/*
+
 SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coordY, BuildingType buildingType){
 	//Regarde si le joueur est le propriétaire de la parcelle:
 	//	Si oui, regarde si la parcelle est vide
@@ -27,8 +35,8 @@ SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coo
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
-		Field *concernedField = _cityMap.getCase(coordX, coordY);
+	if(cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
+		Field *concernedField = cityMap.getCase(coordX, coordY);
 		if(*concernedField.getOwner() == player.number){
 			if(!concernedCase.hasBuilding()){
 				if(player.getMoney() >= buildingType.getPrice()){
@@ -65,8 +73,8 @@ SocketMessage CityLordManager::upgradeBuilding(Player& player, int coordX, int c
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
-		Field *concernedField = _cityMap.getCase(coordX, coordY);
+	if(cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
+		Field *concernedField = cityMap.getCase(coordX, coordY);
 		if(*concernedField.getOwner() == player.number){
 			if(*concernedField.hasBuilding()){
 				if(player.getMoney() >= *concernedField.getBuilding().type.upgradeCost){
@@ -100,8 +108,8 @@ SocketMessage CityLordManager::destroyBuilding(Player& player, int coordX, int c
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
-		Field *concernedField = _cityMap.getCase(coordX, coordY);
+	if(cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
+		Field *concernedField = cityMap.getCase(coordX, coordY);
 		if(concernedCase.getOwner() == player.number){
 			if(*concernedField.hasBuilding()){
 				if(player.getMoney() >= *concernedField.getBuilding().destructionCost){
@@ -133,8 +141,8 @@ SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, int c
 	//	Si oui, l'échange est effectué et des messages sont envoyés
 	//	Si non, un message est envoyé au joueur 1
 	SocketMessage message = SocketMessage();
-	if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
-		Field *concernedField = _cityMap.getCase(coordX, coordY);
+	if(cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
+		Field *concernedField = cityMap.getCase(coordX, coordY);
 		if(*concernedField.getOwner() == player2.number){
 			if(player1.getMoney() >= offeredMoney){
 				player1.setMoney(player1.getMoney() - offeredMoney);
@@ -162,8 +170,8 @@ SocketMessage CityLordManager::makePurchase(Player& player, int coordX, int coor
 	// Si oui, le cataloque est mis a jour, le joueur obtient la parcelle et un message est envoyé
 	// Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
-		Field *concernedField = _cityMap.getCase(coordX, coordY);
+	if(cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
+		Field *concernedField = cityMap.getCase(coordX, coordY);
 		if(_catalog.isOnMarket(*concernedField)){
 			if(*concernedField.hasBuilding()){
 				if(player.getMoney() >= *concernedField.getPrice() + *concernedField.getBuilding().price){;
@@ -196,25 +204,26 @@ SocketMessage CityLordManager::makePurchase(Player& player, int coordX, int coor
 	}
 	return message;
 }
-
+/*
 std::string showCatalog(){
 	//Envoie le statut du catalogue de la ville
-	//return _catalog.show();
+	return _catalog.show();
 }
+*/
 
 std::string showCity(){
 	//Envoie la carte de la ville gérée par ce manager
-	//return _cityMap.display();
+	return cityMap.display();
 }
 
 void updateBuildings(){
-	//Mets à jour tous les buildings dans _cityMap en introduisant des visiteurs
+	//Mets à jour tous les buildings dans cityMap en introduisant des visiteurs
 	srand( time(NULL) );
 	Visitor randomVisitor:
 	for(int coordX = 0; coordX<=dimensionX; coordX++){
 		for(int coordY = 0; coordY<=dimensionY; coordY++){
-			if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){
-				Field *concernedField = _cityMap.getCase(coordX, coordY);
+			if(cityMap.getCase(coordX, coordY).getType() == "FIELD"){
+				Field *concernedField = cityMap.getCase(coordX, coordY);
 				if(*concernedField.hasBuilding()){
 					*concernedField.getBuilding().visitorList.clear();
 					int numberOfVisitors = rand % 10;
@@ -228,4 +237,4 @@ void updateBuildings(){
 	}
 }
 						
-*/
+
