@@ -67,17 +67,18 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
             if (temp_char == 'B') {
                 //temp_char = temp_string.at(1);
                 //int player = temp_char;
-                /*temp_char = temp_string.at(3);
+                temp_char = temp_string.at(3);
                 int building = (int) temp_char;
-                    cout<<"marde"<<endl;
-                    BuildingType type = BuildingType::getTypeByIndex((building%10));
-                    cout<<"lel"<<endl;
-                mapMatrice[0][j/2] = new Field(Location(0,j/2), new Building(type, building-((building%10)*10)));*/
-                    mapMatrice[0][j/2] = new Obstacle(Location(0,j/2));
+                BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
+                int level = (building%10);
+                if (level == 0){
+                    level = 10;
+                }
+                mapMatrice[0][j/2] = new Field(Location(0,j/2), new Building(type, level));
             }else if (temp_char == 'X') {
                 mapMatrice[0][j/2] = new Obstacle(Location(0,j/2));
             }else if (temp_char == 'F') {
-                mapMatrice[0][j/2] = new Obstacle(Location(0,j/2));
+                mapMatrice[0][j/2] = new Field(Location(0,j/2));
             }else {
                 if (mapMatrice[0][j/2] == nullptr) {
                     mapMatrice[0][j/2] = new Road(Location(Location(0,j/2)));
@@ -99,17 +100,18 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                 if (temp_char == 'B') {
                     //temp_char = temp_string.at(1);
                     //int player = temp_char;
-                    /*temp_char = temp_string.at((i*4)+3);
+                    temp_char = temp_string.at((i*4)+3);
                     int building = (int) temp_char;
-                    cout<<"marde"<<endl;
-                    BuildingType type = BuildingType::getTypeByIndex((building%10));
-                    cout<<"lel"<<endl;
-                    mapMatrice[i][j/2] = new Field(Location(i,j/2), new Building(type, building-((building%10)*10)));*/
-                    mapMatrice[i][j/2] = new Obstacle(Location(i,j/2));
+                    BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
+                    int level = (building%10);
+                    if (level == 0){
+                        level = 10;
+                    }
+                    mapMatrice[i][j/2] = new Field(Location(i,j/2), new Building(type, level));
                 }else if (temp_char == 'X') {
                     mapMatrice[i][j/2] = new Obstacle(Location(i,j/2));
                 }else if (temp_char == 'F') {
-                    mapMatrice[i][j/2] = new Obstacle(Location(i,j/2));
+                    mapMatrice[i][j/2] = new Field(Location(i,j/2));
                 }else {
                     if (mapMatrice[i][j/2] == nullptr) {
                         mapMatrice[i][j/2] = new Road(Location(i,j/2));
@@ -123,7 +125,6 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
         }
     }
     file.close();
-    cout<<"CHIER"<<endl;
 }
 
 void Map::display(){
@@ -164,7 +165,7 @@ void Map::display(){
                             color="\033[0m";
                         }
                         string item = mapMatrice[i][j/2]->display();
-                        cout<<color<<((item.replace(0,1," ")).replace(0,2," ")) + "\033[0m\n";
+                        cout<<color<<(((item.replace(0,1," ")).replace(2,1," ")) + "\033[0m");
                     }else {
                         cout<<(mapMatrice[i][j/2]->display());
                     }
@@ -225,9 +226,15 @@ string Map::getMapString(){
                     output += (mapMatrice[i][j/2]->getType())[0];
                     output += " ";
                 }else {
-                    output += "| ";
-                    output += (mapMatrice[i][j/2]->getType())[0];
-                    output += " ";
+                    output += "|";
+                    if ((mapMatrice[i][j/2])->getType() != "Field"){
+                        output += " ";
+                        output += (mapMatrice[i][j/2]->getType())[0];
+                        output += " ";
+                    }else {
+                        output += (mapMatrice[i][j/2])->display();
+                    }
+
                 }
             }
             if (((mapMatrice[dimensionX-1][j/2])->getType() == "Road") && \

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "Field.hpp"
 
 using namespace std;
@@ -28,18 +29,25 @@ Field::Field(Player* newOwner, Location coords, Building* newBuilding){
 }
 
 string Field::display(){
-	char ownerStr = ' ';
+	string ownerStr = " ";
 	if (this->hasOwner()){
-		ownerStr = (owner->getPlayerID());
+		ownerStr = to_string(owner->getPlayerID());
 	}
 	if (this->hasBuilding()){
 		int type = BuildingType::getIndexByType(getBuilding()->getType());
 		int level = getBuilding()->getLevel();
-		char buildingStr = ((type*10)+level);
+		if (level == 10){
+			level = 0;
+		}
+		char key = (((type+2)*10)+level);
+		string buildingStr;
+		stringstream temp_string;
+		temp_string << key;
+		temp_string >> buildingStr;
 		return ownerStr + "B" + buildingStr;
 	}
 	else{
-		return ownerStr + "F ";
+		return (ownerStr + "F ");
 	}
 }
 

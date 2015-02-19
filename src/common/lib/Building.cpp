@@ -26,6 +26,7 @@ Building::Building(BuildingType building, int lvl=1) : type(building){
 	if (level > 1){
 		for (int i=1; i<level; i++){
 			this->upgrade();
+			level -= 1;
 		}
 	}
 }
