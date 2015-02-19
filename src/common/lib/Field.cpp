@@ -55,7 +55,7 @@ Building* Field::getBuilding(){
 }
 
 void Field::setBuilding(Building* building){
-	this->building=building;
+	building=building;
 }
 
 bool Field::hasBuilding(){

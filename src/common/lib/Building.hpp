@@ -18,10 +18,9 @@ class Building {
 		int level;
 		int destructionCost;
 		BuildingType type;
-		int owner; // peut etre string
 	
 	public:
-		Building(int, int, BuildingType, int);
+		Building(BuildingType);
 		~Building();
 		void receiveVisitor(Visitor);
 		void deleteVisitor(Visitor);

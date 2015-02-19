@@ -218,7 +218,7 @@ void Map::parseMap(string filePath, string map){
     file.close();
 }
 
-int main(int argc, char* argv[]){
+int main(int argc, const char* argv[]){
     Map map1 = Map("Map1.txt");
     map1.display();
 	return 0;

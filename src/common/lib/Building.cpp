@@ -17,7 +17,8 @@ Building::Building(int x, int y, BuildingType building, int player) : type(build
 }
 
 Building::~Building(){
-	owner = 0;
+	owner = nullptr;
+	type = nullptr;
 	level = 0;
 
 	maxCapacity = 0;
