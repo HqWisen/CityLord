@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Building::Building(int x, int y, BuildingType building, int player) : type(building), owner(player){
+Building::Building(BuildingType building) : type(building){
 	level = 1;
 
 	maxCapacity = type.maxCapacity;
@@ -17,8 +17,6 @@ Building::Building(int x, int y, BuildingType building, int player) : type(build
 }
 
 Building::~Building(){
-	owner = nullptr;
-	type = nullptr;
 	level = 0;
 
 	maxCapacity = 0;
