@@ -205,12 +205,15 @@ SocketMessage CityLordManager::makePurchase(Player& player, Location coordinates
 	}
 	return message;
 }
-/*
+
 std::string showCatalog(){
 	//Envoie le statut du catalogue de la ville
-	return _catalog.show();
+	std::string message = ""
+	for(int i = 0; i<_catalog.getBuyable().size(); i++){
+		message = message + (_catalog.getBuyable()[i])->display() + "\n" + "-----------" + "\n";
+	}
+	return message;
 }
-*/
 
 std::string showCity(){
 	//Envoie la carte de la ville gérée par ce manager
