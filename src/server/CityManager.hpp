@@ -19,8 +19,9 @@
 #include "../common/lib/Player.hpp"
 #include "../common/lib/Road.hpp"
 #include "../common/lib/User.hpp"
-#include "../common/template/SocketMessage.hpp"
+#include "../common/socket/SocketMessage.hpp"
 #include "../common/lib/Map.hpp"
+#include "../common/lib/Location.hpp"
 
 class CityManager{
 	std::string mapname;
@@ -33,11 +34,11 @@ class CityManager{
 		int getNumber();
 		Map& getMap();
 	CityLordManager(Map);
-	SocketMessage makePurchase(Player&, int, int); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées
-	SocketMessage makeTrade(Player&, Player&, int , int, int);
-	SocketMessage buildBuilding(Player&, int, int, std::string);
-	SocketMessage destroyBuilding(Player&, int, int);
-	SocketMessage upgradeBuilding(Player&, int, int);
+	SocketMessage makePurchase(Player&, Location); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées
+	SocketMessage makeTrade(Player&, Player&, Location, int);
+	SocketMessage buildBuilding(Player&, Location, BuildingType);
+	SocketMessage destroyBuilding(Player&, Location);
+	SocketMessage upgradeBuilding(Player&, Location);
 	std::string showCatalog();
 	std::string showCity();
 	void updateBuildings();

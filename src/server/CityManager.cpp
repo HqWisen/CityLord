@@ -26,7 +26,7 @@ Map& CityManager::getMap(){
 }
 
 
-SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coordY, BuildingType buildingType){
+SocketMessage CityLordManager::buildBuilding(Player& player, Location coordinates, BuildingType buildingType){
 	//Regarde si le joueur est le propriétaire de la parcelle:
 	//	Si oui, regarde si la parcelle est vide
 	//		Si oui, regarde si le joueur a assez d'argent
@@ -35,12 +35,12 @@ SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coo
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	if(cityMap.getCase(coordX, coordY).getType() == "Field"){;
-		Field *concernedField = cityMap.getCase(coordX, coordY);
+	if(cityMap.getCase(coordinates).getType() == "Field"){;
+		Field *concernedField = cityMap.getCase(coordinates);
 		if(*concernedField.getOwner() == player.number){
 			if(!concernedCase.hasBuilding()){
 				if(player.getMoney() >= buildingType.getPrice()){
-					player.setMoney(player.getMoney() - buildingType.getPrice());
+					player.setMoney(player.getMoney() - buildingType.price);
 					Building building = Building(buildingType, player);
 					*concernedField.setBuilding(building);
 					message.setTopic(TOPIC_SUCCESS);
@@ -64,7 +64,7 @@ SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coo
 		return message;
 }
 
-SocketMessage CityLordManager::upgradeBuilding(Player& player, int coordX, int coordY){
+SocketMessage CityLordManager::upgradeBuilding(Player& player, Location coordinates){
 	//Regarde si le joueur est le propriétaire de la parcelle et qu'elle contient un bulding:
 	//	Si oui, regarde si le building peut être amélioré
 	//		Si oui, regarde si le joueur a assez d'argent
@@ -73,8 +73,8 @@ SocketMessage CityLordManager::upgradeBuilding(Player& player, int coordX, int c
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	if(cityMap.getCase(coordX, coordY).getType() == "Field"){;
-		Field *concernedField = cityMap.getCase(coordX, coordY);
+	if(cityMap.getCase(coordinates).getType() == "Field"){;
+		Field *concernedField = cityMap.getCase(coordinates);
 		if(*concernedField.getOwner() == player.number){
 			if(*concernedField.hasBuilding()){
 				if(player.getMoney() >= *concernedField.getBuilding().type.upgradeCost){
@@ -101,15 +101,15 @@ SocketMessage CityLordManager::upgradeBuilding(Player& player, int coordX, int c
 	return message;
 }
 
-SocketMessage CityLordManager::destroyBuilding(Player& player, int coordX, int coordY){
+SocketMessage CityLordManager::destroyBuilding(Player& player, Location coordinates){
 	//Regarde si le joueur est le propriétaire de la parcelle et qu'elle contient un bulding:
 	//	Si oui, regarde si le joueur a assez d'argent
 	//		Si oui, le building est amélioré et un message est envoyé
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	if(cityMap.getCase(coordX, coordY).getType() == "Field"){;
-		Field *concernedField = cityMap.getCase(coordX, coordY);
+	if(cityMap.getCase(coordinates).getType() == "Field"){;
+		Field *concernedField = cityMap.getCase(coordinates);
 		if(concernedCase.getOwner() == player.number){
 			if(*concernedField.hasBuilding()){
 				if(player.getMoney() >= *concernedField.getBuilding().destructionCost){
@@ -136,13 +136,13 @@ SocketMessage CityLordManager::destroyBuilding(Player& player, int coordX, int c
 	return message;
 }
 
-SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, int coordX, int coordY, int offeredMoney){
+SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, Location coordinates, int offeredMoney){
 	//Regarde si le joueur 1 a assez d'argent
 	//	Si oui, l'échange est effectué et des messages sont envoyés
 	//	Si non, un message est envoyé au joueur 1
 	SocketMessage message = SocketMessage();
-	if(cityMap.getCase(coordX, coordY).getType() == "Field"){;
-		Field *concernedField = cityMap.getCase(coordX, coordY);
+	if(cityMap.getCase(coordinates).getType() == "Field"){;
+		Field *concernedField = cityMap.getCase(coordinates);
 		if(*concernedField.getOwner() == player2.number){
 			if(player1.getMoney() >= offeredMoney){
 				player1.setMoney(player1.getMoney() - offeredMoney);
@@ -165,13 +165,13 @@ SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, int c
 	return message;*
 }
 
-SocketMessage CityLordManager::makePurchase(Player& player, int coordX, int coordY){
+SocketMessage CityLordManager::makePurchase(Player& player, Location coordinates){
 	//Regarde si le joueur 1 a assez d'argent
 	// Si oui, le cataloque est mis a jour, le joueur obtient la parcelle et un message est envoyé
 	// Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	if(cityMap.getCase(coordX, coordY).getType() == "Field"){;
-		Field *concernedField = cityMap.getCase(coordX, coordY);
+	if(cityMap.getCase(coordinates).getType() == "Field"){;
+		Field *concernedField = cityMap.getCase(coordinates);
 		if(_catalog.isOnMarket(*concernedField)){
 			if(*concernedField.hasBuilding()){
 				if(player.getMoney() >= *concernedField.getPrice() + *concernedField.getBuilding().price){;
@@ -222,8 +222,8 @@ void updateBuildings(){
 	Visitor randomVisitor:
 	for(int coordX = 0; coordX<=dimensionX; coordX++){
 		for(int coordY = 0; coordY<=dimensionY; coordY++){
-			if(cityMap.getCase(coordX, coordY).getType() == "Field"){
-				Field *concernedField = cityMap.getCase(coordX, coordY);
+			if(cityMap.getCase(coordinates).getType() == "Field"){
+				Field *concernedField = cityMap.getCase(coordinates);
 				if(*concernedField.hasBuilding()){
 					*concernedField.getBuilding().visitorList.clear();
 					int numberOfVisitors = rand % 10;
