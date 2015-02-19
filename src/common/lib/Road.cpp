@@ -3,9 +3,9 @@
 
 using namespace std;
 
-Road::Road(int x, int y){
+Road::Road(Location coords){
 	typeName = "Road";
-	coord=Location(x, y);
+	coord=coords;
 }
 
 Road::~Road(){
@@ -13,8 +13,8 @@ Road::~Road(){
 	path[4] = {false};
 }
 
-void Road::display(){
-	cout<<image;
+string Road::display(){
+	return image;
 }
 
 //getters & setters

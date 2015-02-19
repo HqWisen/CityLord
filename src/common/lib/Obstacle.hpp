@@ -5,9 +5,9 @@
 
 class Obstacle: public Case{  // : public Case
 	public:
-		Obstacle(int, int);
+		Obstacle(Location);
 		~Obstacle();
-		void display();
+		string display();
 };
 
 #endif // OBSTACLE_HPP_

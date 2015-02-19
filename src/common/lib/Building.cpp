@@ -3,13 +3,10 @@
 
 using namespace std;
 
-Building::Building(int x, int y, BuildingType type_, int player) : type(type_){
-	/*
-	owner = player;
-	type = building;
+Building::Building(int x, int y, BuildingType building, int player) : type(building), owner(player){
 	level = 1;
 
-	maxcapacity = type.capacity;
+	maxCapacity = type.maxCapacity;
 	price = type.price;
 	openTime = type.openTime;
 	closeTime = type.closeTime;
@@ -17,16 +14,13 @@ Building::Building(int x, int y, BuildingType type_, int player) : type(type_){
 	attractiveness = type.attractiveness;
 	dailyCost = type.dailyCost;
 	destructionCost = type.destructionCost;
-	*/
 }
 
 Building::~Building(){
-	/*
 	owner = 0;
-	type = NULL;
 	level = 0;
 
-	maxcapacity = 0;
+	maxCapacity = 0;
 	price = 0;
 	openTime = 0;
 	closeTime = 0;
@@ -35,12 +29,6 @@ Building::~Building(){
 	dailyCost = 0;
 	destructionCost = 0;
 	visitorList.clear();
-	delete visitorList;
-	*/
-}
-
-void Building::display(){
-	cout<<endl;
 }
 
 void Building::receiveVisitor(Visitor){

@@ -5,8 +5,8 @@ Location Case::getCoord(){
 	return coord;
 }
 
-void Case::setCoord(int x, int y){
-	coord.setX(x); coord.setY(y);
+void Case::setCoord(Location coords){
+	coord = coords;
 }
 
 string Case::getType(){

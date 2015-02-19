@@ -29,11 +29,14 @@ class Map{
 	int dimensionY;
 	//Neighborhood neighborhoods[];
 	Case*** mapMatrice;
-public:
-	Map(string nomDeLaCarte); // metrre un fichier txt en paramètre
-	void display();
-	~Map();
-	Case* getCase(int,int);
+	public:
+		Map(string nomDeLaCarte); // metrre un fichier txt en paramètre
+		Map();
+		void display();
+		~Map();
+		Case* getCase(int,int);
+		string getMapString();
+		static void parseMap(string, string);
 };
 
 #endif // MAP_HPP_

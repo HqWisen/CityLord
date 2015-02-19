@@ -6,19 +6,20 @@
 #include "Player.hpp"
 
 class Field : public Case{			// public Case
-	Building* building;
+	Building* building = nullptr;
 	int price;
-	//Player* owner;
+	Player* owner;
+
 public:
 	Field(Location);
-	void buildBuilding(Building build); // type Building
+	void buildBuilding(Building* build); // type Building
 	void destroyBuilding();
-	void display();
+	string display();
 
 	int getPrice();
 	void setPrice(int);
-	//Player* getOwner();
-	//void setOwner(Player*);
+	Player* getOwner();
+	void setOwner(Player*);
 	Building* getBuilding();
 	void setBuilding(Building*);
 	bool hasBuilding();

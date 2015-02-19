@@ -1,7 +1,6 @@
 #ifndef ROAD_HPP_
 #define ROAD_HPP_
 
-#include <string>
 #include "Case.hpp"
 
 using namespace std;
@@ -11,9 +10,9 @@ class Road : public Case{
 	string image;
 
 	public:
-		Road(int, int);
+		Road(Location);
 		~Road();
-		void display();
+		string display();
 		bool getPath(int);
 		void setPath(int,bool);
 };

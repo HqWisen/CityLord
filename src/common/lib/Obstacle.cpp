@@ -3,15 +3,15 @@
 
 using namespace std;
 
-Obstacle::Obstacle(int x, int y){
+Obstacle::Obstacle(Location coords){
 	typeName = "Obstacle";
-	coord = Location(x, y);
+	coord = coords;
 }
 
 Obstacle::~Obstacle(){
 	typeName = "";
 }
 
-void Obstacle::display(){
-	cout<<" ♦ ";
+string Obstacle::display(){
+	return " ♦ ";
 }
