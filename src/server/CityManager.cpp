@@ -27,28 +27,33 @@ SocketMessage CityLordManager::buildBuilding(Player& player, int coordX, int coo
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	Case* concernedCase = _cityMap.getCase(coordX, coordY);
-	if(concernedCase.getOwner() == player.number){
-		if(!concernedCase.hasBuilding()){
-			if(player.getMoney() >= buildingType.getPrice()){
-				player.setMoney(player.getMoney() - buildingType.getPrice());
-				Building building = Building(buildingType, player);
-				concernedCase.setBuilding(building);
-				message.setTopic(TOPIC_SUCCESS);
-				message.set("reason", "Building has been successfully built!")
+	if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
+		Field *concernedField = _cityMap.getCase(coordX, coordY);
+		if(*concernedField.getOwner() == player.number){
+			if(!concernedCase.hasBuilding()){
+				if(player.getMoney() >= buildingType.getPrice()){
+					player.setMoney(player.getMoney() - buildingType.getPrice());
+					Building building = Building(buildingType, player);
+					*concernedField.setBuilding(building);
+					message.setTopic(TOPIC_SUCCESS);
+					message.set("reason", "Building has been successfully built!")
+				}else{
+					message.setTopic(TOPIC_FAILURE);
+					message.set("reason", "You do not have enough money!")
+				}
 			}else{
-				message.setTopic(TOPIC_FAILURE);
-				message.set("reason", "You do not have enough money!")
+				message.set(TOPIC_FAILURE);
+				message.set("reason", "This field already has a building!");
 			}
 		}else{
-			message.set(TOPIC_FAILURE);
-			message.set("reason", "This field already has a building!");
+			message.setTopic(TOPIC_FAILURE);
+			message.set("reason", "You do not own this field!");
 		}
 	}else{
 		message.setTopic(TOPIC_FAILURE);
-		message.set("reason", "You do not own this field!");
+		message.set("reason", "This is not a field!");
 	}
-	return message;
+		return message;
 }
 
 SocketMessage CityLordManager::upgradeBuilding(Player& player, int coordX, int coordY){
@@ -60,26 +65,30 @@ SocketMessage CityLordManager::upgradeBuilding(Player& player, int coordX, int c
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	Case* concernedCase = _cityMap.getCase(coordX, coordY);
-	if(concernedCase.getOwner() == player.number){
-		if(concernedCase.hasBuilding()){
-			Building concernedBuilding = concernedCase.getBuilding();
-			if(player.getMoney() >= concernedBuilding.getUpgradeCost()){
-				player.setMoney(player.getMoney() - buildingType.getUpdateCost());
-				concernedBuilding.upgrade();
-				message.setTopic(TOPIC_SUCCESS);
-				message.set("reason", "Building has been successfully upgraded!")
+	if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
+		Field *concernedField = _cityMap.getCase(coordX, coordY);
+		if(*concernedField.getOwner() == player.number){
+			if(*concernedField.hasBuilding()){
+				if(player.getMoney() >= *concernedField.getBuilding().type.upgradeCost){
+					player.setMoney(player.getMoney() - *concernedField.getBuilding().type.upgradeCost);
+					*concernedField.getBuilding().upgrade();
+					message.setTopic(TOPIC_SUCCESS);
+					message.set("reason", "Building has been successfully upgraded!")
+				}else{
+					message.setTopic(TOPIC_FAILURE);
+					message.set("reason", "You do not have enough money!")
+				}
 			}else{
-				message.setTopic(TOPIC_FAILURE);
-				message.set("reason", "You do not have enough money!")
+				message.set(TOPIC_FAILURE);
+				message.set("reason", "This field has no building!");
 			}
 		}else{
-			message.set(TOPIC_FAILURE);
-			message.set("reason", "This field has no building!");
+			message.setTopic(TOPIC_FAILURE);
+			message.set("reason", "You do not own this field!");
 		}
 	}else{
 		message.setTopic(TOPIC_FAILURE);
-		message.set("reason", "You do not own this field!");
+		message.set("reason", "This is not a field!");
 	}
 	return message;
 }
@@ -91,26 +100,30 @@ SocketMessage CityLordManager::destroyBuilding(Player& player, int coordX, int c
 	//		Si non, un message est envoyé
 	//	Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	Case* concernedCase = _cityMap.getCase(coordX, coordY);
-	if(concernedCase.getOwner() == player.number){
-		if(concernedCase.hasBuilding()){
-			Building concernedBuilding = concernedCase.getBuilding();
-			if(player.getMoney() >= concernedBuilding.getDestructionCost()){
-				player.setMoney(player.getMoney() - buildingType.getDestructionCost());
-				concernedBuilding.destroy();
-				message.setTopic(TOPIC_SUCCESS);
-				message.set("reason", "Building has been successfully destroyed!")
+	if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
+		Field *concernedField = _cityMap.getCase(coordX, coordY);
+		if(concernedCase.getOwner() == player.number){
+			if(*concernedField.hasBuilding()){
+				if(player.getMoney() >= *concernedField.getBuilding().destructionCost){
+					player.setMoney(player.getMoney() - *concernedField.getBuilding().destructionCost);
+					*concernedField.destroyBuilding();
+					message.setTopic(TOPIC_SUCCESS);
+					message.set("reason", "Building has been successfully destroyed!")
+				}else{
+					message.setTopic(TOPIC_FAILURE);
+					message.set("reason", "You do not have enough money!")
+				}
 			}else{
-				message.setTopic(TOPIC_FAILURE);
-				message.set("reason", "You do not have enough money!")
+				message.set(TOPIC_FAILURE);
+				message.set("reason", "This field has no building!");
 			}
 		}else{
-			message.set(TOPIC_FAILURE);
-			message.set("reason", "This field has no building!");
+			message.setTopic(TOPIC_FAILURE);
+			message.set("reason", "You do not own this field!");
 		}
 	}else{
 		message.setTopic(TOPIC_FAILURE);
-		message.set("reason", "You do not own this field!");
+		message.set("reason", "This is not a field!");
 	}
 	return message;
 }
@@ -120,21 +133,26 @@ SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, int c
 	//	Si oui, l'échange est effectué et des messages sont envoyés
 	//	Si non, un message est envoyé au joueur 1
 	SocketMessage message = SocketMessage();
-	Case* concernedCase = _cityMap.getCase(coordX, coordY);
-	if(concernedCase.getOwner() == player2.number){
-		if(player1.getMoney() >= offeredMoney){
-			player1.setMoney(player1.getMoney() - offeredMoney);
-			player2.setMoney(player2.getMoney() + offeredMoney);
-			concernedCase.setOwner(player1);
-			message.setTopic(TOPIC_SUCCESS);
-			message.set("reason", "Trade has been successful!");
+	if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
+		Field *concernedField = _cityMap.getCase(coordX, coordY);
+		if(*concernedField.getOwner() == player2.number){
+			if(player1.getMoney() >= offeredMoney){
+				player1.setMoney(player1.getMoney() - offeredMoney);
+				player2.setMoney(player2.getMoney() + offeredMoney);
+				*concernedField.setOwner(player1);
+				message.setTopic(TOPIC_SUCCESS);
+				message.set("reason", "Trade has been successful!");
+			}else{
+				message.setTopic(TOPIC_FAILURE);
+				message.set("reason", "The purchasing player does not have enough money!");
+			}
 		}else{
 			message.setTopic(TOPIC_FAILURE);
-			message.set("reason", "The purchasing player does not have enough money!");
+			message.set("reason", "The offering player does not have this case!");
 		}
 	}else{
 		message.setTopic(TOPIC_FAILURE);
-		message.set("reason", "The offering player does not have this case!");
+		message.set("reason", "This is not a field!");
 	}
 	return message;*
 }
@@ -144,31 +162,37 @@ SocketMessage CityLordManager::makePurchase(Player& player, int coordX, int coor
 	// Si oui, le cataloque est mis a jour, le joueur obtient la parcelle et un message est envoyé
 	// Si non, un message est envoyé
 	SocketMessage message = SocketMessage();
-	Case* concernedCase = _cityMap.getCase(coordX, coordY);
-	if(_catalog.isOnMarket(*concernedCase)){
-		if(*concernedCase.hasBuilding()){
-			if(player.getMoney() >= *concernedCase.getPrice() + *concernedCase.getBuilding().price);
-				player.setMoney(player.getMoney() - (*concernedCase.getPrice() + *concernedCase.getBuilding().price)):
-				_catalog.give(concernedCase, player);
-				message.setTopic(TOPIC_SUCCESS);
-				SocketMessage.set("reason", "Field has been successfully purchased!");
+	if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){;
+		Field *concernedField = _cityMap.getCase(coordX, coordY);
+		if(_catalog.isOnMarket(*concernedField)){
+			if(*concernedField.hasBuilding()){
+				if(player.getMoney() >= *concernedField.getPrice() + *concernedField.getBuilding().price){;
+					player.setMoney(player.getMoney() - (*concernedField.getPrice() + *concernedField.getBuilding().price)):
+					_catalog.give(concernedField, player);
+					message.setTopic(TOPIC_SUCCESS);
+					SocketMessage.set("reason", "Field has been successfully purchased!");
+				}else{
+					message.setTopic(TOPIC_FAILURE);
+					message.set("reason", "You do not own enough money!");
+				}
 			}else{
-				message.setTopic(TOPIC_FAILURE);
-				message.set("reason", "You do not own enough money!");
+				if(player.getMoney() >= *concernedField.getPrice()){;
+					player.setMoney(player.getMoney() - *concernedField.getPrice()):
+					_catalog.give(concernedField, player);
+					message.setTopic(TOPIC_SUCCESS);
+					SocketMessage.set("reason", "Field has been successfully purchased!");
+				}else{
+					message.setTopic(TOPIC_FAILURE);
+					message.set("reason", "You do not own enough money!");
+				}
 			}
 		}else{
-				if(player.getMoney() >= *concernedCase.getPrice());
-				player.setMoney(player.getMoney() - *concernedCase.getPrice()):
-				_catalog.give(concernedCase, player);
-				message.setTopic(TOPIC_SUCCESS);
-				SocketMessage.set("reason", "Field has been successfully purchased!");
-			}else{
-				message.setTopic(TOPIC_FAILURE);
-				message.set("reason", "You do not own enough money!");
-			}
+			message.setTopic(TOPIC_FAILURE);
+			message.set("reason", "Field is not on the catalog, therefore it was purchased by someone else (might be you =P)");
+		}
 	}else{
 		message.setTopic(TOPIC_FAILURE);
-		message.set("reason", "Field is not on the catalog, therefore it was purchased by someone else (might be you =P)");
+		message.set("reason", "This is not a field!");
 	}
 	return message;
 }
@@ -183,5 +207,25 @@ std::string showCity(){
 	//return _cityMap.display();
 }
 
-void 
+void updateBuildings(){
+	//Mets à jour tous les buildings dans _cityMap en introduisant des visiteurs
+	srand( time(NULL) );
+	Visitor randomVisitor:
+	for(int coordX = 0; coordX<=dimensionX; coordX++){
+		for(int coordY = 0; coordY<=dimensionY; coordY++){
+			if(_cityMap.getCase(coordX, coordY).getType() == "FIELD"){
+				Field *concernedField = _cityMap.getCase(coordX, coordY);
+				if(*concernedField.hasBuilding()){
+					*concernedField.getBuilding().visitorList.clear();
+					int numberOfVisitors = rand % 10;
+					for(int visitors = 0; visitors < numberOfVisitors; visitors++){
+						randomVisitor = Visitor();
+						*concernedField.getBuilding().receiveVisitor(randomVisitor);
+					}
+				}
+			}
+		}
+	}
+}
+						
 */
