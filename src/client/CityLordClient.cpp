@@ -10,7 +10,7 @@ void CityLordClient::run(){
 	chooseCity();
 	bool disconnected = false;
 	while(! disconnected){
-		std::cout<<"----------------------------------------"<<std::endl;
+		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		LOG("Choose an action");
 		std::cout<<"1 - Show map"<<std::endl;
 		std::cout<<"2 - Select field"<<std::endl;
@@ -47,6 +47,7 @@ void CityLordClient::run(){
 
 
 void CityLordClient::chooseCity(){
+	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	LOG("Choose your city");
 	std::cout<<"1 - Create a city"<<std::endl;
 	std::cout<<"2 - Join a city"<<std::endl;
@@ -65,6 +66,7 @@ void CityLordClient::createCity(){
 	recvAnswer(answer);
 	std::map<std::string, std::string> map = answer.getMap();
 	int i = 0;
+	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	LOG("Choose a map for the city");
 	for(std::map<std::string, std::string>::iterator iterator = map.begin(); iterator != map.end(); iterator++) {
 		i++;
@@ -89,6 +91,7 @@ void CityLordClient::joinCity(){
 	sendRequest(request);
 	recvAnswer(answer);
 	std::map<std::string, std::string> map = answer.getMap();
+	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	LOG("Choose a city to play");
 	int i = 0;
 	for(std::map<std::string, std::string>::iterator iterator = map.begin(); iterator != map.end(); iterator++) {
@@ -108,6 +111,7 @@ void CityLordClient::joinCity(){
 }
 
 void CityLordClient::beginConnection(){
+	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	LOG("Connect you to the server");
 	std::cout<<"1 - Create an account"<<std::endl;
 	std::cout<<"2 - Login"<<std::endl;
@@ -124,6 +128,7 @@ void CityLordClient::login(){
 	bool fail = true;
 	std::string username;
 	SocketMessage request("login"), answer;
+	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	LOG("Enter your account nickname to log in.");
 	while(fail){
 		std::cout<<"Username : ";
@@ -143,6 +148,7 @@ void CityLordClient::createAccount(){
 	bool fail = true;
 	std::string username;
 	SocketMessage request("createaccount"), answer;
+	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	LOG("To create an account enter your username.");
 	while(fail){
 		std::cout<<"Username : ";
@@ -206,6 +212,7 @@ void CityLordClient::selectField(){
 	SocketMessage request("selectfield");
 	SocketMessage answer;   //la réponse doit etre l'appartenance de la parcelle
 	if(answer.getTopic() == "owner"){ 
+		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		std::cout<<"It's your field, what would you want to do ?"<<std::endl;
 		std::cout<<"1 - Build"<<std::endl;
 		std::cout<<"2 - Sell"<<std::endl;
@@ -234,6 +241,7 @@ void CityLordClient::selectField(){
 		}
 	}
 	else if(answer.getTopic() == "other"){ 
+		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		std::cout<<"It's not your field, what would you want to do ?"<<std::endl;
 		std::cout<<"1 - Show information"<<std::endl;
 		std::cout<<"2 - Quit"<<std::endl;
@@ -247,6 +255,7 @@ void CityLordClient::selectField(){
 		}
 	}
 	else{
+		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		std::cout<<"The field selected is not selectable ! (Tree, road, ...)"<<std::endl;
 		//quit()
 	}
