@@ -83,24 +83,35 @@ namespace request{
 	}
 
 	SocketMessage selectfield(CityLordServer* server, UserManager* userManager, SocketMessage message){
-		int x = std::stoi(message.get("x"));
-		int y = std::stoi(message.get("y"));
+		SocketMessage answer;
+		//int x = std::stoi(message.get("x"));
+		//int y = std::stoi(message.get("y"));
+		return answer;
 	}
 
-	SocketMessage build(CityLordServer* server, UserManager* userManager, SocketMessage message){
+	SocketMessage build1(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		return answer;
+	}
 
+	SocketMessage build2(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		return answer;
 	}
 
 	SocketMessage viewcatalog(CityLordServer* server, UserManager* userManager, SocketMessage message){
-
+		SocketMessage answer;
+		return answer;
 	}
 
 	SocketMessage showinfo(CityLordServer* server, UserManager* userManager, SocketMessage message){
-
+		SocketMessage answer;
+		return answer;
 	}
 
 	SocketMessage showinfoothersplayers(CityLordServer* server, UserManager* userManager, SocketMessage message){
-
+		SocketMessage answer;
+		return answer;
 	}
 
 
