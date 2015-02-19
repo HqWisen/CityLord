@@ -10,7 +10,8 @@ const std::map<std::string, request_ptr> UserManager::requestmap = {
 	{"showmap", request::showmap},
 	{"selectfield", request::selectfield},
 	{"build1", request::build1},
-	{"build2", request::build2}	
+	{"build2", request::build2},
+	{"showinfo", request::showinfo}
 };
 
 UserManager::UserManager(CityLordServer* cserver, ClientSocket socket) : server(cserver), clientSocket(socket){

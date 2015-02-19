@@ -21,6 +21,7 @@ namespace request{
 	SocketMessage selectfield(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage build1(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage build2(CityLordServer*, UserManager*, SocketMessage);
+	SocketMessage showinfo(CityLordServer*, UserManager*, SocketMessage);
 }
 
 #endif // REQUEST_HPP_

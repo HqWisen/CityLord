@@ -33,7 +33,7 @@ void CityLordClient::run(){
 			//showCatalog();
 		}
 		else if(choice == 5){
-			//showInfo();
+			showInfo();
 		}
 		else if(choice == 6){
 			//showInfoOthersPlayers();
@@ -267,4 +267,21 @@ void CityLordClient::build1(){  // La parcelle n'est pas encore selectionnée
 
 void CityLordClient::build2(){ // La parcelle est déjà selectionnée
 	
+}
+
+void CityLordClient::showInfo(){
+	SocketMessage request("showinfo");
+	SocketMessage answer; // les différentes informations
+	std::string name = answer.get("name");
+	std::string color =answer.get("color");
+	std::string money = answer.get("money");	
+	std::string nBuilding = answer.get("nbuilding");
+	std::string nEmptyField = answer.get("nEmptyField");
+
+	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
+	std::cout<<"Your name : "<< name <<std::endl;
+	std::cout<<"Your color : "<< color <<std::endl;
+	std::cout<<"Your money : "<< money <<std::endl;
+	std::cout<<"Building's number : "<< nBuilding <<std::endl;
+	std::cout<<"Empty field's number : "<< nEmptyField <<std::endl;
 }

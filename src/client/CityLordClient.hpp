@@ -33,7 +33,7 @@ class CityLordClient{
 		void build1();
 		void build2();
 		//void showCatalog();
-		//void showInfo();
+		void showInfo();
 		//void showInfoOthersPlayers();
 };
 
