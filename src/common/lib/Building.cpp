@@ -1,11 +1,19 @@
 #include <iostream>
+#include <algorithm>
 #include "Building.hpp"
 
 using namespace std;
 
-Building::Building(BuildingType building) : type(building){
-	level = 1;
+//Erase-Remove idiom for vector 
+template<typename T>
+inline void removeElem(vector<T> & vect, const T & item)
+{
+    vect.erase(remove(vect.begin(), vect.end(), item), vect.end());
+}
 
+Building::Building(BuildingType building, int lvl=1) : type(building){
+	level = lvl;
+	//
 	maxCapacity = type.maxCapacity;
 	price = type.price;
 	openTime = type.openTime;
@@ -14,11 +22,17 @@ Building::Building(BuildingType building) : type(building){
 	attractiveness = type.attractiveness;
 	dailyCost = type.dailyCost;
 	destructionCost = type.destructionCost;
+	//
+	if (level > 1){
+		for (int i=1; i<level; i++){
+			this->upgrade();
+		}
+	}
 }
 
 Building::~Building(){
 	level = 0;
-
+	//
 	maxCapacity = 0;
 	price = 0;
 	openTime = 0;
@@ -30,25 +44,27 @@ Building::~Building(){
 	visitorList.clear();
 }
 
-void Building::receiveVisitor(Visitor){
-	//visitorList.add(Visitor);
-	//Player.money += income;
+void Building::receiveVisitor(Visitor* guest){
+	visitorList.push_back(guest);
 }
 
-void Building::deleteVisitor(Visitor){
-	//visitorList.remove(Visitor);
+void Building::deleteVisitor(Visitor* guest){
+	removeElem(visitorList, guest);
 }
 
 void Building::upgrade(){
-	//Player.money -= (type.upgradeCost)*level;
-	//maxcapacity += type.capacity;
-	//income += type.income;
-	//attractiveness += (type.attractiveness)/2;
-	//dailyCost += (type.dailyCost)/2;
-	//level += 1;
-	//destructionCost += (type.destructionCost)/2;
+	maxCapacity += type.maxCapacity;
+	income += type.income;
+	attractiveness += ((type.attractiveness)/2);
+	dailyCost += ((type.dailyCost)/1.75);
+	level += 1;
+	destructionCost += ((type.destructionCost)/2);
 }
 
-int main(){
-	return 0;
+int Building::getLevel(){
+	return level;
+}
+
+BuildingType Building::getType(){
+	return type;
 }

@@ -13,15 +13,15 @@ Matrice dans laquelle sera stockée la carte et les éléments de la ville (bati
 #include <string>
 #include "Case.hpp"
 //#include "Neighborhood.hpp"
-//#include "Field.hpp"
+#include "Field.hpp"
 #include "Road.hpp"
 #include "Obstacle.hpp"
 #include "Building.hpp"
 
 using namespace std;
 
-const int tailleMaxLong=6; // Longueur maximale de la carte
-const int tailleMaxLarg=10; // Largueur maximale de la carte
+const int tailleMaxLong=8; // Longueur maximale de la carte
+const int tailleMaxLarg=12; // Largueur maximale de la carte
 const int nombreDeCases = tailleMaxLarg*tailleMaxLong;
 
 class Map{
@@ -34,7 +34,7 @@ class Map{
 		Map();
 		void display();
 		~Map();
-		Case* getCase(int,int);
+		Case* getCase(Location);
 		string getMapString();
 		static void parseMap(string, string);
 };

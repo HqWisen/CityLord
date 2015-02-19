@@ -1,9 +1,11 @@
 #ifndef BUILDING_HPP_
 #define BUILDING_HPP_
 
-#include <list>
+#include <vector>
 #include "Visitor.hpp"
 #include "BuildingType.hpp"
+
+using namespace std;
 
 class Building {
 	public:
@@ -14,17 +16,19 @@ class Building {
 		int income;
 		int attractiveness;
 		int dailyCost;
-		std::list<Visitor*> visitorList;
+		std::vector<Visitor*> visitorList;
 		int level;
 		int destructionCost;
 		BuildingType type;
 	
 	public:
-		Building(BuildingType);
+		Building(BuildingType, int);
 		~Building();
-		void receiveVisitor(Visitor);
-		void deleteVisitor(Visitor);
+		void receiveVisitor(Visitor*);
+		void deleteVisitor(Visitor*);
 		void upgrade();
+		int getLevel();
+		BuildingType getType();
 };
 
 #endif // BUILDING_HPP_

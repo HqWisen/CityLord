@@ -6,36 +6,50 @@ using namespace std;
 
 Field::Field(Location coords){
 	typeName = "Field";
-	coord=coord;
-	//coord.setX(coords.getX());
-	//coord.setY(coords.getY());
-	price=200; //default price ?
+	coord = coords;
 }
 
-/*
-string Field::display(){
-	string color;
-	if(this->asOwner()){
-		color=this->owner.getColor();
-	}
-	else{color="\033[0m";}
+Field::Field(Location coords, Building* newBuilding){
+	typeName = "Field";
+	coord = coords;
+	building = newBuilding;
+}
 
-	if(building){
-		cout<<color<<" B \033[0m\n";
-		//building->display();
+Field::Field(Player* newOwner, Location coords){
+	typeName = "Field";
+	coord = coords;
+	owner = newOwner;
+}
+Field::Field(Player* newOwner, Location coords, Building* newBuilding){
+	typeName = "Field";
+	coord = coords;
+	owner = newOwner;
+	building = newBuilding;
+}
+
+string Field::display(){
+	char ownerStr = ' ';
+	if (this->hasOwner()){
+		ownerStr = (owner->getPlayerID());
+	}
+	if (this->hasBuilding()){
+		int type = BuildingType::getIndexByType(getBuilding()->getType());
+		int level = getBuilding()->getLevel();
+		char buildingStr = ((type*10)+level);
+		return ownerStr + "B" + buildingStr;
 	}
 	else{
-		cout<<color<<"   \033[0m\n";
+		return ownerStr + "F ";
 	}
 }
-*/
-void Field::buildBuilding(Building* build){
-	building = build;
+
+void Field::buildBuilding(Building* newBuilding){
+	building = newBuilding;
 }
 
 //----getters & setters----
 void Field::setPrice(int amount){
-	price=amount;
+	price = amount;
 }
 
 int Field::getPrice(){
@@ -54,8 +68,8 @@ Building* Field::getBuilding(){
 	return building;
 }
 
-void Field::setBuilding(Building* building){
-	building=building;
+bool Field::hasOwner(){
+	return (owner != nullptr);
 }
 
 bool Field::hasBuilding(){

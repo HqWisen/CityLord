@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "BuildingType.hpp"
 
 BuildingType::BuildingType(string name,\
@@ -17,6 +18,18 @@ BuildingType::BuildingType(string name,\
 	price(buy),\
 	upgradeCost(upgrade) {}
 
+BuildingType BuildingType::getTypeByIndex(int index){
+	return types[index];
+}
+int BuildingType::getIndexByType(BuildingType type){
+	for (int i=0; i<typesLength; i++){
+		if (types[i].buildingName == type.buildingName){
+			return i;
+		}
+	}
+	return -1; //ne devrait JAMAIS arriver
+}
+
 const BuildingType BuildingType::BAR = BuildingType("BAR",\
 	 70000, 25000, 70, 400, 0,\
 		3, 12, 2, 30, 35500, 32000);
@@ -32,3 +45,5 @@ const BuildingType BuildingType::NIGHT_CLUB = BuildingType("NIGHT CLUB",\
 const BuildingType BuildingType::SHOP = BuildingType("SHOP",\
 	 50000, 15000, 40, 200, 0,\
 		2, 8, 18, 20, 25500, 19000);
+
+const BuildingType BuildingType::types[] = {BuildingType::BAR, BuildingType::MUSEUM, BuildingType::NIGHT_CLUB, BuildingType::SHOP};

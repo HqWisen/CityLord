@@ -7,12 +7,15 @@
 
 class Field : public Case{			// public Case
 	Building* building = nullptr;
-	int price;
-	Player* owner;
+	int price = 15000;
+	Player* owner = nullptr;
 
 	public:
 		Field(Location);
-		void buildBuilding(Building* build); // type Building
+		Field(Location, Building*);
+		Field(Player*, Location);
+		Field(Player*, Location, Building*);
+		void buildBuilding(Building*);
 		void destroyBuilding();
 		string display();
 
@@ -21,7 +24,8 @@ class Field : public Case{			// public Case
 		Player* getOwner();
 		void setOwner(Player*);
 		Building* getBuilding();
-		void setBuilding(Building*);
+
+		bool hasOwner();
 		bool hasBuilding();
 };
 
