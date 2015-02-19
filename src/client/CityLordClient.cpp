@@ -211,6 +211,8 @@ void CityLordClient::showMap(){
 void CityLordClient::selectField(){
 	SocketMessage request("selectfield");
 	SocketMessage answer;   //la réponse doit etre l'appartenance de la parcelle
+	sendRequest(request);
+	recvAnswer(answer);
 	if(answer.getTopic() == "owner"){ 
 		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		std::cout<<"It's your field, what would you want to do ?"<<std::endl;
@@ -237,7 +239,7 @@ void CityLordClient::selectField(){
 			//destroy();
 		}
 		else if(choice == 6){
-			//quit();
+			//quitte automatiquement
 		}
 	}
 	else if(answer.getTopic() == "other"){ 
@@ -262,16 +264,25 @@ void CityLordClient::selectField(){
 }
 
 void CityLordClient::build1(){  // La parcelle n'est pas encore selectionnée
+	SocketMessage request("build1");
+	SocketMessage answer; // les parcelles vendables avec leurs infos
+	sendRequest(request);
+	recvAnswer(answer);
+
 	
 }
 
 void CityLordClient::build2(){ // La parcelle est déjà selectionnée
-	
+	SocketMessage request("build2");
+	SocketMessage answer; // les parcelles vendables avec leurs infos
 }
 
 void CityLordClient::showInfo(){
 	SocketMessage request("showinfo");
 	SocketMessage answer; // les différentes informations
+	sendRequest(request);
+	recvAnswer(answer);
+
 	std::string name = answer.get("name");
 	std::string color =answer.get("color");
 	std::string money = answer.get("money");	
@@ -284,4 +295,13 @@ void CityLordClient::showInfo(){
 	std::cout<<"Your money : "<< money <<std::endl;
 	std::cout<<"Building's number : "<< nBuilding <<std::endl;
 	std::cout<<"Empty field's number : "<< nEmptyField <<std::endl;
+}
+
+void CityLordClient::showCatalog(){
+	SocketMessage request("showcatalog");
+	SocketMessage answer; // les parcelles vendables avec leurs infos
+	sendRequest(request);
+	recvAnswer(answer);
+
+
 }

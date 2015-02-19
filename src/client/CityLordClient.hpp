@@ -32,7 +32,7 @@ class CityLordClient{
 		void selectField();
 		void build1();
 		void build2();
-		//void showCatalog();
+		void showCatalog();
 		void showInfo();
 		//void showInfoOthersPlayers();
 };
