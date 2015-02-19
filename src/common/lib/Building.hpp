@@ -7,7 +7,7 @@
 
 class Building {
 	public:
-		int maxcapacity;
+		int maxCapacity;
 		int price;
 		int openTime;
 		int closeTime;
@@ -17,8 +17,8 @@ class Building {
 		std::list<Visitor*> visitorList;
 		int level;
 		int destructionCost;
-		int owner; // peut etre string
 		BuildingType type;
+		int owner; // peut etre string
 	
 	public:
 		Building(int, int, BuildingType, int);
@@ -26,7 +26,6 @@ class Building {
 		void receiveVisitor(Visitor);
 		void deleteVisitor(Visitor);
 		void upgrade();
-		void display();
 };
 
 #endif // BUILDING_HPP_
