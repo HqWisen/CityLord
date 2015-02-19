@@ -29,7 +29,7 @@ class CityLordClient{
 		void recvAnswer(SocketMessage&);
 		void LOG(std::string);
 		void showMap();
-		//void selectField();
+		void selectField();
 		//void build();
 		//void showCatalog();
 		//void showInfo();

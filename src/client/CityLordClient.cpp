@@ -202,4 +202,52 @@ void CityLordClient::showMap(){
 	//map.display();
 }
 
-//void CityLordClient::
+void CityLordClient::selectField(){
+	SocketMessage request("selectfield");
+	SocketMessage answer;   //la réponse doit etre l'appartenance de la parcelle
+	if(answer.getTopic() == "owner"){ 
+		std::cout<<"It's your field, what would you want to do ?"<<std::endl;
+		std::cout<<"1 - Build"<<std::endl;
+		std::cout<<"2 - Sell"<<std::endl;
+		std::cout<<"3 - Show information"<<std::endl;
+		std::cout<<"4 - Upgrade"<<std::endl;
+		std::cout<<"5 - Destroy"<<std::endl;
+		std::cout<<"6 - Quit"<<std::endl;
+
+		int choice = makeChoice(1, 6);
+		if(choice == 1){
+			//build2();
+		}else if(choice == 2){
+			//sell();
+		}
+		else if(choice == 3){
+			//showinfo()field;
+		}
+		else if(choice == 4){
+			//upgrade();
+		}
+		else if(choice == 5){
+			//destroy();
+		}
+		else if(choice == 6){
+			//quit();
+		}
+	}
+	else if(answer.getTopic() == "other"){ 
+		std::cout<<"It's not your field, what would you want to do ?"<<std::endl;
+		std::cout<<"1 - Show information"<<std::endl;
+		std::cout<<"2 - Quit"<<std::endl;
+
+		int choice = makeChoice(1, 2);
+		if(choice == 1){
+			//showinfofield();
+		}
+		else if(choice == 2){
+			//quit();
+		}
+	}
+	else{
+		std::cout<<"The field selected is not selectable ! (Tree, road, ...)"<<std::endl;
+		//quit()
+	}
+}
