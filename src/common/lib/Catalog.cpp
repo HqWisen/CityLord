@@ -32,7 +32,7 @@ void Catalog::give(Field* field,Player player){
 		//field->getBuilding()->setOwner(player);
 		//player.addBuilding(field->getBuilding());
 	}
-	//fieldList.remove(field); remove existe?
+	//fieldList.erase(std::remove(fieldList.begin(), fieldList.end(), field), fieldList.end()); retire field de la liste du catalog
 }
 
 //----getters & setters----
