@@ -3,21 +3,25 @@
 
 #include "Case.hpp"
 #include "Building.hpp"
+#include "Player.hpp"
 
 class Field : public Case{			// public Case
 	Building* building;
 	int price;
-	//int-char-string-user ? owner;
-	public:
-		Field(Location);
-		void buildBuilding(Building build); // type Building
-		void destroyBuilding();
-		void display();
+	//Player* owner;
+public:
+	Field(Location);
+	void buildBuilding(Building build); // type Building
+	void destroyBuilding();
+	void display();
 
-		int getPrice();
-		void setPrice(int);
-		//int-char-string-user ? getOwner();
-		//void setOwner(int-char-string-user?);
+	int getPrice();
+	void setPrice(int);
+	//Player* getOwner();
+	//void setOwner(Player*);
+	Building* getBuilding();
+	void setBuilding(Building*);
+	bool hasBuilding();
 };
 
 #endif // FIELD_HPP_

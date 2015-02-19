@@ -37,5 +37,8 @@ void Field::buildBuilding(Building build){
 //----getters & setters----
 void Field::setPrice(int amount){price=amount;}
 int Field::getPrice(){return price;}
-//int-char-string ? getOwner(){return owner;};
-//void setOwner(int-char-string ? owner){this.owner=owner};
+//Player Field::getOwner(){return owner;};
+//void Field::setOwner(Player owner){this.owner=owner};
+Building* Field::getBuilding(){return building;}
+void Field::setBuilding(Building* building){this->building=building;}
+bool Field::hasBuilding(){return building!=NULL;}

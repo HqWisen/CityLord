@@ -11,28 +11,28 @@ void Catalog::putOnMarket(Field* field){
 }
 
 void Catalog::getOffer(Player player,Field* field, int money){
-	if(std::find(fieldList.begin(), fieldList.end(), field) != fieldList.end()){ //field in fieldList){
-		if(*field.owner!=player){
-			if(money>=*field.price){
-				this.acceptOffer(player, field, money);
+	//if(std::find(fieldList.begin(), fieldList.end(), field) != fieldList.end()){ //field in fieldList){
+		//if(*field->owner!=player){
+			if(money>=field->getPrice()){
+				this->acceptOffer(player, field, money);
 			}
-		}
-	}
+		//}
+	//}
 }
 
 void Catalog::acceptOffer(Player player,Field* field, int money){
-	this.give(field,player);
+	this->give(field,player);
 	player.loseMoney(money);
 }
 
 void Catalog::give(Field* field,Player player){
-	*field.setOwner(player);
-	player.addField(field);
-	if(*field.hasBuilding()){
-		*field.getBuilding().setOwner(player);
-		player.addBuilding(*field.getBuilding());
+	//field->setOwner(player);
+	//player.addField(field);
+	if(field->hasBuilding()){
+		//field->getBuilding()->setOwner(player);
+		//player.addBuilding(field->getBuilding());
 	}
-	fieldList.remove(field);
+	//fieldList.remove(field); remove existe?
 }
 
 //----getters & setters----
