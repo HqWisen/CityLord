@@ -5,8 +5,9 @@ CityManager::CityManager(std::string mapname_, int number_) : mapname(mapname_),
 	_catalog = Catalog();
 	for(int i = 0; i<=cityMap.dimensionX; i++){
 		for(int j = 0; j<cityMap.dimensionY; j++){
-			if(cityMap.getCase(i,j).getType() == "Field"){
-				Field *concernedField = cityMap.getCase(i,j);
+			Location currentLocation = Location (i,j);
+			if(cityMap.getCase(currentLocation).getType() == "Field"){
+				Field *concernedField = cityMap.getCase(currentLocation);
 				_catalog.putOnMarket(concernedField);
 			}
 		}
