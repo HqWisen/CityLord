@@ -7,7 +7,7 @@
 
 #include "../common/socket/ConnectionSocket.hpp"
 #include "../common/socket/SocketMessage.hpp"
-
+#include "../common/lib/Map.hpp"
 
 #define CLIENTNAME "CityLord"
 #define CINITEM "> "

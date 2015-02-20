@@ -22,7 +22,7 @@ class CityLordServer{
 	ServerSocket serverSocket;
 	std::map<std::string, User> userMap;
 	static const std::vector<std::string> mapNameVector;
-	std::vector<CityManager> cityManagerVector;
+	std::vector<CityManager*> cityManagerVector;
 	//std::map<std::string, UserThread> threadMap;
 	//std::list<City> cityList;
 	//std::list<User> userList;

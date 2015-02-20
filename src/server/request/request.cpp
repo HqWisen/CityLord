@@ -77,13 +77,22 @@ namespace request{
 	SocketMessage showmap(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
 		CityManager* cityManager = userManager->getActiveCity();
-		//answer.set("map", cityManager->getMap().getMapString());
-		answer.set("map", "NOT IMPLEMENTED");
+		answer.set("map", cityManager->getMap()->getMapString());
+		return answer;
+	}
+
+	SocketMessage mapsize(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		Map* map = userManager->getActiveCity()->getMap();
+		answer.set("rows", std::to_string(map->getNRows()));
+		answer.set("cols", std::to_string(map->getNCols()));
 		return answer;
 	}
 
 	SocketMessage selectfield(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
+		std::cout<<"SELECTFILED"<<std::endl;
+		answer.setTopic("admin");
 		//int x = std::stoi(message.get("x"));
 		//int y = std::stoi(message.get("y"));
 		return answer;
@@ -114,6 +123,10 @@ namespace request{
 		return answer;
 	}
 
+	SocketMessage showcatalog(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		return answer;
+	}
 
 
 }

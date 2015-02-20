@@ -28,13 +28,13 @@ class CityManager{
 	std::string mapname;
 	Map cityMap; 
 	int number;
-	Catalog _catalog;
+	Catalog catalog;
 	public:
-		CityManager() = default;
 		CityManager(std::string, int);
 		std::string getMapName();
 		int getNumber();
-		Map& getMap();
+		Map* getMap();
+		void test();
 /*
 	CityLordManager(Map);
 	SocketMessage makePurchase(Player&, Location); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées

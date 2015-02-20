@@ -1,9 +1,8 @@
 #include "CityManager.hpp"
 
 
-CityManager::CityManager(std::string mapname_, int number_) : mapname(mapname_), cityMap(mapname_), number(number_){
-	_catalog = Catalog();
-	for(int i = 0; i<=cityMap.getDimensionX(); i++){
+CityManager::CityManager(std::string mapname_, int number_) : mapname(mapname_), cityMap(mapname_), number(number_), catalog(){
+	/*for(int i = 0; i<=cityMap.getDimensionX(); i++){
 		for(int j = 0; j<cityMap.getDimensionY(); j++){
 			Location currentLocation = Location (i,j);
 			if(cityMap.getCase(currentLocation).getType() == "Field"){
@@ -11,7 +10,7 @@ CityManager::CityManager(std::string mapname_, int number_) : mapname(mapname_),
 				_catalog.putOnMarket(concernedField);
 			}
 		}
-	}
+	}*/
 }
 
 std::string CityManager::getMapName(){
@@ -22,8 +21,8 @@ int CityManager::getNumber(){
 	return number;
 }
 
-Map& CityManager::getMap(){
-	return cityMap;
+Map* CityManager::getMap(){
+	return &cityMap;
 }
 
 /*

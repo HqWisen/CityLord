@@ -203,14 +203,26 @@ void CityLordClient::showMap(){
 	sendRequest(request);
 	recvAnswer(answer);
 	std::string mapString = answer.get("map");
-	std::cout<<mapString<<std::endl;
-	//Map map = Map::parseMap(mapString);
-	//map.display();
+	Map::parseMap("resources/tmp/out.txt", mapString);
+	Map map("resources/tmp/out.txt");
+	map.display();
 }
 
 void CityLordClient::selectField(){
-	SocketMessage request("selectfield");
-	SocketMessage answer;   //la réponse doit etre l'appartenance de la parcelle
+	SocketMessage request;
+	SocketMessage answer; //la réponse doit etre l'appartenance de la parcelle
+	request.setTopic("mapsize");
+	sendRequest(request);
+	recvAnswer(answer);
+	int rows = std::stoi(answer.get("rows"));
+	int cols = std::stoi(answer.get("cols"));
+	LOG("Choose the row");
+	int row = makeChoice(1, rows);
+	LOG("Choose the col");
+	int col = makeChoice(1, cols);
+	request.setTopic("selectfield");
+	request.set("row", std::to_string(row));
+	request.set("col", std::to_string(col));
 	sendRequest(request);
 	recvAnswer(answer);
 	if(answer.getTopic() == "owner"){ 
@@ -265,7 +277,7 @@ void CityLordClient::selectField(){
 
 void CityLordClient::build1(){  // La parcelle n'est pas encore selectionnée
 	SocketMessage request("build1");
-	SocketMessage answer; // les parcelles vendables avec leurs infos
+	SocketMessage answer;
 	sendRequest(request);
 	recvAnswer(answer);
 
@@ -274,7 +286,7 @@ void CityLordClient::build1(){  // La parcelle n'est pas encore selectionnée
 
 void CityLordClient::build2(){ // La parcelle est déjà selectionnée
 	SocketMessage request("build2");
-	SocketMessage answer; // les parcelles vendables avec leurs infos
+	SocketMessage answer; 
 }
 
 void CityLordClient::showInfo(){

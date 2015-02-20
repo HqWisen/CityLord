@@ -35,12 +35,13 @@ CityManager* CityLordServer::createCity(int numberOfMap){
 	// TODO Accès concurentielle
 	std::string path(MAPFILEPATH);
 	path += mapNameVector[numberOfMap];
-	cityManagerVector.push_back(CityManager(path, cityManagerVector.size() + 1));
-	return &cityManagerVector.back();
+	// TODO server destructor
+	cityManagerVector.push_back(new CityManager(path, cityManagerVector.size() + 1));
+	return cityManagerVector.back();
 }
 
 CityManager* CityLordServer::getCity(int numberOfCity){
-	return &cityManagerVector[numberOfCity];
+	return cityManagerVector[numberOfCity];
 }
 
 int CityLordServer::getNumberOfCity(){

@@ -10,7 +10,7 @@ class Catalog{
 	std::vector<Field*> fieldList;
 
 public:
-	Catalog();
+	Catalog() = default;
 	void putOnMarket(Field*);
 	void getOffer(Player,Field*,int);
 	void acceptOffer(Player,Field*,int);

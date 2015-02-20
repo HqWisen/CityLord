@@ -4,8 +4,6 @@
 
 #include "Catalog.hpp"
 
-Catalog::Catalog() = default;
-
 void Catalog::putOnMarket(Field* field){
 	fieldList.push_back(field);
 }
