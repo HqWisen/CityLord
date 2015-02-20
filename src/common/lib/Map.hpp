@@ -36,6 +36,8 @@ class Map{
 		~Map();
 		Case* getCase(Location);
 		string getMapString();
+		int getDimensionX(){return dimensionX;};
+		int getDimensionY(){return dimensionY;};
 		static void parseMap(string, string);
 };
 

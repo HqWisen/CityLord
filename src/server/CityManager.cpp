@@ -3,8 +3,8 @@
 
 CityManager::CityManager(std::string mapname_, int number_) : mapname(mapname_), cityMap(mapname_), number(number_){
 	_catalog = Catalog();
-	for(int i = 0; i<=cityMap.dimensionX; i++){
-		for(int j = 0; j<cityMap.dimensionY; j++){
+	for(int i = 0; i<=cityMap.getDimensionX(); i++){
+		for(int j = 0; j<cityMap.getDimensionY(); j++){
 			Location currentLocation = Location (i,j);
 			if(cityMap.getCase(currentLocation).getType() == "Field"){
 				Field *concernedField = cityMap.getCase(currentLocation);
@@ -26,7 +26,7 @@ Map& CityManager::getMap(){
 	return cityMap;
 }
 
-
+/*
 SocketMessage CityLordManager::buildBuilding(Player& player, Location coordinates, BuildingType buildingType){
 	//Regarde si le joueur est le propriétaire de la parcelle:
 	//	Si oui, regarde si la parcelle est vide
@@ -241,4 +241,4 @@ void updateBuildings(){
 	}
 }
 						
-
+*/

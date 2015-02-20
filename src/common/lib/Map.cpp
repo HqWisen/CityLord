@@ -254,7 +254,7 @@ void Map::parseMap(string filePath, string map){
     file.close();
 }
 
-
+/*
 int main(int argc, const char* argv[]){
     char i = 20;
     cout<<i<<endl;
@@ -263,4 +263,4 @@ int main(int argc, const char* argv[]){
     string lel = map1.getMapString();
     Map::parseMap("out.txt", lel);
 	return 0;
-}
+}*/
