@@ -79,10 +79,10 @@ void CityLordClient::createCity(){
 	recvAnswer(answer);
 	if(answer.getTopic() == "success"){
 		LOG("The server created a new city with the map "+map[std::to_string(choice)]);
-		LOG("You've joined the City n°"+answer.get("citynumber"));
 	}else{
 		// TODO handle creation failure
 	}
+	joinCity();
 }
 
 void CityLordClient::joinCity(){
@@ -214,17 +214,18 @@ void CityLordClient::selectField(){
 	request.setTopic("mapsize");
 	sendRequest(request);
 	recvAnswer(answer);
-	int rows = std::stoi(answer.get("rows"));
-	int cols = std::stoi(answer.get("cols"));
-	LOG("Choose the row");
-	int row = makeChoice(1, rows);
-	LOG("Choose the col");
-	int col = makeChoice(1, cols);
+	int dimx = std::stoi(answer.get("x"));
+	int dimy = std::stoi(answer.get("y"));
+	LOG("Choose the col (x dimension)");
+	int cx = makeChoice(1, dimx);
+	LOG("Choose the row (y dimension)");
+	int cy = makeChoice(1, dimy);
 	request.setTopic("selectfield");
-	request.set("row", std::to_string(row));
-	request.set("col", std::to_string(col));
+	request.set("x", std::to_string(cx-1));
+	request.set("y", std::to_string(cy-1));
 	sendRequest(request);
 	recvAnswer(answer);
+	std::cout<<"topic = "<<answer.getTopic()<<std::endl;
 	if(answer.getTopic() == "owner"){ 
 		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		std::cout<<"It's your field, what would you want to do ?"<<std::endl;

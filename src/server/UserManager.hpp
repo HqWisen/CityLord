@@ -15,7 +15,6 @@ class CityManager;
 class User;
 
 typedef SocketMessage (* request_ptr)(CityLordServer*, UserManager *, SocketMessage);
-//typedef void (* view_ptr)(JsonValue *, UserHandler *);
 class UserManager : public Thread{
 	static const std::map<std::string, request_ptr> requestmap;
 
@@ -31,8 +30,10 @@ class UserManager : public Thread{
 		std::string getUserName();
 		void setUser(User*);
 		void setActiveCity(CityManager*);
+		void initActivePlayer(){user->initPlayer(cityManager);};
 		void run() override;
 		CityManager* getActiveCity(){return cityManager;};
+		Player* getActivePlayer(){return user->getPlayer(cityManager);};
 };
 
 #endif // USERMANAGER_HPP_

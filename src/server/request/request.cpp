@@ -42,13 +42,10 @@ namespace request{
 
 	SocketMessage createcity(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		int number = std::stoi(message.get("number")) - 1;
-		CityManager* cityManager = server->createCity(number);
+		int numberOfMap = std::stoi(message.get("number")) - 1;
+		CityManager* cityManager = server->createCity(numberOfMap);
 		server->LOG("User "+ userManager->getUserName() + " created a city with map " + cityManager->getMapName() + ", city number is " + std::to_string(cityManager->getNumber()));
-		userManager->setActiveCity(cityManager);
-		server->LOG("User " + userManager->getUserName() + " joined the city n° " + std::to_string(cityManager->getNumber()));
 		answer.setTopic("success");
-		answer.set("citynumber", std::to_string(cityManager->getNumber()));
 		// TODO send failure if creation failed
 		return answer;		
 	}
@@ -64,9 +61,10 @@ namespace request{
 
 	SocketMessage joincity(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		int number = std::stoi(message.get("number")) - 1;
-		CityManager* cityManager = server->getCity(number);
+		int numberOfCity = std::stoi(message.get("number")) - 1;
+		CityManager* cityManager = server->getCity(numberOfCity);
 		userManager->setActiveCity(cityManager);
+		userManager->initActivePlayer();
 		server->LOG("User " + userManager->getUserName() + " joined the city n° " + std::to_string(cityManager->getNumber()));
 		answer.setTopic("success");
 		answer.set("citynumber", std::to_string(cityManager->getNumber()));
@@ -84,17 +82,30 @@ namespace request{
 	SocketMessage mapsize(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
 		Map* map = userManager->getActiveCity()->getMap();
-		answer.set("rows", std::to_string(map->getNRows()));
-		answer.set("cols", std::to_string(map->getNCols()));
+		answer.set("x", std::to_string(map->getDimensionX()));
+		answer.set("y", std::to_string(map->getDimensionY()));
 		return answer;
 	}
 
 	SocketMessage selectfield(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		std::cout<<"SELECTFILED"<<std::endl;
-		answer.setTopic("admin");
-		//int x = std::stoi(message.get("x"));
-		//int y = std::stoi(message.get("y"));
+		Map* map = userManager->getActiveCity()->getMap();
+		int x = std::stoi(message.get("x"));
+		int y = std::stoi(message.get("y"));
+		Case* casePtr = map->getCase(Location(x, y));
+		if(casePtr->isField()){
+			Field* field = dynamic_cast<Field*>(casePtr);
+			if(field->getOwner() == userManager->getActivePlayer()){
+				std::cout<<"owner"<<std::endl;
+				answer.setTopic("owner");
+			}else{
+				std::cout<<"other"<<std::endl;
+				answer.setTopic("other");
+			}
+		}else{
+			std::cout<<"notfield"<<std::endl;
+			answer.setTopic("notfield");
+		}
 		return answer;
 	}
 

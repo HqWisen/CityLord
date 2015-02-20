@@ -11,8 +11,8 @@ class Road : public Case{
 
 	public:
 		Road(Location);
-		~Road();
-		string display();
+		~Road() = default;
+		string display() override;
 		bool getPath(int);
 		void setPath(int,bool);
 };

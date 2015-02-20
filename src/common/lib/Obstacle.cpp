@@ -8,10 +8,6 @@ Obstacle::Obstacle(Location coords){
 	coord = coords;
 }
 
-Obstacle::~Obstacle(){
-	typeName = "";
-}
-
 string Obstacle::display(){
 	return " ♦ ";
 }

@@ -80,7 +80,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                 }else {
                     mapMatrice[0][j/2] = new Field(Location(0,j/2), new Building(type, level));
                 }
-            }else if (temp_char == 'X') {
+            }else if (temp_char == 'O') {
                 mapMatrice[0][j/2] = new Obstacle(Location(0,j/2));
             }else if (temp_char == 'F') {
                 temp_char = temp_string.at(1);
@@ -126,7 +126,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                         mapMatrice[i][j/2] = new Field(Location(i,j/2), new Building(type, level));
                     }
 
-                }else if (temp_char == 'X') {
+                }else if (temp_char == 'O') {
                     mapMatrice[i][j/2] = new Obstacle(Location(i,j/2));
                 }else if (temp_char == 'F') {
                     temp_char = temp_string.at((i*4)+1);
@@ -138,7 +138,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                         mapMatrice[i][j/2] = new Field(Location(i,j/2));
                     }
                 }else {
-                    if (mapMatrice[i][j/2] == nullptr) {
+                    if (mapMatrice[i][j/2] == nullptr){
                         mapMatrice[i][j/2] = new Road(Location(i,j/2));
                     }
                 }

@@ -5,6 +5,8 @@
 
 using namespace std;
 
+Player* Player::playerList[8] = {nullptr};
+
 Player::Player(string name, int number){
 	userName = name;
 	playerID = number;
@@ -19,19 +21,21 @@ Player::Player(string name, int number){
 	playerList[number] = this;
 }
 
-//bool Player::isBankrupt(){return money<0;}
+int Player::getPlayerID(){
+	return playerID;
+}
 
 string Player::getColor(){
 	return color;
 }
 
-int Player::getPlayerID(){
-	return playerID;
-}
-
 Player* Player::getPlayerByID(int index){
 	return playerList[index];
 }
+
+/*
+//bool Player::isBankrupt(){return money<0;}
+
 
 //std::vector<Building*> Player::getOwnedBuildings(){return buildingList;}
 //std::vector<Field*> Player::getOwnedFields(){return fieldList;}
@@ -41,4 +45,4 @@ void Player::loseMoney(int amount){
 	money -= amount;
 }
 
-Player* Player::playerList[8] = {nullptr};
+*/

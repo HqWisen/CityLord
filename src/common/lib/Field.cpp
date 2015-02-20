@@ -51,6 +51,10 @@ string Field::display(){
 	}
 }
 
+bool Field::isField(){
+	return true;
+}
+
 void Field::buildBuilding(Building* newBuilding){
 	building = newBuilding;
 }

@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "Catalog.hpp"
-
+/*
 void Catalog::putOnMarket(Field* field){
 	fieldList.push_back(field);
 }
@@ -35,3 +35,4 @@ void Catalog::give(Field* field,Player player){
 
 //----getters & setters----
 std::vector<Field*> Catalog::getBuyable(){return fieldList;}
+*/

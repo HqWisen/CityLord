@@ -8,11 +8,6 @@ Road::Road(Location coords){
 	coord=coords;
 }
 
-Road::~Road(){
-	typeName = "";
-	path[4] = {false};
-}
-
 string Road::display(){
 	return image;
 }

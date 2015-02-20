@@ -6,8 +6,8 @@
 class Obstacle: public Case{  // : public Case
 	public:
 		Obstacle(Location);
-		~Obstacle();
-		string display();
+		~Obstacle() = default;
+		string display() override;
 };
 
 #endif // OBSTACLE_HPP_

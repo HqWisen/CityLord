@@ -8,15 +8,15 @@ using namespace std;
 
 class Case{
 	protected:
-		string typeName = "";
+		string typeName;
 		Location coord;
-
 	public:
-		virtual ~Case(){};
-		virtual string display() = 0;	//Pure virtuelle, fait de Case une classe abstraite
 		Location getCoord();
 		void setCoord(Location);
 		string getType();
+		virtual bool isField();
+		virtual ~Case() = default;
+		virtual string display() = 0;	//Pure virtuelle, fait de Case une classe abstraite
 };
 
 #endif // CASE_HPP_
