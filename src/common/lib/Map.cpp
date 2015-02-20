@@ -288,7 +288,7 @@ void Map::parseMap(string filePath, string map){
 }
 
 
-int main(int argc, const char* argv[]){
+/*int main(int argc, const char* argv[]){
     Player p1 = Player("lel1", 0);
     Player p2 = Player("lel2", 1);
     Player p3 = Player("lel3", 2);
@@ -304,4 +304,4 @@ int main(int argc, const char* argv[]){
     string lel = map1.getMapString();
     Map::parseMap("out.txt", lel);
 	return 0;
-}
+}*/
