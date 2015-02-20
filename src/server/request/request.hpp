@@ -20,11 +20,10 @@ namespace request{
 	SocketMessage showmap(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage mapsize(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage selectfield(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage build1(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage build2(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage showinfo(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage showinfoothersplayers(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage showcatalog(CityLordServer*, UserManager*, SocketMessage);
+	SocketMessage buy(CityLordServer*, UserManager*, SocketMessage);
+
 }
 
 #endif // REQUEST_HPP_

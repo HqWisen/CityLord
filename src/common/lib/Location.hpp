@@ -1,6 +1,8 @@
 #ifndef LOCATION_HPP_
 #define LOCATION_HPP_
 
+#include <string>
+
 class Location{
 	int x, y;
 
@@ -14,6 +16,7 @@ class Location{
 		int getY();
 		void setX(int);
 		void setY(int);
+		std::string toString();
 
 };
 

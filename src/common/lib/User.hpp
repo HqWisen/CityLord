@@ -5,7 +5,7 @@
 #include <map>
 
 #include "Player.hpp"
-
+#include "../../server/CityManager.hpp"
 class CityManager;
 
 class User{

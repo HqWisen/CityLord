@@ -37,3 +37,11 @@ void Location::setX(int a){
 void Location::setY(int b){
 	y=b;
 }
+
+std::string Location::toString(){
+	std::string result;
+	result +="(";
+	result += "x="+std::to_string(x)+", ";
+	result += "y="+std::to_string(y)+")";
+	return result;
+}

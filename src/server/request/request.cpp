@@ -42,11 +42,11 @@ namespace request{
 
 	SocketMessage createcity(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
+		answer.setTopic("success");
 		int numberOfMap = std::stoi(message.get("number")) - 1;
 		CityManager* cityManager = server->createCity(numberOfMap);
-		server->LOG("User "+ userManager->getUserName() + " created a city with map " + cityManager->getMapName() + ", city number is " + std::to_string(cityManager->getNumber()));
-		answer.setTopic("success");
-		// TODO send failure if creation failed
+		server->LOG("User "+ userManager->getUserName() + " created a city with map " + cityManager->getMapName() + ", city number is " + std::to_string(cityManager->getID()));
+		// TODO send failure if creation failed*/
 		return answer;		
 	}
 	
@@ -65,9 +65,9 @@ namespace request{
 		CityManager* cityManager = server->getCity(numberOfCity);
 		userManager->setActiveCity(cityManager);
 		userManager->initActivePlayer();
-		server->LOG("User " + userManager->getUserName() + " joined the city n° " + std::to_string(cityManager->getNumber()));
+		server->LOG("User " + userManager->getUserName() + " joined the city n° " + std::to_string(cityManager->getID()));
 		answer.setTopic("success");
-		answer.set("citynumber", std::to_string(cityManager->getNumber()));
+		answer.set("citynumber", std::to_string(cityManager->getID()));
 		// TODO send failure if cannot join the city
 		return answer;
 	}
@@ -96,49 +96,49 @@ namespace request{
 		if(casePtr->isField()){
 			Field* field = dynamic_cast<Field*>(casePtr);
 			if(field->getOwner() == userManager->getActivePlayer()){
-				std::cout<<"owner"<<std::endl;
 				answer.setTopic("owner");
+			}else if(field->getOwner() == nullptr){
+				answer.setTopic("purchasable");
 			}else{
-				std::cout<<"other"<<std::endl;
 				answer.setTopic("other");
 			}
+			answer.set("info", field->toString());
 		}else{
-			std::cout<<"notfield"<<std::endl;
 			answer.setTopic("notfield");
 		}
 		return answer;
 	}
 
-	SocketMessage build1(CityLordServer* server, UserManager* userManager, SocketMessage message){
+	SocketMessage showcatalog(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		return answer;
-	}
-
-	SocketMessage build2(CityLordServer* server, UserManager* userManager, SocketMessage message){
-		SocketMessage answer;
-		return answer;
-	}
-
-	SocketMessage viewcatalog(CityLordServer* server, UserManager* userManager, SocketMessage message){
-		SocketMessage answer;
+		std::vector<Field*> fieldVector = userManager->getActiveCity()->getPurchasableFields();
+		int i = 0;
+		for (std::vector<Field*>::iterator it = fieldVector.begin(); it != fieldVector.end(); it++){
+			answer.set((*it)->getCoord().toString(), (*it)->toString());
+			i++;
+		}
 		return answer;
 	}
 
 	SocketMessage showinfo(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
+		Player* player = userManager->getActivePlayer();
+		answer.set("money", std::to_string(player->getMoney()));	
+		answer.set("nickname", player->getNickName());	
+		answer.set("nbuilding", std::to_string(player->getNBuilding()));	
+		answer.set("nemptyfield", std::to_string(player->getNEmptyField()));
+		//answer.set("color", player->getColor());	
 		return answer;
 	}
-
-	SocketMessage showinfoothersplayers(CityLordServer* server, UserManager* userManager, SocketMessage message){
+	SocketMessage buy(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
+		int x = std::stoi(message.get("x"));
+		int y = std::stoi(message.get("y"));
+		CityManager* cityManager = userManager->getActiveCity();
+		Player* player = userManager->getActivePlayer();
+		answer = cityManager->makePurchase(player, Location(x, y));
 		return answer;
 	}
-
-	SocketMessage showcatalog(CityLordServer* server, UserManager* userManager, SocketMessage message){
-		SocketMessage answer;
-		return answer;
-	}
-
 
 }
 

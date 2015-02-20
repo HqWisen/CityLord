@@ -14,31 +14,27 @@ void CityLordClient::run(){
 		LOG("Choose an action");
 		std::cout<<"1 - Show map"<<std::endl;
 		std::cout<<"2 - Select field"<<std::endl;
-		std::cout<<"3 - Build"<<std::endl;
-		std::cout<<"4 - Show catalog"<<std::endl;
-		std::cout<<"5 - Show information"<<std::endl;
-		std::cout<<"6 - Show others players's information"<<std::endl;
-		std::cout<<"7 - Disconnection"<<std::endl;
+		std::cout<<"3 - Show catalog"<<std::endl;
+		std::cout<<"4 - Show information"<<std::endl;
+		//std::cout<<"5 - Show others players's information"<<std::endl;
+		std::cout<<"5 - Disconnection"<<std::endl;
 
-		int choice = makeChoice(1, 7);
+		int choice = makeChoice(1, 6);
 		if(choice == 1){
 			showMap();
 		}else if(choice == 2){
 			selectField();
 		}
 		else if(choice == 3){
-			//build();           !!! parcelle non selectionne
+			showCatalog();
 		}
 		else if(choice == 4){
-			//showCatalog();
-		}
-		else if(choice == 5){
 			showInfo();
 		}
-		else if(choice == 6){
+		//else if(choice == 5){
 			//showInfoOthersPlayers();
-		}
-		else if(choice == 7){
+		//}
+		else if(choice == 5){
 			disconnected= true;
 		}
 	}
@@ -225,7 +221,6 @@ void CityLordClient::selectField(){
 	request.set("y", std::to_string(cy-1));
 	sendRequest(request);
 	recvAnswer(answer);
-	std::cout<<"topic = "<<answer.getTopic()<<std::endl;
 	if(answer.getTopic() == "owner"){ 
 		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		std::cout<<"It's your field, what would you want to do ?"<<std::endl;
@@ -257,36 +252,38 @@ void CityLordClient::selectField(){
 	}
 	else if(answer.getTopic() == "other"){ 
 		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-		std::cout<<"It's not your field, what would you want to do ?"<<std::endl;
+		std::cout<<"It's another player field"<<std::endl;
 		std::cout<<"1 - Show information"<<std::endl;
 		std::cout<<"2 - Quit"<<std::endl;
-
 		int choice = makeChoice(1, 2);
 		if(choice == 1){
-			//showinfofield();
+			std::cout<<answer.get("info")<<std::endl;
 		}
-		else if(choice == 2){
-			//quit();
+	}
+	else if(answer.getTopic() == "purchasable"){ 
+		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
+		std::cout<<"It's a purchasable field"<<std::endl;
+		std::cout<<"1 - Show information"<<std::endl;
+		std::cout<<"2 - Buy"<<std::endl;
+		std::cout<<"3 - Quit"<<std::endl;
+		int choice = makeChoice(1, 3);
+		if(choice == 1){
+			std::cout<<answer.get("info")<<std::endl;
+		}else if(choice == 2){
+			request.setTopic("buy");
+			sendRequest(request);
+			recvAnswer(answer);
+			LOG(answer.getTopic() + " - " + answer.get("reason"));
 		}
 	}
 	else{
 		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		std::cout<<"The field selected is not selectable ! (Tree, road, ...)"<<std::endl;
-		//quit()
 	}
 }
 
-void CityLordClient::build1(){  // La parcelle n'est pas encore selectionnée
-	SocketMessage request("build1");
-	SocketMessage answer;
-	sendRequest(request);
-	recvAnswer(answer);
-
-	
-}
-
-void CityLordClient::build2(){ // La parcelle est déjà selectionnée
-	SocketMessage request("build2");
+void CityLordClient::build(){ // La parcelle est déjà selectionnée
+	SocketMessage request("build");
 	SocketMessage answer; 
 }
 
@@ -295,19 +292,18 @@ void CityLordClient::showInfo(){
 	SocketMessage answer; // les différentes informations
 	sendRequest(request);
 	recvAnswer(answer);
-
-	std::string name = answer.get("name");
-	std::string color =answer.get("color");
 	std::string money = answer.get("money");	
+	std::string nickname = answer.get("nickname");
 	std::string nBuilding = answer.get("nbuilding");
-	std::string nEmptyField = answer.get("nEmptyField");
+	std::string nEmptyField = answer.get("nemptyfield");
+	//std::string color = answer.get("color");
 
 	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-	std::cout<<"Your name : "<< name <<std::endl;
-	std::cout<<"Your color : "<< color <<std::endl;
+	std::cout<<"Your nickname : "<< nickname <<std::endl;
 	std::cout<<"Your money : "<< money <<std::endl;
-	std::cout<<"Building's number : "<< nBuilding <<std::endl;
-	std::cout<<"Empty field's number : "<< nEmptyField <<std::endl;
+	std::cout<<"Number of building : "<< nBuilding <<std::endl;
+	std::cout<<"Number of empty field : "<< nEmptyField <<std::endl;
+	//std::cout<<"Your color : "<< color <<std::endl;
 }
 
 void CityLordClient::showCatalog(){
@@ -315,6 +311,9 @@ void CityLordClient::showCatalog(){
 	SocketMessage answer; // les parcelles vendables avec leurs infos
 	sendRequest(request);
 	recvAnswer(answer);
-
-
+	std::map<std::string, std::string> map = answer.getMap();
+	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
+	for(std::map<std::string, std::string>::iterator iterator = map.begin(); iterator != map.end(); iterator++) {
+		std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
+	}
 }

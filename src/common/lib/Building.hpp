@@ -28,6 +28,7 @@ class Building {
 		void deleteVisitor(Visitor*);
 		void upgrade();
 		int getLevel();
+		int getPrice(){return price;};
 		BuildingType getType();
 };
 

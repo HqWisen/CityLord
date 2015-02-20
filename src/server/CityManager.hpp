@@ -27,17 +27,21 @@
 class CityManager{
 	std::string mapname;
 	Map cityMap; 
-	int number;
+	int id;
 	Catalog catalog;
+	int nPlayer;
+	//std::vector<Player*> playerVector;
 	public:
 		CityManager(std::string, int);
 		std::string getMapName();
-		int getNumber();
+		int getID();
+		int getNPlayer();
+		void addPlayer(Player*);
 		Map* getMap();
-		void test();
+		std::vector<Field*> getPurchasableFields();
+		SocketMessage makePurchase(Player*, Location); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées
+		
 /*
-	CityLordManager(Map);
-	SocketMessage makePurchase(Player&, Location); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées
 	SocketMessage makeTrade(Player&, Player&, Location, int);
 	SocketMessage buildBuilding(Player&, Location, BuildingType);
 	SocketMessage destroyBuilding(Player&, Location);

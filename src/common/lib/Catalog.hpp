@@ -4,19 +4,24 @@
 #include <vector>
 #include "Field.hpp"
 #include "Player.hpp"
+#include "../socket/SocketMessage.hpp"
+
 
 class Catalog{
 
-	std::vector<Field*> fieldList;
+	std::vector<Field*> fieldVector;
 
-public:
-	Catalog() = default;
-	void putOnMarket(Field*);
-	void getOffer(Player,Field*,int);
-	void acceptOffer(Player,Field*,int);
-	void give(Field*,Player);
-	std::vector<Field*> getBuyable();
+	public:
+		Catalog() = default;
+		void putOnMarket(Field*);
+		bool isOnMarket(Field*);
+		std::vector<Field*> getPurchasableFields();
+		void give(Field*, Player*);
 };
-
+	/*void getOffer(Player,Field*,int);
+	void acceptOffer(Player,Field*,int);
+	
+};
+*/
 #endif // CATALOG_HPP_
 

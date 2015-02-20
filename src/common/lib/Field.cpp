@@ -87,3 +87,17 @@ bool Field::hasOwner(){
 bool Field::hasBuilding(){
 	return (building != nullptr);
 }
+
+string Field::toString(){
+	string result;
+	result += "Price : "+ std::to_string(price);
+	result += " - ";
+	result += "Owner : ";
+	if(hasOwner()){
+		result += owner->getNickName();
+	}else{
+		result += "no owner";
+	}
+	return result;
+}
+

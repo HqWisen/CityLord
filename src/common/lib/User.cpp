@@ -8,6 +8,8 @@ std::string User::getUserName(){
 
 void User::initPlayer(CityManager* cm){
 	if(playerMap.find(cm) == playerMap.end()){
-		playerMap[cm] = new Player();
+		int id = cm->getNPlayer();
+		playerMap[cm] = new Player(id, username);
+		cm->addPlayer(playerMap[cm]);
 	}
 }

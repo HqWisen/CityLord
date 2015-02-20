@@ -25,6 +25,7 @@ class Field : public Case{			// public Case
 		bool hasBuilding();
 		string display() override;
 		bool isField() override;
+		string toString();
 };
 
 #endif // FIELD_HPP_

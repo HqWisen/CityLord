@@ -1,29 +1,84 @@
 #include "CityManager.hpp"
 
 
-CityManager::CityManager(std::string mapname_, int number_) : mapname(mapname_), cityMap(mapname_), number(number_), catalog(){
-	/*for(int i = 0; i<=cityMap.getDimensionX(); i++){
-		for(int j = 0; j<cityMap.getDimensionY(); j++){
-			Location currentLocation = Location (i,j);
-			if(cityMap.getCase(currentLocation).getType() == "Field"){
-				Field *concernedField = cityMap.getCase(currentLocation);
-				_catalog.putOnMarket(concernedField);
+CityManager::CityManager(std::string mapname_, int id_) : mapname(mapname_), cityMap(mapname_), id(id_), catalog(), nPlayer(0){
+	for(int x = 0; x<cityMap.getDimensionX(); x++){
+		for(int y = 0; y<cityMap.getDimensionY(); y++){
+			Location currentLocation = Location (x,y);
+			if(cityMap.getCase(currentLocation)->getType() == "Field"){
+				Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation));
+				catalog.putOnMarket(concernedField);
 			}
 		}
-	}*/
+	}
 }
 
 std::string CityManager::getMapName(){
 	return mapname;
 }
 
-int CityManager::getNumber(){
-	return number;
+int CityManager::getID(){
+	return id;
+}
+
+int CityManager::getNPlayer(){
+	return nPlayer;
+}
+
+void CityManager::addPlayer(Player* player){
+	//playerVector.push_back(player);
+	nPlayer++;
 }
 
 Map* CityManager::getMap(){
 	return &cityMap;
 }
+
+std::vector<Field*> CityManager::getPurchasableFields(){
+	return catalog.getPurchasableFields();
+}
+
+
+SocketMessage CityManager::makePurchase(Player* player, Location coordinates){
+	//Regarde si le joueur 1 a assez d'argent
+	// Si oui, le cataloque est mis a jour, le joueur obtient la parcelle et un message est envoyé
+	// Si non, un message est envoyé
+	SocketMessage message;
+	if(cityMap.getCase(coordinates)->getType() == "Field"){;
+		Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates));
+		if(catalog.isOnMarket(concernedField)){
+			if(concernedField->hasBuilding()){
+				if(player->getMoney() >= concernedField->getPrice() + concernedField->getBuilding()->getPrice()){
+					player->setMoney(player->getMoney() - (concernedField->getPrice() + concernedField->getBuilding()->getPrice()));
+					catalog.give(concernedField, player);
+					message.setTopic("success");
+					message.set("reason", "Field has been successfully purchased!");
+				}else{
+					message.setTopic("failure");
+					message.set("reason", "You do not own enough money!");
+				}
+			}else{
+				if(player->getMoney() >= concernedField->getPrice()){
+					player->setMoney(player->getMoney() - concernedField->getPrice());
+					catalog.give(concernedField, player);
+					message.setTopic("success");
+					message.set("reason", "Field has been successfully purchased!");
+				}else{
+					message.setTopic("failure");
+					message.set("reason", "You do not own enough money!");
+				}
+			}
+		}else{
+			message.setTopic("failure");
+			message.set("reason", "Field is not on the catalog, therefore it was purchased by someone else");
+		}
+	}else{
+		message.setTopic("failure");
+		message.set("reason", "This is not a Field!");
+	}
+	return message;
+}
+
 
 /*
 SocketMessage CityLordManager::buildBuilding(Player& player, Location coordinates, BuildingType buildingType){
@@ -165,45 +220,6 @@ SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, Locat
 	return message;*
 }
 
-SocketMessage CityLordManager::makePurchase(Player& player, Location coordinates){
-	//Regarde si le joueur 1 a assez d'argent
-	// Si oui, le cataloque est mis a jour, le joueur obtient la parcelle et un message est envoyé
-	// Si non, un message est envoyé
-	SocketMessage message = SocketMessage();
-	if(cityMap.getCase(coordinates).getType() == "Field"){;
-		Field *concernedField = cityMap.getCase(coordinates);
-		if(_catalog.isOnMarket(*concernedField)){
-			if(*concernedField.hasBuilding()){
-				if(player.getMoney() >= *concernedField.getPrice() + *concernedField.getBuilding().price){;
-					player.setMoney(player.getMoney() - (*concernedField.getPrice() + *concernedField.getBuilding().price)):
-					_catalog.give(concernedField, player);
-					message.setTopic(TOPIC_SUCCESS);
-					SocketMessage.set("reason", "Field has been successfully purchased!");
-				}else{
-					message.setTopic(TOPIC_FAILURE);
-					message.set("reason", "You do not own enough money!");
-				}
-			}else{
-				if(player.getMoney() >= *concernedField.getPrice()){;
-					player.setMoney(player.getMoney() - *concernedField.getPrice()):
-					_catalog.give(concernedField, player);
-					message.setTopic(TOPIC_SUCCESS);
-					SocketMessage.set("reason", "Field has been successfully purchased!");
-				}else{
-					message.setTopic(TOPIC_FAILURE);
-					message.set("reason", "You do not own enough money!");
-				}
-			}
-		}else{
-			message.setTopic(TOPIC_FAILURE);
-			message.set("reason", "Field is not on the catalog, therefore it was purchased by someone else (might be you =P)");
-		}
-	}else{
-		message.setTopic(TOPIC_FAILURE);
-		message.set("reason", "This is not a Field!");
-	}
-	return message;
-}
 
 std::string showCatalog(){
 	//Envoie le statut du catalogue de la ville

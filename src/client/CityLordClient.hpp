@@ -30,8 +30,7 @@ class CityLordClient{
 		void LOG(std::string);
 		void showMap();
 		void selectField();
-		void build1();
-		void build2();
+		void build();
 		void showCatalog();
 		void showInfo();
 		//void showInfoOthersPlayers();
