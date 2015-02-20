@@ -49,16 +49,16 @@ void Player::addField(Field* field){
 	fieldVector.push_back(field);
 }
 
-void Player::createBuilding(Field* field){
-	nBuilding++;
-}
-
 int Player::getNBuilding(){
 	return nBuilding;
 }
 
 int Player::getNEmptyField(){
 	return fieldVector.size() - nBuilding;
+}
+
+void Player::buildBuilding(){
+	nBuilding++;
 }
 
 /*

@@ -139,6 +139,24 @@ namespace request{
 		answer = cityManager->makePurchase(player, Location(x, y));
 		return answer;
 	}
+	
+	SocketMessage build(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		int x = std::stoi(message.get("x"));
+		int y = std::stoi(message.get("y"));
+		std::string type = message.get("type");
+		BuildingType buildingType;
+		if(type == "bar"){
+			buildingType = BuildingType::BAR;
+		}else if(type == "shop"){
+			buildingType = BuildingType::SHOP;
+		}
+		CityManager* cityManager = userManager->getActiveCity();
+		std::cout<<"calling build request"<<std::endl;
+		Player* player = userManager->getActivePlayer();
+		answer = cityManager->buildBuilding(player, Location(x, y), buildingType);
+		return answer;
+	}
 
 }
 

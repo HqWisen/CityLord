@@ -27,6 +27,8 @@ class BuildingType{
 		int income;
 		int price;
 		int upgradeCost;
+		BuildingType() = default;
+		BuildingType(const BuildingType&) = default;
 		BuildingType(string ,\
 					int, int, int, int,
 					int, int, int, int,

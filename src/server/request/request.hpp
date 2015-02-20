@@ -4,6 +4,7 @@
 #include "../UserManager.hpp"
 #include "../CityLordServer.hpp"
 #include "../../common/socket/SocketMessage.hpp"
+#include "../../common/lib/BuildingType.hpp"
 
 #include <iostream>
 
@@ -23,6 +24,7 @@ namespace request{
 	SocketMessage showinfo(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage showcatalog(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage buy(CityLordServer*, UserManager*, SocketMessage);
+	SocketMessage build(CityLordServer*, UserManager*, SocketMessage);
 
 }
 

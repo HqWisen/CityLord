@@ -225,29 +225,35 @@ void CityLordClient::selectField(){
 		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		std::cout<<"It's your field, what would you want to do ?"<<std::endl;
 		std::cout<<"1 - Build"<<std::endl;
-		std::cout<<"2 - Sell"<<std::endl;
-		std::cout<<"3 - Show information"<<std::endl;
-		std::cout<<"4 - Upgrade"<<std::endl;
-		std::cout<<"5 - Destroy"<<std::endl;
-		std::cout<<"6 - Quit"<<std::endl;
+		//std::cout<<"2 - Sell"<<std::endl;
+		std::cout<<"2 - Show information"<<std::endl;
+		std::cout<<"3 - Upgrade"<<std::endl;
+		std::cout<<"4 - Destroy"<<std::endl;
+		std::cout<<"5 - Quit"<<std::endl;
 
 		int choice = makeChoice(1, 6);
 		if(choice == 1){
-			//build2();             !!!!!!!!!!! build2 = parcelle déjà selectionne
-		}else if(choice == 2){
-			//sell();
+			request.setTopic("build");
+			std::cout<<"1 - BAR"<<std::endl;
+			std::cout<<"2 - SHOP"<<std::endl;
+			int buildChoice = makeChoice(1, 2);
+			if(buildChoice == 1){
+				request.set("type", "bar");
+			}else if(buildChoice == 2){
+				request.set("type", "shop");
+			}
+			sendRequest(request);
+			recvAnswer(answer);
+			LOG(answer.getTopic() + " - " + answer.get("reason"));
+		}
+		else if(choice == 2){
+			std::cout<<answer.get("info")<<std::endl;
 		}
 		else if(choice == 3){
-			//showinfo()field;
-		}
-		else if(choice == 4){
 			//upgrade();
 		}
-		else if(choice == 5){
+		else if(choice == 4){
 			//destroy();
-		}
-		else if(choice == 6){
-			//quitte automatiquement
 		}
 	}
 	else if(answer.getTopic() == "other"){ 

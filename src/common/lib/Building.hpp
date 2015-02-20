@@ -16,20 +16,20 @@ class Building {
 		int income;
 		int attractiveness;
 		int dailyCost;
-		std::vector<Visitor*> visitorList;
+		std::vector<Visitor*> visitorVector;
 		int level;
 		int destructionCost;
 		BuildingType type;
 	
 	public:
-		Building(BuildingType, int);
-		~Building();
-		void receiveVisitor(Visitor*);
+		Building(BuildingType, int level = 1);
+		~Building() = default;
+		int getLevel();
+		BuildingType getType();
+		int getPrice(){return price;};
+		/*void receiveVisitor(Visitor*);
 		void deleteVisitor(Visitor*);
 		void upgrade();
-		int getLevel();
-		int getPrice(){return price;};
-		BuildingType getType();
+*/
 };
-
 #endif // BUILDING_HPP_

@@ -5,15 +5,15 @@
 using namespace std;
 
 //Erase-Remove idiom for vector 
+/*
 template<typename T>
 inline void removeElem(vector<T> & vect, const T & item)
 {
     vect.erase(remove(vect.begin(), vect.end(), item), vect.end());
 }
-
-Building::Building(BuildingType building, int lvl=1) : type(building){
+*/
+Building::Building(BuildingType buildingtype, int lvl) : type(buildingtype){
 	level = lvl;
-	//
 	maxCapacity = type.maxCapacity;
 	price = type.price;
 	openTime = type.openTime;
@@ -23,27 +23,22 @@ Building::Building(BuildingType building, int lvl=1) : type(building){
 	dailyCost = type.dailyCost;
 	destructionCost = type.destructionCost;
 	//
-	if (level > 1){
+	/*if (level > 1){
 		for (int i=1; i<level; i++){
 			this->upgrade();
 			level -= 1;
 		}
-	}
+	}*/
 }
 
-Building::~Building(){
-	level = 0;
-	//
-	maxCapacity = 0;
-	price = 0;
-	openTime = 0;
-	closeTime = 0;
-	income = 0;
-	attractiveness = 0;
-	dailyCost = 0;
-	destructionCost = 0;
-	visitorList.clear();
+int Building::getLevel(){
+	return level;
 }
+BuildingType Building::getType(){
+	return type;
+}
+
+/*
 
 void Building::receiveVisitor(Visitor* guest){
 	visitorList.push_back(guest);
@@ -62,10 +57,5 @@ void Building::upgrade(){
 	destructionCost += ((type.destructionCost)/2);
 }
 
-int Building::getLevel(){
-	return level;
-}
 
-BuildingType Building::getType(){
-	return type;
-}
+}*/

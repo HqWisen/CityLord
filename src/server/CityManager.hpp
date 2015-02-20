@@ -40,10 +40,10 @@ class CityManager{
 		Map* getMap();
 		std::vector<Field*> getPurchasableFields();
 		SocketMessage makePurchase(Player*, Location); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées
+		SocketMessage buildBuilding(Player*, Location, BuildingType);
 		
 /*
 	SocketMessage makeTrade(Player&, Player&, Location, int);
-	SocketMessage buildBuilding(Player&, Location, BuildingType);
 	SocketMessage destroyBuilding(Player&, Location);
 	SocketMessage upgradeBuilding(Player&, Location);
 	std::string showCatalog();

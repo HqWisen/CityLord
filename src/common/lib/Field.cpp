@@ -55,8 +55,8 @@ bool Field::isField(){
 	return true;
 }
 
-void Field::buildBuilding(Building* newBuilding){
-	building = newBuilding;
+void Field::buildBuilding(BuildingType buildingType){
+	building = new Building(buildingType);
 }
 
 //----getters & setters----
@@ -97,6 +97,9 @@ string Field::toString(){
 		result += owner->getNickName();
 	}else{
 		result += "no owner";
+	}
+	if(hasBuilding()){
+		result += "# "+building->getType().buildingName;
 	}
 	return result;
 }

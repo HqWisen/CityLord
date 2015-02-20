@@ -14,7 +14,7 @@ class Field : public Case{			// public Case
 		Field(Location, Building*);
 		Field(Player*, Location);
 		Field(Player*, Location, Building*);
-		void buildBuilding(Building*);
+		void buildBuilding(BuildingType);
 		void destroyBuilding();
 		int getPrice();
 		void setPrice(int);
