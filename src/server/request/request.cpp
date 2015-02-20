@@ -152,9 +152,28 @@ namespace request{
 			buildingType = BuildingType::SHOP;
 		}
 		CityManager* cityManager = userManager->getActiveCity();
-		std::cout<<"calling build request"<<std::endl;
 		Player* player = userManager->getActivePlayer();
 		answer = cityManager->buildBuilding(player, Location(x, y), buildingType);
+		return answer;
+	}
+	
+	SocketMessage upgrade(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		int x = std::stoi(message.get("x"));
+		int y = std::stoi(message.get("y"));
+		CityManager* cityManager = userManager->getActiveCity();
+		Player* player = userManager->getActivePlayer();
+		answer = cityManager->upgradeBuilding(player, Location(x, y));
+		
+		return answer;
+	}
+	SocketMessage destroy(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		int x = std::stoi(message.get("x"));
+		int y = std::stoi(message.get("y"));
+		CityManager* cityManager = userManager->getActiveCity();
+		Player* player = userManager->getActivePlayer();
+		answer = cityManager->destroyBuilding(player, Location(x, y));
 		return answer;
 	}
 

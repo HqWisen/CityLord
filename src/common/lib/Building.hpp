@@ -27,9 +27,10 @@ class Building {
 		int getLevel();
 		BuildingType getType();
 		int getPrice(){return price;};
+		int getDestructionCost(){return destructionCost;};
+		void upgrade();
 		/*void receiveVisitor(Visitor*);
 		void deleteVisitor(Visitor*);
-		void upgrade();
 */
 };
 #endif // BUILDING_HPP_

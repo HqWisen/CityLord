@@ -13,7 +13,9 @@ const std::map<std::string, request_ptr> UserManager::requestmap = {
 	{"showinfo", request::showinfo},
 	{"showcatalog", request::showcatalog},
 	{"buy", request::buy},
-	{"build", request::build}
+	{"build", request::build},
+	{"upgrade", request::upgrade},
+	{"destroy", request::destroy}
 };
 
 UserManager::UserManager(CityLordServer* cserver, ClientSocket socket) : server(cserver), clientSocket(socket){
@@ -48,7 +50,6 @@ void UserManager::run(){
 	SocketMessage request, answer;
 	recvRequest(request);
 	while(request.getTopic() != "quit" and !request.getTopic().empty()){
-		std::cout<<"EXECUTING "<<request.getTopic()<<std::endl;
 		answer = UserManager::requestmap.at(request.getTopic())(server, this, request);
 		sendAnswer(answer);
 		recvRequest(request);

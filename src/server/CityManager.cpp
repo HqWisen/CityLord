@@ -43,7 +43,6 @@ SocketMessage CityManager::makePurchase(Player* player, Location coordinates){
 	//Regarde si le joueur 1 a assez d'argent
 	// Si oui, le cataloque est mis a jour, le joueur obtient la parcelle et un message est envoyé
 	// Si non, un message est envoyé
-	std::cout<<"MAKEPURCHASE"<<std::endl;
 	SocketMessage message;
 	if(cityMap.getCase(coordinates)->getType() == "Field"){;
 		Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates));
@@ -84,7 +83,6 @@ SocketMessage CityManager::makePurchase(Player* player, Location coordinates){
 
 SocketMessage CityManager::buildBuilding(Player* player, Location coordinates, BuildingType buildingType){
 	SocketMessage message;
-		std::cout<<"BUILDBUILND"<<std::endl;
 	if(cityMap.getCase(coordinates)->getType() == "Field"){;
 		Field *concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates));
 		if(concernedField->getOwner() == player){
@@ -113,79 +111,69 @@ SocketMessage CityManager::buildBuilding(Player* player, Location coordinates, B
 	}
 		return message;
 }
+
+SocketMessage CityManager::upgradeBuilding(Player* player, Location coordinates){
+
+	SocketMessage message;
+	if(cityMap.getCase(coordinates)->getType() == "Field"){;
+		Field *concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates));
+		if(concernedField->getOwner() == player){
+			if(concernedField->hasBuilding()){
+				if(player->getMoney() >= concernedField->getBuilding()->getType().upgradeCost){
+					player->setMoney(player->getMoney() - concernedField->getBuilding()->getType().upgradeCost);
+					concernedField->getBuilding()->upgrade();
+					message.setTopic("success");
+					message.set("reason", "Building has been successfully upgraded!");
+				}else{
+					message.setTopic("failure");
+					message.set("reason", "You do not have enough money!");
+				}
+			}else{
+				message.setTopic("failure");
+				message.set("reason", "This Field has no building!");
+			}
+		}else{
+			message.setTopic("failure");
+			message.set("reason", "You do not own this Field!");
+		}
+	}else{
+		message.setTopic("failure");
+		message.set("reason", "This is not a Field!");
+	}
+	return message;
+}
+
+SocketMessage CityManager::destroyBuilding(Player* player, Location coordinates){
+	SocketMessage message;
+	if(cityMap.getCase(coordinates)->getType() == "Field"){;
+		Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates));
+		if(concernedField->getOwner() == player){
+			if(concernedField->hasBuilding()){
+				if(player->getMoney() >= concernedField->getBuilding()->getDestructionCost()){
+					player->setMoney(player->getMoney() - concernedField->getBuilding()->getDestructionCost());
+					player->destroyBuilding();
+					concernedField->destroyBuilding();
+					message.setTopic("success");
+					message.set("reason", "Building has been successfully destroyed!");
+				}else{
+					message.setTopic("failure");
+					message.set("reason", "You do not have enough money!");
+				}
+			}else{
+				message.setTopic("failure");
+				message.set("reason", "This Field has no building!");
+			}
+		}else{
+			message.setTopic("failure");
+			message.set("reason", "You do not own this Field!");
+		}
+	}else{
+		message.setTopic("failure");
+		message.set("reason", "This is not a Field!");
+	}
+	return message;
+}
 /*
-SocketMessage CityLordManager::upgradeBuilding(Player& player, Location coordinates){
-	//Regarde si le joueur est le propriétaire de la parcelle et qu'elle contient un bulding:
-	//	Si oui, regarde si le building peut être amélioré
-	//		Si oui, regarde si le joueur a assez d'argent
-	//			Si oui, le building est amélioré et un message est envoyé
-	//			Si non, un message est envoyé
-	//		Si non, un message est envoyé
-	//	Si non, un message est envoyé
-	SocketMessage message = SocketMessage();
-	if(cityMap.getCase(coordinates).getType() == "Field"){;
-		Field *concernedField = cityMap.getCase(coordinates);
-		if(*concernedField.getOwner() == player.number){
-			if(*concernedField.hasBuilding()){
-				if(player.getMoney() >= *concernedField.getBuilding().type.upgradeCost){
-					player.setMoney(player.getMoney() - *concernedField.getBuilding().type.upgradeCost);
-					*concernedField.getBuilding().upgrade();
-					message.setTopic(TOPIC_SUCCESS);
-					message.set("reason", "Building has been successfully upgraded!")
-				}else{
-					message.setTopic(TOPIC_FAILURE);
-					message.set("reason", "You do not have enough money!")
-				}
-			}else{
-				message.set(TOPIC_FAILURE);
-				message.set("reason", "This Field has no building!");
-			}
-		}else{
-			message.setTopic(TOPIC_FAILURE);
-			message.set("reason", "You do not own this Field!");
-		}
-	}else{
-		message.setTopic(TOPIC_FAILURE);
-		message.set("reason", "This is not a Field!");
-	}
-	return message;
-}
-
-SocketMessage CityLordManager::destroyBuilding(Player& player, Location coordinates){
-	//Regarde si le joueur est le propriétaire de la parcelle et qu'elle contient un bulding:
-	//	Si oui, regarde si le joueur a assez d'argent
-	//		Si oui, le building est amélioré et un message est envoyé
-	//		Si non, un message est envoyé
-	//	Si non, un message est envoyé
-	SocketMessage message = SocketMessage();
-	if(cityMap.getCase(coordinates).getType() == "Field"){;
-		Field *concernedField = cityMap.getCase(coordinates);
-		if(concernedCase.getOwner() == player.number){
-			if(*concernedField.hasBuilding()){
-				if(player.getMoney() >= *concernedField.getBuilding().destructionCost){
-					player.setMoney(player.getMoney() - *concernedField.getBuilding().destructionCost);
-					*concernedField.destroyBuilding();
-					message.setTopic(TOPIC_SUCCESS);
-					message.set("reason", "Building has been successfully destroyed!")
-				}else{
-					message.setTopic(TOPIC_FAILURE);
-					message.set("reason", "You do not have enough money!")
-				}
-			}else{
-				message.set(TOPIC_FAILURE);
-				message.set("reason", "This Field has no building!");
-			}
-		}else{
-			message.setTopic(TOPIC_FAILURE);
-			message.set("reason", "You do not own this Field!");
-		}
-	}else{
-		message.setTopic(TOPIC_FAILURE);
-		message.set("reason", "This is not a Field!");
-	}
-	return message;
-}
-
 SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, Location coordinates, int offeredMoney){
 	//Regarde si le joueur 1 a assez d'argent
 	//	Si oui, l'échange est effectué et des messages sont envoyés

@@ -36,6 +36,7 @@ public:
 	static Player* getPlayerByID(int); //De la part de Gab: SA MERE A CELUI QUI TOUCHE A CETTE FONCTION x(
 	void addField(Field*);
 	void buildBuilding();
+	void destroyBuilding();
 	
 	/*void createBuilding();
 	void removeBuilding();

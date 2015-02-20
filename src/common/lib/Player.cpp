@@ -61,6 +61,10 @@ void Player::buildBuilding(){
 	nBuilding++;
 }
 
+void Player::destroyBuilding(){
+	nBuilding--;
+}
+
 /*
 //bool Player::isBankrupt(){return money<0;}
 

@@ -38,6 +38,15 @@ BuildingType Building::getType(){
 	return type;
 }
 
+void Building::upgrade(){
+	maxCapacity += type.maxCapacity;
+	income += type.income;
+	attractiveness += ((type.attractiveness)/2);
+	dailyCost += ((type.dailyCost)/1.75);
+	level += 1;
+	destructionCost += ((type.destructionCost)/2);
+}
+
 /*
 
 void Building::receiveVisitor(Visitor* guest){
@@ -48,14 +57,7 @@ void Building::deleteVisitor(Visitor* guest){
 	removeElem(visitorList, guest);
 }
 
-void Building::upgrade(){
-	maxCapacity += type.maxCapacity;
-	income += type.income;
-	attractiveness += ((type.attractiveness)/2);
-	dailyCost += ((type.dailyCost)/1.75);
-	level += 1;
-	destructionCost += ((type.destructionCost)/2);
-}
+
 
 
 }*/

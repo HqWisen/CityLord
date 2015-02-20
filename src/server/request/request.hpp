@@ -25,6 +25,8 @@ namespace request{
 	SocketMessage showcatalog(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage buy(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage build(CityLordServer*, UserManager*, SocketMessage);
+	SocketMessage upgrade(CityLordServer*, UserManager*, SocketMessage);
+	SocketMessage destroy(CityLordServer*, UserManager*, SocketMessage);
 
 }
 

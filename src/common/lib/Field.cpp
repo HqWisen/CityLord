@@ -59,6 +59,11 @@ void Field::buildBuilding(BuildingType buildingType){
 	building = new Building(buildingType);
 }
 
+void Field::destroyBuilding(){
+	delete building;
+	building = nullptr;
+}
+
 //----getters & setters----
 void Field::setPrice(int amount){
 	price = amount;
