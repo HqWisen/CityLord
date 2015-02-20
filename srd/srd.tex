@@ -10,6 +10,8 @@
 \usepackage{textcomp}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{array}
+\usepackage{varwidth}
 \setcounter{secnumdepth}{3}
 
 \makeatletter
@@ -109,6 +111,8 @@ Un joueur peut, s'il le souhaite et pour un certain coût, amélioré son bâtim
 Si un joueur est en faillite, à cause d'un coût d'entretien trop élévé face aux recettes, il sera alors obligé de vendre des propriétés. Il mettra alors sa propriété (parcelle+bâtiment) dans le catalogue de vente, ouvert à tous les joueurs.
 Il peut également s'il le souhaite, supprimer son bâtiment, ce qui réduira grandement les coût d'entretien, mais rendera les recettes nulles. (Une parcelle vide à un coût d'entretien, mais pas de revenu, ceci est pour éviter qu'un joeur achète tous les emplacements simplement pour empêcher les autres de construire).
 
+La partie s'achève lorsqu'il ne reste qu'un seul joueur en jeu, n'ayant pas fait faillite, ou que le temps est écoulé. Lorsque l'horloge arrive à 0, le jeu est arrêté et le joueur remportant la partie est celui dont le capital cummulé (argent sur le compte + prix réel des bâtiments possédés) est le plus élevé. En cas d'égalité, le vainqueur est choisi en comptant la notoriété des bâtiments, puis le nombre de bâtiments (celui qui en a le plus gagne), et enfin le nombre de visiteurs total lors de la partie.
+
 \newpage
 \section{Glossaire}
 \begin{itemize}
@@ -122,25 +126,44 @@ Il peut également s'il le souhaite, supprimer son bâtiment, ce qui réduira gr
  \item \textbf{Log In:}se connecter.
  \item \textbf{Log Out:}se déconnecter.
  \item \textbf{Débugger:} Action de chercher, trouver et retirer un bug d’un programme informatique.
+ \item \textbf{Host:} Action d'héberger une partie.
+ \item \textbf{Join:} Action de rejoindre une partie.
 \end{itemize}
 
 \newpage
 \section{Historique du document}
-\begin{description}
-	\item[2.2] (16/02/15) : Modification du Use Case de "Log In", plus de utilisateur hôte mais un serveur \& modification des besoins non-fonctionels - David
-	\item[2.1] (13/02/15) : Modification du glossaire, enrichissement des pré et post condition. - David - Cédric
-	\item[2.0] (06/02/15) : Modification du But du projet, ajout au glossaire \& index +précondition "Construire"  - David
-	\item[1.8] (15/12/14) : Mise à jour des exigences de domaine - Cédric
-    \item[1.7] (14/12/14) : Ajout des déscriptions textuelles des uses cases (Premiers achats,Construire-Améliorer-Détruire,Achats entre joueurs) - David
-    \item[1.6] (12/12/14) : Rajout et correction des déscriptions textuelles des use case, et ajout des exigences de domaine - Hakim
-    \item[1.5] (11/12/14) : Déscriptions de Use Case interface de connexion - Kaio
-    \item[1.4] (11/12/14) : Exigences fonctionnelles (Besoins de l'utilisateur) et ajout dans le glossaire et l'index de termes - David
-    \item[1.3] (11/02/14) : Ajout du diagramme de classe - Equipe
-    \item[1.2] (10/02/14) : Ajout des premières \textit{use case} - Zakaria
-    \item[1.1] (10/02/14) : Première version. (Aharrar Zakaria) Contient les points 1.1, 1.2, 1.3, 2 et 2.1 (partiellement) - Zakaria
-    \item[1.0] (09/12/14) : Création du document - Hakim
-    
-\end{description}
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+Date de modification & Version & Modification apportée & Auteur \\
+\hline
+19/02/2015 & 2.3 & \parbox{7cm}{ - \\ Modification du glossaire, but du jeu, Historique (tableau), use cases, ajustement, orthographe, enrichissement des pré et post condition.\\} & Zakaria \\
+\hline
+16/02/2015 & 2.2 & \parbox{7cm}{-\\ Modification du Use Case de "Log In", plus de utilisateur hôte mais un serveur \& modification des besoins non-fonctionels\\} & David \\
+\hline
+13/02/2015 & 2.1 & \parbox{7cm}{-\\ Modification du glossaire, enrichissement des pré et post condition.\\} & David - Cédric \\
+\hline
+06/02/2015 & 2.0 & \parbox{7cm}{-\\Modification du But du projet, ajout au glossaire \& index +précondition "Construire".\\} & David \\
+\hline
+15/12/2015 & 1.8 & \parbox{7cm}{-\\ Mise à jour des exigences de domaine.\\} &  Cédric \\
+\hline
+14/12/2015 & 1.7 & \parbox{7cm}{-\\ Ajout des descriptions textuelles des use case (Premiers achats,Construire-Améliorer-Détruire,Achats entre joueurs).\\} & David\\
+\hline
+12/12/2015 & 1.6 & \parbox{7cm}{-\\ Rajout et correction des descriptions textuelles des use case, ajout des éxigeances de domaine.\\} & Hakim \\
+\hline
+11/12/2015 & 1.5 & \parbox{7cm}{-\\ Description de Use Case interface de connexion.\\} & Kaio \\
+\hline
+11/12/2015 & 1.4 & \parbox{7cm}{-\\ Exigence fonctionnelles (Besoin de l'utilisateur) et ajout dans le glossaire et l'index des termes.\\} & David \\
+\hline
+11/12/2015 & 1.3 & \parbox{7cm}{-\\ Ajout du diagramme de classe.\\} & Équipe \\
+\hline
+10/12/2015 & 1.2 & \parbox{7cm}{-\\ Ajout des premières \textit{use case}\\} & Zakaria \\
+\hline
+10/12/2015 & 1.1 & \parbox{7cm}{-\\Première version. Contient les points 1.1, 1.2, 1.3, 2 et 2.1 (partiellement).\\} & Zakaria \\
+\hline
+09/12/2015 & 1.0 & \parbox{7cm}{-\\Création du document.\\} & Hakim\\
+\hline
+\end{tabular}
 
 
 \newpage
@@ -149,7 +172,7 @@ Il peut également s'il le souhaite, supprimer son bâtiment, ce qui réduira gr
 \subsection{Interface de connexion}
 \begin{figure}[ht]
     \makebox[\linewidth]{
-        \includegraphics[width=550pt]{uml/useCaseDiagrams/loginUseCase2.png}
+        \includegraphics[width=550pt]{uml/useCaseDiagrams/loginUseCase.png}
     }
     \caption{Use Case Login/Logout}
 \end{figure}
@@ -346,7 +369,7 @@ Dès qu'un bâtiment n'as pas de prioritaire, le catalogue le met en vente libre
 \subsection{Construire-Améliorer-Détruire}
 \begin{figure}[ht]
     \makebox[\linewidth]{
-        \includegraphics[width=550pt]{uml/useCaseDiagrams/buildDestroyUseCase2.png}
+        \includegraphics[width=550pt]{uml/useCaseDiagrams/buildDestroyUseCase.png}
     }
     \caption{Use Case Buid/Upgrade/Destroy}
 \end{figure}
@@ -366,9 +389,10 @@ Dès qu'un bâtiment n'as pas de prioritaire, le catalogue le met en vente libre
 \begin{itemize}
  \item Un bâtiment est construit.
  \item Le joueur possède ce nouveau bâtiment.
+ \item Le joueur a payé le prix de construction.
 \end{itemize}
 \paragraph{Cas général}
-Lorsque un joueur veut construire un nouveau bâtiment, il lui faudra simplement séléctionner l'option \og \textit{Construire} \fg, il entre alors en mode Construction. Il peut à tout moment quitter ce mode et annuler la construction, en appuyant sur \og \textit{-ESC-} \fg ou en cliquant sur \og \textit{annuler} \fg. Un "catalogue" de type de bâtiment lui sera proposé, après qu'il en ai séléctionné un[Exception : Le joueur n'as pas assez d'argent], il devra cliquer sur le terrain sur lequel il veut construire.[Exception : Propriété séléctionnée non-valide]
+Lorsque un joueur veut construire un nouveau bâtiment, il lui faudra simplement séléctionner l'option \og \textit{Construire} \fg, il entre alors en mode Construction. Il peut à tout moment quitter ce mode et annuler la construction, en appuyant sur \og \textit{-ESC-} \fg ou en cliquant sur \og \textit{annuler} \fg. Un "catalogue" de type de bâtiment lui sera proposé, après qu'il en ai séléctionné un, il devra cliquer sur le terrain vide lui appartenant sur lequel il veut construire.[Exception : Propriété séléctionnée non-valide] Il devra payer ensuite le prix indiqué par le catalogue. [Exception : Le joueur n'as pas assez d'argent]
 \paragraph{Exceptions}
 \begin{itemize}
  \item \textit{Le joueur n'as pas assez d'argent:}  Une fenètre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
@@ -413,10 +437,10 @@ Un joueur peut à tout moment améliorer un de ses bâtiments. Il lui suffit de 
  \item Le propriétaire gagne une somme d'argent équivalente à la moitié de la valeur du bâtiment détruit.
 \end{itemize}
 \paragraph{Cas général}
-Un joueur peut également détruire un de ses bâtiments. Il lui suffit de cliquer sur l'option \og \textit{Détruire} \fg, il entre alors en mode Destruction. Il peut à tout moment quitter ce mode et annuler la destruction, en appuyant sur \og \textit{-ESC-} \fg ou en cliquant sur \og \textit{annuler} \fg. Et ensuite séléctionner le bâtiment qu'il désire détruire. Une fois détruit, le bâtiment rapporte la moitié de la valuer de celui-ci à son propriétaire. [Exception : Propriété séléctionnée non-valide]
+Un joueur peut également détruire un de ses bâtiments. Il lui suffit de cliquer sur l'option \og \textit{Détruire} \fg, il entre alors en mode Destruction. Il peut à tout moment quitter ce mode et annuler la destruction, en appuyant sur \og \textit{-ESC-} \fg ou en cliquant sur \og \textit{annuler} \fg. Et ensuite séléctionner le bâtiment qu'il désire détruire. Une fois détruit, le bâtiment rapporte la moitié de la valeur de celui-ci à son propriétaire. [Exception : Propriété séléctionnée non-valide]
 \paragraph{Exceptions}
 \begin{itemize}
- \item \textit{Le joueur n'as pas assez d'argent:}  Une fenètre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
+ \item \textit{Le joueur n'a pas assez d'argent:}  Une fenètre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
   \item \textit{Propriété séléctionnée non-valide:}  Si le joueur séléctionne une proprité qui ne lui appartient pas, où qui ne possède pas de bâtiment, une fenètre s'ouvre indiquant au joueur sa mauvaise sélection.
 \end{itemize}
 \subsubsection{Select Building type}
@@ -488,7 +512,7 @@ A tout moment de la partie, un joueur peut tenter d'acheter le bâtiment d'un au
 \paragraph{Préconditions}
 \begin{itemize}
  \item La partie est en cours.
- \item Le joueur à fait une offre qui n'as pas encore été validée.
+ \item Le joueur à fait une offre qui n'a pas encore été validée.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
@@ -529,7 +553,7 @@ Lorsque un joueur reçoit une offre sur un bâtiment, une fenêtre s'affiche ave
 \section{Exigences non fonctionnelles}
 \subsection{Service}
 \paragraph{}Ergonomie:  \newline
-Le système sera esthétique et disposera donc d’une apparence conviviale, ludique, mais également professionnelle.
+Le système sera esthétique et disposera donc d’une apparence claire, afin que le joueur puisse repérer les options dont il a besoin facilement et rapidement.
 
 La map sera facilement compréhensible, chaque joueur aura sa couleur qui sera affichée sur ses propriétés.
 
@@ -602,6 +626,8 @@ Sans cela, la communication avec le serveur et entre les joueurs serait endommag
  \item \textbf{Upgrade}
  \item \textbf{Log In}
  \item \textbf{Log Out}
+ \item \textbf{Host}
+ \item \textbf{Join}
 \end{itemize}
 
 \end{document}
