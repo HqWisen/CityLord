@@ -9,6 +9,8 @@
 using namespace std;
 
 class Player{
+	static Player* playerList[8];
+
 	const int INITIALBUDGET = 150000;
 	int money;
 	int playerID;
@@ -28,8 +30,9 @@ public:
 	void makeOffer();
 	void cancelOffer();
 	void isBankrupt();
-	string getColor(); //De la part de Gab: CA MERE A CELUI QUI TOUCHE A CETTE FONCTION x(
+	string getColor();
 	int getPlayerID();
+	static Player* getPlayerByID(int); //De la part de Gab: SA MERE A CELUI QUI TOUCHE A CETTE FONCTION x(
 	//std::vector<Location> getOwnedBuildings();
 	//std::vector<Location> getOwnedFields();
 	//void addField(Field);
