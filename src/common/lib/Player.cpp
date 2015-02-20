@@ -16,6 +16,7 @@ Player::Player(string name, int number){
 										 \033[1;43m   yellow     \033[1;44m   dark blue
 										 \033[1;45m   purple     \033[1;46m    light blue
 										 \033[1;47m  white*/
+	playerList[number] = this;
 }
 
 //bool Player::isBankrupt(){return money<0;}
@@ -27,6 +28,11 @@ string Player::getColor(){
 int Player::getPlayerID(){
 	return playerID;
 }
+
+Player* Player::getPlayerByID(int index){
+	return playerList[index];
+}
+
 //std::vector<Building*> Player::getOwnedBuildings(){return buildingList;}
 //std::vector<Field*> Player::getOwnedFields(){return fieldList;}
 //void Player::addField(Field field){fieldList.push_back(field);}
@@ -34,3 +40,5 @@ int Player::getPlayerID(){
 void Player::loseMoney(int amount){
 	money -= amount;
 }
+
+Player* Player::playerList[8] = {nullptr};

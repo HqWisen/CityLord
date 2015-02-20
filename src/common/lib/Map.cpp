@@ -18,7 +18,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
     dimensionY = atoi(temp_string.c_str());
     //initialise la matrice
     mapMatrice = new Case**[dimensionX];
-    for (int i=0; i<dimensionX; i++) { //creates matrix of nodes
+    for (int i=0; i<dimensionX; i++) {
         mapMatrice[i] = new Case*[dimensionY];
         for (int j=0; j<dimensionY; j++) {
             mapMatrice[i][j] = nullptr;
@@ -65,8 +65,8 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
             } 
             temp_char = temp_string.at(2);
             if (temp_char == 'B') {
-                //temp_char = temp_string.at(1);
-                //int player = temp_char;
+                temp_char = temp_string.at(1);
+                int player = temp_char;
                 temp_char = temp_string.at(3);
                 int building = (int) temp_char;
                 BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
@@ -74,11 +74,23 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                 if (level == 0){
                     level = 10;
                 }
-                mapMatrice[0][j/2] = new Field(Location(0,j/2), new Building(type, level));
+                if (player > 47){
+                    Player* owner = Player::getPlayerByID(player-48);
+                    mapMatrice[0][j/2] = new Field(owner, Location(0,j/2), new Building(type, level));
+                }else {
+                    mapMatrice[0][j/2] = new Field(Location(0,j/2), new Building(type, level));
+                }
             }else if (temp_char == 'X') {
                 mapMatrice[0][j/2] = new Obstacle(Location(0,j/2));
             }else if (temp_char == 'F') {
-                mapMatrice[0][j/2] = new Field(Location(0,j/2));
+                temp_char = temp_string.at(1);
+                int player = temp_char;
+                if (player > 47){
+                    Player* owner = Player::getPlayerByID(player-48);
+                    mapMatrice[0][j/2] = new Field(owner, Location(0,j/2));
+                }else {
+                    mapMatrice[0][j/2] = new Field(Location(0,j/2));
+                }
             }else {
                 if (mapMatrice[0][j/2] == nullptr) {
                     mapMatrice[0][j/2] = new Road(Location(Location(0,j/2)));
@@ -98,8 +110,8 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                 }
                 temp_char = temp_string.at((i*4)+2);
                 if (temp_char == 'B') {
-                    //temp_char = temp_string.at(1);
-                    //int player = temp_char;
+                    temp_char = temp_string.at((i*4)+1);
+                    int player = temp_char;
                     temp_char = temp_string.at((i*4)+3);
                     int building = (int) temp_char;
                     BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
@@ -107,11 +119,24 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                     if (level == 0){
                         level = 10;
                     }
-                    mapMatrice[i][j/2] = new Field(Location(i,j/2), new Building(type, level));
+                    if (player > 47){
+                        Player* owner = Player::getPlayerByID(player-48);
+                        mapMatrice[i][j/2] = new Field(owner, Location(i,j/2), new Building(type, level));
+                    }else {
+                        mapMatrice[i][j/2] = new Field(Location(i,j/2), new Building(type, level));
+                    }
+
                 }else if (temp_char == 'X') {
                     mapMatrice[i][j/2] = new Obstacle(Location(i,j/2));
                 }else if (temp_char == 'F') {
-                    mapMatrice[i][j/2] = new Field(Location(i,j/2));
+                    temp_char = temp_string.at((i*4)+1);
+                    int player = temp_char;
+                    if (player > 47){
+                        Player* owner = Player::getPlayerByID(player-48);
+                        mapMatrice[i][j/2] = new Field(owner, Location(i,j/2));
+                    }else{
+                        mapMatrice[i][j/2] = new Field(Location(i,j/2));
+                    }
                 }else {
                     if (mapMatrice[i][j/2] == nullptr) {
                         mapMatrice[i][j/2] = new Road(Location(i,j/2));
@@ -193,6 +218,14 @@ Case* Map::getCase(Location coord){
     return mapMatrice[coord.getX()][coord.getY()];
 }
 
+int Map::getDimensionX(){
+    return dimensionX;
+}
+
+int Map::getDimensionY(){
+    return dimensionY;
+}
+
 string Map::getMapString(){
     string output = "";
     output += (to_string(dimensionX)) + "\n";
@@ -254,13 +287,21 @@ void Map::parseMap(string filePath, string map){
     file.close();
 }
 
-/*
+
 int main(int argc, const char* argv[]){
-    char i = 20;
-    cout<<i<<endl;
+    Player p1 = Player("lel1", 0);
+    Player p2 = Player("lel2", 1);
+    Player p3 = Player("lel3", 2);
+    Player p4 = Player("lel4", 3);
+    Player p5 = Player("lel5", 4);
+    Player p6 = Player("lel6", 5);
+    Player p7 = Player("lel7", 6);
+    Player p8 = Player("lel8", 7);
+    //int i = '0';
+    //cout<<i<<endl;
     Map map1 = Map("Map1.txt");
     map1.display();
     string lel = map1.getMapString();
     Map::parseMap("out.txt", lel);
 	return 0;
-}*/
+}
