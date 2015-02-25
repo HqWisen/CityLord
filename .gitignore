@@ -8,6 +8,7 @@
 *.toc
 *.pdf
 *.synctex.gz
+
 ## c++ objects:
 *.hpp.gch
 *.o
@@ -17,6 +18,7 @@ bin
 citylord
 citylordserver
 testexe
+## tmp files:
 *~
-
 src/resources/tmp
+
