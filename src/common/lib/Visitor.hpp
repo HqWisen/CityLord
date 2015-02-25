@@ -23,7 +23,7 @@ class Visitor{
 		void displayGUI();
 		//void enter(Building);
 		std::vector<Location> getWay();
-		bool choose();
+		bool choose(); //Building en paramètre
 };
 
 #endif // MAP_HPP_
