@@ -1,21 +1,14 @@
-
-
-
 #include "Visitor.hpp"
 
 
-using namespace std;
-
-
-Visitor::Visitor(){
+Visitor::Visitor(Location loc){ //le spawner donne la localistion
+	currentLocation = loc;
 	path = getWay();
+	int number = rand() % 4;
+	preference = listOfBuildType[number];
 }
 
 Visitor::~Visitor(){
-
-}
-
-void Visitor::display(){
 
 }
 
@@ -24,7 +17,21 @@ void Visitor::displayGUI(){
 }
 
 void Visitor::move(){
+	bool end = false;
+	unsigned timeWait = 1;
+	while( ! end){
+		sleep(timeWait);
+		end= true;
+	}
+}
 
+void Visitor::moveGUI(){
+	bool end = false;
+	unsigned timeWait = 1;
+	while( ! end){
+		sleep(timeWait);
+		end = true;
+	}
 }
 
 /*
@@ -36,6 +43,7 @@ void Visitor::enter(Building build){
 
 std::vector<Location> Visitor::getWay(){
 	std::vector<Location> way;
+
 
 	return way;
 }
