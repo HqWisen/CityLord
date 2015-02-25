@@ -40,27 +40,22 @@ void Visitor::move(){
 	}
 }
 
+/*
 void Visitor::moveGUI(){
 	bool end = false;
 	unsigned timeWait = 1;
 	unsigned count = 0;
-
 	while( ! end){
-		count += 1;
-		
+		count += 1;		
 		if(count-1 > path.size()){
 			end = true;
 			delete this;
 		}
-
 		else{
 			currentLocation = path[count];
-
 			this->displayGUI();
-
 			sleep(timeWait);
 			bool test = choose(); //Building en parametre
-
 			if(test){
 				end = true;
 				delete this;
@@ -68,6 +63,7 @@ void Visitor::moveGUI(){
 		}
 	}
 }
+*/
 
 /*
 void Visitor::enter(Building build){
