@@ -1,18 +1,29 @@
 #ifndef VISITOR_HPP_
 #define VISITOR_HPP_
 
-#include <list>
+#include <vector>
+#include <random>
 #include "Location.hpp"
-//#include "BuildingType.hpp"
 
+//#include "Building.hpp"
+//#include "BuildingType.hpp"
 
 class Visitor{
 	Location currentLocation;
-	std::list<Location> path;
-	//std::list<BuildingType> preference;
+	std::vector<Location> path;
+	//BuildingType preference;
+	std::string preference;
+	std::vector<std::string> listOfBuildType = {"BAR","MUSEUM","NIGHT CLUB","SHOP"};
 	public:
 		Visitor();
-		void advance();
+		~Visitor();
+		void move();
+		void moveGUI();
+		void display();
+		void displayGUI();
+		//void enter(Building);
+		std::vector<Location> getWay();
+		bool choose();
 };
 
 #endif // MAP_HPP_
