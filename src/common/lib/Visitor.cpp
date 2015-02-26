@@ -12,13 +12,10 @@ Visitor::Visitor(Location loc){ //le spawner donne la localistion
 Visitor::~Visitor(){}
 */
 
-void Visitor::displayGUI(){
-
-}
+void Visitor::displayGUI(){}
 
 void Visitor::move(){
 	bool end = false;
-	unsigned timeWait = 1;
 	unsigned count = 0;
 
 	while( ! end){
@@ -28,14 +25,19 @@ void Visitor::move(){
 			end = true;
 			delete this;
 		}
-		
-		currentLocation = path[count];
-		sleep(timeWait);
-		bool test = choose(); //Building en parametre
+		else{		
+			currentLocation = path[count];
+			//int x = currentLocation.getX();
+			//int y = currentLocation.getY();
 
-		if(test){
-			end = true;
-			delete this;
+			if(true){  // map[x][y]  avec +1 -1
+				bool test = choose(); //Building en parametre
+				if(test){
+					end = true;
+					//enter(build);
+					delete this;
+				}
+			}
 		}
 	}
 }
@@ -54,7 +56,6 @@ void Visitor::moveGUI(){
 		else{
 			currentLocation = path[count];
 			this->displayGUI();
-			sleep(timeWait);
 			bool test = choose(); //Building en parametre
 			if(test){
 				end = true;
@@ -65,12 +66,12 @@ void Visitor::moveGUI(){
 }
 */
 
-/*
+
 void Visitor::enter(Building build){
-	//build.receiveVisitor(this);
+	build.receiveVisitor(this);
 
 }
-*/
+
 
 std::vector<Location> Visitor::getWay(){
 	std::vector<Location> way;
@@ -79,9 +80,18 @@ std::vector<Location> Visitor::getWay(){
 	return way;
 }
 
-bool Visitor::choose(){  //Building en parametre
-
-
-
-	return true;
+bool Visitor::choose(){  //Building build en parametre
+	if(true){   //preference = build.getType
+		int luck = rand() %  10 + 1;
+		if(luck <= 6){  
+			return true;   // 60% de chance de rentrer dans le batiment
+		}
+	}
+	else{
+		int luck = rand() %  10 + 1;
+		if(luck <= 3){
+			return true;   // 30% de chance de rentrer dans le batiment
+		}		
+	}
+	return false;  // ne rentre pas dans le batiment
 }
