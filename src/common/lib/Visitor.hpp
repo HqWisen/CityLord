@@ -5,7 +5,7 @@
 #include <random>
 #include "Location.hpp"
 
-//#include "Building.hpp"
+#include "Building.hpp"
 //#include "BuildingType.hpp"
 
 class Visitor{

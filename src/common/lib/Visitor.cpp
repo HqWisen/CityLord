@@ -68,7 +68,9 @@ void Visitor::moveGUI(){
 
 
 void Visitor::enter(Building build){
-	build.receiveVisitor(this);
+	//if build.addVisitor();
+		//ok
+	//else....
 
 }
 
