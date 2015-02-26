@@ -75,7 +75,8 @@ void Visitor::enter(Building build){
 
 std::vector<Location> Visitor::getWay(){
 	std::vector<Location> way;
-
+	Location previousLoc = currentLocation;
+	
 
 	return way;
 }
@@ -89,8 +90,8 @@ bool Visitor::choose(){  //Building build en parametre
 	}
 	else{
 		int luck = rand() %  10 + 1;
-		if(luck <= 3){
-			return true;   // 30% de chance de rentrer dans le batiment
+		if(luck <= 2){
+			return true;   // 20% de chance de rentrer dans le batiment
 		}		
 	}
 	return false;  // ne rentre pas dans le batiment
