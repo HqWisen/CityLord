@@ -76,7 +76,6 @@ std::vector<Location> Visitor::getWay(){
 	std::vector<Location> way;
 
 
-
 	return way;
 }
 
