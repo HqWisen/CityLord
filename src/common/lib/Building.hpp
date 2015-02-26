@@ -2,7 +2,6 @@
 #define BUILDING_HPP_
 
 #include <vector>
-#include "Visitor.hpp"
 #include "BuildingType.hpp"
 
 using namespace std;
@@ -16,7 +15,7 @@ class Building {
 		int income;
 		int attractiveness;
 		int dailyCost;
-		std::vector<Visitor*> visitorVector;
+		int visitorCounter;
 		int level;
 		int destructionCost;
 		BuildingType type;
@@ -29,8 +28,8 @@ class Building {
 		int getPrice(){return price;};
 		int getDestructionCost(){return destructionCost;};
 		void upgrade();
-		/*void receiveVisitor(Visitor*);
-		void deleteVisitor(Visitor*);
-*/
+		bool addVisitor();
+		void removeVisitor();
+
 };
 #endif // BUILDING_HPP_

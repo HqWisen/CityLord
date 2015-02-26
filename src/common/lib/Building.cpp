@@ -4,16 +4,9 @@
 
 using namespace std;
 
-//Erase-Remove idiom for vector 
-/*
-template<typename T>
-inline void removeElem(vector<T> & vect, const T & item)
-{
-    vect.erase(remove(vect.begin(), vect.end(), item), vect.end());
-}
-*/
 Building::Building(BuildingType buildingtype, int lvl) : type(buildingtype){
 	level = lvl;
+	visitorCounter = 0;
 	maxCapacity = type.maxCapacity;
 	price = type.price;
 	openTime = type.openTime;
@@ -22,18 +15,18 @@ Building::Building(BuildingType buildingtype, int lvl) : type(buildingtype){
 	attractiveness = type.attractiveness;
 	dailyCost = type.dailyCost;
 	destructionCost = type.destructionCost;
-	//
-	/*if (level > 1){
+	if (level > 1){
 		for (int i=1; i<level; i++){
 			this->upgrade();
 			level -= 1;
 		}
-	}*/
+	}
 }
 
 int Building::getLevel(){
 	return level;
 }
+
 BuildingType Building::getType(){
 	return type;
 }
@@ -47,17 +40,15 @@ void Building::upgrade(){
 	destructionCost += ((type.destructionCost)/2);
 }
 
-/*
-
-void Building::receiveVisitor(Visitor* guest){
-	visitorList.push_back(guest);
+bool Building::addVisitor(){
+	if (visitorCounter < maxCapacity){
+		visitorCounter += 1;
+		return true;
+	}
+	return false;
+	
 }
 
-void Building::deleteVisitor(Visitor* guest){
-	removeElem(visitorList, guest);
+void Building::removeVisitor(){
+	visitorCounter -= 1;
 }
-
-
-
-
-}*/

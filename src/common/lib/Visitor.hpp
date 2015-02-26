@@ -3,10 +3,9 @@
 
 #include <vector>
 #include <random>
-#include <unistd.h>
 #include "Location.hpp"
 
-//#include "Building.hpp"
+#include "Building.hpp"
 //#include "BuildingType.hpp"
 
 class Visitor{
@@ -21,7 +20,7 @@ class Visitor{
 		void move();
 		void moveGUI();
 		void displayGUI();
-		//void enter(Building);
+		void enter(Building);
 		std::vector<Location> getWay();
 		bool choose(); //Building en paramètre
 };
