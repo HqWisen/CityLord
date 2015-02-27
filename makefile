@@ -1,16 +1,16 @@
 # ***** Makefile of citylord ****** 
 
 # -- client
-CLIENT = client
+CLIENT = citylord
 DEPC = client socket lib
 
 # -- server
-SERVER = server
+SERVER = citylordserver
 DEPS = server request socket thread lib
 
 # -- gui
 
-GUI = citylord
+GUI = citylordgui
 
 # -- test
 TEST = testexe
