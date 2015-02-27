@@ -15,12 +15,9 @@
 
 ## execution files:
 bin
-citylord
-citylordserver
-citylordgui
 client
 server
-gui
+citylord
 testexe
 ## tmp files:
 *~

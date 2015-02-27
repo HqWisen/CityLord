@@ -10,7 +10,7 @@ DEPS = server request socket thread lib
 
 # -- gui
 
-GUI = gui
+GUI = citylord
 
 # -- test
 TEST = testexe
