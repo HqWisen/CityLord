@@ -16,7 +16,6 @@ void Visitor::displayGUI(){}
 
 void Visitor::move(){
 	bool end = false;
-	unsigned count = 0;
 	count += 1;
 		
 	if(count-1 > path.size()){
@@ -69,15 +68,6 @@ void Visitor::enter(Building build){
 		//ok
 	//else....
 
-}
-
-
-std::vector<Location> Visitor::getWay(){
-	std::vector<Location> way;
-	Location previousLoc = currentLocation;
-	
-
-	return way;
 }
 
 bool Visitor::choose(){  //Building build en parametre

@@ -14,6 +14,7 @@ class Visitor{
 	//BuildingType preference;
 	std::string preference;
 	std::vector<std::string> listOfBuildType = {"BAR","MUSEUM","NIGHT CLUB","SHOP"};
+	unsigned count = 0;
 	public:
 		Visitor(Location); //le spawner donne la localistion
 		~Visitor();
@@ -21,7 +22,6 @@ class Visitor{
 		void moveGUI();
 		void displayGUI();
 		void enter(Building);
-		std::vector<Location> getWay();
 		bool choose(); //Building en paramètre
 };
 
