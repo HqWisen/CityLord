@@ -1,5 +1,5 @@
-Pour compiler, aller avec le terminal dans le dossier src, et taper la commande "make".
+Pour compiler, placez vous dans Groupe2_2014 et tapez 'make'.
+Pour lancer le serveur "./server"
+Pour lancer le client (terminal) "./client"
+Pour lancer le client (gui) "./gui"
 
-Pour lancer le serveur, encore en terminal, dans le dossier src, taper la commande "./citylordserver".
-
-Pour lancer le client, toujours en terminal, dans le dossier src, taper la commande "./citylord".

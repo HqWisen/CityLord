@@ -1,3 +1,3 @@
 NAME = client
 
-include ../rules.mk
+include ../../rules.mk

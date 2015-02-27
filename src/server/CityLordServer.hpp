@@ -16,7 +16,7 @@
 #define SERVERNAME "CityLordServer"
 
 // Relative path of the executable
-#define MAPFILEPATH "resources/maps/"
+#define MAPFILEPATH "src/resources/maps/"
 
 class CityLordServer{
 	ServerSocket serverSocket;

@@ -1,3 +1,3 @@
 NAME = request
 
-include ../../rules.mk
+include ../../../rules.mk

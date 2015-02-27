@@ -1,3 +1,3 @@
 NAME = thread
 
-include ../../rules.mk
+include ../../../rules.mk

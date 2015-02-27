@@ -1,3 +1,3 @@
 NAME = socket
 
-include ../../rules.mk
+include ../../../rules.mk

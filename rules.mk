@@ -27,5 +27,5 @@ cleanobj:
 	$(RM) $(OBJECTS)
 cleanbin:
 	$(RM) $(BIN_DIR)
-clean: cleanobj
+clean: cleanbin
 
