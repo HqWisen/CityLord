@@ -2,10 +2,10 @@ TARGET = ../citylordgui
 
 SOURCES += \
     main.cpp \
-    LoginScreen.cpp
+    LoginWindow.cpp
 
 HEADERS += \
-    LoginScreen.hpp
+    LoginWindow.hpp
 
 QT += widgets
 

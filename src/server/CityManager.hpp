@@ -23,6 +23,7 @@
 */
 #include "../common/lib/Map.hpp"
 #include "../common/lib/Catalog.hpp"
+#include "../common/lib/Spawnable.hpp"
 
 class CityManager{
 	std::string mapname;
