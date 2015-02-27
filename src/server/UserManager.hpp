@@ -15,7 +15,9 @@ class CityManager;
 class User;
 
 typedef SocketMessage (* request_ptr)(CityLordServer*, UserManager *, SocketMessage);
+
 class UserManager : public Thread{
+
 	static const std::map<std::string, request_ptr> requestmap;
 
 	CityLordServer* server;
@@ -24,16 +26,16 @@ class UserManager : public Thread{
 	CityManager* cityManager;
 	public:
 		UserManager(CityLordServer*, ClientSocket);
-		void recvRequest(SocketMessage&);
-		void sendAnswer(SocketMessage);
-		std::string getIP();
-		std::string getUserName();
+		void run() override;
 		void setUser(User*);
 		void setActiveCity(CityManager*);
-		void initActivePlayer(){user->initPlayer(cityManager);};
-		void run() override;
-		CityManager* getActiveCity(){return cityManager;};
-		Player* getActivePlayer(){return user->getPlayer(cityManager);};
+		void initActivePlayer();
+		Player* getActivePlayer();
+		CityManager* getActiveCity();
+		std::string getIP();
+		std::string getUserName();
+		void recvRequest(SocketMessage&);
+		void sendAnswer(SocketMessage);
 };
 
 #endif // USERMANAGER_HPP_

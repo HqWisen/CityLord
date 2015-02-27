@@ -27,7 +27,6 @@ namespace request{
 	SocketMessage build(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage upgrade(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage destroy(CityLordServer*, UserManager*, SocketMessage);
-
 }
 
 #endif // REQUEST_HPP_

@@ -14,7 +14,6 @@
 #include "CityManager.hpp"
 
 #define SERVERNAME "CityLordServer"
-
 // Relative path of the executable
 #define MAPFILEPATH "src/resources/maps/"
 
@@ -31,15 +30,11 @@ class CityLordServer{
 		CityLordServer(const CityLordServer&) = default;
 		void run();
 		User* createAccount(std::string);
+		bool accountExist(std::string);
 		CityManager* createCity(int);
 		CityManager* getCity(int);
 		int getNumberOfCity();
-		bool accountExist(std::string);
 		User* getUser(std::string);
-
-		//void login();
-		//void logout();
-		//void connect(City&, Player&);
 		void LOG(std::string);
 		static const std::vector<std::string>& getMapNameVector();
 

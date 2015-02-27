@@ -110,6 +110,17 @@ namespace request{
 		return answer;
 	}
 
+	SocketMessage showinfo(CityLordServer* server, UserManager* userManager, SocketMessage message){
+		SocketMessage answer;
+		Player* player = userManager->getActivePlayer();
+		answer.set("money", std::to_string(player->getMoney()));	
+		answer.set("nickname", player->getNickName());	
+		answer.set("nbuilding", std::to_string(player->getNBuilding()));	
+		answer.set("nemptyfield", std::to_string(player->getNEmptyField()));
+		//answer.set("color", player->getColor());	
+		return answer;
+	}
+
 	SocketMessage showcatalog(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
 		std::vector<Field*> fieldVector = userManager->getActiveCity()->getPurchasableFields();
@@ -121,16 +132,6 @@ namespace request{
 		return answer;
 	}
 
-	SocketMessage showinfo(CityLordServer* server, UserManager* userManager, SocketMessage message){
-		SocketMessage answer;
-		Player* player = userManager->getActivePlayer();
-		answer.set("money", std::to_string(player->getMoney()));	
-		answer.set("nickname", player->getNickName());	
-		answer.set("nbuilding", std::to_string(player->getNBuilding()));	
-		answer.set("nemptyfield", std::to_string(player->getNEmptyField()));
-		//answer.set("color", player->getColor());	
-		return answer;
-	}
 	SocketMessage buy(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
 		int x = std::stoi(message.get("x"));
@@ -168,6 +169,7 @@ namespace request{
 		
 		return answer;
 	}
+	
 	SocketMessage destroy(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
 		int x = std::stoi(message.get("x"));

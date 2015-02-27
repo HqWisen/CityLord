@@ -19,21 +19,20 @@ class CityLordClient{
 		CityLordClient(const CityLordClient&) = default;
 		void run();
 		void beginConnection();
-		void chooseCity();
-		void createAccount();
 		void login();
+		void createAccount();
+		void chooseCity();
 		void createCity();
 		void joinCity();
-		int makeChoice(int min = 1, int max = 1);
-		void sendRequest(SocketMessage);
-		void recvAnswer(SocketMessage&);
-		void LOG(std::string);
 		void showMap();
 		void selectField();
 		void build();
 		void showCatalog();
 		void showInfo();
-		//void showInfoOthersPlayers();
+		void sendRequest(SocketMessage);
+		void recvAnswer(SocketMessage&);
+		int makeChoice(int min = 1, int max = 1);
+		void LOG(std::string);
 };
 
 #endif // CITYLORDCLIENT_HPP_

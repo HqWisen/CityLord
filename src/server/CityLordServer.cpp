@@ -40,16 +40,16 @@ CityManager* CityLordServer::createCity(int numberOfMap){
 	return cityManagerVector.back();
 }
 
+bool CityLordServer::accountExist(std::string username){
+	return userMap.find(username) != userMap.end();
+}
+
 CityManager* CityLordServer::getCity(int numberOfCity){
 	return cityManagerVector[numberOfCity];
 }
 
 int CityLordServer::getNumberOfCity(){
 	return cityManagerVector.size();
-}
-
-bool CityLordServer::accountExist(std::string username){
-	return userMap.find(username) != userMap.end();
 }
 
 User* CityLordServer::getUser(std::string username){

@@ -22,30 +22,6 @@ UserManager::UserManager(CityLordServer* cserver, ClientSocket socket) : server(
 	this->start();
 }
 
-void UserManager::recvRequest(SocketMessage& request){
- 	request = SocketMessage::parse(clientSocket.read());
-}
-
-void UserManager::sendAnswer(SocketMessage answer){
- 	clientSocket.write(answer.toString());
-}
-
-std::string UserManager::getIP(){
-	return clientSocket.getClientIP();
-}
-
-void UserManager::setUser(User* user_){
-	user = user_;
-}
-
-void UserManager::setActiveCity(CityManager* cm){
-	cityManager = cm;
-}
-
-std::string UserManager::getUserName(){
-	return user->getUserName();
-}
-
 void UserManager::run(){
 	SocketMessage request, answer;
 	recvRequest(request);
@@ -56,6 +32,41 @@ void UserManager::run(){
 	}
 }
 
+void UserManager::setUser(User* user_){
+	user = user_;
+}
+
+void UserManager::setActiveCity(CityManager* cm){
+	cityManager = cm;
+}
+
+void UserManager::initActivePlayer(){
+	user->initPlayer(cityManager);
+}
+
+Player* UserManager::getActivePlayer(){
+	return user->getPlayer(cityManager);
+}
+
+CityManager* UserManager::getActiveCity(){
+	return cityManager;
+}
+
+std::string UserManager::getIP(){
+	return clientSocket.getClientIP();
+}
+
+std::string UserManager::getUserName(){
+	return user->getUserName();
+}
+
+void UserManager::recvRequest(SocketMessage& request){
+ 	request = SocketMessage::parse(clientSocket.read());
+}
+
+void UserManager::sendAnswer(SocketMessage answer){
+ 	clientSocket.write(answer.toString());
+}
 
 
 
