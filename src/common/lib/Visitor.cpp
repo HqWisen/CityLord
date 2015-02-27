@@ -17,30 +17,27 @@ void Visitor::displayGUI(){}
 void Visitor::move(){
 	bool end = false;
 	unsigned count = 0;
-
-	while( ! end){
-		count += 1;
+	count += 1;
 		
-		if(count-1 > path.size()){
-			end = true;
-			delete this;
-		}
-		else{		
-			currentLocation = path[count];
-			//int x = currentLocation.getX();
-			//int y = currentLocation.getY();
-
-			if(true){  // map[x][y]  avec +1 -1
-				bool test = choose(); //Building en parametre
-				if(test){
-					end = true;
-					//enter(build);
-					delete this;
-				}
+	if(count-1 > path.size()){
+		end = true;
+		delete this;
+	}
+	else{		
+		currentLocation = path[count];
+		//int x = currentLocation.getX();
+		//int y = currentLocation.getY();
+		if(true){  // map[x][y]  avec +1 -1
+			bool test = choose(); //Building en parametre
+			if(test){
+				end = true;
+				//enter(build);
+				delete this;
 			}
 		}
 	}
 }
+
 
 /*
 void Visitor::moveGUI(){
