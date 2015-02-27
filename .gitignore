@@ -17,6 +17,10 @@
 bin
 citylord
 citylordserver
+citylordgui
+client
+server
+gui
 testexe
 ## tmp files:
 *~

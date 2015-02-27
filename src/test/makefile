@@ -1,3 +1,3 @@
 NAME = test
 
-include ../rules.mk
+include ../../rules.mk

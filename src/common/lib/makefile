@@ -1,3 +1,3 @@
 NAME = lib
 
-include ../../rules.mk
+include ../../../rules.mk

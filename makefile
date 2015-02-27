@@ -1,13 +1,17 @@
-# ***** Makefile of exe ****** 
-# DON'T CALL AN EXECUTABLE WITH A PACKAGE NAME !
+# ***** Makefile of citylord ****** 
 
 # -- client
-CLIENT = citylord
+CLIENT = client
 DEPC = client socket lib
 
 # -- server
-SERVER = citylordserver
+SERVER = server
 DEPS = server request socket thread lib
+
+# -- gui
+
+GUI = gui
+
 # -- test
 TEST = testexe
 DEPT = test socket lib server
@@ -15,15 +19,17 @@ DEPT = test socket lib server
 
 # -- Do not edit below this line --
 
-TARGETS = $(CLIENT) $(SERVER)
+TARGETS = $(CLIENT) $(SERVER) $(GUI)
 # $(TEST)
 
 DEPCA = $(addsuffix .a,$(addprefix $(BIN_DIR)/,$(DEPC)))
 DEPSA = $(addsuffix .a,$(addprefix $(BIN_DIR)/,$(DEPS)))
 DEPTA = $(addsuffix .a,$(addprefix $(BIN_DIR)/,$(DEPT)))
+
 default: $(TARGETS)
 client: $(CLIENT)
 server: $(SERVER)
+gui: $(GUI)
 test: $(TEST)
 
 include rules.mk
@@ -33,25 +39,30 @@ $(CLIENT): $(DEPCA)
 
 $(SERVER): $(DEPSA)
 	$(CC) $(FLAGS) $(DEPSA) -o $(SERVER)
+
+$(GUI):
+	rm -f src/client/gui/makefile
+	cd src/client/gui/; qmake -o makefile; cd -
+	$(MAKE) -C src/client/gui/
 	
 $(TEST): $(DEPTA)
 	$(CC) $(FLAGS) $(DEPTA) -o $(TEST)
 
 $(BIN_DIR)/socket.a:	
-	$(MAKE) -C common/socket
+	$(MAKE) -C src/common/socket
 $(BIN_DIR)/thread.a:	
-	$(MAKE) -C common/thread
+	$(MAKE) -C src/common/thread
 $(BIN_DIR)/lib.a:	
-	$(MAKE) -C common/lib
+	$(MAKE) -C src/common/lib
 $(BIN_DIR)/client.a:
-	$(MAKE) -C client
+	$(MAKE) -C src/client
 $(BIN_DIR)/server.a:
-	$(MAKE) -C server
+	$(MAKE) -C src/server
 $(BIN_DIR)/request.a:
-	$(MAKE) -C server/request
+	$(MAKE) -C src/server/request
 $(BIN_DIR)/test.a:
-	$(MAKE) -C test
+	$(MAKE) -C src/test
 cleanexe:
 	$(RM) $(TARGETS)
 	
-clean: cleanobj cleanbin cleanexe
+clean: cleanbin cleanexe
