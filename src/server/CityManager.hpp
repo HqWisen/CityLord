@@ -30,6 +30,8 @@ class CityManager{
 	int id;
 	Catalog catalog;
 	int nPlayer;
+
+	std::vector<Spawnable> listSpawnable;
 	//std::vector<Player*> playerVector;
 	public:
 		CityManager(std::string, int);
@@ -43,6 +45,9 @@ class CityManager{
 		SocketMessage buildBuilding(Player*, Location, BuildingType);
 		SocketMessage upgradeBuilding(Player*, Location);
 		SocketMessage destroyBuilding(Player*, Location);
+
+		void popVisitor();
+		std::vector<Location> giveWay();
 		
 /*
 	SocketMessage makeTrade(Player&, Player&, Location, int);
