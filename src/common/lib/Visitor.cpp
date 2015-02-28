@@ -26,7 +26,7 @@ void Visitor::move(){
 		currentLocation = path[count];
 		//int x = currentLocation.getX();
 		//int y = currentLocation.getY();
-		if(true){  // map[x][y]  avec +1 -1
+		if(end){  // map[x][y]  avec +1 -1
 			bool test = choose(); //Building en parametre
 			if(test){
 				end = true;

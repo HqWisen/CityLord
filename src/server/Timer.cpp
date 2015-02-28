@@ -2,13 +2,13 @@
 
 
 void Timer::start(){
-
+	startTime = clock();
 }
 
 unsigned long Timer::elapsedTime(){
-	return 5;
+	 return ((unsigned long) clock() - startTime) / CLOCKS_PER_SEC;
 }
 
 bool Timer::isTimeout(unsigned long seconds){
-	return true;
+	return seconds >= elapsedTime();
 }
