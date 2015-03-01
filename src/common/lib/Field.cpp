@@ -20,11 +20,35 @@ Field::Field(Player* newOwner, Location coords){
 	typeName = "Field";
 	coord = coords;
 	owner = newOwner;
+	color = newOwner->getColor();
 }
+
 Field::Field(Player* newOwner, Location coords, Building* newBuilding){
 	typeName = "Field";
 	coord = coords;
 	owner = newOwner;
+	color = newOwner->getColor();
+	building = newBuilding;
+}
+
+Field::Field(int newColor, Location coords){
+	typeName = "Field";
+	coord = coords;
+	string colorNumber;
+	ostringstream convert;
+	convert << newColor;
+	colorNumber = convert.str();
+	color = color="\033[1;"+colorNumber+"m";
+}
+
+Field::Field(int newColor, Location coords, Building* newBuilding){
+	typeName = "Field";
+	coord = coords;
+	string colorNumber;
+	ostringstream convert;
+	convert << newColor;
+	colorNumber = convert.str();
+	color = color="\033[1;"+colorNumber+"m";
 	building = newBuilding;
 }
 
@@ -77,8 +101,13 @@ Player* Field::getOwner(){
 	return owner;
 }
 
+string Field::getColor(){
+	return color;
+}
+
 void Field::setOwner(Player* newOwner){
 	owner = newOwner;
+	color = newOwner->getColor();
 }
 
 Building* Field::getBuilding(){
@@ -87,6 +116,10 @@ Building* Field::getBuilding(){
 
 bool Field::hasOwner(){
 	return (owner != nullptr);
+}
+
+bool Field::hasColor(){
+	return (color != "");
 }
 
 bool Field::hasBuilding(){

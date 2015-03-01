@@ -13,10 +13,10 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
     string temp_string;
     ifstream file (nomDeLaCarte);
     getline(file, temp_string);
-		dimensionX = atoi(temp_string.c_str());
+	dimensionX = atoi(temp_string.c_str());
     getline(file, temp_string);
     dimensionY = atoi(temp_string.c_str());
-    //initialise la matrice
+    //----------------------------------------------- Matrice  --------------------------------
     mapMatrice = new Case**[dimensionX];
     for (int i=0; i<dimensionX; i++) {
         mapMatrice[i] = new Case*[dimensionY];
@@ -24,10 +24,11 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
             mapMatrice[i][j] = nullptr;
         }
     }
-    //parseur
+    //----------------------------------------------- Parseur  --------------------------------
     for (int j=0; j<((dimensionY*2)+1); j++) { //par ligne
         getline(file, temp_string);
         char temp_char;
+        // ---------------------------------------- Premiere Ligne ----------------------------
         if (j == 0) {
             for (int i=0; i<dimensionX; i++) { //par colonne
                 temp_char = temp_string.at((i*4)+1);
@@ -36,6 +37,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                     ((Road*) (mapMatrice[i][0]))->setPath(1, true);
                 }
             }
+        // ---------------------------------------- Derniere Ligne ----------------------------
         } else if (j == (dimensionY*2)) { 
             for (int i=0; i<dimensionX; i++) {
                 temp_char = temp_string.at((i*4)+1);
@@ -43,6 +45,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                     ((Road*) (mapMatrice[i][dimensionY-1]))->setPath(3, true);
                 }
             }
+        // ------------------- Lignes Intermediaires (partie au-dessus des cases) -------------
         }else if ((j % 2) == 0) {
             for (int i=0; i<dimensionX; i++) {
                 temp_char = temp_string.at((i*4)+1);
@@ -54,7 +57,9 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                     ((Road*) (mapMatrice[i][(j/2)-1]))->setPath(3, true);
                 }
             }
+        // ------------------------ Lignes Intermediaires (milieu des cases) -------------------
         } else {
+            // ---------------------------- Premiere case --------------------------------------
             temp_char = temp_string.at(0);
             if (temp_char == ' ') {
                 if (mapMatrice[0][j/2] == nullptr) {
@@ -76,7 +81,11 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                 }
                 if (player > 47){
                     Player* owner = Player::getPlayerByID(player-48);
-                    mapMatrice[0][j/2] = new Field(owner, Location(0,j/2), new Building(type, level));
+                    if (owner != nullptr){ // serveur!!!
+                        mapMatrice[0][j/2] = new Field(owner, Location(0,j/2), new Building(type, level));
+                    }else { // client!!!
+                        mapMatrice[0][j/2] = new Field(player-8, Location(0,j/2), new Building(type, level));
+                    }
                 }else {
                     mapMatrice[0][j/2] = new Field(Location(0,j/2), new Building(type, level));
                 }
@@ -87,7 +96,11 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                 int player = temp_char;
                 if (player > 47){
                     Player* owner = Player::getPlayerByID(player-48);
-                    mapMatrice[0][j/2] = new Field(owner, Location(0,j/2));
+                    if (owner != nullptr){
+                        mapMatrice[0][j/2] = new Field(owner, Location(0,j/2));
+                    }else {
+                        mapMatrice[0][j/2] = new Field(player-8, Location(0,j/2));
+                    }
                 }else {
                     mapMatrice[0][j/2] = new Field(Location(0,j/2));
                 }
@@ -96,6 +109,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                     mapMatrice[0][j/2] = new Road(Location(Location(0,j/2)));
                 }
             }
+            // -------------------------- Cases suivantes --------------------------------------
             for (int i=1; i<dimensionX; i++) {
                 temp_char = temp_string.at((i*4));
                 if (temp_char == ' ') {
@@ -121,11 +135,14 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                     }
                     if (player > 47){
                         Player* owner = Player::getPlayerByID(player-48);
-                        mapMatrice[i][j/2] = new Field(owner, Location(i,j/2), new Building(type, level));
+                        if (owner != nullptr){
+                            mapMatrice[i][j/2] = new Field(owner, Location(i,j/2), new Building(type, level));
+                        }else {
+                            mapMatrice[i][j/2] = new Field(player-8, Location(i,j/2), new Building(type, level));
+                        }
                     }else {
                         mapMatrice[i][j/2] = new Field(Location(i,j/2), new Building(type, level));
                     }
-
                 }else if (temp_char == 'O') {
                     mapMatrice[i][j/2] = new Obstacle(Location(i,j/2));
                 }else if (temp_char == 'F') {
@@ -133,7 +150,11 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                     int player = temp_char;
                     if (player > 47){
                         Player* owner = Player::getPlayerByID(player-48);
-                        mapMatrice[i][j/2] = new Field(owner, Location(i,j/2));
+                        if (owner != nullptr){
+                            mapMatrice[i][j/2] = new Field(owner, Location(i,j/2));
+                        }else {
+                            mapMatrice[i][j/2] = new Field(player-8, Location(i,j/2));
+                        }
                     }else{
                         mapMatrice[i][j/2] = new Field(Location(i,j/2));
                     }
@@ -143,6 +164,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
                     }
                 }
             }
+            // ---------------------------- Dernier 'mur' --------------------------------------
             temp_char = temp_string.at(dimensionX*4);
             if (temp_char == ' ') {
                 ((Road*) (mapMatrice[dimensionX-1][j/2]))->setPath(2, true);
@@ -184,8 +206,9 @@ void Map::display(){
                 }else {
                     cout<<"|";
                     if (((mapMatrice[i][j/2])->getType() == "Field")) {
-                        if(((Field*) (mapMatrice[i][j/2]))->hasOwner()){
-                            color = ((Field*) (mapMatrice[i][j/2]))->getOwner()->getColor();
+
+                        if(((Field*) (mapMatrice[i][j/2]))->hasColor()){
+                            color = ((Field*) (mapMatrice[i][j/2]))->getColor();
                         }else {
                             color="\033[0m";
                         }
@@ -289,7 +312,7 @@ void Map::parseMap(string filePath, string map){
 
 
 /*int main(int argc, const char* argv[]){
-    Player p1 = Player("lel1", 0);
+    /*Player p1 = Player("lel1", 0);
     Player p2 = Player("lel2", 1);
     Player p3 = Player("lel3", 2);
     Player p4 = Player("lel4", 3);

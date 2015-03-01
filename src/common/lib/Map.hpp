@@ -17,6 +17,7 @@ Matrice dans laquelle sera stockée la carte et les éléments de la ville (bati
 #include "Road.hpp"
 #include "Obstacle.hpp"
 #include "Building.hpp"
+#include "Player.hpp"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ const int tailleMaxLarg=12; // Largueur maximale de la carte
 const int nombreDeCases = tailleMaxLarg*tailleMaxLong;
 
 class Map{
+	Player* playerList[8] = {nullptr};
 	int dimensionX;
 	int dimensionY;
 	//Neighborhood neighborhoods[];
