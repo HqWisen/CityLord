@@ -1,13 +1,27 @@
 TARGET = ../citylordgui
+QT += widgets core gui
+TEMPLATE = app
 
-SOURCES += \
-    main.cpp \
-    LoginWindow.cpp
+SOURCES += main.cpp\
+    login.cpp \
+    mainmenu.cpp \
+    inplay.cpp \
+    mainwindow.cpp \
+    widgetmanager.cpp
 
-HEADERS += \
-    LoginWindow.hpp
+HEADERS  += \
+    login.h \
+    mainmenu.h \
+    inplay.h \
+    mainwindow.h \
+    widgetmanager.h
 
-QT += widgets
+
+FORMS    += \
+    login.ui \
+    mainmenu.ui \
+    inplay.ui \
+    mainwindow.ui
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic

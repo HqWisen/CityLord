@@ -1,14 +1,35 @@
+#include "mainwindow.h"
 #include <QApplication>
-#include "LoginWindow.hpp"
-//#include <QtGui> //inclut toute les classes du module GUI
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QApplication a(argc, argv);
 
-    LoginWindow login;
-    //affichage de la fenêtre
-    login.show();
+    MainWindow mainWindow;
+    mainWindow.show();
+    //mainWindow.setWindowState(Qt::WindowFullScreen);
+    //mainWindow.showFullScreen();
 
-    return app.exec();
+
+    /*InPlay w;
+    w.show();
+
+    Login l;
+    l.show();
+
+    MainMenu m;
+    m.show();
+    */
+    //test
+    /*QWidget window;
+    window.setFixedSize(1200,800);
+
+    Login l(&window);
+    l.show();
+    l.move(345,235);
+    //MainMenu testMenu(&window);
+
+    window.show();    */
+
+    return a.exec();
 }
