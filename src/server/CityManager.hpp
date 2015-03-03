@@ -49,7 +49,7 @@ class CityManager{
 		SocketMessage destroyBuilding(Player*, Location);
 
 		std::vector<Location> giveWay();
-		void generateVisitor()
+		void generateVisitor();
 /*
 	SocketMessage makeTrade(Player&, Player&, Location, int);
 	std::string showCatalog();
