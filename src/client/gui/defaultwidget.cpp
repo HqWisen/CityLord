@@ -15,6 +15,6 @@ void DefaultWidget::displayDefaultBackground(){
 
 void DefaultWidget::displayLogo(QWidget *parent,int x, int y){
     QWidget *frame = new QWidget(parent);
-    frame->setGeometry(100, 100, 400, 150);
+    frame->setGeometry(x, y, 400, 150);
     frame->setStyleSheet("background-image: url(src/resources/img/CityLordLogo.png)");
 }

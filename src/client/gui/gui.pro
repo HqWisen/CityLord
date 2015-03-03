@@ -10,7 +10,8 @@ SOURCES += main.cpp\
     widgetmanager.cpp \
     createaccount.cpp \
     defaultwidget.cpp \
-    creategame.cpp
+    creategame.cpp \
+    joingame.cpp
 
 HEADERS  += \
     login.h \
@@ -20,7 +21,8 @@ HEADERS  += \
     widgetmanager.h \
     createaccount.h \
     defaultwidget.h \
-    creategame.h
+    creategame.h \
+    joingame.h
 
 
 FORMS    += \
