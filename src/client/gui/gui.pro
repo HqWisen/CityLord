@@ -29,7 +29,8 @@ FORMS    += \
     inplay.ui \
     mainwindow.ui \
     createaccount.ui \
-    creategame.ui
+    creategame.ui \
+    joingame.ui
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic

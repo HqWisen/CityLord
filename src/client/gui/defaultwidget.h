@@ -11,6 +11,7 @@ public:
     DefaultWidget(QWidget*, WidgetManager*);
     virtual ~DefaultWidget();
     void displayDefaultBackground();
+    void displayLogo(QWidget *,int, int);
     virtual void refresh() = 0;
 protected:
     WidgetManager* widgetManager;
