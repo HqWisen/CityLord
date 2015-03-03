@@ -5,6 +5,7 @@ const key_type WidgetManager::LOGIN = 0;
 const key_type WidgetManager::CREATEACCOUNT = 1;
 const key_type WidgetManager::MAINMENU = 2;
 const key_type WidgetManager::INPLAY = 3;
+const key_type WidgetManager::CREATEGAME = 4;
 
 WidgetManager::WidgetManager() : stackedWidget(new QStackedWidget), layout(new QVBoxLayout), pages(){
     layout->setContentsMargins(0,0,0,0);

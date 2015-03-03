@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreateAccount</class>
- <widget class="QWidget" name="CreateAccount">
+ <class>CreateGame</class>
+ <widget class="QWidget" name="CreateGame">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -503,14 +503,14 @@ QLabel{color:white;}</string>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QPushButton" name="loginButton">
+         <widget class="QPushButton" name="createButton">
           <property name="text">
            <string>CREATE</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="createAccountButton">
+         <widget class="QPushButton" name="cancelButton">
           <property name="text">
            <string>CANCEL</string>
           </property>
@@ -532,30 +532,37 @@ QLabel{color:white;}</string>
          <number>0</number>
         </property>
         <item>
-         <widget class="QScrollArea" name="scrollArea">
-          <property name="styleSheet">
-           <string notr="true">QScrollArea{background-color:grey;}</string>
-          </property>
-          <property name="widgetResizable">
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="alternatingRowColors">
            <bool>true</bool>
           </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>574</width>
-             <height>127</height>
-            </rect>
-           </property>
-          </widget>
-         </widget>
-        </item>
-        <item>
-         <widget class="QScrollBar" name="verticalScrollBar">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
           </property>
+          <property name="iconSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="showGrid">
+           <bool>false</bool>
+          </property>
+          <property name="gridStyle">
+           <enum>Qt::CustomDashLine</enum>
+          </property>
+          <property name="rowCount">
+           <number>2</number>
+          </property>
+          <property name="columnCount">
+           <number>1</number>
+          </property>
+          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+           <bool>false</bool>
+          </attribute>
+          <row/>
+          <row/>
+          <column/>
          </widget>
         </item>
        </layout>

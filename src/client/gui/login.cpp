@@ -31,3 +31,7 @@ void Login::on_createAccountButton_clicked(){
     widgetManager->setCurrentWidget(WidgetManager::CREATEACCOUNT);
 
 }
+
+void Login::on_quitButton_clicked(){
+    QApplication::quit();
+}
