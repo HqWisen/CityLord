@@ -8,10 +8,6 @@ Visitor::Visitor(Location loc){ //le spawner donne la localistion
 	preference = listOfBuildType[number];
 }
 
-/*
-Visitor::~Visitor(){}
-*/
-
 void Visitor::displayGUI(){}
 
 void Visitor::move(){

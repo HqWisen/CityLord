@@ -25,6 +25,7 @@
 #include "../common/lib/Catalog.hpp"
 #include "../common/lib/Spawnable.hpp"
 #include "../common/lib/Visitor.hpp"
+#include <random>
 
 class CityManager{
 	std::string mapname;
@@ -49,7 +50,9 @@ class CityManager{
 		SocketMessage destroyBuilding(Player*, Location);
 
 		std::vector<Location> giveWay();
-		void generateVisitor();
+
+        Spawnable getRandomSpawn();
+
 /*
 	SocketMessage makeTrade(Player&, Player&, Location, int);
 	std::string showCatalog();
