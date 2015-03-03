@@ -5,6 +5,7 @@ Login::Login(QWidget* parent, ClientManager* cm) :
     DefaultWidget(parent, cm), ui(new Ui::Login){
 
     displayDefaultBackground();
+    displayLogo(this,376,357);
     ui->setupUi(this);
 }
 

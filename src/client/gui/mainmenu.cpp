@@ -5,6 +5,7 @@ MainMenu::MainMenu(QWidget *parent, ClientManager* cm) :
     DefaultWidget(parent, cm), ui(new Ui::MainMenu){
 
     displayDefaultBackground();
+    displayLogo(this,376,200);
     ui->setupUi(this);
 }
 
@@ -27,12 +28,12 @@ void MainMenu::on_quitButton_clicked(){
     QApplication::quit();
 }
 
-/*
-void MainMenu::on_join_pushButton_clicked()
+void MainMenu::on_joinButton_clicked()
 {
-    QMessageBox::warning(this, "Join", "Make a Join Function");
+    widgetManager->setCurrentWidget(WidgetManager::JOINGAME);
 }
 
+/*
 void MainMenu::on_create_pushButton_clicked()
 {
     QMessageBox::warning(this, "Create", "Make a Create Function");
@@ -45,3 +46,4 @@ void MainMenu::on_quit_pushButton_clicked()
     QMessageBox::warning(this, "Quit", "Make a Quit Function");
 }
 */
+

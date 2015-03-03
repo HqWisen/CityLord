@@ -173,6 +173,14 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location coordinates)
 	}
 	return message;
 }
+
+Spawnable CityManager::getRandomSpawn(){
+    int size = listSpawnable.size();
+    int luck = rand() %  (size-1);
+    return listSpawnable[luck];
+}
+
+
 /*
 SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, Location coordinates, int offeredMoney){
 	//Regarde si le joueur 1 a assez d'argent

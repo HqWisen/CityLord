@@ -1,11 +1,21 @@
 #include "clientmanager.h"
 #include "defaultwidget.h"
 
+<<<<<<< HEAD:src/client/gui/clientmanager.cpp
 const key_type ClientManager::LOGIN = 0;
 const key_type ClientManager::CREATEACCOUNT = 1;
 const key_type ClientManager::MAINMENU = 2;
 const key_type ClientManager::INPLAY = 3;
 const key_type ClientManager::CREATEGAME = 4;
+=======
+const key_type WidgetManager::LOGIN = 0;
+const key_type WidgetManager::CREATEACCOUNT = 1;
+const key_type WidgetManager::MAINMENU = 2;
+const key_type WidgetManager::INPLAY = 3;
+const key_type WidgetManager::CREATEGAME = 4;
+const key_type WidgetManager::JOINGAME = 5;
+
+>>>>>>> 8947808f1fbea653d2706b8cb98785f6eaf305c8:src/client/gui/widgetmanager.cpp
 
 ClientManager::ClientManager() : stackedWidget(new QStackedWidget), layout(new QVBoxLayout), pages(){
     layout->setContentsMargins(0,0,0,0);
