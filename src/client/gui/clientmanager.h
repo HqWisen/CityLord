@@ -1,5 +1,5 @@
-#ifndef WIDGETMANAGER_H
-#define WIDGETMANAGER_H
+#ifndef CLIENTMANAGER_H
+#define CLIENTMANAGER_H
 
 #include <QStackedWidget>
 #include <QVBoxLayout>
@@ -9,12 +9,12 @@ typedef int key_type;
 
 class DefaultWidget;
 
-class WidgetManager{
+class ClientManager{
 public:
     static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INPLAY, CREATEGAME;
 public:
-    WidgetManager();
-    ~WidgetManager();
+    ClientManager();
+    ~ClientManager();
     void set(key_type, DefaultWidget*);
     DefaultWidget* get(key_type);
     bool alreadySet(key_type);
@@ -26,6 +26,7 @@ private:
     QVBoxLayout* layout;
     std::map<key_type, DefaultWidget*> pages;
 
+
 };
 
-#endif // WIDGETMANAGER_H
+#endif // CLIENTMANAGER_H

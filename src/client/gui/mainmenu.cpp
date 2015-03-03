@@ -1,8 +1,8 @@
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
 
-MainMenu::MainMenu(QWidget *parent, WidgetManager* wm) :
-    DefaultWidget(parent, wm), ui(new Ui::MainMenu){
+MainMenu::MainMenu(QWidget *parent, ClientManager* cm) :
+    DefaultWidget(parent, cm), ui(new Ui::MainMenu){
 
     displayDefaultBackground();
     ui->setupUi(this);
@@ -16,11 +16,11 @@ void MainMenu::refresh(){
 }
 
 void MainMenu::on_createButton_clicked(){
-    widgetManager->setCurrentWidget(WidgetManager::CREATEGAME);
+    clientManager->setCurrentWidget(ClientManager::CREATEGAME);
 }
 
 void MainMenu::on_disconnectButton_clicked(){
-    widgetManager->setCurrentWidget(WidgetManager::LOGIN);
+    clientManager->setCurrentWidget(ClientManager::LOGIN);
 }
 
 void MainMenu::on_quitButton_clicked(){

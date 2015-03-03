@@ -7,20 +7,20 @@ SOURCES += main.cpp\
     mainmenu.cpp \
     inplay.cpp \
     mainwindow.cpp \
-    widgetmanager.cpp \
     createaccount.cpp \
     defaultwidget.cpp \
-    creategame.cpp
+    creategame.cpp \
+    clientmanager.cpp
 
 HEADERS  += \
     login.h \
     mainmenu.h \
     inplay.h \
     mainwindow.h \
-    widgetmanager.h \
     createaccount.h \
     defaultwidget.h \
-    creategame.h
+    creategame.h \
+    clientmanager.h
 
 
 FORMS    += \

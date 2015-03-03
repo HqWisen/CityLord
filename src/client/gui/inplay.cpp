@@ -1,8 +1,8 @@
 #include "inplay.h"
 #include "ui_inplay.h"
 
-InPlay::InPlay(QWidget *parent, WidgetManager* wm) :
-    QWidget(parent), ui(new Ui::InPlay), widgetManager(wm)
+InPlay::InPlay(QWidget *parent, ClientManager* cm) :
+    DefaultWidget(parent, cm), ui(new Ui::InPlay)
 {
     ui->setupUi(this);
 }

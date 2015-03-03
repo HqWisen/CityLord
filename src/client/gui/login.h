@@ -10,7 +10,7 @@ class Login;
 class Login : public DefaultWidget{
     Q_OBJECT
 public:
-    explicit Login(QWidget*, WidgetManager*);
+    explicit Login(QWidget*, ClientManager*);
     ~Login();
     void refresh() override;
 private slots:
