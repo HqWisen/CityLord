@@ -7,21 +7,26 @@ SOURCES += main.cpp\
     mainmenu.cpp \
     inplay.cpp \
     mainwindow.cpp \
-    widgetmanager.cpp
+    widgetmanager.cpp \
+    createaccount.cpp \
+    defaultwidget.cpp
 
 HEADERS  += \
     login.h \
     mainmenu.h \
     inplay.h \
     mainwindow.h \
-    widgetmanager.h
+    widgetmanager.h \
+    createaccount.h \
+    defaultwidget.h
 
 
 FORMS    += \
     login.ui \
     mainmenu.ui \
     inplay.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    createaccount.ui
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic

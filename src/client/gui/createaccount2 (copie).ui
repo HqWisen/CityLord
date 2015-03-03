@@ -37,13 +37,13 @@ QLabel{color:white;}</string>
      <number>250</number>
     </property>
     <property name="topMargin">
-     <number>455</number>
+     <number>300</number>
     </property>
     <property name="rightMargin">
      <number>250</number>
     </property>
     <property name="bottomMargin">
-     <number>185</number>
+     <number>340</number>
     </property>
     <property name="spacing">
      <number>0</number>
@@ -503,14 +503,14 @@ QLabel{color:white;}</string>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QPushButton" name="createButton">
+         <widget class="QPushButton" name="loginButton">
           <property name="text">
            <string>CREATE</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="cancelButton">
+         <widget class="QPushButton" name="createAccountButton">
           <property name="text">
            <string>CANCEL</string>
           </property>
@@ -577,14 +577,14 @@ QLabel{color:white;}</string>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QLabel" name="retypePasswordLabel">
+         <widget class="QLabel" name="passwordLabel_2">
           <property name="text">
            <string>Retype password: </string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="retypePasswordLineEdit">
+         <widget class="QLineEdit" name="passwordLineEdit_2">
           <property name="echoMode">
            <enum>QLineEdit::Password</enum>
           </property>

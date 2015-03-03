@@ -2,27 +2,23 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow() :
-    ui(new Ui::MainWindow), centralWidget(new QWidget), widgetManager(new WidgetManager), stackedWidget(new QStackedWidget)
+    ui(new Ui::MainWindow), centralWidget(new QWidget), widgetManager(new WidgetManager)
 {
     ui->setupUi(this);
     setCentralWidget(centralWidget);
 
-    widgetManager->setLoginPage(new Login(this, widgetManager, stackedWidget));
-    widgetManager->setMainMenuPage(new MainMenu(this, widgetManager));
-    widgetManager->setInPlayPage(new InPlay(this, widgetManager));
-    stackedWidget->addWidget(widgetManager->getLoginPage());
-    stackedWidget->addWidget(widgetManager->getMainMenuPage());
-    stackedWidget->addWidget(widgetManager->getInPlayPage());
+    widgetManager->set(WidgetManager::LOGIN, new Login(this, widgetManager));
+    widgetManager->set(WidgetManager::MAINMENU, new MainMenu(this, widgetManager));
+    //widgetManager->set(WidgetManager::INPLAY, new InPlay(this, widgetManager));
+    widgetManager->set(WidgetManager::CREATEACCOUNT, new CreateAccount(this, widgetManager));
 
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->setContentsMargins(0,0,0,0);
-    layout->addWidget(stackedWidget);
-    centralWidget->setLayout(layout);
-    stackedWidget->setCurrentWidget(widgetManager->getLoginPage());
+    centralWidget->setLayout(widgetManager->getLayout());
+    widgetManager->setCurrentWidget(WidgetManager::LOGIN);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete centralWidget;
     delete widgetManager;
 }

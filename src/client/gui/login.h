@@ -1,29 +1,24 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-#include "widgetmanager.h"
-#include <QWidget>
-#include <QStackedWidget>
+#include "defaultwidget.h"
 
 namespace Ui {
 class Login;
 }
 
-class Login : public QWidget
-{
+class Login : public DefaultWidget{
     Q_OBJECT
-
 public:
-    explicit Login(QWidget*, WidgetManager*, QStackedWidget*);
+    explicit Login(QWidget*, WidgetManager*);
     ~Login();
-
+    void refresh() override;
 private slots:
     void on_loginButton_clicked();
+    void on_createAccountButton_clicked();
 
 private:
     Ui::Login *ui;
-    WidgetManager* widgetManager;
-    QStackedWidget* stackedWidget;
 };
 
 #endif // LOGIN_H

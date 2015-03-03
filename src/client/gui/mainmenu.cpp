@@ -2,24 +2,20 @@
 #include "ui_mainmenu.h"
 
 MainMenu::MainMenu(QWidget *parent, WidgetManager* wm) :
-    QWidget(parent), ui(new Ui::MainMenu), widgetManager(wm)
-{
-    QWidget *frame = new QWidget(this);
-    frame->setGeometry(0, 0, 1152, 864);
-    frame->setStyleSheet("background-image: url("+QCoreApplication::applicationDirPath() + "/BgCityBig.jpg"+")");
+    DefaultWidget(parent, wm), ui(new Ui::MainMenu){
 
-    /*QWidget *frame2 = new QWidget(this);
-    frame2->setGeometry(350, 100, 500, 200);
-    frame2->setStyleSheet("background-image: url("+QCoreApplication::applicationDirPath() + "/CityLordsmall.png"+")");*/
-
+    displayDefaultBackground();
     ui->setupUi(this);
 }
 
-MainMenu::~MainMenu()
-{
+MainMenu::~MainMenu(){
     delete ui;
 }
 
+void MainMenu::refresh(){
+}
+
+/*
 void MainMenu::on_join_pushButton_clicked()
 {
     QMessageBox::warning(this, "Join", "Make a Join Function");
@@ -39,3 +35,4 @@ void MainMenu::on_quit_pushButton_clicked()
 {
     QMessageBox::warning(this, "Quit", "Make a Quit Function");
 }
+*/

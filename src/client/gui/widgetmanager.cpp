@@ -1,26 +1,55 @@
 #include "widgetmanager.h"
+#include "defaultwidget.h"
 
-void WidgetManager::setMainMenuPage(QWidget* mainmenu){
-    menuPage = mainmenu;
+const key_type WidgetManager::LOGIN = 0;
+const key_type WidgetManager::CREATEACCOUNT = 1;
+const key_type WidgetManager::MAINMENU = 2;
+const key_type WidgetManager::INPLAY = 3;
+
+WidgetManager::WidgetManager() : stackedWidget(new QStackedWidget), layout(new QVBoxLayout), pages(){
+    layout->setContentsMargins(0,0,0,0);
+    layout->addWidget(stackedWidget);
+}
+
+WidgetManager::~WidgetManager(){
+    // FIXME SEGMENTION FAULT
+    //delete layout;
+    //delete stackedWidget;
+    /*for(std::map<int, QWidget*>::iterator iterator = pages.begin(); iterator != pages.end(); iterator++) {
+        std::cout<<"first = "<<iterator->first<<std::endl;
+        std::cout<<"second = "<<iterator->second<<std::endl;
+        //delete iterator->second;
+    }*/
 }
 
 
-void WidgetManager::setLoginPage(QWidget* login){
-    loginPage = login;
+void WidgetManager::set(key_type key, DefaultWidget* widget){
+    if(!alreadySet(key)){
+        pages[key] = widget;
+        stackedWidget->addWidget(widget);
+    }else{
+        throw std::invalid_argument("This key is already set.");
+    }
 }
 
-void WidgetManager::setInPlayPage(QWidget* inplay){
-    inplayPage = inplay;
+DefaultWidget* WidgetManager::get(key_type key){
+    if(alreadySet(key)){
+        return pages[key];
+    }else{
+        return nullptr;
+    }
 }
 
-QWidget* WidgetManager::getMainMenuPage(){
-    return menuPage;
+bool WidgetManager::alreadySet(key_type key){
+    auto search = pages.find(key);
+    return search != pages.end();
 }
 
-QWidget* WidgetManager::getLoginPage(){
-    return loginPage;
+void WidgetManager::setCurrentWidget(key_type key){
+    get(key)->refresh();
+    stackedWidget->setCurrentWidget(get(key));
 }
 
-QWidget* WidgetManager::getInPlayPage(){
-    return inplayPage;
+QVBoxLayout* WidgetManager::getLayout(){
+    return layout;
 }

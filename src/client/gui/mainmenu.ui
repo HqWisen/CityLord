@@ -20,7 +20,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="quit_pushButton">
+  <widget class="QPushButton" name="quitButton">
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -33,7 +33,7 @@
     <string>Quit</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="disconnect_pushButton">
+  <widget class="QPushButton" name="disconnectButton">
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -46,7 +46,7 @@
     <string>Disconnect</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="join_pushButton">
+  <widget class="QPushButton" name="joinButton">
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -56,10 +56,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>Join a Game</string>
+    <string>Join a game</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="create_pushButton">
+  <widget class="QPushButton" name="createButton">
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -69,7 +69,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Create a Game</string>
+    <string>Create a game</string>
    </property>
   </widget>
  </widget>

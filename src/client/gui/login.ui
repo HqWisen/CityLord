@@ -505,7 +505,7 @@ QLabel{color:white;}</string>
         <item>
          <widget class="QPushButton" name="loginButton">
           <property name="text">
-           <string>LOGIN</string>
+           <string>CONNECT</string>
           </property>
          </widget>
         </item>
@@ -517,7 +517,7 @@ QLabel{color:white;}</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="quitButton">
           <property name="text">
            <string>QUIT</string>
           </property>

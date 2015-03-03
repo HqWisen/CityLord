@@ -1,26 +1,33 @@
 #include "login.h"
 #include "ui_login.h"
 
-Login::Login(QWidget* parent, WidgetManager* wm, QStackedWidget* sw) :
-    QWidget(parent), ui(new Ui::Login), widgetManager(wm), stackedWidget(sw)
-{
-    QWidget *frame = new QWidget(this);
-    frame->setGeometry(0, 0, 1152, 864);
-    frame->setStyleSheet("background-image: url(src/resources/img/BgCityBig.jpg)");
+Login::Login(QWidget* parent, WidgetManager* wm) :
+    DefaultWidget(parent, wm), ui(new Ui::Login){
 
+    displayDefaultBackground();
     ui->setupUi(this);
 }
 
-Login::~Login()
-{
+Login::~Login(){
     delete ui;
+}
+
+void Login::refresh(){
+    ui->errorLabel->setText("");
+    ui->usernameLineEdit->setText("");
+    ui->passwordLineEdit->setText("");
 }
 
 void Login::on_loginButton_clicked(){
     if(ui->usernameLineEdit->text()=="Fish" && ui->passwordLineEdit->text()=="123"){
         ui->errorLabel->setText("");
-        stackedWidget->setCurrentWidget(widgetManager->getMainMenuPage());
+        widgetManager->setCurrentWidget(WidgetManager::MAINMENU);
     }else{
         ui->errorLabel->setText("Username doesn't match the password.");
     }
+}
+
+void Login::on_createAccountButton_clicked(){
+    widgetManager->setCurrentWidget(WidgetManager::CREATEACCOUNT);
+
 }

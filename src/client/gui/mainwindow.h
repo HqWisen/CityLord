@@ -4,13 +4,9 @@
 #include "inplay.h"
 #include "login.h"
 #include "mainmenu.h"
+#include "createaccount.h"
 #include "widgetmanager.h"
 #include <QMainWindow>
-#include <QStackedWidget>
-#include <QVBoxLayout>
-#include <QComboBox>
-
-#include <iostream>
 
 namespace Ui {
 class MainWindow;
@@ -28,7 +24,6 @@ private:
     Ui::MainWindow *ui;
     QWidget *centralWidget;
     WidgetManager* widgetManager;
-    QStackedWidget* stackedWidget;
 };
 
 #endif // MAINWINDOW_H

@@ -1,27 +1,31 @@
 #ifndef WIDGETMANAGER_H
 #define WIDGETMANAGER_H
 
-#include <QWidget>
+#include <QStackedWidget>
+#include <QVBoxLayout>
+#include <map>
 
-class Login;
-class MainMenu;
-class InPlay;
+typedef int key_type;
 
-class WidgetManager
-{
+class DefaultWidget;
+
+class WidgetManager{
+public:
+    static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INPLAY;
 
 public:
-    WidgetManager() = default;
-    void setMainMenuPage(QWidget*);
-    void setLoginPage(QWidget*);
-    void setInPlayPage(QWidget*);
-    QWidget* getMainMenuPage();
-    QWidget* getLoginPage();
-    QWidget* getInPlayPage();
+    WidgetManager();
+    ~WidgetManager();
+    void set(key_type, DefaultWidget*);
+    DefaultWidget* get(key_type);
+    bool alreadySet(key_type);
+    void setCurrentWidget(key_type);
+    QVBoxLayout* getLayout();
+
 private:
-    QWidget* menuPage;
-    QWidget* loginPage;
-    QWidget* inplayPage;
+    QStackedWidget* stackedWidget;
+    QVBoxLayout* layout;
+    std::map<key_type, DefaultWidget*> pages;
 
 };
 
