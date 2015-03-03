@@ -10,7 +10,8 @@ SOURCES += main.cpp\
     widgetmanager.cpp \
     createaccount.cpp \
     defaultwidget.cpp \
-    creategame.cpp
+    creategame.cpp \
+    joingame.cpp
 
 HEADERS  += \
     login.h \
@@ -20,7 +21,8 @@ HEADERS  += \
     widgetmanager.h \
     createaccount.h \
     defaultwidget.h \
-    creategame.h
+    creategame.h \
+    joingame.h
 
 
 FORMS    += \
@@ -29,7 +31,8 @@ FORMS    += \
     inplay.ui \
     mainwindow.ui \
     createaccount.ui \
-    creategame.ui
+    creategame.ui \
+    joingame.ui
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic

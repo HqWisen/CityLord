@@ -11,7 +11,7 @@ class DefaultWidget;
 
 class WidgetManager{
 public:
-    static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INPLAY, CREATEGAME;
+    static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INPLAY, CREATEGAME, JOINGAME;
 public:
     WidgetManager();
     ~WidgetManager();

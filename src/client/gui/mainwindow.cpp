@@ -12,6 +12,7 @@ MainWindow::MainWindow() :
     //widgetManager->set(WidgetManager::INPLAY, new InPlay(this, widgetManager));
     widgetManager->set(WidgetManager::CREATEACCOUNT, new CreateAccount(this, widgetManager));
     widgetManager->set(WidgetManager::CREATEGAME, new CreateGame(this, widgetManager));
+    widgetManager->set(WidgetManager::JOINGAME, new CreateGame(this, widgetManager));
 
     centralWidget->setLayout(widgetManager->getLayout());
     widgetManager->setCurrentWidget(WidgetManager::LOGIN);

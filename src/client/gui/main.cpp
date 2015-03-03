@@ -7,8 +7,8 @@ int main(int argc, char *argv[])
 
     MainWindow mainWindow;
     mainWindow.show();
-    mainWindow.setWindowState(Qt::WindowFullScreen);
-    mainWindow.showFullScreen();
+    //mainWindow.setWindowState(Qt::WindowFullScreen);
+    //mainWindow.showFullScreen();
 
 
     /*InPlay w;
