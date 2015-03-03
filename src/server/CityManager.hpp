@@ -24,6 +24,7 @@
 #include "../common/lib/Map.hpp"
 #include "../common/lib/Catalog.hpp"
 #include "../common/lib/Spawnable.hpp"
+#include "../common/lib/Visitor.hpp"
 
 class CityManager{
 	std::string mapname;
@@ -47,9 +48,8 @@ class CityManager{
 		SocketMessage upgradeBuilding(Player*, Location);
 		SocketMessage destroyBuilding(Player*, Location);
 
-		void popVisitor();
 		std::vector<Location> giveWay();
-		
+		void generateVisitor()
 /*
 	SocketMessage makeTrade(Player&, Player&, Location, int);
 	std::string showCatalog();

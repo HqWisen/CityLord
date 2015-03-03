@@ -173,6 +173,9 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location coordinates)
 	}
 	return message;
 }
+
+void CityManager::generateVisitor(){}
+
 /*
 SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, Location coordinates, int offeredMoney){
 	//Regarde si le joueur 1 a assez d'argent
