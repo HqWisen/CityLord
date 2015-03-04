@@ -30,10 +30,7 @@
 #include <random>
 #include "Generator.hpp"
 
-int UPDATE_INTERVAL = 2;
-int NUMBER_OF_VISITORS = 20;
-
-class CityManager: public Thread{
+class CityManager{
 	std::string mapname;
 	Map cityMap; 
 	int id;
@@ -59,7 +56,7 @@ class CityManager: public Thread{
 		SocketMessage destroyBuilding(Player*, Location);
 
 		std::vector<Location> giveWay();
-		void run() override;
+		//void run() override;
         Spawnable getRandomSpawn();
 
 /*

@@ -239,24 +239,11 @@ void CityManager::updateBuildings(){
 }
 
 void CityManager::makeVisitorsAvance(){
-	for(int i = 0; i<NUMBER_OF_VISITORS; i++){
-		if(listVisitor[i].isActive()){
-			listVisitor[i].moveGUI();
-		}
-	}
+	
 }
 
 void CityManager::spawnVisitors(){
-	for(int i = 0; i<NUMBER_OF_VISITORS; i++){
-		if(!listVisitor[i].isActive()){
-			int willISpawn = rand % 10;
-			if(willISpawn>5){
-				giveWay(i);
-				listVisitor[i].makeActive();
-				spawnVisitor(i);
-			}
-		}
-	}
+	
 }
 void CityManager::run(){
 	while(1){
