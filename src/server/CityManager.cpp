@@ -226,25 +226,41 @@ std::string showCity(){
 	return cityMap.display();
 }
 
-void updateBuildings(){
-	//Mets à jour tous les buildings dans cityMap en introduisant des visiteurs
-	srand( time(NULL) );
-	Visitor randomVisitor:
-	for(int coordX = 0; coordX<=dimensionX; coordX++){
-		for(int coordY = 0; coordY<=dimensionY; coordY++){
-			if(cityMap.getCase(coordinates).getType() == "Field"){
-				Field *concernedField = cityMap.getCase(coordinates);
-				if(*concernedField.hasBuilding()){
-					*concernedField.getBuilding().visitorList.clear();
-					int numberOfVisitors = rand % 10;
-					for(int visitors = 0; visitors < numberOfVisitors; visitors++){
-						randomVisitor = Visitor();
-						*concernedField.getBuilding().receiveVisitor(randomVisitor);
-					}
-				}
+
+void CityManager::updateCity(){
+	if((Timer.elapsedTime() - lastUpdateTime)>=UPDATE_INTERVAL){
+		spawnVisitors();
+		updateBuildings();
+		makeVisitorsAdvance();
+}
+
+void CityManager::updateBuildings(){
+}
+
+void CityManager::makeVisitorsAvance(){
+	for(int i = 0; i<NUMBER_OF_VISITORS; i++){
+		if(listVisitor[i].isActive()){
+			listVisitor[i].moveGUI();
+		}
+	}
+}
+
+void CityManager::spawnVisitors(){
+	for(int i = 0; i<NUMBER_OF_VISITORS; i++){
+		if(!listVisitor[i].isActive()){
+			int willISpawn = rand % 10;
+			if(willISpawn>5){
+				giveWay(i);
+				listVisitor[i].makeActive();
+				spawnVisitor(i);
 			}
 		}
 	}
 }
-						
+void CityManager::run(){
+	while(1){
+		updateCity();
+	}
+}
+
 */
