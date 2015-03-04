@@ -28,6 +28,7 @@
 #include "../common/thread/Thread.hpp
 #include "Timer.hpp"
 #include <random>
+#include "Generator.hpp"
 
 UPDATE_INTERVAL = 2;
 NUMBER_OF_VISITORS = 20;

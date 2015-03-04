@@ -4,6 +4,7 @@
 
 #include "../common/thread/Thread.hpp"
 #include "CityManager.hpp"
+#include "Timer.hpp"
 
 
 class CityLordServer;
