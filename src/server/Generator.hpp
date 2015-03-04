@@ -1,14 +1,12 @@
-#ifndef USERMANAGER_HPP_
-#define USERMANAGER_HPP_
+#ifndef GENERATOR_HPP_
+#define GENERATOR_HPP_
 
 
 #include "../common/thread/Thread.hpp"
-#include "CityManager.hpp"
 #include "Timer.hpp"
+#include <iostream>
 
 
-class CityLordServer;
-class CityManager;
 
 class Generator : public Thread{
 
@@ -19,5 +17,5 @@ class Generator : public Thread{
 
 };
 
-#endif // USERMANAGER_HPP_
+#endif // GENERATOR_HPP_
 
