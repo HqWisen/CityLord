@@ -25,13 +25,13 @@
 #include "../common/lib/Catalog.hpp"
 #include "../common/lib/Spawnable.hpp"
 #include "../common/lib/Visitor.hpp"
-#include "../common/thread/Thread.hpp
+#include "../common/thread/Thread.hpp"
 #include "Timer.hpp"
 #include <random>
 #include "Generator.hpp"
 
-UPDATE_INTERVAL = 2;
-NUMBER_OF_VISITORS = 20;
+int UPDATE_INTERVAL = 2;
+int NUMBER_OF_VISITORS = 20;
 
 class CityManager: public Thread{
 	std::string mapname;
