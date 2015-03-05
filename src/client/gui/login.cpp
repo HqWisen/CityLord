@@ -30,10 +30,10 @@ void Login::on_loginButton_clicked(){
 
 void Login::on_createAccountButton_clicked(){
     clientManager->setCurrentWidget(ClientManager::CREATEACCOUNT);
-
 }
 
 void Login::on_quitButton_clicked(){
+    clientManager->quit();
     QApplication::quit();
 }
 

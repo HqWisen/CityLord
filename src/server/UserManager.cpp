@@ -30,6 +30,7 @@ void UserManager::run(){
 		sendAnswer(answer);
 		recvRequest(request);
 	}
+    server->LOG("User '"+getUserName()+"' with IP "+clientSocket.getClientIP()+" is now disconnected.");
 }
 
 void UserManager::setUser(User* user_){
@@ -57,7 +58,11 @@ std::string UserManager::getIP(){
 }
 
 std::string UserManager::getUserName(){
-	return user->getUserName();
+    if(user != nullptr){
+        return user->getUserName();
+    }else{
+        return "Unknown username";
+    }
 }
 
 void UserManager::recvRequest(SocketMessage& request){

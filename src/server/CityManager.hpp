@@ -23,7 +23,7 @@
 */
 #include "../common/lib/Map.hpp"
 #include "../common/lib/Catalog.hpp"
-#include "../common/lib/Spawnable.hpp"
+//#include "../common/lib/Spawnable.hpp"
 #include "../common/lib/Visitor.hpp"
 #include "CityUpdater.hpp"
 
@@ -33,7 +33,7 @@ class CityManager{
 	int id;
 	Catalog catalog;
 	int nPlayer;
-	std::vector<Spawnable> listSpawnable;
+    //std::vector<Spawnable> listSpawnable;
 	public:
 		CityManager(std::string, int);
 		std::string getMapName();
@@ -48,7 +48,7 @@ class CityManager{
 		SocketMessage destroyBuilding(Player*, Location);
 
 		std::vector<Location> giveWay();
-        Spawnable getRandomSpawn();
+        //Spawnable getRandomSpawn();
 
 /*
 	SocketMessage makeTrade(Player&, Player&, Location, int);

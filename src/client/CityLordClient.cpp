@@ -57,15 +57,18 @@ void CityLordClient::beginConnection(){
 
 void CityLordClient::login(){
 	bool fail = true;
-	std::string username;
+    std::string username, password;
 	SocketMessage request("login"), answer;
 	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	LOG("Enter your account nickname to log in.");
 	while(fail){
-		std::cout<<"Username : ";
-		std::cin>>username;
-		request.set("username", username);
-		sendRequest(request);
+        std::cout<<"Username : ";
+        std::cin>>username;
+        request.set("username", username);
+        std::cout<<"Password : ";
+        std::cin>>password;
+        request.set("password", password);
+        sendRequest(request);
 		recvAnswer(answer);
 		fail = (answer.getTopic() == "failure");
 		if(fail){
@@ -77,14 +80,17 @@ void CityLordClient::login(){
 void CityLordClient::createAccount(){
 	// TODO restriction du pseudo (nb max de char etc...)
 	bool fail = true;
-	std::string username;
+    std::string username, password;
 	SocketMessage request("createaccount"), answer;
 	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	LOG("To create an account enter your username.");
 	while(fail){
-		std::cout<<"Username : ";
-		std::cin>>username;
-		request.set("username", username);
+        std::cout<<"Username : ";
+        std::cin>>username;
+        request.set("username", username);
+        std::cout<<"Password : ";
+        std::cin>>password;
+        request.set("password", password);
 		sendRequest(request);
 		recvAnswer(answer);
 		fail = (answer.getTopic() == "failure");

@@ -30,7 +30,6 @@ class Field : public Case{			// public Case
 		bool hasColor();
 		bool hasBuilding();
 		string display() override;
-		bool isField() override;
 		string toString();
 };
 

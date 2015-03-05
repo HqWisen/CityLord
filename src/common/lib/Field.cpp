@@ -75,10 +75,6 @@ string Field::display(){
 	}
 }
 
-bool Field::isField(){
-	return true;
-}
-
 void Field::buildBuilding(BuildingType buildingType){
 	building = new Building(buildingType);
 }

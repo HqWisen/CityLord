@@ -25,7 +25,7 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
         }
     }
     //----------------------------------------------- Visitor  --------------------------------
-    visitorList = new Visitor[(dimensionX*dimensionY)/3];
+    //visitorList = new Visitor[(dimensionX*dimensionY)/3];
     //----------------------------------------------- Parseur  --------------------------------
     for (int j=0; j<((dimensionY*2)+1); j++) { //par ligne
         getline(file, temp_string);

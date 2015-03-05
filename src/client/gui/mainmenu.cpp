@@ -25,6 +25,7 @@ void MainMenu::on_disconnectButton_clicked(){
 }
 
 void MainMenu::on_quitButton_clicked(){
+    clientManager->quit();
     QApplication::quit();
 }
 

@@ -29,8 +29,9 @@ class CityLordServer{
 		CityLordServer(int port);
 		CityLordServer(const CityLordServer&) = default;
 		void run();
-		User* createAccount(std::string);
+        User* createAccount(std::string, std::string);
 		bool accountExist(std::string);
+        bool matchPassword(std::string, std::string);
 		CityManager* createCity(int);
 		CityManager* getCity(int);
 		int getNumberOfCity();
