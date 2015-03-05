@@ -23,7 +23,7 @@ testexe
 *~
 src/resources/tmp
 ##
-src/client/gui/gui.pro.*
+src/client/gui/gui.pro.user
 src/client/gui/makefile
 src/client/gui/Makefile
 

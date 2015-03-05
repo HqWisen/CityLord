@@ -24,6 +24,8 @@ Map::Map(string nomDeLaCarte){ // metrre un fichier txt en paramètre
             mapMatrice[i][j] = nullptr;
         }
     }
+    //----------------------------------------------- Visitor  --------------------------------
+    visitorList = new Visitor[(dimensionX*dimensionY)/3];
     //----------------------------------------------- Parseur  --------------------------------
     for (int j=0; j<((dimensionY*2)+1); j++) { //par ligne
         getline(file, temp_string);
@@ -230,11 +232,8 @@ void Map::display(){
 }
 
 Map::~Map(){
-    for (int i=0; i<dimensionX; i++) {
-        for (int j=0; j<dimensionY; j++) {
-            delete mapMatrice[i][j];
-        }
-    }
+    delete[] mapMatrice;
+    delete[] visitorList;
 }
 
 Case* Map::getCase(Location coord){

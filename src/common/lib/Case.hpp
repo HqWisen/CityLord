@@ -14,7 +14,6 @@ class Case{
 		Location getCoord();
 		void setCoord(Location);
 		string getType();
-		virtual bool isField();
 		virtual ~Case() = default;
 		virtual string display() = 0;	//Pure virtuelle, fait de Case une classe abstraite
 };
