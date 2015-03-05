@@ -5,7 +5,7 @@
 #include "../common/thread/Thread.hpp"
 #include "Timer.hpp"
 #include <iostream>
-
+#include "../common/lib/Map.hpp"
 
 
 class CityUpdater : public Thread{

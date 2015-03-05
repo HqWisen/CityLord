@@ -25,7 +25,6 @@
 #include "../common/lib/Catalog.hpp"
 #include "../common/lib/Spawnable.hpp"
 #include "../common/lib/Visitor.hpp"
-#include "../common/thread/Thread.hpp"
 #include "CityUpdater.hpp"
 
 class CityManager{
@@ -34,12 +33,7 @@ class CityManager{
 	int id;
 	Catalog catalog;
 	int nPlayer;
-	Timer timer;
-	unsigned long lastUpdateTime;
-
 	std::vector<Spawnable> listSpawnable;
-	//std::vector<Player*> playerVector;
-	//std::vector<Visitor> listVisitor;
 	public:
 		CityManager(std::string, int);
 		std::string getMapName();
@@ -48,23 +42,18 @@ class CityManager{
 		void addPlayer(Player*);
 		Map* getMap();
 		std::vector<Field*> getPurchasableFields();
-		SocketMessage makePurchase(Player*, Location); //Implique que les coordonnées de la case sont envoyées du client vers le serveur et ont été décodées
+		SocketMessage makePurchase(Player*, Location);
 		SocketMessage buildBuilding(Player*, Location, BuildingType);
 		SocketMessage upgradeBuilding(Player*, Location);
 		SocketMessage destroyBuilding(Player*, Location);
 
 		std::vector<Location> giveWay();
-		//void run() override;
         Spawnable getRandomSpawn();
 
 /*
 	SocketMessage makeTrade(Player&, Player&, Location, int);
 	std::string showCatalog();
 	std::string showCity();
-	void updateBuildings();
-	void makeVisitorsAdvance();
-	void spawnVisitors();
-	void updateCity();
 	*/
 };
 
