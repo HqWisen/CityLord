@@ -21,6 +21,15 @@ JoinGame::JoinGame(QWidget* parent, ClientManager* cm) :
     QTableWidgetItem *item1b = new QTableWidgetItem("Hakim");
     QTableWidgetItem *item0c = new QTableWidgetItem("0/8");
     QTableWidgetItem *item1c = new QTableWidgetItem("0/6");
+
+    //items not Editable
+    item0->setFlags(item0->flags() & ~Qt::ItemIsEditable);
+    item1->setFlags(item1->flags() & ~Qt::ItemIsEditable);
+    item0b->setFlags(item0b->flags() & ~Qt::ItemIsEditable);
+    item1b->setFlags(item1b->flags() & ~Qt::ItemIsEditable);
+    item0c->setFlags(item0c->flags() & ~Qt::ItemIsEditable);
+    item1c->setFlags(item1c->flags() & ~Qt::ItemIsEditable);
+
     ui->tableWidget->setItem(0, 0, item0);
     ui->tableWidget->setItem(1, 0, item1);
     ui->tableWidget->setItem(0, 1, item0b);

@@ -19,6 +19,13 @@ CreateGame::CreateGame(QWidget* parent, ClientManager* cm) :
     QTableWidgetItem *item1 = new QTableWidgetItem("Map2.txt");
     QTableWidgetItem *item0b = new QTableWidgetItem("-/8");
     QTableWidgetItem *item1b = new QTableWidgetItem("-/6");
+
+    //items not Editable
+    item0->setFlags(item0->flags() & ~Qt::ItemIsEditable);
+    item1->setFlags(item1->flags() & ~Qt::ItemIsEditable);
+    item0b->setFlags(item0b->flags() & ~Qt::ItemIsEditable);
+    item1b->setFlags(item1b->flags() & ~Qt::ItemIsEditable);
+
     ui->tableWidget->setItem(0, 0, item0);
     ui->tableWidget->setItem(1, 0, item1);
 
@@ -26,7 +33,6 @@ CreateGame::CreateGame(QWidget* parent, ClientManager* cm) :
     ui->tableWidget->setItem(1, 1, item1b);
     ui->tableWidget->item(0,1)->setTextAlignment(Qt::AlignRight);
     ui->tableWidget->item(1,1)->setTextAlignment(Qt::AlignRight);
-
 
 
 }
