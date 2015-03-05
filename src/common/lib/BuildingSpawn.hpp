@@ -1,10 +1,15 @@
 #ifndef BUILDINGSPAWN_HPP_
 #define BUILDINGSPAWN_HPP_
 
-class BuildingSpawn : public Spawnable, public Building{
-	Road* spawnRoad;
+#include "Case.hpp"
+#include "Spawn.hpp"
+
+class BuildingSpawn : public Case, public Spawn{
 	public:
-		BuildingSpawn() = default;
+		BuildingSpawn(Road*);
+		~BuildingSpawn() = default;
+		Visitor* spawn() override;
+		void despawn(Visitor*) override;
 };
 
 #endif // BUILDINGSPAWN_HPP_
