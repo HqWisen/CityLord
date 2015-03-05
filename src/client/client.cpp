@@ -1,6 +1,6 @@
 #include <iostream>
 #include "CityLordClient.hpp"
-#define PORT 5555
+#define PORT 27000
 
 int main(int argc, char** argv){
   char* hostname;
@@ -11,7 +11,7 @@ int main(int argc, char** argv){
 	else{
 		hostname = argv[1];
 	}
-  CityLordClient client(hostname, PORT);
-  client.run();
+    CityLordClient client(hostname, PORT);
+    client.run();
 	return 0;
 }

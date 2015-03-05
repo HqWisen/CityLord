@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow() :
-    ui(new Ui::MainWindow), centralWidget(new QWidget), clientManager(new ClientManager)
+MainWindow::MainWindow(char* hostname, int port) :
+    ui(new Ui::MainWindow), centralWidget(new QWidget), clientManager(new ClientManager(hostname, port))
 {
     ui->setupUi(this);
     setCentralWidget(centralWidget);
