@@ -14,6 +14,8 @@ class cityUpdater : public Thread{
 		cityUpdater();
 		void run() override;
         void generateVisitor();
+        void updateBuildings();
+        void makeVisitorsAdvance();
 
 };
 
