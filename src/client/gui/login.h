@@ -18,6 +18,8 @@ private slots:
     void on_createAccountButton_clicked();
     void on_quitButton_clicked();
 
+    void on_passwordLineEdit_returnPressed();
+
 private:
     Ui::Login *ui;
 };

@@ -36,3 +36,13 @@ void Login::on_createAccountButton_clicked(){
 void Login::on_quitButton_clicked(){
     QApplication::quit();
 }
+
+void Login::on_passwordLineEdit_returnPressed()
+{
+    if(ui->usernameLineEdit->text()=="Fish" && ui->passwordLineEdit->text()=="123"){
+        ui->errorLabel->setText("");
+        clientManager->setCurrentWidget(ClientManager::MAINMENU);
+    }else{
+        ui->errorLabel->setText("Username doesn't match the password.");
+    }
+}
