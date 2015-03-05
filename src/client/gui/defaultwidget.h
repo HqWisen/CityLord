@@ -1,20 +1,20 @@
 #ifndef DEFAULTWIDGET_H
 #define DEFAULTWIDGET_H
 
-#include "widgetmanager.h"
+#include "clientmanager.h"
 #include <QWidget>
 #include <QFrame>
 
 class DefaultWidget : public QWidget{
     Q_OBJECT
 public:
-    DefaultWidget(QWidget*, WidgetManager*);
+    DefaultWidget(QWidget*, ClientManager*);
     virtual ~DefaultWidget();
     void displayDefaultBackground();
     void displayLogo(QWidget *,int, int);
     virtual void refresh() = 0;
 protected:
-    WidgetManager* widgetManager;
+    ClientManager* clientManager;
    QFrame backgroundFrame;
 };
 

@@ -10,7 +10,7 @@ class CreateGame;
 class CreateGame : public DefaultWidget{
     Q_OBJECT
 public:
-    CreateGame(QWidget*, WidgetManager*);
+    CreateGame(QWidget*, ClientManager*);
     ~CreateGame();
     void refresh() override;
 private slots:

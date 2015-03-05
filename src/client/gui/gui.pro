@@ -7,10 +7,10 @@ SOURCES += main.cpp\
     mainmenu.cpp \
     inplay.cpp \
     mainwindow.cpp \
-    widgetmanager.cpp \
     createaccount.cpp \
     defaultwidget.cpp \
     creategame.cpp \
+    clientmanager.cpp \
     joingame.cpp
 
 HEADERS  += \
@@ -18,10 +18,10 @@ HEADERS  += \
     mainmenu.h \
     inplay.h \
     mainwindow.h \
-    widgetmanager.h \
     createaccount.h \
     defaultwidget.h \
     creategame.h \
+    clientmanager.h \
     joingame.h
 
 

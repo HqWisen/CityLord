@@ -17,7 +17,6 @@ class Visitor{
 	unsigned count = 0;
 	public:
 		Visitor(Location); //le spawner donne la localistion
-		~Visitor();
 		void move();
 		void moveGUI();
 		void displayGUI();

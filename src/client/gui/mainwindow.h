@@ -6,7 +6,8 @@
 #include "mainmenu.h"
 #include "createaccount.h"
 #include "creategame.h"
-#include "widgetmanager.h"
+#include "joingame.h"
+#include "clientmanager.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -24,7 +25,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QWidget *centralWidget;
-    WidgetManager* widgetManager;
+    ClientManager* clientManager;
 };
 
 #endif // MAINWINDOW_H

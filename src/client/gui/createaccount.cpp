@@ -1,8 +1,8 @@
 #include "createaccount.h"
 #include "ui_createaccount.h"
 
-CreateAccount::CreateAccount(QWidget* parent, WidgetManager* wm) :
-    DefaultWidget(parent, wm), ui(new Ui::CreateAccount){
+CreateAccount::CreateAccount(QWidget* parent, ClientManager* cm) :
+    DefaultWidget(parent, cm), ui(new Ui::CreateAccount){
 
     displayDefaultBackground();
     ui->setupUi(this);
@@ -19,6 +19,6 @@ void CreateAccount::refresh(){
 }
 
 void CreateAccount::on_cancelButton_clicked(){
-    widgetManager->setCurrentWidget(WidgetManager::LOGIN);
+    clientManager->setCurrentWidget(ClientManager::LOGIN);
 }
 

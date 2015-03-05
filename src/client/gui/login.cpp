@@ -1,8 +1,8 @@
 #include "login.h"
 #include "ui_login.h"
 
-Login::Login(QWidget* parent, WidgetManager* wm) :
-    DefaultWidget(parent, wm), ui(new Ui::Login){
+Login::Login(QWidget* parent, ClientManager* cm) :
+    DefaultWidget(parent, cm), ui(new Ui::Login){
 
     displayDefaultBackground();
     displayLogo(this,376,357);
@@ -22,14 +22,14 @@ void Login::refresh(){
 void Login::on_loginButton_clicked(){
     if(ui->usernameLineEdit->text()=="Fish" && ui->passwordLineEdit->text()=="123"){
         ui->errorLabel->setText("");
-        widgetManager->setCurrentWidget(WidgetManager::MAINMENU);
+        clientManager->setCurrentWidget(ClientManager::MAINMENU);
     }else{
         ui->errorLabel->setText("Username doesn't match the password.");
     }
 }
 
 void Login::on_createAccountButton_clicked(){
-    widgetManager->setCurrentWidget(WidgetManager::CREATEACCOUNT);
+    clientManager->setCurrentWidget(ClientManager::CREATEACCOUNT);
 
 }
 
