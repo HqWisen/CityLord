@@ -3,8 +3,8 @@
 
 class Spawnable{
 	public:
-		Spawnable() = default;
-  		virtual void spawn() = 0;
+        Spawnable();
+        void spawn();
   		Location loc;
 };
 

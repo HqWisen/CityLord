@@ -11,6 +11,7 @@ CityManager::CityManager(std::string mapname_, int id_) : mapname(mapname_), cit
 			}
 		}
 	}
+	new Generator();
 }
 
 std::string CityManager::getMapName(){
@@ -173,6 +174,14 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location coordinates)
 	}
 	return message;
 }
+
+Spawnable CityManager::getRandomSpawn(){
+    int size = listSpawnable.size();
+    int luck = rand() %  (size-1);
+    return listSpawnable[luck];
+}
+
+
 /*
 SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, Location coordinates, int offeredMoney){
 	//Regarde si le joueur 1 a assez d'argent
@@ -218,25 +227,49 @@ std::string showCity(){
 	return cityMap.display();
 }
 
-void updateBuildings(){
-	//Mets à jour tous les buildings dans cityMap en introduisant des visiteurs
-	srand( time(NULL) );
-	Visitor randomVisitor:
-	for(int coordX = 0; coordX<=dimensionX; coordX++){
-		for(int coordY = 0; coordY<=dimensionY; coordY++){
-			if(cityMap.getCase(coordinates).getType() == "Field"){
-				Field *concernedField = cityMap.getCase(coordinates);
-				if(*concernedField.hasBuilding()){
-					*concernedField.getBuilding().visitorList.clear();
-					int numberOfVisitors = rand % 10;
-					for(int visitors = 0; visitors < numberOfVisitors; visitors++){
-						randomVisitor = Visitor();
-						*concernedField.getBuilding().receiveVisitor(randomVisitor);
-					}
+
+void CityManager::updateCity(){
+	if((Timer.elapsedTime() - lastUpdateTime)>=UPDATE_INTERVAL){
+		spawnVisitors();
+		updateBuildings();
+		makeVisitorsAdvance();
+}
+
+void CityManager::updateBuildings(){
+	Location currentLocation;
+	for(int i = 0; i<cityMap.getDimensionX(); i++){
+		for(int j = 0; i<cityMap.getDimensionY(); j++){
+			currentLocation = Location(x,y);
+			Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation))
+			if(concernedField->hasBuilding()){;
+				//Faire sortir les visiteurs du building, puis faire payer le joueur
+			}
+		}
+	}
+}
+
+void CityManager::makeVisitorsAdvance(){
+	Location currentLocation;
+	for(int i = 0; i<cityMap.getDimensionX(); i++){
+		for(int j = 0; i<cityMap.getDimensionY(); j++){
+			currentLocation = Location(x,y);
+			Case* concernedCase = cityMap.getCase(currentLocation)
+			if(concernedCase->hasVisitors()){
+				for(k = 0; k <concernedCase->visitorList.size(); k++){
+					concernedCase->visitorList->moveGUI();
 				}
 			}
 		}
 	}
 }
-						
+
+void CityManager::spawnVisitors(){
+	
+}
+void CityManager::run(){
+	while(1){
+		updateCity();
+	}
+}
+
 */

@@ -1,7 +1,7 @@
 #ifndef INPLAY_H
 #define INPLAY_H
 
-#include "widgetmanager.h"
+#include "defaultwidget.h"
 #include <QWidget>
 #include <QMessageBox>
 
@@ -9,12 +9,12 @@ namespace Ui {
 class InPlay;
 }
 
-class InPlay : public QWidget
+class InPlay : public DefaultWidget
 {
     Q_OBJECT
 
 public:
-    explicit InPlay(QWidget *parent, WidgetManager*);
+    explicit InPlay(QWidget *parent, ClientManager*);
     ~InPlay();
 
 private slots:
@@ -28,7 +28,6 @@ private slots:
 
 private:
     Ui::InPlay *ui;
-    WidgetManager* widgetManager;
 
 };
 

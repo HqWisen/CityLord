@@ -24,6 +24,11 @@
 #include "../common/lib/Map.hpp"
 #include "../common/lib/Catalog.hpp"
 #include "../common/lib/Spawnable.hpp"
+#include "../common/lib/Visitor.hpp"
+#include "../common/thread/Thread.hpp"
+#include "Timer.hpp"
+#include <random>
+#include "Generator.hpp"
 
 class CityManager{
 	std::string mapname;
@@ -31,9 +36,12 @@ class CityManager{
 	int id;
 	Catalog catalog;
 	int nPlayer;
+	Timer timer;
+	unsigned long lastUpdateTime;
 
 	std::vector<Spawnable> listSpawnable;
 	//std::vector<Player*> playerVector;
+	//std::vector<Visitor> listVisitor;
 	public:
 		CityManager(std::string, int);
 		std::string getMapName();
@@ -47,14 +55,18 @@ class CityManager{
 		SocketMessage upgradeBuilding(Player*, Location);
 		SocketMessage destroyBuilding(Player*, Location);
 
-		void popVisitor();
 		std::vector<Location> giveWay();
-		
+		//void run() override;
+        Spawnable getRandomSpawn();
+
 /*
 	SocketMessage makeTrade(Player&, Player&, Location, int);
 	std::string showCatalog();
 	std::string showCity();
 	void updateBuildings();
+	void makeVisitorsAdvance();
+	void spawnVisitors();
+	void updateCity();
 	*/
 };
 
