@@ -2,7 +2,9 @@
 
 const std::vector<std::string> CityLordServer::mapNameVector = {
 	"Map1.txt",
-	"Map2.txt"
+    "Map2.txt",
+    "Map3.txt",
+    "Map4.txt"
 };
 
 CityLordServer::CityLordServer(int port) : serverSocket(port){}

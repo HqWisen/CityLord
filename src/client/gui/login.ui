@@ -64,7 +64,7 @@ QLabel{color:white;}</string>
       <widget class="QLabel" name="errorLabel">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>20</x>
          <y>80</y>
          <width>511</width>
          <height>31</height>

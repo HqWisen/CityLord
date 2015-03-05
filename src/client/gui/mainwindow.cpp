@@ -5,6 +5,7 @@ MainWindow::MainWindow(char* hostname, int port) :
     ui(new Ui::MainWindow), centralWidget(new QWidget), clientManager(new ClientManager(hostname, port))
 {
     ui->setupUi(this);
+    setFixedSize(1152, 864);
     setCentralWidget(centralWidget);
 
     clientManager->set(ClientManager::LOGIN, new Login(this, clientManager));
