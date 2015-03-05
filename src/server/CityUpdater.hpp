@@ -8,14 +8,15 @@
 
 
 
-class cityUpdater : public Thread{
+class CityUpdater : public Thread{
 
 	public:
-		cityUpdater();
+		CityUpdater();
 		void run() override;
-        void generateVisitor();
+        void generateVisitors();
         void updateBuildings();
         void makeVisitorsAdvance();
+        void updateCity();
 
 };
 

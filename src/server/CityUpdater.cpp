@@ -1,10 +1,48 @@
-#include "cityUpdater.hpp"
+#include "CityUpdater.hpp"
 
-cityUpdater::cityUpdater(){
+CityUpdater::CityUpdater(){
     this->start();
 }
 
-void cityUpdater::run(){
+void CityUpdater::generateVisitors(){
+	std::cout<<"Visitor"<<std::endl;
+}
+
+void CityUpdater::updateBuildings(){
+	/*Location currentLocation;
+	for(int i = 0; i<cityMap.getDimensionX(); i++){
+		for(int j = 0; i<cityMap.getDimensionY(); j++){
+			currentLocation = Location(x,y);
+			Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation))
+			if(concernedField->hasBuilding()){;
+				//Faire sortir les visiteurs du building, puis faire payer le joueur
+			}
+		}
+	}*/
+}
+
+void CityUpdater::makeVisitorsAdvance(){
+	/*Location currentLocation;
+	for(int i = 0; i<cityMap.getDimensionX(); i++){
+		for(int j = 0; i<cityMap.getDimensionY(); j++){
+			currentLocation = Location(x,y);
+			Case* concernedCase = cityMap.getCase(currentLocation)
+			if(concernedCase->hasVisitors()){
+				for(k = 0; k <concernedCase->visitorList.size(); k++){
+					concernedCase->visitorList->moveGUI();
+				}
+			}
+		}
+	}*/
+}
+
+void CityUpdater::updateCity(){
+	generateVisitors();
+	updateBuildings();
+	makeVisitorsAdvance();
+}
+
+void CityUpdater::run(){
 	bool stop = false;
 	while(not stop){
 		unsigned long timer = 10;
@@ -22,41 +60,4 @@ void cityUpdater::run(){
 	}
 }
 
-void cityUpdater::updateCity(){
-	generateVisitors();
-	updateBuildings();
-	makeVisitorsAdvance();
-}
 
-
-void cityUpdater::generateVisitor(){
-	std::cout<<"Visitor"<<std::endl;
-}
-
-void cityUpdater::updateBuildings(){
-	/*Location currentLocation;
-	for(int i = 0; i<cityMap.getDimensionX(); i++){
-		for(int j = 0; i<cityMap.getDimensionY(); j++){
-			currentLocation = Location(x,y);
-			Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation))
-			if(concernedField->hasBuilding()){;
-				//Faire sortir les visiteurs du building, puis faire payer le joueur
-			}
-		}
-	}*/
-}
-
-void cityUpdater::makeVisitorsAdvance(){
-	/*Location currentLocation;
-	for(int i = 0; i<cityMap.getDimensionX(); i++){
-		for(int j = 0; i<cityMap.getDimensionY(); j++){
-			currentLocation = Location(x,y);
-			Case* concernedCase = cityMap.getCase(currentLocation)
-			if(concernedCase->hasVisitors()){
-				for(k = 0; k <concernedCase->visitorList.size(); k++){
-					concernedCase->visitorList->moveGUI();
-				}
-			}
-		}
-	}*/
-}

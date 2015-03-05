@@ -26,9 +26,7 @@
 #include "../common/lib/Spawnable.hpp"
 #include "../common/lib/Visitor.hpp"
 #include "../common/thread/Thread.hpp"
-#include "Timer.hpp"
-#include <random>
-#include "Generator.hpp"
+#include "CityUpdater.hpp"
 
 class CityManager{
 	std::string mapname;
