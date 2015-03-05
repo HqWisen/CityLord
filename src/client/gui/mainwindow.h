@@ -6,6 +6,7 @@
 #include "mainmenu.h"
 #include "createaccount.h"
 #include "creategame.h"
+#include "joingame.h"
 #include "clientmanager.h"
 #include <QMainWindow>
 

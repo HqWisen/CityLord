@@ -30,7 +30,7 @@ void MainMenu::on_quitButton_clicked(){
 
 void MainMenu::on_joinButton_clicked()
 {
-    widgetManager->setCurrentWidget(WidgetManager::JOINGAME);
+    clientManager->setCurrentWidget(ClientManager::JOINGAME);
 }
 
 /*

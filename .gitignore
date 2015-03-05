@@ -22,4 +22,8 @@ testexe
 ## tmp files:
 *~
 src/resources/tmp
+##
+src/client/gui/gui.pro.*
+src/client/gui/makefile
+src/client/gui/Makefile
 

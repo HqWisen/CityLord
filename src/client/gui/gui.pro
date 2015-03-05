@@ -10,11 +10,8 @@ SOURCES += main.cpp\
     createaccount.cpp \
     defaultwidget.cpp \
     creategame.cpp \
-<<<<<<< HEAD
-    clientmanager.cpp
-=======
+    clientmanager.cpp \
     joingame.cpp
->>>>>>> 8947808f1fbea653d2706b8cb98785f6eaf305c8
 
 HEADERS  += \
     login.h \
@@ -24,11 +21,8 @@ HEADERS  += \
     createaccount.h \
     defaultwidget.h \
     creategame.h \
-<<<<<<< HEAD
-    clientmanager.h
-=======
+    clientmanager.h \
     joingame.h
->>>>>>> 8947808f1fbea653d2706b8cb98785f6eaf305c8
 
 
 FORMS    += \

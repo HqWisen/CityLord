@@ -14,7 +14,7 @@ class JoinGame : public DefaultWidget
     Q_OBJECT
 
 public:
-    JoinGame(QWidget*, WidgetManager*);
+    JoinGame(QWidget*, ClientManager*);
     ~JoinGame();
     void refresh() override;
 

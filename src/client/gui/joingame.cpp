@@ -1,12 +1,12 @@
 #include "joingame.h"
 #include "ui_joingame.h"
 
-JoinGame::JoinGame(QWidget* parent, WidgetManager* wm) :
-    DefaultWidget(parent, wm), ui(new Ui::JoinGame){
+JoinGame::JoinGame(QWidget* parent, ClientManager* cm) :
+    DefaultWidget(parent, cm), ui(new Ui::JoinGame){
 
     displayDefaultBackground();
     ui->setupUi(this);
-    for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
+    /*for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
     {
         ui->tableWidget->horizontalHeader()->setSectionResizeMode(
             c, QHeaderView::Stretch);
@@ -23,7 +23,7 @@ JoinGame::JoinGame(QWidget* parent, WidgetManager* wm) :
     ui->tableWidget->setItem(1, 0, item1);
     ui->tableWidget->setItem(0, 1, item0b);
     ui->tableWidget->setItem(1, 1, item1b);
-
+*/
 }
 
 JoinGame::~JoinGame()
@@ -37,6 +37,6 @@ void JoinGame::refresh(){
 }
 
 void JoinGame::on_cancelButton_clicked(){
-    widgetManager->setCurrentWidget(WidgetManager::MAINMENU);
+    clientManager->setCurrentWidget(ClientManager::MAINMENU);
 
 }
