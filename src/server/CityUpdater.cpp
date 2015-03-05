@@ -60,6 +60,10 @@ void CityUpdater::run(){
         	else{
                 timer += 10; 
 				updateCity();
+				if(timer == 720){  //nouveau jour
+					makeOwnersPay();
+					timer = 0;
+				}				
 			}
 		}
 	}
