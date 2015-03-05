@@ -35,11 +35,11 @@ FORMS    += \
     joingame.ui
 
 CONFIG += c++11
-QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic
+QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic -Wno-write-strings
 
 DESTDIR = ../../../bin
 
-LIBS += 
+LIBS += $$DESTDIR/socket.a
 
 OBJECTS_DIR = $$DESTDIR/gui/
 MOC_DIR = $$DESTDIR/gui/.moc

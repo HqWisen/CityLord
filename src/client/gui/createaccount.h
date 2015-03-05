@@ -15,8 +15,8 @@ public:
     ~CreateAccount();
     void refresh() override;
 private slots:
+    void on_createButton_clicked();
     void on_cancelButton_clicked();
-    //void on_createButton_clicked();
 
 private:
     Ui::CreateAccount *ui;

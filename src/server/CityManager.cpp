@@ -11,7 +11,8 @@ CityManager::CityManager(std::string mapname_, int id_) : mapname(mapname_), cit
 			}
 		}
 	}
-	CityUpdater* updater = new CityUpdater();
+	//CityUpdater* updater =
+	new CityUpdater();
 }
 
 std::string CityManager::getMapName(){

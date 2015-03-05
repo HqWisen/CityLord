@@ -1,11 +1,21 @@
 #include "mainwindow.h"
 #include <QApplication>
 
+#define PORT 27000
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    MainWindow mainWindow;
+    char* hostname;
+    if(argc != 2){
+      printf("Hostname not given !\n");
+      hostname = "localhost";
+    }
+    else{
+          hostname = argv[1];
+    }
+    MainWindow mainWindow(hostname, PORT);
     mainWindow.show();
     //mainWindow.setWindowState(Qt::WindowFullScreen);
     //mainWindow.showFullScreen();
