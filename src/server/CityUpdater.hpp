@@ -1,5 +1,5 @@
-#ifndef GENERATOR_HPP_
-#define GENERATOR_HPP_
+#ifndef CITYUPDATER_HPP_
+#define CITYUPDATER_HPP_
 
 
 #include "../common/thread/Thread.hpp"
@@ -8,14 +8,14 @@
 
 
 
-class Generator : public Thread{
+class cityUpdater : public Thread{
 
 	public:
-		Generator();
+		cityUpdater();
 		void run() override;
         void generateVisitor();
 
 };
 
-#endif // GENERATOR_HPP_
+#endif // CITYUPDATER_HPP_
 
