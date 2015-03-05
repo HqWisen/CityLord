@@ -16,6 +16,7 @@ class CityUpdater : public Thread{
         void generateVisitors();
         void updateBuildings();
         void makeVisitorsAdvance();
+        void makeOwnersPay();
         void updateCity();
 
 };

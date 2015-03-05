@@ -4,8 +4,21 @@ CityUpdater::CityUpdater(){
     this->start();
 }
 
+void CityUpdater::makeOwnersPay(){
+	/*Location currentLocation;
+	for(int i = 0; i<cityMap.getDimensionX(); i++){
+		for(int j = 0; i<cityMap.getDimensionY(); j++){
+			currentLocation = Location(x,y);
+			Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation));
+			if(concernedField->hasOwner()){
+				concernedField->getOwner()->setMoney()(concernedField->getOwner()->getMoney() - concernedField->getBuilding()->dailyCost);
+			}
+		}
+	}*/
+}
+
 void CityUpdater::generateVisitors(){
-	std::cout<<"Visitor"<<std::endl;
+	/*for*/
 }
 
 void CityUpdater::updateBuildings(){
@@ -13,9 +26,9 @@ void CityUpdater::updateBuildings(){
 	for(int i = 0; i<cityMap.getDimensionX(); i++){
 		for(int j = 0; i<cityMap.getDimensionY(); j++){
 			currentLocation = Location(x,y);
-			Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation))
+			Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation));
 			if(concernedField->hasBuilding()){;
-				//Faire sortir les visiteurs du building, puis faire payer le joueur
+				concernedField->getBuilding()->removeVisitor();
 			}
 		}
 	}*/
@@ -23,16 +36,8 @@ void CityUpdater::updateBuildings(){
 
 void CityUpdater::makeVisitorsAdvance(){
 	/*Location currentLocation;
-	for(int i = 0; i<cityMap.getDimensionX(); i++){
-		for(int j = 0; i<cityMap.getDimensionY(); j++){
-			currentLocation = Location(x,y);
-			Case* concernedCase = cityMap.getCase(currentLocation)
-			if(concernedCase->hasVisitors()){
-				for(k = 0; k <concernedCase->visitorList.size(); k++){
-					concernedCase->visitorList->moveGUI();
-				}
-			}
-		}
+	for(int i = 0; i<cityMap.visitorList.size(); i++){
+		cityMap.visitorList[i].advance();
 	}*/
 }
 
