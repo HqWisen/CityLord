@@ -4,18 +4,18 @@
 #include <string>
 
 class Location{
-	int x, y;
+    int row, col;
 
 	public:
-		Location();						//Constructeur par défaut
-		Location(int,int);				//Constructeur	
-		Location(const Location&);		//Constructeur de copie
-		Location& operator=(const Location&);		//opérateur d'affectation
-		~Location();
-		int getX();
-		int getY();
-		void setX(int);
-		void setY(int);
+        Location() = default;
+        Location(int,int);
+        Location(const Location&) = default;
+        Location& operator=(const Location&) = default;
+        ~Location() = default;
+        int getRow();
+        int getCol();
+        void setRow(int);
+        void setCol(int);
 		std::string toString();
 
 };

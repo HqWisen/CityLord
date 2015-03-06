@@ -1,47 +1,28 @@
 #include "Location.hpp"
 
-Location::Location(){
-	x=0; y=0;
+Location::Location(int r,int c) : row(r), col(c){
 }
 
-Location::Location(int a,int b){
-	x=a; y=b;
+int Location::getRow(){
+    return row;
 }
 
-Location::Location(const Location  &s){
-	this->x=s.x; this->y=s.y;
+int Location::getCol(){
+    return col;
 }
 
-Location& Location::operator=(const Location &s){
-	this->x=s.x; this->y=s.y;
-	return *this;
+void Location::setRow(int r){
+    row=r;
 }
 
-Location::~Location(){
-	this->x=0; this->y=0;
-}
-
-//getters & setters
-int Location::getX(){
-	return x;
-}
-
-int Location::getY(){
-	return y;
-}
-
-void Location::setX(int a){
-	x=a;
-}
-
-void Location::setY(int b){
-	y=b;
+void Location::setCol(int c){
+    col=c;
 }
 
 std::string Location::toString(){
 	std::string result;
 	result +="(";
-	result += "x="+std::to_string(x)+", ";
-	result += "y="+std::to_string(y)+")";
+    result += "row="+std::to_string(row)+", ";
+    result += "col="+std::to_string(col)+")";
 	return result;
 }

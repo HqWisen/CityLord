@@ -1,69 +1,81 @@
-#include <iostream>
 #include "Road.hpp"
 
-using namespace std;
+#include <iostream>
 
-Road::Road(Location coords){
-	typeName = "Road";
-	coord=coords;
+const int Road::WEST = 0;
+const int Road::NORTH = 1;
+const int Road::EAST = 2;
+const int Road::SOUTH = 3;
+
+Road::Road(Location location) : Case(location){
 }
 
-string Road::display(){
-	return image;
+std::string Road::print(){
+    return image;
+    //return toString();
 }
 
-//getters & setters
-bool Road::getPath(int i){
-	return path[i];
-}
+// ╬ ╝ ═ ║ ╚ ╠ ╣ ╔ ╗ ╦ ╩ □
 
-void Road::setPath(int i, bool newRoad){ // ╬ ╝ ═ ║ ╚ ╠ ╣ ╔ ╗ ╦ ╩ □
-	path[i]=newRoad;
-
-	if (path[0] != false){
-		if (path[1] != false){
-			if (path[2] != false){
-				if (path[3] != false){
+void Road::open(direction_type dir){
+    directions[dir]=true;
+    if (directions[WEST]){
+        if (directions[NORTH]){
+            if (directions[EAST]){
+                if (directions[SOUTH]){
 					image="═╬═";
 				}
 				else {
 					image="═╩═";
 				}
-			}else if (path[3] != false){
+            }else if (directions[SOUTH]){
 				image="═╣ ";
 			}else {
 				image="═╝ ";
 			}
-		}else if (path[2] != false){
-			if (path[3] != false){
+        }else if (directions[EAST]){
+            if (directions[SOUTH]){
 				image="═╦═";
 			}else {
 				image="═══"; 
 			}
-		}else if (path[3] != false){
+        }else if (directions[SOUTH]){
 			image="═╗ ";
 		}else {
 			image="═□ ";
 		}
-	}else if (path[1] != false){
-		if (path[2] != false){
-			if (path[3] != false){
+    }else if (directions[NORTH]){
+        if (directions[EAST]){
+            if (directions[SOUTH]){
 				image=" ╠═";
 			}else {
 				image=" ╚═";
 			}
-		}else if (path[3] != false){
+        }else if (directions[SOUTH]){
 			image=" ║ ";
 		}else {
 			image=" □ ";
 		}
-	}else if (path[2] != false){
-		if (path[3] != false){
+    }else if (directions[EAST]){
+        if (directions[SOUTH]){
 			image=" ╔═";
 		}else {
 			image=" □═";
 		}
 	}else {
 		image=" □ ";
-	}
+    }
+}
+
+bool Road::isOpen(direction_type dir){
+    return directions[dir];
+}
+
+std::string Road::toString(){
+    std::string result = "";
+    result +=  directions[NORTH] ? "N" :"" ;
+    result +=  directions[SOUTH] ? "S" :"" ;
+    result +=  directions[WEST] ? "W" :"" ;
+    result +=  directions[EAST] ? "E" :"" ;
+    return result;
 }

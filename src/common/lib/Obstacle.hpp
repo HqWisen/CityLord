@@ -3,11 +3,11 @@
 
 #include "Case.hpp"
 
-class Obstacle: public Case{  // : public Case
+class Obstacle: public Case{
 	public:
 		Obstacle(Location);
 		~Obstacle() = default;
-		string display() override;
+        std::string print() override;
 };
 
 #endif // OBSTACLE_HPP_

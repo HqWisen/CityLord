@@ -1,13 +1,10 @@
-#include <iostream>
 #include "Obstacle.hpp"
 
 using namespace std;
 
-Obstacle::Obstacle(Location coords){
-	typeName = "Obstacle";
-	coord = coords;
+Obstacle::Obstacle(Location location) : Case(location){
 }
 
-string Obstacle::display(){
+std::string Obstacle::print(){
 	return " ♦ ";
 }
