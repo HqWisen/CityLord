@@ -33,10 +33,10 @@ class Map{
         int getNumberOfRows();
         int getNumberOfCols();
         void display();
+        Case* getCase(Location);
         /*Map();
         ~Map();
-		Case* getCase(Location);
-		string getMapString();
+        string getMapString();
 		int getDimensionX();
 		int getDimensionY();
         static void parseMap(string, string);*/

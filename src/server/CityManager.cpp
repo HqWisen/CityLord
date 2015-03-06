@@ -2,12 +2,12 @@
 
 
 CityManager::CityManager(std::string mapname_, int id_) : mapname(mapname_), cityMap(mapname_), id(id_), catalog(), nPlayer(0){
-	for(int x = 0; x<cityMap.getDimensionX(); x++){
-		for(int y = 0; y<cityMap.getDimensionY(); y++){
-			Location currentLocation = Location (x,y);
-			if(cityMap.getCase(currentLocation)->getType() == "Field"){
-				Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation));
-				catalog.putOnMarket(concernedField);
+    Field* concernedField;
+    for(int row = 0; row<cityMap.getNumberOfRows(); row++){
+        for(int col = 0; col<cityMap.getNumberOfCols(); col++){
+            Location currentLocation = Location (row, col);
+            if((concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation)))){
+                catalog.putOnMarket(concernedField);
 			}
 		}
 	}
@@ -46,9 +46,9 @@ SocketMessage CityManager::makePurchase(Player* player, Location coordinates){
 	// Si oui, le cataloque est mis a jour, le joueur obtient la parcelle et un message est envoyé
 	// Si non, un message est envoyé
 	SocketMessage message;
-	if(cityMap.getCase(coordinates)->getType() == "Field"){;
-		Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates));
-		if(catalog.isOnMarket(concernedField)){
+    Field* concernedField;
+    if((concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates)))){;
+        if(catalog.isOnMarket(concernedField)){
 			if(concernedField->hasBuilding()){
 				if(player->getMoney() >= concernedField->getPrice() + concernedField->getBuilding()->getPrice()){
 					player->setMoney(player->getMoney() - (concernedField->getPrice() + concernedField->getBuilding()->getPrice()));
@@ -85,9 +85,9 @@ SocketMessage CityManager::makePurchase(Player* player, Location coordinates){
 
 SocketMessage CityManager::buildBuilding(Player* player, Location coordinates, BuildingType buildingType){
 	SocketMessage message;
-	if(cityMap.getCase(coordinates)->getType() == "Field"){;
-		Field *concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates));
-		if(concernedField->getOwner() == player){
+    Field* concernedField;
+    if((concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates)))){;
+        if(concernedField->getOwner() == player){
 			if(!concernedField->hasBuilding()){
 				if(player->getMoney() >= buildingType.price){
 					player->setMoney(player->getMoney() - buildingType.price);
@@ -117,9 +117,9 @@ SocketMessage CityManager::buildBuilding(Player* player, Location coordinates, B
 SocketMessage CityManager::upgradeBuilding(Player* player, Location coordinates){
 
 	SocketMessage message;
-	if(cityMap.getCase(coordinates)->getType() == "Field"){;
-		Field *concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates));
-		if(concernedField->getOwner() == player){
+    Field* concernedField;
+    if((concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates)))){;
+        if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){
 				if(player->getMoney() >= concernedField->getBuilding()->getType().upgradeCost){
 					player->setMoney(player->getMoney() - concernedField->getBuilding()->getType().upgradeCost);
@@ -147,7 +147,8 @@ SocketMessage CityManager::upgradeBuilding(Player* player, Location coordinates)
 
 SocketMessage CityManager::destroyBuilding(Player* player, Location coordinates){
 	SocketMessage message;
-	if(cityMap.getCase(coordinates)->getType() == "Field"){;
+    Field* concernedField;
+    if((concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates)))){;
 		Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates));
 		if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){

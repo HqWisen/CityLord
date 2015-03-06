@@ -175,7 +175,9 @@ void Map::display(){
     }
 }
 
-
+Case* Map::getCase(Location location){
+    return caseMatrix[location.getRow()][location.getCol()];
+}
 
 /*
 void Map::display(){
@@ -246,10 +248,6 @@ void Map::display(){
 Map::~Map(){
     delete[] mapMatrice;
     delete[] visitorList;
-}
-
-Case* Map::getCase(Location coord){
-    return mapMatrice[coord.getX()][coord.getY()];
 }
 
 int Map::getDimensionX(){

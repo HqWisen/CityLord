@@ -6,7 +6,7 @@ CreateGame::CreateGame(QWidget* parent, ClientManager* cm) :
 
     displayDefaultBackground();
     ui->setupUi(this);
-    for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
+    /*for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
     {
         ui->tableWidget->horizontalHeader()->setSectionResizeMode(
             c, QHeaderView::Stretch);
@@ -32,7 +32,7 @@ CreateGame::CreateGame(QWidget* parent, ClientManager* cm) :
     ui->tableWidget->setItem(0, 1, item0b);
     ui->tableWidget->setItem(1, 1, item1b);
     ui->tableWidget->item(0,1)->setTextAlignment(Qt::AlignRight);
-    ui->tableWidget->item(1,1)->setTextAlignment(Qt::AlignRight);
+    ui->tableWidget->item(1,1)->setTextAlignment(Qt::AlignRight);*/
 
 
 }

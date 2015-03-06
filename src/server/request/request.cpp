@@ -79,17 +79,17 @@ namespace request{
 
 	SocketMessage showmap(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		CityManager* cityManager = userManager->getActiveCity();
+        /*CityManager* cityManager = userManager->getActiveCity();
 		cityManager->getMap()->display();
-		answer.set("map", cityManager->getMap()->getMapString());
-		return answer;
+        answer.set("map", cityManager->getMap()->getMapString());*/
+        return answer;
 	}
 
 	SocketMessage mapsize(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
 		Map* map = userManager->getActiveCity()->getMap();
-		answer.set("x", std::to_string(map->getDimensionX()));
-		answer.set("y", std::to_string(map->getDimensionY()));
+        answer.set("x", std::to_string(map->getNumberOfCols()));
+        answer.set("y", std::to_string(map->getNumberOfRows()));
 		return answer;
 	}
 
@@ -98,10 +98,9 @@ namespace request{
 		Map* map = userManager->getActiveCity()->getMap();
 		int x = std::stoi(message.get("x"));
 		int y = std::stoi(message.get("y"));
-		Case* casePtr = map->getCase(Location(x, y));
-        if(casePtr->getType() == "Field"){
-			Field* field = dynamic_cast<Field*>(casePtr);
-			if(field->getOwner() == userManager->getActivePlayer()){
+        Field* field;
+        if((field = dynamic_cast<Field*>(map->getCase(Location(x, y))))){
+            if(field->getOwner() == userManager->getActivePlayer()){
 				answer.setTopic("owner");
 			}else if(field->getOwner() == nullptr){
 				answer.setTopic("purchasable");
@@ -131,7 +130,7 @@ namespace request{
 		std::vector<Field*> fieldVector = userManager->getActiveCity()->getPurchasableFields();
 		int i = 0;
 		for (std::vector<Field*>::iterator it = fieldVector.begin(); it != fieldVector.end(); it++){
-			answer.set((*it)->getCoord().toString(), (*it)->toString());
+            answer.set((*it)->getLocation().toString(), (*it)->toString());
 			i++;
 		}
 		return answer;
