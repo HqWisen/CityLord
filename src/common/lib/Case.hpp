@@ -1,21 +1,19 @@
 #ifndef CASE_HPP_
 #define CASE_HPP_
 
-#include <string>
 #include "Location.hpp"
-
-using namespace std;
+#include <string>
 
 class Case{
 	protected:
-		string typeName;
-		Location coord;
+        Location location;
 	public:
-		Location getCoord();
-		void setCoord(Location);
-		string getType();
-		virtual ~Case() = default;
-		virtual string display() = 0;	//Pure virtuelle, fait de Case une classe abstraite
+        Case(int, int);
+        Case(Location);
+        Location getLocation();
+        void setLocation(Location);
+        virtual ~Case() = default;
+        virtual std::string print() = 0;
 };
 
 #endif // CASE_HPP_

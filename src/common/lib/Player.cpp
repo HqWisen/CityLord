@@ -5,8 +5,6 @@
 
 using namespace std;
 
-Player* Player::playerList[8] = {nullptr};
-
 Player::Player(int number, string nn){
 	playerID = number;
 	nickname = nn;
@@ -18,8 +16,7 @@ Player::Player(int number, string nn){
 										 \033[1;43m   yellow     \033[1;44m   dark blue
 										 \033[1;45m   purple     \033[1;46m    light blue
 										 \033[1;47m  white*/
-	playerList[number] = this;
-	money = INITIALBUDGET;
+    money = INITIALBUDGET;
 	nBuilding = 0;
 }
 
@@ -42,9 +39,6 @@ void Player::setMoney(int newMoney){
 	money = newMoney;
 }
 
-Player* Player::getPlayerByID(int index){
-	return playerList[index];
-}
 void Player::addField(Field* field){
 	fieldVector.push_back(field);
 }

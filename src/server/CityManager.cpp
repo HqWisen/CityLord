@@ -176,11 +176,11 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location coordinates)
 	return message;
 }
 
-Spawnable CityManager::getRandomSpawn(){
+/*Spawnable CityManager::getRandomSpawn(){
     int size = listSpawnable.size();
     int luck = rand() %  (size-1);
     return listSpawnable[luck];
-}
+}*/
 
 
 /*

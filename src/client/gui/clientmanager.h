@@ -31,6 +31,7 @@ public:
     void recvAnswer();
     bool requestFailed();
     std::string getFailureReason();
+    void quit();
 
 private:
     QStackedWidget* stackedWidget;

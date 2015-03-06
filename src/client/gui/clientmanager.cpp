@@ -94,3 +94,8 @@ bool ClientManager::requestFailed(){
 std::string ClientManager::getFailureReason(){
     return message.get("reason");
 }
+
+void ClientManager::quit(){
+    setRequest("quit");
+    sendRequest();
+}

@@ -1,14 +1,15 @@
 #include "Case.hpp"
 
-//getters & setters
-Location Case::getCoord(){
-	return coord;
+Case::Case(int row, int col) : location(row, col){
 }
 
-void Case::setCoord(Location coords){
-	coord = coords;
+Case::Case(Location loc) : location(loc){
 }
 
-string Case::getType(){
-	return typeName;
+Location Case::getLocation(){
+    return location;
+}
+
+void Case::setLocation(Location loc){
+    location = loc;
 }

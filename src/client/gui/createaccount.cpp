@@ -19,13 +19,26 @@ void CreateAccount::refresh(){
 }
 
 void CreateAccount::on_createButton_clicked(){
-    clientManager->setRequest("createaccount");
-    clientManager->addInfo("username", ui->usernameLineEdit->text().toStdString());
-    clientManager->sendRequestAndRecv();
-    if(clientManager->requestFailed()){
-        ui->errorLabel->setText(QString(clientManager->getFailureReason().c_str()));
+    std::string username, password, retypePassword;
+    username = ui->usernameLineEdit->text().toStdString();
+    password = ui->passwordLineEdit->text().toStdString();
+    retypePassword = ui->retypePasswordLineEdit->text().toStdString();
+    if(username.empty()){
+        ui->errorLabel->setText("Username can't be empty.");
+    }else if(password.empty()){
+        ui->errorLabel->setText("Password can't be empty.");
+    }else if(password != retypePassword){
+        ui->errorLabel->setText("Password and retype password are different.");
     }else{
-        clientManager->setCurrentWidget(ClientManager::LOGIN);
+        clientManager->setRequest("createaccount");
+        clientManager->addInfo("username", username);
+        clientManager->addInfo("password", password);
+        clientManager->sendRequestAndRecv();
+        if(clientManager->requestFailed()){
+            ui->errorLabel->setText(QString(clientManager->getFailureReason().c_str()));
+        }else{
+            clientManager->setCurrentWidget(ClientManager::MAINMENU);
+        }
     }
 }
 

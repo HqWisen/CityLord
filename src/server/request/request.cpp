@@ -4,28 +4,33 @@ namespace request{
 	
 	SocketMessage login(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		if(server->accountExist(message.get("username"))){
-			server->LOG("Client with IP " + userManager->getIP() + " log in with username " + message.get("username") + ".");
-			userManager->setUser(server->getUser(message.get("username")));
-			answer.setTopic("success");
-		}else{
+        if(server->accountExist(message.get("username"))){
+            if(server->matchPassword(message.get("username"), message.get("password"))){
+                server->LOG("Client with IP " + userManager->getIP() + " log in with username " + message.get("username") + ".");
+                userManager->setUser(server->getUser(message.get("username")));
+                answer.setTopic("success");
+            }else{
+                answer.setTopic("failure");
+                answer.set("reason", "LOGIN FAILURE - The password doesn't match the nickname.");
+            }
+        }else{
 			answer.setTopic("failure");
-			answer.set("reason", "Login failed : this username doesn't exist.");
+            answer.set("reason", "LOGIN FAILURE - this username doesn't exist.");
 			
-		}
+        }
 		return answer;
 	}
 
 	SocketMessage createaccount(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
 		if(!server->accountExist(message.get("username"))){
-			User* user = server->createAccount(message.get("username"));
+            User* user = server->createAccount(message.get("username"), message.get("password"));
 			userManager->setUser(user);
 			server->LOG("Client with IP " + userManager->getIP() + " has created an account with username " + message.get("username") + ".");
 			answer.setTopic("success");
 		}else{
 			answer.setTopic("failure");
-			answer.set("reason", "Creation failure : This username is already used.");
+            answer.set("reason", "CREATION FAILURE - This username is already used.");
 		}
 		return answer;		
 	}
@@ -94,7 +99,7 @@ namespace request{
 		int x = std::stoi(message.get("x"));
 		int y = std::stoi(message.get("y"));
 		Case* casePtr = map->getCase(Location(x, y));
-		if(casePtr->isField()){
+        if(casePtr->getType() == "Field"){
 			Field* field = dynamic_cast<Field*>(casePtr);
 			if(field->getOwner() == userManager->getActivePlayer()){
 				answer.setTopic("owner");

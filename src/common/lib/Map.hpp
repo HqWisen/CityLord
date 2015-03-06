@@ -1,16 +1,7 @@
-/*
-
-Map.hpp
-
-Matrice dans laquelle sera stockée la carte et les éléments de la ville (batiments, routes, ...)
-
-*/
 #ifndef MAP_HPP_
 #define MAP_HPP_
+/*
 
-#include <iostream>
-#include <fstream>
-#include <string>
 #include "Case.hpp"
 //#include "Neighborhood.hpp"
 #include "Field.hpp"
@@ -19,30 +10,36 @@ Matrice dans laquelle sera stockée la carte et les éléments de la ville (bati
 #include "Building.hpp"
 #include "Player.hpp"
 #include "Visitor.hpp"
+*/
 
-using namespace std;
+#include <iostream>
+#include <fstream>
+#include <string>
 
-const int tailleMaxLong=8; // Longueur maximale de la carte
-const int tailleMaxLarg=12; // Largueur maximale de la carte
-const int nombreDeCases = tailleMaxLarg*tailleMaxLong;
+#include "Case.hpp"
+#include "Road.hpp"
+#include "Field.hpp"
+#include "Obstacle.hpp"
 
 class Map{
-	Visitor* visitorList;
-	Player* playerList[8] = {nullptr};
-	int dimensionX;
-	int dimensionY;
-	//Neighborhood neighborhoods[];
-	Case*** mapMatrice;
-	public:
-		Map(string nomDeLaCarte); // metrre un fichier txt en paramètre
-		Map();
-		void display();
-		~Map();
+    //Visitor* visitorList;
+    //Player* playerList[8] = {nullptr};
+    int numberOfRows;
+    int numberOfCols;
+    Case*** caseMatrix;
+    //Neighborhood neighborhoods[];
+    public:
+        Map(std::string);
+        int getNumberOfRows();
+        int getNumberOfCols();
+        void display();
+        /*Map();
+        ~Map();
 		Case* getCase(Location);
 		string getMapString();
 		int getDimensionX();
 		int getDimensionY();
-		static void parseMap(string, string);
+        static void parseMap(string, string);*/
 };
 
 #endif // MAP_HPP_

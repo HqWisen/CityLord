@@ -11,7 +11,6 @@ using namespace std;
 class Field;
 
 class Player{
-	static Player* playerList[8];
 	const int INITIALBUDGET = 150000;
 	int money;
 	int playerID;
@@ -33,8 +32,7 @@ public:
 	int getNEmptyField();
 	int getMoney();
 	void setMoney(int);
-	static Player* getPlayerByID(int); //De la part de Gab: SA MERE A CELUI QUI TOUCHE A CETTE FONCTION x(
-	void addField(Field*);
+    void addField(Field*);
 	void buildBuilding();
 	void destroyBuilding();
 	

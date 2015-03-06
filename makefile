@@ -14,7 +14,7 @@ GUI = citylordgui
 
 # -- test
 TEST = testexe
-DEPT = test socket lib server
+DEPT = test lib
 # -- 
 
 # -- Do not edit below this line --

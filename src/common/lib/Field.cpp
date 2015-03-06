@@ -1,37 +1,12 @@
-#include <iostream>
-#include <sstream>
 #include "Field.hpp"
 
 using namespace std;
 
 
-Field::Field(Location coords){
-	typeName = "Field";
-	coord = coords;
+Field::Field(Location location) : Case(location){
 }
 
-Field::Field(Location coords, Building* newBuilding){
-	typeName = "Field";
-	coord = coords;
-	building = newBuilding;
-}
-
-Field::Field(Player* newOwner, Location coords){
-	typeName = "Field";
-	coord = coords;
-	owner = newOwner;
-	color = newOwner->getColor();
-}
-
-Field::Field(Player* newOwner, Location coords, Building* newBuilding){
-	typeName = "Field";
-	coord = coords;
-	owner = newOwner;
-	color = newOwner->getColor();
-	building = newBuilding;
-}
-
-Field::Field(int newColor, Location coords){
+/*Field::Field(int newColor, Location coords){
 	typeName = "Field";
 	coord = coords;
 	string colorNumber;
@@ -39,21 +14,10 @@ Field::Field(int newColor, Location coords){
 	convert << newColor;
 	colorNumber = convert.str();
 	color = color="\033[1;"+colorNumber+"m";
-}
+}*/
 
-Field::Field(int newColor, Location coords, Building* newBuilding){
-	typeName = "Field";
-	coord = coords;
-	string colorNumber;
-	ostringstream convert;
-	convert << newColor;
-	colorNumber = convert.str();
-	color = color="\033[1;"+colorNumber+"m";
-	building = newBuilding;
-}
-
-string Field::display(){
-	string ownerStr = " ";
+std::string Field::print(){
+    string ownerStr = " ";
 	if (this->hasOwner()){
 		ownerStr = to_string(owner->getPlayerID());
 	}
@@ -72,11 +36,8 @@ string Field::display(){
 	}
 	else{
 		return (ownerStr + "F ");
-	}
-}
-
-bool Field::isField(){
-	return true;
+    }
+    //return "TOIMPL";
 }
 
 void Field::buildBuilding(BuildingType buildingType){

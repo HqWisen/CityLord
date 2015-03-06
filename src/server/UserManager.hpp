@@ -20,10 +20,10 @@ class UserManager : public Thread{
 
 	static const std::map<std::string, request_ptr> requestmap;
 
-	CityLordServer* server;
-	ClientSocket clientSocket;
-	User* user;
-	CityManager* cityManager;
+    CityLordServer* server = nullptr;
+    ClientSocket clientSocket;
+    User* user = nullptr;
+    CityManager* cityManager = nullptr;
 	public:
 		UserManager(CityLordServer*, ClientSocket);
 		void run() override;
