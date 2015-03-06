@@ -79,9 +79,9 @@ namespace request{
 
 	SocketMessage showmap(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-        /*CityManager* cityManager = userManager->getActiveCity();
-		cityManager->getMap()->display();
-        answer.set("map", cityManager->getMap()->getMapString());*/
+        CityManager* cityManager = userManager->getActiveCity();
+        cityManager->getMap()->display();
+        answer.set("map", cityManager->getMap()->getMapString());
         return answer;
 	}
 

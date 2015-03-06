@@ -169,10 +169,10 @@ void CityLordClient::showMap(){
 	SocketMessage answer;
 	sendRequest(request);
 	recvAnswer(answer);
-    /*std::string mapString = answer.get("map");
+    std::string mapString = answer.get("map");
 	Map::parseMap("resources/tmp/out.txt", mapString);
 	Map map("resources/tmp/out.txt");
-    map.display();*/
+    map.display();
 }
 
 void CityLordClient::selectField(){

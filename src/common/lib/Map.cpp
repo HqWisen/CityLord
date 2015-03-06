@@ -121,7 +121,6 @@ int Map::getNumberOfCols(){
     return numberOfCols;
 }
 
-
 void Map::display(){
     string color;
     Road* road;
@@ -318,4 +317,5 @@ void Map::parseMap(string filePath, string map){
     file << map;
     file.close();
 }
+
 */
