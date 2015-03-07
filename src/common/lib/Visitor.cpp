@@ -3,12 +3,15 @@
 
 Visitor::Visitor(Location loc){ //le spawner donne la localistion
 	currentLocation = loc;
-	//path = getWay();
 	int number = rand() % 4;
 	preference = listOfBuildType[number];
 }
 
 void Visitor::displayGUI(){}
+
+void Visitor::setPath(std::vector<Location> way){ 
+	path = way;
+}
 
 void Visitor::move(){
 	bool end = false;

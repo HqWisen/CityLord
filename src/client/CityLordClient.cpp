@@ -14,7 +14,7 @@ void CityLordClient::run(){
 		LOG("Choose an action");
 		std::cout<<"1 - Show map"<<std::endl;
 		std::cout<<"2 - Select field"<<std::endl;
-		std::cout<<"3 - Show catalog (BUG)"<<std::endl;
+		std::cout<<"3 - Show catalog"<<std::endl;
 		std::cout<<"4 - Show information"<<std::endl;
 		//std::cout<<"5 - Show others players's information"<<std::endl;
 		std::cout<<"5 - Disconnection"<<std::endl;

@@ -21,10 +21,10 @@
 #include "../common/socket/SocketMessage.hpp"
 #include "../common/lib/Location.hpp"
 */
-#include "../common/lib/Map.hpp"
+//#include "../common/lib/Map.hpp"
 #include "../common/lib/Catalog.hpp"
 //#include "../common/lib/Spawnable.hpp"
-#include "../common/lib/Visitor.hpp"
+//#include "../common/lib/Visitor.hpp"
 #include "CityUpdater.hpp"
 #include <vector>
 #include <algorithm>
