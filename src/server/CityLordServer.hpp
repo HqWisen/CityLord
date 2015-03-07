@@ -14,8 +14,6 @@
 #include "CityManager.hpp"
 
 #define SERVERNAME "CityLordServer"
-// Relative path of the executable
-#define MAPFILEPATH "src/resources/maps/"
 
 class CityLordServer{
 	ServerSocket serverSocket;
@@ -32,7 +30,7 @@ class CityLordServer{
         User* createAccount(std::string, std::string);
 		bool accountExist(std::string);
         bool matchPassword(std::string, std::string);
-		CityManager* createCity(int);
+        CityManager* createCity(int, User*);
 		CityManager* getCity(int);
 		int getNumberOfCity();
 		User* getUser(std::string);

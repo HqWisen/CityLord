@@ -10,10 +10,9 @@ std::string User::getPassword(){
     return password;
 }
 
-void User::initPlayer(CityManager* cm){
+void User::initPlayer(CityManager* cm, int playerid){
 	if(playerMap.find(cm) == playerMap.end()){
-		int id = cm->getNPlayer();
-		playerMap[cm] = new Player(id, username);
+        playerMap[cm] = new Player(playerid, username);
 		cm->addPlayer(playerMap[cm]);
 	}
 }

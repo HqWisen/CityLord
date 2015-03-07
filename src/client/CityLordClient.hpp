@@ -14,6 +14,7 @@
 
 class CityLordClient{
 	ConnectionSocket connectionSocket;
+    Map map;
 	public:
 		CityLordClient(char* hostname, int port);
 		CityLordClient(const CityLordClient&) = default;

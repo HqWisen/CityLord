@@ -28,8 +28,9 @@ class UserManager : public Thread{
 		UserManager(CityLordServer*, ClientSocket);
 		void run() override;
 		void setUser(User*);
+        User* getUser();
 		void setActiveCity(CityManager*);
-		void initActivePlayer();
+        void initActivePlayer(int);
 		Player* getActivePlayer();
 		CityManager* getActiveCity();
 		std::string getIP();

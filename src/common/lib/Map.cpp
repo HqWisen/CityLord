@@ -113,6 +113,14 @@ Map::Map(string fileName){
     file.close();
 }
 
+Map::~Map(){
+    for (int row=0; row<numberOfRows; row++) {
+        for (int col=0; col<numberOfCols; col++) {
+            delete caseMatrix[row][col];
+        }
+    }
+}
+
 int Map::getNumberOfRows(){
     return numberOfRows;
 }
@@ -153,10 +161,10 @@ void Map::display(){
                 }else {
                     cout<<"|";
                     if((field = dynamic_cast<Field*>(caseMatrix[row/2][col]))){
-                        if(field->hasColor()){
-                            color = field->getColor();
+                        if(field->hasOwner()){
+                            color = field->getOwnerColor();
                         }else{
-                        color="\033[0m";
+                            color="\033[0m";
                         }
                         string item = caseMatrix[row/2][col]->print();
                         cout<<color<<(((item.replace(0,1," ")).replace(2,1," ")) + "\033[0m");
@@ -177,86 +185,7 @@ void Map::display(){
 Case* Map::getCase(Location location){
     return caseMatrix[location.getRow()][location.getCol()];
 }
-
 /*
-void Map::display(){
-    string color;
-    Road* road;
-    Field* field;
-    for (int row=0; row<((numberOfRows*2)+1); row++) {
-        if (row == (numberOfRows*2)) {
-            for (int col=0; col<numberOfCols; col++) {
-                if((road = dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col])) && (road->isOpen(Road::SOUTH))){
-                    cout<<"+ ║ ";
-                }else{
-                    cout<<"+---";
-                }
-            }
-            cout<<"+"<<endl;
-        }else if ((row % 2) == 0) {
-            for (int col=0; col<numberOfCols; col++) {
-                if((road = dynamic_cast<Road*>(caseMatrix[row/2][col])) && road->isOpen(Road::NORTH)){
-                        cout<<"+ ║ ";
-                 }else {
-                        cout<<"+---";
-                    }
-                }
-            }
-            cout<<"+"<<endl;
-        }else{
-            for (int col=0; col<numberOfCols; col++) {
-                if(((road = dynamic_cast<Road*>(caseMatrix[row/2][col])))){
-                    if(road->isOpen(Road::WEST)){
-                        cout<<"═";
-                        cout<<(caseMatrix[row/2][col]->print());
-                    }
-                }else {
-                    cout<<"|";
-                    if((field = dynamic_cast<Field*>(caseMatrix[row/2][col]))){
-                        if(field->hasColor()){
-                            color = field->getColor();
-                        }else{
-                        color="\033[0m";
-                        }
-                        string item = caseMatrix[row/2][col]->print();
-                        cout<<color<<(((item.replace(0,1," ")).replace(2,1," ")) + "\033[0m");
-                        //cout<<" F ";
-                    }else {
-                        cout<<(caseMatrix[row/2][col]->print());
-                    }
-                }
-            }
-            if((road = dynamic_cast<Road*>(caseMatrix[row/2][numberOfCols-1]))){
-                if(road->isOpen(Road::EAST)){
-                    cout<<"═"<<endl;
-                }else{
-                    cout<<"|"<<endl;
-                }
-            }
-        }
-    }
-    for(int row=0;row<numberOfRows;row++){
-        for(int col=0;col<numberOfCols;col++){
-            cout<<caseMatrix[row][col]->print()<< " ";
-        }
-        cout<<endl;
-    }
-}
-*/
-/*
-Map::~Map(){
-    delete[] mapMatrice;
-    delete[] visitorList;
-}
-
-int Map::getDimensionX(){
-    return dimensionX;
-}
-
-int Map::getDimensionY(){
-    return dimensionY;
-}
-
 string Map::getMapString(){
     string output = "";
     output += (to_string(dimensionX)) + "\n";

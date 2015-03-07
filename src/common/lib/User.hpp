@@ -19,8 +19,9 @@ class User{
         User(std::string, std::string);
 		std::string getUserName();
         std::string getPassword();
-		void initPlayer(CityManager*);
+        void initPlayer(CityManager*, int);
 		Player* getPlayer(CityManager* cm){return playerMap.find(cm) != playerMap.end() ? playerMap[cm] : nullptr;};
+        // TODO DESTRUCTOR OF PLAYER
 };
 
 #endif // USER_HPP_

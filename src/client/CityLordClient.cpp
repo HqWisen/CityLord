@@ -1,6 +1,6 @@
 #include "CityLordClient.hpp"
 
-CityLordClient::CityLordClient(char* hostname, int port) : connectionSocket(hostname, port){}
+CityLordClient::CityLordClient(char* hostname, int port) : connectionSocket(hostname, port), map(){}
 
 void CityLordClient::run(){
 	SocketMessage quitRequest("quit");
@@ -141,27 +141,34 @@ void CityLordClient::createCity(){
 
 void CityLordClient::joinCity(){
 	SocketMessage request, answer;
-	request.setTopic("choicecity");
-	sendRequest(request);
-	recvAnswer(answer);
-	std::map<std::string, std::string> map = answer.getMap();
-	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-	LOG("Choose a city to play");
-	int i = 0;
-	for(std::map<std::string, std::string>::iterator iterator = map.begin(); iterator != map.end(); iterator++) {
-		i++;
-		std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
-	}
-	int choice = makeChoice(1, i);
-	request.setTopic("joincity");
-	request.set("number", std::to_string(choice));
-	sendRequest(request);
-	recvAnswer(answer);
-	if(answer.getTopic() == "success"){
-		LOG("You've joined the City n°"+answer.get("citynumber"));
-	}else{
-		// TODO handle join failed
-	}
+    std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
+    LOG("Choose a city to play");
+    bool fail = true;
+    while(fail){
+        int cityid = 0;
+        request.setTopic("cityinfo");
+        request.set("cityid", std::to_string(cityid));
+        sendRequest(request);
+        recvAnswer(answer);
+        while(answer.getTopic() != "failure"){
+            std::cout<<cityid+1<<" - "<<answer.get("name")<<" | "<<answer.get("mapname")<<" | " \
+            <<answer.get("creator")<<" | "<<answer.get("nplayer")<<"/"<<answer.get("maxplayer")<<std::endl;
+            cityid++;
+            request.set("cityid", std::to_string(cityid));
+            sendRequest(request);
+            recvAnswer(answer);
+        }
+        int choice = makeChoice(1, cityid);
+        request.setTopic("joincity");
+        request.set("cityid", std::to_string(choice-1));
+        sendRequest(request);
+        recvAnswer(answer);
+        if(answer.getTopic() == "failure"){
+            LOG(answer.get("reason"));
+        }else{
+            fail = false;
+        }
+    }
 }
 
 void CityLordClient::showMap(){
@@ -169,10 +176,10 @@ void CityLordClient::showMap(){
 	SocketMessage answer;
 	sendRequest(request);
 	recvAnswer(answer);
-    std::string mapString = answer.get("map");
+    /*std::string mapString = answer.get("map");
 	Map::parseMap("resources/tmp/out.txt", mapString);
 	Map map("resources/tmp/out.txt");
-    map.display();
+    map.display();*/
 }
 
 void CityLordClient::selectField(){

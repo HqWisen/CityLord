@@ -16,7 +16,7 @@ namespace request{
 	SocketMessage createaccount(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage choicemap(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage createcity(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage choicecity(CityLordServer*, UserManager*, SocketMessage);
+    SocketMessage cityinfo(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage joincity(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage showmap(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage mapsize(CityLordServer*, UserManager*, SocketMessage);

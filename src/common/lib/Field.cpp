@@ -62,13 +62,12 @@ Player* Field::getOwner(){
 	return owner;
 }
 
-string Field::getColor(){
-	return color;
+string Field::getOwnerColor(){
+    return owner->getColor();
 }
 
 void Field::setOwner(Player* newOwner){
 	owner = newOwner;
-	color = newOwner->getColor();
 }
 
 Building* Field::getBuilding(){
@@ -77,10 +76,6 @@ Building* Field::getBuilding(){
 
 bool Field::hasOwner(){
 	return (owner != nullptr);
-}
-
-bool Field::hasColor(){
-	return (color != "");
 }
 
 bool Field::hasBuilding(){

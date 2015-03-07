@@ -29,16 +29,16 @@ class Map{
     Case*** caseMatrix;
     //Neighborhood neighborhoods[];
     public:
+        Map() = default;
         Map(std::string);
+        Map(const Map&) = default;
         int getNumberOfRows();
         int getNumberOfCols();
         void display();
         Case* getCase(Location);
-        /*Map();
         ~Map();
-        string getMapString();
-		int getDimensionX();
-		int getDimensionY();
+
+/*      string getMapString();
         static void parseMap(string, string);*/
 };
 

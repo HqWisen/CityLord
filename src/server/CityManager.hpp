@@ -26,21 +26,40 @@
 //#include "../common/lib/Spawnable.hpp"
 #include "../common/lib/Visitor.hpp"
 #include "CityUpdater.hpp"
+#include <vector>
+#include <algorithm>
+
+// Relative path of the executable
+#define MAPFILEPATH "src/resources/maps/"
+
+class User;
 
 class CityManager{
-	std::string mapname;
+
+    static const int DEFAULTMAXPLAYER;
+
+    std::string mapname;
 	Map cityMap; 
 	int id;
+    User* creator;
 	Catalog catalog;
 	int nPlayer;
+    std::vector<Player*> playerVector;
+    const int MAXPLAYER;
     //std::vector<Spawnable> listSpawnable;
 	public:
-		CityManager(std::string, int);
-		std::string getMapName();
+        CityManager(std::string, int, User*);
+        std::string getMapName();
 		int getID();
 		int getNPlayer();
+        int getMaxPlayer();
+        int getNextID();
 		void addPlayer(Player*);
-		Map* getMap();
+        Map* getMap();
+        User* getCreator();
+        std::string getName();
+        bool canJoin(Player*);
+        bool alreadyInCity(Player*);
 		std::vector<Field*> getPurchasableFields();
 		SocketMessage makePurchase(Player*, Location);
 		SocketMessage buildBuilding(Player*, Location, BuildingType);
@@ -49,12 +68,8 @@ class CityManager{
 
 		std::vector<Location> giveWay();
         //Spawnable getRandomSpawn();
-
-/*
-	SocketMessage makeTrade(Player&, Player&, Location, int);
-	std::string showCatalog();
-	std::string showCity();
-	*/
+    private:
+        std::string getMapFileName();
 };
 
 #endif

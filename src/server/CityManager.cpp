@@ -1,7 +1,8 @@
 #include "CityManager.hpp"
 
+const int CityManager::DEFAULTMAXPLAYER = 3;
 
-CityManager::CityManager(std::string mapname_, int id_) : mapname(mapname_), cityMap(mapname_), id(id_), catalog(), nPlayer(0){
+CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), cityMap(getMapFileName()), id(cityid), creator(cr), catalog(), nPlayer(0), playerVector(), MAXPLAYER(DEFAULTMAXPLAYER){
     Field* concernedField;
     for(int row = 0; row<cityMap.getNumberOfRows(); row++){
         for(int col = 0; col<cityMap.getNumberOfCols(); col++){
@@ -15,8 +16,12 @@ CityManager::CityManager(std::string mapname_, int id_) : mapname(mapname_), cit
 	new CityUpdater();
 }
 
+std::string CityManager::getMapFileName(){
+    return MAPFILEPATH + mapname + ".txt";
+}
+
 std::string CityManager::getMapName(){
-	return mapname;
+    return mapname;
 }
 
 int CityManager::getID(){
@@ -27,13 +32,40 @@ int CityManager::getNPlayer(){
 	return nPlayer;
 }
 
+int CityManager::getMaxPlayer(){
+    return MAXPLAYER;
+}
+
+int CityManager::getNextID(){
+    return getNPlayer();
+}
+
+std::string CityManager::getName(){
+    return "City NID["+std::to_string(id)+"]";
+}
+
+bool CityManager::canJoin(Player* player){
+    return alreadyInCity(player) || nPlayer < MAXPLAYER;
+}
+
 void CityManager::addPlayer(Player* player){
-	//playerVector.push_back(player);
-	nPlayer++;
+    if(!alreadyInCity(player)){
+        playerVector.push_back(player);
+        nPlayer++;
+    }
+}
+
+bool CityManager::alreadyInCity(Player* player){
+    return std::find(playerVector.begin(), playerVector.end(), player) != playerVector.end();
+
 }
 
 Map* CityManager::getMap(){
 	return &cityMap;
+}
+
+User* CityManager::getCreator(){
+    return creator;
 }
 
 std::vector<Field*> CityManager::getPurchasableFields(){

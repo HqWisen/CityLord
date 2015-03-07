@@ -1,0 +1,3 @@
+gérer les deconnexion
+ambiguité entre quitter partie et déconnecté du serveur
+mutex lock quand achat + voir ou utilisé des mutex

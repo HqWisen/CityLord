@@ -5,7 +5,7 @@ const std::map<std::string, request_ptr> UserManager::requestmap = {
 	{"createaccount", request::createaccount},
 	{"choicemap", request::choicemap},
 	{"createcity", request::createcity},
-	{"choicecity", request::choicecity},
+    {"cityinfo", request::cityinfo},
 	{"joincity", request::joincity},
 	{"showmap", request::showmap},
 	{"mapsize", request::mapsize},
@@ -30,19 +30,24 @@ void UserManager::run(){
 		sendAnswer(answer);
 		recvRequest(request);
 	}
+    setActiveCity(nullptr);
     server->LOG("User '"+getUserName()+"' with IP "+clientSocket.getClientIP()+" is now disconnected.");
 }
 
 void UserManager::setUser(User* user_){
-	user = user_;
+    user = user_;
+}
+
+User* UserManager::getUser(){
+    return user;
 }
 
 void UserManager::setActiveCity(CityManager* cm){
 	cityManager = cm;
 }
 
-void UserManager::initActivePlayer(){
-	user->initPlayer(cityManager);
+void UserManager::initActivePlayer(int playerid){
+    user->initPlayer(cityManager, playerid);
 }
 
 Player* UserManager::getActivePlayer(){

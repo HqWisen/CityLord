@@ -49,39 +49,51 @@ namespace request{
 		SocketMessage answer;
 		answer.setTopic("success");
 		int numberOfMap = std::stoi(message.get("number")) - 1;
-		CityManager* cityManager = server->createCity(numberOfMap);
+        CityManager* cityManager = server->createCity(numberOfMap, userManager->getUser());
 		server->LOG("User "+ userManager->getUserName() + " created a city with map " + cityManager->getMapName() + ", city number is " + std::to_string(cityManager->getID()));
 		// TODO send failure if creation failed*/
 		return answer;		
 	}
 	
-	SocketMessage choicecity(CityLordServer* server, UserManager* userManager, SocketMessage message){
+    SocketMessage cityinfo(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		int numberOfCity = server->getNumberOfCity();
-		for (int i = 0; i < numberOfCity; i++){
-			answer.set(std::to_string(i+1), "City n°"+std::to_string(i+1));
-		}
+        int cityid = std::stoi(message.get("cityid"));
+        if(cityid < server->getNumberOfCity()){
+            CityManager* cityManager = server->getCity(cityid);
+            answer.set("name", cityManager->getName());
+            answer.set("mapname", cityManager->getMapName());
+            answer.set("creator", cityManager->getCreator()->getUserName());
+            answer.set("nplayer", std::to_string(cityManager->getNPlayer()));
+            answer.set("maxplayer", std::to_string(cityManager->getMaxPlayer()));
+        }else{
+            answer.setTopic("failure");
+            answer.set("reason", "The city with ID " + message.get("id") + " doesn't exist.");
+        }
 		return answer;		
 	}
 
 	SocketMessage joincity(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		int numberOfCity = std::stoi(message.get("number")) - 1;
-		CityManager* cityManager = server->getCity(numberOfCity);
-		userManager->setActiveCity(cityManager);
-		userManager->initActivePlayer();
-		server->LOG("User " + userManager->getUserName() + " joined the city n° " + std::to_string(cityManager->getID()));
-		answer.setTopic("success");
-		answer.set("citynumber", std::to_string(cityManager->getID()));
-		// TODO send failure if cannot join the city
+        int cityid = std::stoi(message.get("cityid"));
+        CityManager* cityManager = server->getCity(cityid);
+        userManager->setActiveCity(cityManager);
+        if(cityManager->canJoin(userManager->getActivePlayer())){
+            userManager->initActivePlayer(cityManager->getNextID());
+            cityManager->addPlayer(userManager->getActivePlayer());
+            server->LOG("User " + userManager->getUserName() + " joined the city "+cityManager->getName());
+            answer.setTopic("success");
+        }else{
+            answer.setTopic("failure");
+            answer.set("reason", "The city "+cityManager->getName()+" is full.");
+        }
 		return answer;
 	}
 
 	SocketMessage showmap(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
+
         CityManager* cityManager = userManager->getActiveCity();
         cityManager->getMap()->display();
-        answer.set("map", cityManager->getMap()->getMapString());
         return answer;
 	}
 

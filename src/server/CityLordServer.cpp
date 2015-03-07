@@ -1,10 +1,8 @@
 #include "CityLordServer.hpp"
 
 const std::vector<std::string> CityLordServer::mapNameVector = {
-	"Map1.txt",
-    "Map2.txt",
-    "Map3.txt",
-    "Map4.txt"
+    "CITYBAY",
+    "ROADRED"
 };
 
 CityLordServer::CityLordServer(int port) : serverSocket(port){}
@@ -33,12 +31,10 @@ User* CityLordServer::createAccount(std::string username, std::string password){
 	return &(userMap[username]);
 }
 
-CityManager* CityLordServer::createCity(int numberOfMap){
+CityManager* CityLordServer::createCity(int numberOfMap, User* creator){
 	// TODO Accès concurentielle
-	std::string path(MAPFILEPATH);
-	path += mapNameVector[numberOfMap];
-	// TODO server destructor
-	cityManagerVector.push_back(new CityManager(path, cityManagerVector.size() + 1));
+    // TODO server destructor
+    cityManagerVector.push_back(new CityManager(mapNameVector[numberOfMap], cityManagerVector.size(), creator));
 	return cityManagerVector.back();
 }
 
@@ -50,8 +46,8 @@ bool CityLordServer::matchPassword(std::string username, std::string password){
     return userMap[username].getPassword() == password;
 }
 
-CityManager* CityLordServer::getCity(int numberOfCity){
-	return cityManagerVector[numberOfCity];
+CityManager* CityLordServer::getCity(int cityid){
+    return cityManagerVector[cityid];
 }
 
 int CityLordServer::getNumberOfCity(){
