@@ -23,6 +23,8 @@ Building::Building(BuildingType buildingtype, int lvl) : type(buildingtype){
 	}
 }
 
+Building::Building(){}
+
 int Building::getLevel(){
 	return level;
 }

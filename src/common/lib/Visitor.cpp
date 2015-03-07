@@ -7,32 +7,25 @@ Visitor::Visitor(Location loc){ //le spawner donne la localistion
 	preference = listOfBuildType[number];
 }
 
-void Visitor::displayGUI(){}
+Location Visitor::getLoc(){
+	return currentLocation;
+}
+
+//void Visitor::displayGUI(){}
 
 void Visitor::setPath(std::vector<Location> way){ 
 	path = way;
 }
 
 void Visitor::move(){
-	bool end = false;
 	count += 1;
 		
 	if(count-1 > path.size()){
-		end = true;
 		delete this;
 	}
 	else{		
 		currentLocation = path[count];
-		//int x = currentLocation.getX();
-		//int y = currentLocation.getY();
-		if(end){  // map[x][y]  avec +1 -1
-			bool test = choose(); //Building en parametre
-			if(test){
-				end = true;
-				//enter(build);
-				delete this;
-			}
-		}
+
 	}
 }
 
@@ -61,13 +54,13 @@ void Visitor::moveGUI(){
 }
 */
 
-
+/*
 void Visitor::enter(Building build){
 	//if build.addVisitor();
 		//ok
 	//else....
-
 }
+*/
 
 bool Visitor::choose(){  //Building build en parametre
 	if(true){   //preference = build.getType

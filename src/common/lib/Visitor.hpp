@@ -3,9 +3,9 @@
 
 #include <vector>
 #include <random>
-#include "Location.hpp"
-
+#include <typeinfo>
 #include "Building.hpp"
+#include "Location.hpp"
 //#include "BuildingType.hpp"
 
 class Visitor{
@@ -17,10 +17,11 @@ class Visitor{
 	unsigned count = 0;
 	public:
 		Visitor(Location); //le spawner donne la localistion
+		Location getLoc();
 		void move();
-		void moveGUI();
-		void displayGUI();
-		void enter(Building);
+		//void moveGUI();
+		//void displayGUI();
+		//void enter(Building);
 		bool choose(); //Building en paramètre
 		void setPath(std::vector<Location>);
 };

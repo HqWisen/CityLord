@@ -22,6 +22,7 @@ class Building {
 	
 	public:
 		Building(BuildingType, int level = 1);
+		Building();
 		~Building() = default;
 		int getLevel();
 		BuildingType getType();
