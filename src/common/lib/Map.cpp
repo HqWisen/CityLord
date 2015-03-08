@@ -72,7 +72,22 @@ Map::Map(string fileName){
                 dynamic_cast<Road*>(caseMatrix[row/2][0])->open(Road::WEST);
             }
             tmpChar = tmpString.at(2);
-            if (tmpChar == 'O') {
+            if (tmpChar == 'B') {
+                tmpChar = tmpString.at(1);
+                int player = tmpChar;
+                tmpChar = tmpString.at(3);
+                int building = (int) tmpChar;
+                BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
+                int level = (building%10);
+                if (level == 0){
+                    level = 10;
+                }
+                if (player > 47){
+                    caseMatrix[row/2][0] = new Field(player-8, Location(row/2,0), new Building(type, level));
+                }else {
+                    caseMatrix[row/2][0] = new Field(Location(row/2,0), new Building(type, level));
+                }
+            }else if (tmpChar == 'O') {
                 caseMatrix[row/2][0] = new Obstacle(Location(row/2, 0));
             }else if (tmpChar == 'F'){
                 tmpChar = tmpString.at(1);
@@ -104,7 +119,22 @@ Map::Map(string fileName){
 
                 }
                 tmpChar = tmpString.at((col*4)+2);
-                if (tmpChar == 'O') {
+                if (tmpChar == 'B') {
+                    tmpChar = tmpString.at((col*4)+1);
+                    int player = tmpChar;
+                    tmpChar = tmpString.at((col*4)+3);
+                    int building = (int) tmpChar;
+                    BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
+                    int level = (building%10);
+                    if (level == 0){
+                        level = 10;
+                    }
+                    if (player > 47){
+                        caseMatrix[row/2][col] = new Field(player-8, Location(row/2,col), new Building(type, level));
+                    }else {
+                        caseMatrix[row/2][col] = new Field(Location(row/2,col), new Building(type, level));
+                    }
+                }if (tmpChar == 'O') {
                     caseMatrix[row/2][col] = new Obstacle(Location(row/2, col));
                 }else if (tmpChar == 'F'){
                     tmpChar = tmpString.at(1);
