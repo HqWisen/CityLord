@@ -14,7 +14,7 @@ class Road : public Case{
 	public:
 		Road(Location);
 		~Road() = default;
-        std::string print(); // override
+        std::string print() override;
         void open(direction_type);
         bool isOpen(direction_type);
         std::string toString();

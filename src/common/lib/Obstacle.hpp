@@ -7,7 +7,7 @@ class Obstacle: public Case{
 	public:
 		Obstacle(Location);
 		~Obstacle() = default;
-        std::string print(); // override
+        std::string print() override;
 };
 
 #endif // OBSTACLE_HPP_

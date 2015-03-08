@@ -18,7 +18,7 @@ class Field : public Case{			// public Case
 		Field(Location, Building*);
 		Field(int, Location);
 		Field(int, Location, Building*);
-        std::string print(); //override
+        std::string print() override;
         void buildBuilding(BuildingType);
 		void destroyBuilding();
 		int getPrice();
