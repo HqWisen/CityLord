@@ -1,6 +1,6 @@
 #include "CityLordClient.hpp"
 
-CityLordClient::CityLordClient(char* hostname, int port) : connectionSocket(hostname, port), map(){}
+CityLordClient::CityLordClient(char* hostname, int port) : connectionSocket(hostname, port), map(nullptr){}
 
 void CityLordClient::run(){
 	SocketMessage quitRequest("quit");
@@ -39,6 +39,10 @@ void CityLordClient::run(){
 		}
 	}
 	sendRequest(quitRequest);
+}
+
+CityLordClient::~CityLordClient(){
+    delete map;
 }
 
 void CityLordClient::beginConnection(){
@@ -167,19 +171,13 @@ void CityLordClient::joinCity(){
             LOG(answer.get("reason"));
         }else{
             fail = false;
+            map = new Map<ClientField>(answer.get("filename"));
         }
     }
 }
 
 void CityLordClient::showMap(){
-	SocketMessage request("showmap");
-	SocketMessage answer;
-	sendRequest(request);
-	recvAnswer(answer);
-    /*std::string mapString = answer.get("map");
-	Map::parseMap("resources/tmp/out.txt", mapString);
-	Map map("resources/tmp/out.txt");
-    map.display();*/
+    map->display();
 }
 
 void CityLordClient::selectField(){
@@ -197,10 +195,10 @@ void CityLordClient::selectField(){
 	request.setTopic("selectfield");
 	request.set("x", std::to_string(cx-1));
 	request.set("y", std::to_string(cy-1));
-	sendRequest(request);
+    sendRequest(request);
 	recvAnswer(answer);
 	if(answer.getTopic() == "owner"){ 
-		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
+        std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		std::cout<<"It's your field, what would you want to do ?"<<std::endl;
 		std::cout<<"1 - Build"<<std::endl;
 		//std::cout<<"2 - Sell"<<std::endl;

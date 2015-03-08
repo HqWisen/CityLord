@@ -82,6 +82,7 @@ namespace request{
             cityManager->addPlayer(userManager->getActivePlayer());
             server->LOG("User " + userManager->getUserName() + " joined the city "+cityManager->getName());
             answer.setTopic("success");
+            answer.set("filename", cityManager->getMapFileName());
         }else{
             answer.setTopic("failure");
             answer.set("reason", "The city "+cityManager->getName()+" is full.");
@@ -89,17 +90,9 @@ namespace request{
 		return answer;
 	}
 
-	SocketMessage showmap(CityLordServer* server, UserManager* userManager, SocketMessage message){
-		SocketMessage answer;
-
-        CityManager* cityManager = userManager->getActiveCity();
-        cityManager->getMap()->display();
-        return answer;
-	}
-
 	SocketMessage mapsize(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		Map* map = userManager->getActiveCity()->getMap();
+        Map<Field>* map = userManager->getActiveCity()->getMap();
         answer.set("x", std::to_string(map->getNumberOfCols()));
         answer.set("y", std::to_string(map->getNumberOfRows()));
 		return answer;
@@ -107,7 +100,7 @@ namespace request{
 
 	SocketMessage selectfield(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		Map* map = userManager->getActiveCity()->getMap();
+        Map<Field>* map = userManager->getActiveCity()->getMap();
 		int x = std::stoi(message.get("x"));
 		int y = std::stoi(message.get("y"));
         Field* field;

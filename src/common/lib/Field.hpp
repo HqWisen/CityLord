@@ -8,25 +8,45 @@
 #include "Building.hpp"
 #include <string>
 
-class Field : public Case{			// public Case
-    int price = 15000;
-    Building* building = nullptr;
-    Player* owner = nullptr;
-	public:
-		Field(Location);
-        std::string print() override;
+class BasicField : public Case{
+    protected:
+        int price = 15000;
+        Building* building = nullptr;
+    public:
+        BasicField(Location);
+        virtual ~BasicField() = default;
+        string print() override;
         void buildBuilding(BuildingType);
-		void destroyBuilding();
-		int getPrice();
-		void setPrice(int);
-		Player* getOwner();
+        void destroyBuilding();
+        int getPrice();
+        void setPrice(int);
+        Building* getBuilding();
+        bool hasBuilding();
+        virtual int getOwnerID() = 0;
+        virtual bool hasOwner() = 0;
         string getOwnerColor();
-        void setOwner(Player*);
-		Building* getBuilding();
-		bool hasOwner();
-		bool hasBuilding();
-        string toString();
 };
+
+class Field : public BasicField{
+    Player* owner;
+    public:
+        Field(Location);
+        Player* getOwner();
+        void setOwner(Player*);
+        string toString();
+        int getOwnerID() override;
+        bool hasOwner() override;
+};
+
+class ClientField : public BasicField{
+    int ownerid = -1;
+    public:
+        ClientField(Location);
+        int getOwnerID() override;
+        void setOwnerID(int);
+        bool hasOwner() override;
+};
+
 
 #endif // FIELD_HPP_
 

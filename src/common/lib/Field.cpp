@@ -1,100 +1,129 @@
+
 #include "Field.hpp"
 
 using namespace std;
 
+/* BASIC FIELD */
 
-Field::Field(Location location) : Case(location){
+BasicField::BasicField(Location location) : Case(location){
 }
 
 /*Field::Field(int newColor, Location coords){
-	typeName = "Field";
-	coord = coords;
-	string colorNumber;
-	ostringstream convert;
-	convert << newColor;
-	colorNumber = convert.str();
-	color = color="\033[1;"+colorNumber+"m";
+    typeName = "Field";
+    coord = coords;
+    string colorNumber;
+    ostringstream convert;
+    convert << newColor;
+    colorNumber = convert.str();
+    color = color="\033[1;"+colorNumber+"m";
 }*/
 
-std::string Field::print(){
+string BasicField::print(){
     string ownerStr = " ";
-	if (this->hasOwner()){
-		ownerStr = to_string(owner->getPlayerID());
-	}
-	if (this->hasBuilding()){
-		int type = BuildingType::getIndexByType(getBuilding()->getType());
-		int level = getBuilding()->getLevel();
-		if (level == 10){
-			level = 0;
-		}
-		char key = (((type+2)*10)+level);
-		string buildingStr;
-		stringstream temp_string;
-		temp_string << key;
-		temp_string >> buildingStr;
-		return ownerStr + "B" + buildingStr;
-	}
-	else{
-		return (ownerStr + "F ");
+    if (hasOwner()){
+        ownerStr = to_string(getOwnerID());
     }
-    //return "TOIMPL";
+    if (hasBuilding()){
+        int type = BuildingType::getIndexByType(getBuilding()->getType());
+        int level = getBuilding()->getLevel();
+        if (level == 10){
+            level = 0;
+        }
+        char key = (((type+2)*10)+level);
+        string buildingStr;
+        stringstream temp_string;
+        temp_string << key;
+        temp_string >> buildingStr;
+        return ownerStr + "B" + buildingStr;
+    }
+    else{
+        return (ownerStr + "F ");
+    }
 }
 
-void Field::buildBuilding(BuildingType buildingType){
-	building = new Building(buildingType);
+void BasicField::buildBuilding(BuildingType buildingType){
+    building = new Building(buildingType);
 }
 
-void Field::destroyBuilding(){
-	delete building;
-	building = nullptr;
+void BasicField::destroyBuilding(){
+    delete building;
+    building = nullptr;
 }
 
-//----getters & setters----
-void Field::setPrice(int amount){
-	price = amount;
+void BasicField::setPrice(int amount){
+    price = amount;
 }
 
-int Field::getPrice(){
-	return price;
+int BasicField::getPrice(){
+    return price;
 }
+
+Building* BasicField::getBuilding(){
+    return building;
+}
+
+bool BasicField::hasBuilding(){
+    return (building != nullptr);
+}
+
+string BasicField::getOwnerColor(){
+    return Player::COLOR[getOwnerID()];
+}
+
+
+/* FIELD */
+
+Field::Field(Location location) : BasicField(location){
+}
+
 
 Player* Field::getOwner(){
-	return owner;
-}
-
-string Field::getOwnerColor(){
-    return owner->getColor();
+    return owner;
 }
 
 void Field::setOwner(Player* newOwner){
-	owner = newOwner;
+    owner = newOwner;
 }
 
-Building* Field::getBuilding(){
-	return building;
+
+string Field::toString(){
+    string result;
+    result += "Price : "+ std::to_string(price);
+    result += " - ";
+    result += "Owner : ";
+    if(hasOwner()){
+        result += owner->getNickName();
+    }else{
+        result += "no owner";
+    }
+    if(hasBuilding()){
+        result += "# "+building->getType().buildingName;
+    }
+    return result;
+}
+
+int Field::getOwnerID(){
+    return owner->getPlayerID();
 }
 
 bool Field::hasOwner(){
-	return (owner != nullptr);
+    return owner != nullptr;
 }
 
-bool Field::hasBuilding(){
-	return (building != nullptr);
+/* CLIENTFIELD */
+
+ClientField::ClientField(Location location) : BasicField(location){
 }
 
-string Field::toString(){
-	string result;
-	result += "Price : "+ std::to_string(price);
-	result += " - ";
-	result += "Owner : ";
-	if(hasOwner()){
-		result += owner->getNickName();
-	}else{
-		result += "no owner";
-	}
-	if(hasBuilding()){
-		result += "# "+building->getType().buildingName;
-	}
-	return result;
+int ClientField::getOwnerID(){
+    return ownerid;
+}
+
+void ClientField::setOwnerID(int id){
+    ownerid = id;
+}
+
+bool ClientField::hasOwner(){
+    return ownerid != -1;
 }
 

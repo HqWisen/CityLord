@@ -13,7 +13,7 @@ CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), ci
 		}
 	}
 	//CityUpdater* updater =
-	new CityUpdater(cityMap);
+    //new CityUpdater(cityMap);
 }
 
 std::string CityManager::getMapFileName(){
@@ -60,7 +60,7 @@ bool CityManager::alreadyInCity(Player* player){
 
 }
 
-Map* CityManager::getMap(){
+Map<Field>* CityManager::getMap(){
 	return &cityMap;
 }
 

@@ -7,7 +7,6 @@ const std::map<std::string, request_ptr> UserManager::requestmap = {
 	{"createcity", request::createcity},
     {"cityinfo", request::cityinfo},
 	{"joincity", request::joincity},
-	{"showmap", request::showmap},
 	{"mapsize", request::mapsize},
 	{"selectfield", request::selectfield},
 	{"showinfo", request::showinfo},

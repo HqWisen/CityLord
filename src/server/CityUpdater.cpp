@@ -1,5 +1,5 @@
 #include "CityUpdater.hpp"
-
+/*
 CityUpdater::CityUpdater(Map newMap){
 	map = newMap;
     this->start();
@@ -15,7 +15,7 @@ void CityUpdater::makeOwnersPay(){
 				concernedField->getOwner()->setMoney()(concernedField->getOwner()->getMoney() - concernedField->getBuilding()->dailyCost);
 			}
 		}
-	}*/
+    }
 }
 
 std::vector<Location> CityUpdater::creatWay(){
@@ -36,7 +36,7 @@ void CityUpdater::generateVisitors(){
 }
 
 void CityUpdater::updateBuildings(){
-	/*Location currentLocation;
+    /*Location currentLocation;
 	for(int i = 0; i<cityMap.getDimensionX(); i++){
 		for(int j = 0; i<cityMap.getDimensionY(); j++){
 			currentLocation = Location(x,y);
@@ -45,7 +45,7 @@ void CityUpdater::updateBuildings(){
 				concernedField->getBuilding()->removeVisitor();
 			}
 		}
-	}*/
+    }
 }
 
 void CityUpdater::makeVisitorsAdvance(){	
@@ -102,4 +102,4 @@ void CityUpdater::run(){
 	}
 }
 
-
+*/

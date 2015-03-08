@@ -39,7 +39,7 @@ class CityManager{
     static const int DEFAULTMAXPLAYER;
 
     std::string mapname;
-	Map cityMap; 
+    Map<Field> cityMap;
 	int id;
     User* creator;
 	Catalog catalog;
@@ -50,12 +50,13 @@ class CityManager{
 	public:
         CityManager(std::string, int, User*);
         std::string getMapName();
-		int getID();
+        std::string getMapFileName();
+        int getID();
 		int getNPlayer();
         int getMaxPlayer();
         int getNextID();
 		void addPlayer(Player*);
-        Map* getMap();
+        Map<Field>* getMap();
         User* getCreator();
         std::string getName();
         bool canJoin(Player*);
@@ -68,8 +69,6 @@ class CityManager{
 
 		std::vector<Location> giveWay();
         //Spawnable getRandomSpawn();
-    private:
-        std::string getMapFileName();
 };
 
 #endif

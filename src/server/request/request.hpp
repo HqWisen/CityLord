@@ -18,7 +18,6 @@ namespace request{
 	SocketMessage createcity(CityLordServer*, UserManager*, SocketMessage);
     SocketMessage cityinfo(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage joincity(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage showmap(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage mapsize(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage selectfield(CityLordServer*, UserManager*, SocketMessage);
 	SocketMessage showinfo(CityLordServer*, UserManager*, SocketMessage);

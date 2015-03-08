@@ -8,16 +8,18 @@
 #include "../common/socket/ConnectionSocket.hpp"
 #include "../common/socket/SocketMessage.hpp"
 #include "../common/lib/Map.hpp"
+#include "../common/lib/Field.hpp"
 
 #define CLIENTNAME "CityLord"
 #define CINITEM "> "
 
 class CityLordClient{
 	ConnectionSocket connectionSocket;
-    Map map;
+    Map<ClientField>* map;
 	public:
 		CityLordClient(char* hostname, int port);
 		CityLordClient(const CityLordClient&) = default;
+        ~CityLordClient();
 		void run();
 		void beginConnection();
 		void login();

@@ -8,7 +8,7 @@
 #include "../common/lib/Map.hpp"
 #include "../common/lib/Visitor.hpp"
 
-
+/*
 class CityUpdater : public Thread{
 	Map map;
 	std::vector<Location> spawn;  //=map.getListSpawn
@@ -24,6 +24,6 @@ class CityUpdater : public Thread{
         std::vector<Location> creatWay();
 
 };
-
+*/
 #endif // CITYUPDATER_HPP_
 
