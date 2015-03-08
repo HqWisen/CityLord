@@ -8,8 +8,8 @@ using namespace std;
 BasicField::BasicField(Location location) : Case(location){
 }
 
-<<<<<<< HEAD
-/*Field::Field(int newColor, Location coords){
+/*
+Field::Field(int newColor, Location coords){
     typeName = "Field";
     coord = coords;
     string colorNumber;
@@ -17,8 +17,8 @@ BasicField::BasicField(Location location) : Case(location){
     convert << newColor;
     colorNumber = convert.str();
     color = color="\033[1;"+colorNumber+"m";
-}*/
-=======
+}
+
 Field::Field(Location location, Building* newBuilding) : Case(location), building(newBuilding) {
 }
 
@@ -37,7 +37,7 @@ Field::Field(int newColor, Location location, Building* newBuilding) : Case(loca
 	colorNumber = convert.str();
 	color = color="\033[1;"+colorNumber+"m";
 }
->>>>>>> 67527cefd8236d939f70ac94f5dabb24fead0857
+*/
 
 string BasicField::print(){
     string ownerStr = " ";
@@ -83,7 +83,6 @@ Building* BasicField::getBuilding(){
     return building;
 }
 
-<<<<<<< HEAD
 bool BasicField::hasBuilding(){
     return (building != nullptr);
 }
@@ -122,19 +121,6 @@ string Field::toString(){
         result += "# "+building->getType().buildingName;
     }
     return result;
-=======
-string Field::getColor(){
-	return color;
-}
-
-string Field::getOwnerColor(){
-    return owner->getColor();
-}
-
-void Field::setOwner(Player* newOwner){
-	owner = newOwner;
-	color = newOwner->getColor();
->>>>>>> 67527cefd8236d939f70ac94f5dabb24fead0857
 }
 
 int Field::getOwnerID(){
@@ -145,18 +131,9 @@ bool Field::hasOwner(){
     return owner != nullptr;
 }
 
-<<<<<<< HEAD
 /* CLIENTFIELD */
 
 ClientField::ClientField(Location location) : BasicField(location){
-=======
-bool Field::hasColor(){
-	return (color != "");
-}
-
-bool Field::hasBuilding(){
-	return (building != nullptr);
->>>>>>> 67527cefd8236d939f70ac94f5dabb24fead0857
 }
 
 int ClientField::getOwnerID(){

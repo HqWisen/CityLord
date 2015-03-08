@@ -9,7 +9,7 @@ Matrice dans laquelle sera stockée la carte et les éléments de la ville (bati
 
 using namespace std;
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 /*
 string Map::getMapString(){
 =======

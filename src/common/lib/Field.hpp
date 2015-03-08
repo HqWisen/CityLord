@@ -8,7 +8,6 @@
 #include "Building.hpp"
 #include <string>
 
-<<<<<<< HEAD
 class BasicField : public Case{
     protected:
         int price = 15000;
@@ -25,25 +24,6 @@ class BasicField : public Case{
         bool hasBuilding();
         virtual int getOwnerID() = 0;
         virtual bool hasOwner() = 0;
-=======
-class Field : public Case{			// public Case
-    int price = 15000;
-    Building* building = nullptr;
-    Player* owner = nullptr;
-    string color = "";
-	public:
-		Field(Location);
-		Field(Location, Building*);
-		Field(int, Location);
-		Field(int, Location, Building*);
-        std::string print() override;
-        void buildBuilding(BuildingType);
-		void destroyBuilding();
-		int getPrice();
-		void setPrice(int);
-		Player* getOwner();
-		string getColor();
->>>>>>> 67527cefd8236d939f70ac94f5dabb24fead0857
         string getOwnerColor();
 };
 
@@ -53,13 +33,6 @@ class Field : public BasicField{
         Field(Location);
         Player* getOwner();
         void setOwner(Player*);
-<<<<<<< HEAD
-=======
-		Building* getBuilding();
-		bool hasOwner();
-		bool hasColor();
-		bool hasBuilding();
->>>>>>> 67527cefd8236d939f70ac94f5dabb24fead0857
         string toString();
         int getOwnerID() override;
         bool hasOwner() override;
@@ -69,8 +42,8 @@ class ClientField : public BasicField{
     int ownerid = -1;
     public:
         ClientField(Location);
-        int getOwnerID() override;
         void setOwnerID(int);
+        int getOwnerID() override;
         bool hasOwner() override;
 };
 
