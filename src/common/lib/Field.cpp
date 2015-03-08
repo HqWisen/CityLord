@@ -6,15 +6,24 @@ using namespace std;
 Field::Field(Location location) : Case(location){
 }
 
-/*Field::Field(int newColor, Location coords){
-	typeName = "Field";
-	coord = coords;
+Field::Field(Location location, Building* newBuilding) : Case(location), building(newBuilding) {
+}
+
+Field::Field(int newColor, Location location) : Case(location) {
 	string colorNumber;
 	ostringstream convert;
 	convert << newColor;
 	colorNumber = convert.str();
 	color = color="\033[1;"+colorNumber+"m";
-}*/
+}
+
+Field::Field(int newColor, Location location, Building* newBuilding) : Case(location), building(newBuilding) {
+	string colorNumber;
+	ostringstream convert;
+	convert << newColor;
+	colorNumber = convert.str();
+	color = color="\033[1;"+colorNumber+"m";
+}
 
 std::string Field::print(){
     string ownerStr = " ";
@@ -62,12 +71,17 @@ Player* Field::getOwner(){
 	return owner;
 }
 
+string Field::getColor(){
+	return color;
+}
+
 string Field::getOwnerColor(){
     return owner->getColor();
 }
 
 void Field::setOwner(Player* newOwner){
 	owner = newOwner;
+	color = newOwner->getColor();
 }
 
 Building* Field::getBuilding(){
@@ -76,6 +90,10 @@ Building* Field::getBuilding(){
 
 bool Field::hasOwner(){
 	return (owner != nullptr);
+}
+
+bool Field::hasColor(){
+	return (color != "");
 }
 
 bool Field::hasBuilding(){

@@ -1,3 +1,10 @@
+/*
+
+Map.cpp
+
+Matrice dans laquelle sera stockée la carte et les éléments de la ville (batiments, routes, ...)
+
+*/
 #include "Map.hpp"
 
 using namespace std;
@@ -9,9 +16,7 @@ Map::Map(string fileName){
     numberOfCols = atoi(tmpString.c_str());
     getline(file, tmpString);
     numberOfRows = atoi(tmpString.c_str());
-
     //----------------------------------------------- Matrice  --------------------------------
-
     caseMatrix = new Case**[numberOfRows];
     for (int i=0; i<numberOfRows; i++) {
         caseMatrix[i] = new Case*[numberOfCols];
@@ -70,7 +75,13 @@ Map::Map(string fileName){
             if (tmpChar == 'O') {
                 caseMatrix[row/2][0] = new Obstacle(Location(row/2, 0));
             }else if (tmpChar == 'F'){
-                caseMatrix[row/2][0] = new Field(Location(row/2, 0));
+                tmpChar = tmpString.at(1);
+                int player = tmpChar;
+                if (player > 47){
+                    caseMatrix[row/2][0] = new Field(player-8, Location(row/2,0));
+                }else {
+                    caseMatrix[row/2][0] = new Field(Location(row/2,0));
+                }
             }else if(tmpChar == 'R'){
                 if (caseMatrix[row/2][0] == nullptr) {
                     caseMatrix[row/2][0] = new Road(Location(row/2, 0));
@@ -96,7 +107,13 @@ Map::Map(string fileName){
                 if (tmpChar == 'O') {
                     caseMatrix[row/2][col] = new Obstacle(Location(row/2, col));
                 }else if (tmpChar == 'F'){
-                    caseMatrix[row/2][col] = new Field(Location(row/2, col));
+                    tmpChar = tmpString.at(1);
+                    int player = tmpChar;
+                    if (player > 47){
+                        caseMatrix[row/2][col] = new Field(player-8, Location(row/2,col));
+                    }else {
+                        caseMatrix[row/2][col] = new Field(Location(row/2,col));
+                    }
                 }else if(tmpChar == 'R') {
                     if (caseMatrix[row/2][col] == nullptr){
                         caseMatrix[row/2][col] = new Road(Location(row/2, col));
@@ -111,22 +128,6 @@ Map::Map(string fileName){
         }
     }
     file.close();
-}
-
-Map::~Map(){
-    for (int row=0; row<numberOfRows; row++) {
-        for (int col=0; col<numberOfCols; col++) {
-            delete caseMatrix[row][col];
-        }
-    }
-}
-
-int Map::getNumberOfRows(){
-    return numberOfRows;
-}
-
-int Map::getNumberOfCols(){
-    return numberOfCols;
 }
 
 void Map::display(){
@@ -182,29 +183,45 @@ void Map::display(){
     }
 }
 
-Case* Map::getCase(Location location){
-    return caseMatrix[location.getRow()][location.getCol()];
+Map::~Map(){
+    delete[] caseMatrix;
+    //delete[] visitorList;
 }
-/*
-string Map::getMapString(){
+
+Case* Map::getCase(Location coord){
+    return caseMatrix[coord.getRow()][coord.getCol()];
+}
+
+int Map::getNumberOfCols(){
+    return numberOfCols;
+}
+
+int Map::getNumberOfRows(){
+    return numberOfRows;
+}
+
+/*string Map::getMapString(){
     string output = "";
-    output += (to_string(dimensionX)) + "\n";
-    output += (to_string(dimensionY)) + "\n";
-    for (int j=0; j<((dimensionY*2)+1); j++) {
-        if (j == (dimensionY*2)) {
-            for (int i=0; i<dimensionX; i++) {
-                if (((mapMatrice[i][dimensionY-1])->getType() == "Road") && \
-                                            (((Road*) (mapMatrice[i][dimensionY-1]))->getPath(3) == true)) {
+    Road* road;
+    Field* field;
+    output += (to_string(numberOfCols)) + "\n";
+    output += (to_string(numberOfRows)) + "\n";
+    for (int row=0; row<((numberOfRows*2)+1); row++) {
+        if (row == (numberOfRows*2)) {
+            for (int col=0; col<numberOfCols; col++) {
+
+                if ((road = dynamic_cast<Road*>(caseMatrix[col][numberOfRows-1])) && \
+                                            (((Road*) (caseMatrix[col][numberOfRows-1]))->getPath(3) == true)) {
                     output += "+   ";
                 }else {
                     output += "+---";
                 }
             }
             output += "+\n";
-        }else if ((j % 2) == 0) {
-            for (int i=0; i<dimensionX; i++) {
-                if (((mapMatrice[i][j/2])->getType() == "Road") && \
-                                            ((Road*) (mapMatrice[i][j/2]))->getPath(1) == true) {
+        }else if ((row % 2) == 0) {
+            for (int col=0; col<numberOfCols; col++) {
+                if ((road = dynamic_cast<Road*>(caseMatrix[col][row/2])) && \
+                                            ((Road*) (caseMatrix[col][row/2]))->getPath(1) == true) {
                     output += "+   ";
                 }else {
                     output += "+---";
@@ -212,26 +229,22 @@ string Map::getMapString(){
             }
             output += "+\n";
         } else {
-            for (int i=0; i<dimensionX; i++) {
-                if (((mapMatrice[i][j/2])->getType() == "Road") && \
-                                            ((Road*) (mapMatrice[i][j/2]))->getPath(0) == true) {
-                    output += "  ";
-                    output += (mapMatrice[i][j/2]->getType())[0];
-                    output += " ";
+            for (int col=0; col<numberOfCols; col++) {
+                if ((road = dynamic_cast<Road*>(caseMatrix[col][row/2])) && \
+                                            ((Road*) (caseMatrix[col][row/2]))->getPath(0) == true) {
+                    output += "  R ";
                 }else {
                     output += "|";
-                    if ((mapMatrice[i][j/2])->getType() != "Field"){
-                        output += " ";
-                        output += (mapMatrice[i][j/2]->getType())[0];
-                        output += " ";
+                    if ((field = dynamic_cast<Field*>(caseMatrix[col][row/2]))) {
+                        output += (caseMatrix[col][row/2])->print();
                     }else {
-                        output += (mapMatrice[i][j/2])->display();
+                        output += " O ";
                     }
 
                 }
             }
-            if (((mapMatrice[dimensionX-1][j/2])->getType() == "Road") && \
-                                            ((Road*) (mapMatrice[dimensionX-1][j/2]))->getPath(2) == true) {
+            if ((road = dynamic_cast<Road*>(caseMatrix[numberOfCols-1][row/2])) && \
+                                            ((Road*) (caseMatrix[numberOfCols-1][row/2]))->getPath(2) == true) {
                 output += " \n";
             }else {
                 output += "|\n";
@@ -245,6 +258,15 @@ void Map::parseMap(string filePath, string map){
     ofstream file (filePath);
     file << map;
     file.close();
-}
+}*/
 
-*/
+
+/*int main(int argc, const char* argv[]){
+    //int col = '0';
+    //cout<<col<<endl;
+    Map map1 = Map("Map1.txt");
+    map1.display();
+    //string lel = map1.getMapString();
+    //Map::parseMap("out.txt", lel);
+    return 0;
+}*/

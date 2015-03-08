@@ -12,18 +12,24 @@ class Field : public Case{			// public Case
     int price = 15000;
     Building* building = nullptr;
     Player* owner = nullptr;
+    string color = "";
 	public:
 		Field(Location);
-        std::string print() override;
+		Field(Location, Building*);
+		Field(int, Location);
+		Field(int, Location, Building*);
+        std::string print(); //override
         void buildBuilding(BuildingType);
 		void destroyBuilding();
 		int getPrice();
 		void setPrice(int);
 		Player* getOwner();
+		string getColor();
         string getOwnerColor();
         void setOwner(Player*);
 		Building* getBuilding();
 		bool hasOwner();
+		bool hasColor();
 		bool hasBuilding();
         string toString();
 };
