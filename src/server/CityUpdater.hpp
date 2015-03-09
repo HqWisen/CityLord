@@ -8,13 +8,12 @@
 #include "../common/lib/Map.hpp"
 #include "../common/lib/Visitor.hpp"
 
-/*
+
 class CityUpdater : public Thread{
-	Map map;
+	Map<Field>* map;
 	std::vector<Location> spawn;  //=map.getListSpawn
-	std::vector<Visitor*> listOfVisitor;
 	public:
-		CityUpdater(Map);
+		CityUpdater(Map<Field>*);
 		void run() override;
         void generateVisitors();
         void updateBuildings();
@@ -24,6 +23,6 @@ class CityUpdater : public Thread{
         std::vector<Location> creatWay();
 
 };
-*/
+
 #endif // CITYUPDATER_HPP_
 

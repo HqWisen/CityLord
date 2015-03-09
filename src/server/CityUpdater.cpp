@@ -1,6 +1,6 @@
 #include "CityUpdater.hpp"
-/*
-CityUpdater::CityUpdater(Map newMap){
+
+CityUpdater::CityUpdater(Map<Field>* newMap){
 	map = newMap;
     this->start();
 }
@@ -16,6 +16,7 @@ void CityUpdater::makeOwnersPay(){
 			}
 		}
     }
+    */
 }
 
 std::vector<Location> CityUpdater::creatWay(){
@@ -29,9 +30,9 @@ void CityUpdater::generateVisitors(){
     int size = spawn.size();
     int luck = rand() %  (size-1);
     Location newLocation = spawn[luck];
-    Visitor* newVisitor = new Visitor(newLocation);
-    std::vector<Location> newWay = creatWay();
-    newVisitor->setPath(newWay);
+    //Visitor* newVisitor = new Visitor(newLocation);
+    //std::vector<Location> newWay = creatWay();
+    //newVisitor->setPath(newWay);
     //listOfVisitor.insert(newVisitor);    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
@@ -46,9 +47,11 @@ void CityUpdater::updateBuildings(){
 			}
 		}
     }
+    */
 }
 
 void CityUpdater::makeVisitorsAdvance(){	
+	/*
 	for(unsigned i = 0; i<listOfVisitor.size(); i++){
 		listOfVisitor[i]->move();
 		bool enter = false;
@@ -71,13 +74,14 @@ void CityUpdater::makeVisitorsAdvance(){
 			locTest.setCol(col);
 			locTest.setRow(row-1);
 		}
-	}
+		*/
+	//}
 }
 
 void CityUpdater::updateCity(){
 	generateVisitors();
 	updateBuildings();
-	makeVisitorsAdvance();
+	//makeVisitorsAdvance();
 }
 
 void CityUpdater::run(){
@@ -102,4 +106,3 @@ void CityUpdater::run(){
 	}
 }
 
-*/

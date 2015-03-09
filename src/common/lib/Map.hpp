@@ -26,6 +26,7 @@ using namespace std;
 template <typename FieldType>
 class Map{
     //Visitor* visitorList;
+    int visitorMax = 50;
     int numberOfRows;
     int numberOfCols;
     Case*** caseMatrix;
