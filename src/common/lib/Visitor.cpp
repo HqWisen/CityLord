@@ -3,7 +3,7 @@
 
 Visitor::Visitor(Location loc){ //le spawner donne la localistion
 	currentLocation = loc;
-	int number = rand() % 4;
+	int number = rand() % 3;
 	preference = listOfBuildType[number];
 }
 
