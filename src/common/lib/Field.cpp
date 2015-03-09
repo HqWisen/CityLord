@@ -66,6 +66,15 @@ void BasicField::buildBuilding(BuildingType buildingType){
     building = new Building(buildingType);
 }
 
+/*
+void BasicField::buildBuilding(string buildingType){
+    if(buildingType=="Bar"){building = new Bar();}
+    else if(buildingType=="Shop"){building = new Shop();}
+    else if(buildingType=="Museum"){building = new Museum();}
+    else if(buildingType=="NightClub"){building = new NightClub();}
+}
+*/
+
 void BasicField::destroyBuilding(){
     delete building;
     building = nullptr;

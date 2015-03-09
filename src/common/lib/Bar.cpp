@@ -6,6 +6,7 @@
 using namespace std;
 
 Bar::Bar(int lvl){
+	//type="Bar";
 	level = lvl;
 	visitorCounter = 0;
 	maxCapacity = 70;

@@ -5,6 +5,7 @@
 using namespace std;
 
 NightClub::NightClub(int lvl){
+	//type="NightClub";
 	level = lvl;
 	visitorCounter = 0;
 	maxCapacity = 50;

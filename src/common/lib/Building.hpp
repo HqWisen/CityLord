@@ -19,6 +19,7 @@ class Building {
 		int level;
 		int destructionCost;
 		BuildingType type;
+		//string type
 	
 	public:
 		Building(BuildingType, int level = 1);
@@ -26,11 +27,13 @@ class Building {
 		~Building() = default;
 		int getLevel();
 		BuildingType getType();
+		//string getType(){return this->type;};
 		int getPrice(){return this->price;};
 		int getDestructionCost(){return this->destructionCost;};
 		void upgrade();
 		bool addVisitor();
 		void removeVisitor();
+		bool isFull(){return visitorCounter==maxCapacity;};
 
 };
 #endif // BUILDING_HPP_

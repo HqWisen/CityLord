@@ -5,6 +5,7 @@
 using namespace std;
 
 Museum::Museum(int lvl){
+	//type="Museum";
 	level = lvl;
 	visitorCounter = 0;
 	maxCapacity = 90;
