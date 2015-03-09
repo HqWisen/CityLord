@@ -52,30 +52,44 @@ void CityUpdater::updateBuildings(){
 
 void CityUpdater::makeVisitorsAdvance(){	
 	/*
-	for(unsigned i = 0; i<listOfVisitor.size(); i++){
-		listOfVisitor[i]->move();
-		bool enter = false;
-		Building test;
-		Location loc = listOfVisitor[i]->getLoc();
-		int col = loc.getCol();
-		int row = loc.getRow();
-		Location locTest(col+1,row);
-		if(typeid(map.getCase(locTest)) == typeid(test)){
-
+	for(unsigned i = 0; i<cityMap.getMaxVisitors(); i++){
+		if(cityMap.getVistor(i) != nullptr){
+			cityMap.getVisitor(i)->move();
+			bool enter = false;
+			Building test;
+			Location loc = listOfVisitor[i]->getLoc();
+			int col = loc.getCol();
+			int row = loc.getRow();
+			Location locTest(col+1,row);
+			if(dynamic_cast<Field*>(cityMap.getCase(locTest))->hasBuilding()){
+				enter = cityMap.getVisitor(i)->enter(dynamic_cast<Field*>(cityMap.getCase(locTest))->getBuilding()); //Enter doit retourner un bool
+				if(!enter){
+					locTest = Location(col-1,row);
+				}
+			}
+			if(!enter){
+				if(dynamic_cast<Field*>(cityMap.getCase(locTest))->hasBuilding()){
+					enter = cityMap.getVisitor(i)->enter(dynamic_cast<Field*>(cityMap.getCase(locTest))->getBuilding()); //Enter doit retourner un bool
+					if(!enter){
+						locTest = Location(col,row+1);
+					}
+				}
+			}
+			if(!enter){
+				if(dynamic_cast<Field*>(cityMap.getCase(locTest))->hasBuilding()){
+					enter = cityMap.getVisitor(i)->enter(dynamic_cast<Field*>(cityMap.getCase(locTest))->getBuilding()); //Enter doit retourner un bool
+					if(!enter){
+						locTest = Location(col,row-1);
+					}
+				}
+			}
+			if(!enter){
+				if(dynamic_cast<Field*>(cityMap.getCase(locTest))->hasBuilding()){
+					enter = cityMap.getVisitor(i)->enter(dynamic_cast<Field*>(cityMap.getCase(locTest))->getBuilding()); //Enter doit retourner un bool
+				}
+			}
 		}
-		else if((typeid(map.getCase(locTest)) == typeid(test)) and not enter){
-			locTest.setCol(col-1);
-		}		
-		else if((typeid(map.getCase(locTest)) == typeid(test)) and not enter){
-			locTest.setCol(col);
-			locTest.setRow(row+1);
-		}		
-		else if((typeid(map.getCase(locTest)) == typeid(test)) and not enter){
-			locTest.setCol(col);
-			locTest.setRow(row-1);
-		}
-		*/
-	//}
+	}*/
 }
 
 void CityUpdater::updateCity(){
