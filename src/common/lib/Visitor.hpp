@@ -8,6 +8,8 @@
 #include "Location.hpp"
 //#include "BuildingType.hpp"
 
+#include <iostream>
+
 class Visitor{
 	Location currentLocation;
 	std::vector<Location> path;
