@@ -2,14 +2,16 @@
 #define SPAWN_HPP_
 
 #include "Road.hpp"
+#include "Visitor.hpp"
 
 class Spawn{
-	Road* spawnPoint;
+	protected:
+		Location spawnPoint;
 	public:
-		Road* getSpawnPoint(){return spawnPoint;};
+		Location getSpawnPoint(){return spawnPoint;};
         virtual ~Spawn() = default;
-        virtual Visitor* spawn() = 0;
-        virtual void despawn(Visitor*) = 0;
+        //virtual Visitor* spawn() = 0;
+        //virtual void despawn(Visitor*) = 0;
 };
 
 #endif // SPAWN_HPP_

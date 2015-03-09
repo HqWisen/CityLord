@@ -11,7 +11,7 @@
 
 class CityUpdater : public Thread{
 	Map<Field>* map;
-	//std::vector<Location> spawn;  //=map.getListSpawn
+	std::vector<Spawn*> spawn = map->getSpawnList();  //=map.getListSpawn
 	public:
 		CityUpdater(Map<Field>*);
 		void run() override;

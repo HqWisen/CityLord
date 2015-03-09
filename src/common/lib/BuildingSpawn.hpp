@@ -6,10 +6,11 @@
 
 class BuildingSpawn : public Case, public Spawn{
 	public:
-		BuildingSpawn(Road*);
+		BuildingSpawn(Location, Location);
+        std::string print() override;
 		~BuildingSpawn() = default;
-		Visitor* spawn() override;
-		void despawn(Visitor*) override;
+		//Location spawn() override;
+		//void despawn(Visitor*) override;
 };
 
 #endif // BUILDINGSPAWN_HPP_

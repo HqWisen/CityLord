@@ -27,9 +27,9 @@ std::vector<Location> CityUpdater::creatWay(){
 
 void CityUpdater::generateVisitors(){
 	std::cout<<"test"<<std::endl;
-    //int size = spawn.size();
-    //int luck = rand() %  (size-1);
-    Location newLocation;   // = spawn[luck];
+    int size = spawn.size();
+    int luck = rand() %  (size-1);
+    Location newLocation = spawn[luck]->getSpawnPoint();
     Visitor* newVisitor = new Visitor(newLocation);
     std::vector<Location> newWay = creatWay();
     newVisitor->setPath(newWay);
