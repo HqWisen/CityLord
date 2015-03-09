@@ -26,8 +26,8 @@ class Building {
 		~Building() = default;
 		int getLevel();
 		BuildingType getType();
-		int getPrice(){return price;};
-		int getDestructionCost(){return destructionCost;};
+		int getPrice(){return this->price;};
+		int getDestructionCost(){return this->destructionCost;};
 		void upgrade();
 		bool addVisitor();
 		void removeVisitor();
