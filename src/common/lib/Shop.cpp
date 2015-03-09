@@ -6,6 +6,7 @@
 using namespace std;
 
 Shop::Shop(int lvl){
+	//type="Shop";
 	level = lvl;
 	visitorCounter = 0;
 	maxCapacity = 40;

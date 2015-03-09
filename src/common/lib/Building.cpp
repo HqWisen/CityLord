@@ -33,6 +33,15 @@ BuildingType Building::getType(){
 	return type;
 }
 
+/*void Building::upgrade(){
+	maxCapacity += (maxCapacity/2);
+	income += (income/2);
+	attractiveness += (attractiveness/2);
+	dailyCost += (dailyCost/1.75);
+	level += 1;
+	destructionCost += (destructionCost/2);
+}*/
+
 void Building::upgrade(){
 	maxCapacity += type.maxCapacity;
 	income += type.income;
