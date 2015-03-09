@@ -16,7 +16,7 @@ class BasicField : public Case{
         BasicField(Location);
         virtual ~BasicField() = default;
         string print() override;
-        void buildBuilding(BuildingType);
+        void buildBuilding(BuildingType, int level = 1);
         void destroyBuilding();
         int getPrice();
         void setPrice(int);
@@ -31,6 +31,7 @@ class Field : public BasicField{
     Player* owner;
     public:
         Field(Location);
+        ~Field(){destroyBuilding();};
         Player* getOwner();
         void setOwner(Player*);
         string toString();
@@ -42,6 +43,7 @@ class ClientField : public BasicField{
     int ownerid = -1;
     public:
         ClientField(Location);
+        ~ClientField(){destroyBuilding();};
         void setOwnerID(int);
         int getOwnerID() override;
         bool hasOwner() override;

@@ -62,13 +62,15 @@ string BasicField::print(){
     }
 }
 
-void BasicField::buildBuilding(BuildingType buildingType){
-    building = new Building(buildingType);
+void BasicField::buildBuilding(BuildingType buildingType, int level){
+    building = new Building(buildingType, level);
 }
 
 void BasicField::destroyBuilding(){
-    delete building;
-    building = nullptr;
+    if (building != nullptr){
+        delete building;
+        building = nullptr;
+    }
 }
 
 void BasicField::setPrice(int amount){

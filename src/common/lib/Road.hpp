@@ -7,8 +7,9 @@
 typedef const int direction_type;
 
 class Road : public Case{
-    bool directions[4] = {false, false, false, false};
-    std::string image;
+    protected:
+        bool directions[4] = {false, false, false, false};
+        std::string image;
     public:
         static direction_type NORTH, SOUTH, EAST, WEST;
 	public:
