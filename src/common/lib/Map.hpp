@@ -20,13 +20,14 @@
 #include "Road.hpp"
 #include "Field.hpp"
 #include "Obstacle.hpp"
+#include "Visitor.hpp"
 
 using namespace std;
 
 template <typename FieldType>
 class Map{
-    //Visitor* visitorList;
-    int visitorMax = 50;
+	int visitorMax = 50;
+    Visitor** visitorList;
     int numberOfRows;
     int numberOfCols;
     Case*** caseMatrix;
@@ -40,6 +41,12 @@ class Map{
         int getNumberOfCols();
         void display();
         Case* getCase(Location);
+        void addVisitor(Visitor*);
+        void deleteVisitor(int);
+        Visitor* getVisitor(int);
+        int getMaxVisitors();
+        bool isFull();
+        
 
 
 /*      string getMapString();
@@ -64,6 +71,14 @@ Map<FieldType>::Map(string fileName){
             caseMatrix[i][j] = nullptr;
         }
     }
+    
+    //----------------------------------------- Liste des visiteurs  --------------------------
+    
+    visitorList = new Visitor*[visitorMax];
+    for(int k=0; k<visitorMax; k++){
+		visitorList[k] = nullptr;
+	}
+	
     //----------------------------------------------- Parseur  --------------------------------
     Road* road;
     for (int row=0; row<((numberOfRows*2)+1); row++) { //par ligne
@@ -235,6 +250,53 @@ template <typename FieldType>
 Case* Map<FieldType>::getCase(Location location){
     return caseMatrix[location.getRow()][location.getCol()];
 }
+
+template <typename FieldType>
+void Map<FieldType>::addVisitor(Visitor* newVisitor){
+	int i = 0;
+	bool spaceFound = false;
+	while(i<visitorMax && !spaceFound){
+		if(visitorList[i] == nullptr){
+			spaceFound = true;
+			visitorList[i] = newVisitor;
+		}
+		i++;
+	}
+}
+
+template <typename FieldType>
+void Map<FieldType>::deleteVisitor(int index){
+	if(index<visitorMax && index>=0){
+		if(visitorList[index] != nullptr){
+			delete visitorList[index];
+			visitorList[index] == nullptr;
+		}
+	}
+}
+
+template <typename FieldType>
+Visitor* Map<FieldType>::getVisitor(int index){
+	return visitorList[index];
+}
+
+template <typename FieldType>
+int	Map<FieldType>::getMaxVisitors(){
+	return visitorMax;
+}
+
+/*template <typename FieldType>
+bool Map<FieldType>::isFull(){
+	int numberOfVisitors = 0;
+	for(int i=0; i<visitorMax; i++){
+		if(visitorList[i] != nullptr){
+			numberOfVisitors++;
+		}
+	}
+	if(numberOfVisitors==visitorMax){
+		return true;
+	return false;
+	return true;
+}*/
 
 #endif // MAP_HPP_
 
