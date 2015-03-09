@@ -16,12 +16,8 @@ class BasicField : public Case{
         BasicField(Location);
         virtual ~BasicField() = default;
         string print() override;
-<<<<<<< HEAD
-        void buildBuilding(BuildingType);
         //void buildBuilding(string);
-=======
         void buildBuilding(BuildingType, int level = 1);
->>>>>>> 2ffe12af283573b5ce2f05a45cdade81a672a9ec
         void destroyBuilding();
         int getPrice();
         void setPrice(int);
