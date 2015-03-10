@@ -1,9 +1,10 @@
 #include "CityUpdater.hpp"
 
-CityUpdater::CityUpdater(Map<Field>* newMap){
+CityUpdater::CityUpdater(Map<Field> newMap){
 	map = newMap;
+	spawn = map.getSpawnList();
     this->start();
-    std::cout<<"testeuh"<<std::endl;
+    //std::cout<<"testeuh"<<std::endl;
 }
 
 void CityUpdater::makeOwnersPay(){
@@ -42,7 +43,7 @@ void CityUpdater::generateVisitors(){
     Visitor* newVisitor = new Visitor(newLocation);
     std::vector<Location> newWay = creatWay(newVisitor);
     newVisitor->setPath(newWay);
-    map->addVisitor(newVisitor);
+    map.addVisitor(newVisitor);
 }
 
 void CityUpdater::updateBuildings(){
@@ -60,42 +61,42 @@ void CityUpdater::updateBuildings(){
 }
 
 void CityUpdater::makeVisitorsAdvance(){	
-	for(int i = 0; i < map->getMaxVisitors(); i++){
-		if(map->getVisitor(i) != nullptr){
-			map->getVisitor(i)->move();
+	for(int i = 0; i < map.getMaxVisitors(); i++){
+		if(map.getVisitor(i) != nullptr){
+			map.getVisitor(i)->move();
 			bool enter = false;
 			Building test;
-			Location loc = map->getVisitor(i)->getLoc();
+			Location loc = map.getVisitor(i)->getLoc();
 			int col = loc.getCol();
 			int row = loc.getRow();
 			Location locTest(col+1,row);
 			/*
 			Utilise la fonction choose de visitor pour voir si il rentre dans le batiment
-			if(dynamic_cast<Field*>(map->getCase(locTest))->hasBuilding()){
-				enter = map->getVisitor(i)->enter(dynamic_cast<Field*>(map->getCase(locTest))->getBuilding()); //Enter doit retourner un bool
+			if(dynamic_cast<Field*>(map.getCase(locTest))->hasBuilding()){
+				enter = map.getVisitor(i)->enter(dynamic_cast<Field*>(map.getCase(locTest))->getBuilding()); //Enter doit retourner un bool
 				if(!enter){
 					locTest = Location(col-1,row);
 				}
 			}
 			if(!enter){
-				if(dynamic_cast<Field*>(map->getCase(locTest))->hasBuilding()){
-					enter = map->getVisitor(i)->enter(dynamic_cast<Field*>(map->getCase(locTest))->getBuilding()); //Enter doit retourner un bool
+				if(dynamic_cast<Field*>(map.getCase(locTest))->hasBuilding()){
+					enter = map.getVisitor(i)->enter(dynamic_cast<Field*>(map.getCase(locTest))->getBuilding()); //Enter doit retourner un bool
 					if(!enter){
 						locTest = Location(col,row+1);
 					}
 				}
 			}
 			if(!enter){
-				if(dynamic_cast<Field*>(map->getCase(locTest))->hasBuilding()){
-					enter = map->getVisitor(i)->enter(dynamic_cast<Field*>(map->getCase(locTest))->getBuilding()); //Enter doit retourner un bool
+				if(dynamic_cast<Field*>(map.getCase(locTest))->hasBuilding()){
+					enter = map.getVisitor(i)->enter(dynamic_cast<Field*>(map.getCase(locTest))->getBuilding()); //Enter doit retourner un bool
 					if(!enter){
 						locTest = Location(col,row-1);
 					}
 				}
 			}
 			if(!enter){
-				if(dynamic_cast<Field*>(map->getCase(locTest))->hasBuilding()){
-					enter = map->getVisitor(i)->enter(dynamic_cast<Field*>(map->getCase(locTest))->getBuilding()); //Enter doit retourner un bool
+				if(dynamic_cast<Field*>(map.getCase(locTest))->hasBuilding()){
+					enter = map.getVisitor(i)->enter(dynamic_cast<Field*>(map.getCase(locTest))->getBuilding()); //Enter doit retourner un bool
 				}
 			}*/
 		}

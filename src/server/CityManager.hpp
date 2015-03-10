@@ -40,6 +40,7 @@ class CityManager{
 
     std::string mapname;
     Map<Field> cityMap;
+    CityUpdater* updater;
 	int id;
     User* creator;
 	Catalog catalog;
