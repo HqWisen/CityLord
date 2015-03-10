@@ -36,7 +36,6 @@ std::vector<Location> CityUpdater::creatWay(Visitor* visitor){
 }
 
 void CityUpdater::generateVisitors(){
-	std::cout<<"test"<<std::endl;
     int size = spawn.size();
     int luck = rand() %  (size-1);
     Location newLocation = spawn[luck]->getSpawnPoint();
@@ -107,6 +106,7 @@ void CityUpdater::updateCity(){
 	generateVisitors();
 	updateBuildings();
 	makeVisitorsAdvance();
+	std::cout<<"Fin updateCity"<<std::endl;
 }
 
 void CityUpdater::run(){

@@ -19,16 +19,15 @@ void Visitor::setPath(std::vector<Location> way){
 
 void Visitor::move(){
 	count += 1;
-		
+	/*
 	if(count-1 > path.size()){
 		delete this;
 	}
 	else{		
 		currentLocation = path[count];
-
 	}
+	*/
 }
-
 
 /*
 void Visitor::moveGUI(){
