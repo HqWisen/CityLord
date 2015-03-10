@@ -85,6 +85,7 @@ Map<FieldType>::Map(string fileName){
     //----------------------------------------------- Parseur  --------------------------------
     Road* road;
     BorderSpawn* spawn;
+    ClientField* field;
     for (int row=0; row<((numberOfRows*2)+1); row++) { //par ligne
         getline(file, tmpString);
         char tmpChar;
@@ -147,8 +148,8 @@ Map<FieldType>::Map(string fileName){
                 }
                 if (player > 47){
                     caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
-                    if (typeid(ClientField) == typeid(FieldType)) {
-                        dynamic_cast<ClientField*>(caseMatrix[row/2][0])->setOwnerID(player-8);
+                    if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))) {
+                        field->setOwnerID(player-8);
                     }
                     dynamic_cast<FieldType*>(caseMatrix[row/2][0])->buildBuilding(type, level);
                 }else {
@@ -165,8 +166,8 @@ Map<FieldType>::Map(string fileName){
                 int player = tmpChar;
                 if (player > 47){
                     caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
-                    if (typeid(ClientField) == typeid(FieldType)) {
-                        dynamic_cast<ClientField*>(caseMatrix[row/2][0])->setOwnerID(player-8);
+                    if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))) {
+                        field->setOwnerID(player-8);
                     }
                 }else {
                     caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
@@ -205,8 +206,8 @@ Map<FieldType>::Map(string fileName){
                     }
                     if (player > 47){
                         caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
-                        if (typeid(ClientField) == typeid(FieldType)) {
-                            dynamic_cast<ClientField*>(caseMatrix[row/2][col])->setOwnerID(player-8);
+                        if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
+                            field->setOwnerID(player-8);
                         }
                         dynamic_cast<FieldType*>(caseMatrix[row/2][col])->buildBuilding(type, level);
                     }else {
@@ -223,8 +224,8 @@ Map<FieldType>::Map(string fileName){
                     int player = tmpChar;
                     if (player > 47){
                         caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
-                        if (typeid(ClientField) == typeid(FieldType)) {
-                            dynamic_cast<ClientField*>(caseMatrix[row/2][col])->setOwnerID(player-8);
+                        if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
+                            field->setOwnerID(player-8);
                         }
                     }else {
                         caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
