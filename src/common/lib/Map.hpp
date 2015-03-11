@@ -54,7 +54,6 @@ class Map{
         void deleteVisitor(int);
         Visitor* getVisitor(int);
         int getMaxVisitors();
-		void deleteVisitor(int);
         bool isFull();
 
 
@@ -383,12 +382,8 @@ void Map<FieldType>::addVisitor(Visitor* newVisitor){
 
 template <typename FieldType>
 void Map<FieldType>::deleteVisitor(int index){
-    if(index<visitorMax && index>=0){
-        if(visitorList[index] != nullptr){
-            delete visitorList[index];
-            visitorList[index] == nullptr;
-        }
-    }
+	delete this->visitorList[index];
+	this->visitorList[index] = nullptr;
 }
 
 template <typename FieldType>
@@ -400,13 +395,6 @@ template <typename FieldType>
 int Map<FieldType>::getMaxVisitors(){
     return visitorMax;
 }
-
-template <typename FieldType>
-void Map<FieldType>::deleteVisitor(int index){
-	delete map.visitorList[i];
-	map.visitorList[i] = nullptr;
-}
-
 
 /*template <typename FieldType>
 bool Map<FieldType>::isFull(){
