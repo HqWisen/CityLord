@@ -4,7 +4,6 @@ CityUpdater::CityUpdater(Map<Field>* map){
     cityMap = map;
     spawn = map->getSpawnList();
     this->start();
-    //std::cout<<"testeuh"<<std::endl;
 }
 
 void CityUpdater::run(){
@@ -15,12 +14,11 @@ void CityUpdater::run(){
         t.start();
         while(true){
             if(t.elapsedTime() < timer) {
-
             }
             else{
                 timer += 10;
                 updateCity();
-                if(timer == 720){  //nouveau jour
+                if(timer == 20){  //nouveau jour
                     makeOwnersPay();
                     timer = 0;
                 }
@@ -32,27 +30,30 @@ void CityUpdater::run(){
 
 
 void CityUpdater::makeOwnersPay(){
-	/*Location currentLocation;
-	for(int i = 0; i<cityMap.getDimensionX(); i++){
-		for(int j = 0; i<cityMap.getDimensionY(); j++){
-			currentLocation = Location(x,y);
-			Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation));
+	std::cout<<"test Make Owner"<<std::endl;
+	/*
+	Location currentLocation;
+	for(int i = 0; i < 10 ; i++){ //cityMap->getDimensionX()
+		for(int j = 0; i < 10; j++){ //cityMap->getDimensionX()
+			currentLocation = Location(i,j);
+			Field* concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation));
 			if(concernedField->hasOwner()){
-				concernedField->getOwner()->setMoney()(concernedField->getOwner()->getMoney() - concernedField->getBuilding()->dailyCost);
+				//concernedField->getOwner()->setMoney()(concernedField->getOwner()->getMoney() - concernedField->getBuilding()->dailyCost);
 			}
 		}
-    }*/
+    }
+    */
 
 }
 
 std::vector<Location> CityUpdater::creatWay(Visitor* visitor){
     std::vector<Location> newLoc;
 	Location previousLoc = visitor->getLoc();
-	//newLoc.insert(visitor->getLoc());
+	newLoc.push_back(previousLoc);
 	bool end = false;
-	bool enter = false;
-	//bool goBack = false;
-	while(!end and !enter){
+	bool goOut = false;
+	bool goBack = false;
+	while(!end and !goOut){
         end = true;
 	}
     return newLoc;
@@ -60,20 +61,13 @@ std::vector<Location> CityUpdater::creatWay(Visitor* visitor){
 }
 
 void CityUpdater::generateVisitors(){
-	std::cout<<"1"<<std::endl;
     int size = spawn.size();
-    std::cout<<"2"<<std::endl;
     int luck = rand() %  (size-1);
-    std::cout<<"3"<<std::endl;
     Spawn* newSpawn = spawn[luck];
-    std::cout<<"4"<<std::endl;
     Location newLocation = newSpawn->getSpawnPoint();
     Visitor* newVisitor = new Visitor(newLocation);
-    std::cout<<"5"<<std::endl;
     std::vector<Location> newWay = creatWay(newVisitor);
-    std::cout<<"6"<<std::endl;
     newVisitor->setPath(newWay);
-    std::cout<<"7"<<std::endl;
     cityMap->addVisitor(newVisitor);
 }
 
