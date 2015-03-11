@@ -56,7 +56,7 @@ void CityUpdater::makeOwnersPay(){
 
 }
 
-std::vector<Location> CityUpdater::creatWay(Visitor* visitor, Location loc){
+std::vector<Location> CityUpdater::creatWay(Visitor* visitor, Location loc, Location previousLoc){
     std::vector<Location> newLoc;	
 	newLoc.push_back(loc);
 	
