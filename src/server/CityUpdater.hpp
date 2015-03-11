@@ -20,7 +20,8 @@ class CityUpdater : public Thread{
         void makeVisitorsAdvance();
         void makeOwnersPay();
         void updateCity();
-        std::vector<Location> creatWay(Visitor*, Location);
+        //std::vector<Location> creatWay(Visitor*, Location);
+        std::vector<Location> creatWay(Location,Location,std::vector<Location>);
 
 };
 

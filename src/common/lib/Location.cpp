@@ -37,3 +37,11 @@ Location Location::parse(std::string source){
     col = std::stoi(source);
     return Location(row, col);
 }
+
+bool Location::isEqual(Location &other){
+    bool res = false;
+    if(this->row==other.getRow() and this->col==other.getCol()){
+        res = true;
+    }
+    return res;
+}

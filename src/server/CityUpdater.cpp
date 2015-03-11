@@ -56,6 +56,7 @@ void CityUpdater::makeOwnersPay(){
 
 }
 
+/*
 std::vector<Location> CityUpdater::creatWay(Visitor* visitor, Location loc){
     std::vector<Location> newLoc;	
 	newLoc.push_back(loc);
@@ -127,15 +128,85 @@ std::vector<Location> CityUpdater::creatWay(Visitor* visitor, Location loc){
 
     return newLoc;	
 }
+*/
+
+std::vector<Location> CityUpdater::creatWay(Location start, Location end, std::vector<Location> path){
+	std::vector<Location> res;
+	int row = start.getRow();
+	int col = start.getCol();
+	if(start.isEqual(end)){res= path;}
+	else{
+		Location next = Location(row,col);
+		if(row+1 < cityMap->getNumberOfRows()){
+			next.setRow(row+1);
+			next.setCol(col);
+			if (path.empty() or !path.back().isEqual(next)){
+				if(dynamic_cast<Road*>(cityMap->getCase(next))){
+					path.push_back(next);
+					res = creatWay(next, end, path);
+					path.pop_back();
+				}
+			}
+		}
+		if(row-1 >= 0){
+			next.setRow(row-1);
+			next.setCol(col);
+			if (path.empty() or !path.back().isEqual(next)){
+				if(dynamic_cast<Road*>(cityMap->getCase(next))){
+					path.push_back(next);
+					res = creatWay(next, end, path);
+					path.pop_back();
+				}
+			}
+		}
+		if(col+1 < cityMap->getNumberOfCols()){
+			next.setRow(row);
+			next.setCol(col+1);
+			if (path.empty() or !path.back().isEqual(next)){
+				if(dynamic_cast<Road*>(cityMap->getCase(next))){
+					path.push_back(next);
+					res = creatWay(next, end, path);
+					path.pop_back();
+				}
+			}
+		}
+		if(col-1 >=0){
+			next.setRow(row);
+			next.setCol(col-1);
+			if (path.empty() or !path.back().isEqual(next)){
+				if(dynamic_cast<Road*>(cityMap->getCase(next))){
+					path.push_back(next);
+					res = creatWay(next, end, path);
+					path.pop_back();
+				}
+			}
+		}
+	}
+	return res;
+}
 
 void CityUpdater::generateVisitors(){
     int size = spawn.size();
     std::cout<<"Taille de la liste de spawn :"<< spawn.size() <<std::endl;
     int luck = rand() %  (size-1);
-    Spawn* newSpawn = spawn[luck];
-    Location newLocation = newSpawn->getSpawnPoint();
-    Visitor* newVisitor = new Visitor(newLocation);
-    std::vector<Location> newWay = creatWay(newVisitor, newLocation);
+    Spawn* startSpawn = spawn[luck];
+    Location startLocation = startSpawn->getSpawnPoint();
+	std::cout<<"First Spawn"<<std::endl;
+    luck = rand() %  (size-1);
+    Spawn* endSpawn = spawn[luck];
+    while(endSpawn==startSpawn){
+    	luck = rand() %  (size-1);
+    	endSpawn = spawn[luck];
+    }
+    Location endLocation = endSpawn->getSpawnPoint();
+    std::cout<<"Second Spawn"<<std::endl;
+    
+    //std::vector<Location> newWay = creatWay(newVisitor, startLocation);
+    std::vector<Location> path;
+    std::vector<Location> newWay = creatWay(startLocation,endLocation,path);
+    std::cout<<"Got Way"<<std::endl;
+
+    Visitor* newVisitor = new Visitor(startLocation);
     std::cout<<"Taille du chemin donné :"<< newWay.size() <<std::endl;
     newVisitor->setPath(newWay);
     cityMap->addVisitor(newVisitor);
