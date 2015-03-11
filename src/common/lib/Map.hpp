@@ -136,8 +136,7 @@ Map<FieldType>::Map(string fileName){
             tmpChar = tmpString.at(2);
             if (tmpChar == 'B') {
                 tmpChar = tmpString.at(1);
-                int playerid = atoi(&tmpChar);
-                cout<<"PLAYERID A = "<<row<<", "<<"0"<<playerid<<endl;
+                int player = tmpChar;
                 tmpChar = tmpString.at(3);
                 int building = (int) tmpChar;
                 BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
@@ -145,10 +144,10 @@ Map<FieldType>::Map(string fileName){
                 if (level == 0){
                     level = 10;
                 }
-                if (playerid < 9){
+                if (player > 47){
                     caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
                     if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))) {
-                        field->setOwnerID(playerid);
+                        field->setOwnerID(player-8);
                     }
                     dynamic_cast<FieldType*>(caseMatrix[row/2][0])->buildBuilding(type, level);
                 }else {
@@ -162,13 +161,11 @@ Map<FieldType>::Map(string fileName){
                 spawnList.push_back(dynamic_cast<BuildingSpawn*>(caseMatrix[row/2][0]));
             }else if (tmpChar == 'F'){
                 tmpChar = tmpString.at(1);
-                int playerid = atoi(&tmpChar);
-
-                cout<<"PLAYERID B = "<<row<<", "<<"0"<<playerid<<endl;
-                if (playerid < 9){
+                int player = tmpChar;
+                if (player > 47){
                     caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
                     if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))) {
-                        field->setOwnerID(playerid);
+                        field->setOwnerID(player-8);
                     }
                 }else {
                     caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
@@ -197,9 +194,7 @@ Map<FieldType>::Map(string fileName){
                 tmpChar = tmpString.at((col*4)+2);
                 if (tmpChar == 'B') {
                     tmpChar = tmpString.at((col*4)+1);
-                    int playerid = atoi(&tmpChar);
-                    cout<<"PLAYERID C = "<<row<<", "<<col<<playerid<<endl;
-
+                    int player = tmpChar;
                     tmpChar = tmpString.at((col*4)+3);
                     int building = (int) tmpChar;
                     BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
@@ -207,10 +202,10 @@ Map<FieldType>::Map(string fileName){
                     if (level == 0){
                         level = 10;
                     }
-                    if (playerid < 9){
+                    if (player > 47){
                         caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
                         if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
-                            field->setOwnerID(playerid);
+                            field->setOwnerID(player-8);
                         }
                         dynamic_cast<FieldType*>(caseMatrix[row/2][col])->buildBuilding(type, level);
                     }else {
@@ -224,13 +219,11 @@ Map<FieldType>::Map(string fileName){
                     spawnList.push_back(dynamic_cast<BuildingSpawn*>(caseMatrix[row/2][col]));
                 }else if (tmpChar == 'F'){
                     tmpChar = tmpString.at(1);
-                    int playerid = atoi(&tmpChar);
-                    cout<<"PLAYERID D = "<<row<<", "<<col<<playerid<<endl;
-
-                    if (playerid < 9){
+                    int player = tmpChar;
+                    if (player > 47){
                         caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
                         if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
-                            field->setOwnerID(playerid);
+                            field->setOwnerID(player-8);
                         }
                     }else {
                         caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
@@ -279,14 +272,8 @@ void Map<FieldType>::display(){
     string color;
     Road* road;
     FieldType* field;
-    cout<<"    ";
-	for (int col=1; col<=numberOfCols; col++) {
-    	printf( " %3s", (to_string(col)).c_str());
-	}
-	cout<<"\n";
     for (int row=0; row<((numberOfRows*2)+1); row++) {
         if (row == (numberOfRows*2)) {
-			cout<<"    ";
             for (int col=0; col<numberOfCols; col++) {
                 if((road = dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col])) && road->isOpen(Road::SOUTH)){
                     cout<<"+ ║ ";
@@ -296,7 +283,6 @@ void Map<FieldType>::display(){
             }
             cout<<"+"<<endl;
         }else if ((row % 2) == 0) {
-			cout<<"    ";
             for (int col=0; col<numberOfCols; col++) {
                 if((road = dynamic_cast<Road*>(caseMatrix[row/2][col])) && road->isOpen(Road::NORTH)){
                     cout<<"+ ║ ";
@@ -306,7 +292,6 @@ void Map<FieldType>::display(){
             }
             cout<<"+"<<endl;
         }else{
-        	printf( "%3s ", (to_string(row)).c_str());
             for (int col=0; col<numberOfCols; col++) {
                 if(((road = dynamic_cast<Road*>(caseMatrix[row/2][col]))) && road->isOpen(Road::WEST)){
                     cout<<"═";
@@ -381,7 +366,6 @@ Location Map<FieldType>::findSpawnPoint(Location location){
 
 template <typename FieldType>
 string Map<FieldType>::toString(){
-	cout<<"Printing map"<<endl;
     string output = "";
     Road* road;
     output += (to_string(numberOfCols)) + "\n";
@@ -425,7 +409,6 @@ string Map<FieldType>::toString(){
             }
         }
     }
-    cout<<output<<endl;
     return output;
 }
 

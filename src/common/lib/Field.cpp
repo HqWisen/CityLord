@@ -40,7 +40,7 @@ Field::Field(int newColor, Location location, Building* newBuilding) : Case(loca
 */
 
 string BasicField::print(){
-    string ownerStr = "9";
+    string ownerStr = " ";
     if (hasOwner()){
         ownerStr = to_string(getOwnerID());
     }

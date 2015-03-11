@@ -182,12 +182,9 @@ void CityLordClient::joinCity(){
         }else{
             fail = false;
             //map = new Map<ClientField>(answer.get("filename"));
-            std::cout<<answer.get("mapstring")<<std::endl;
             std::string path = "src/resources/tmp/out.txt";
             Map<ClientField>::parseMap(path, answer.get("mapstring"));
             map = new Map<ClientField>(path);
-            map->display();
-
         }
     }
 }
