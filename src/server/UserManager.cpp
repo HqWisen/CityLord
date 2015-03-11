@@ -33,9 +33,15 @@ void UserManager::run(){
 		sendAnswer(answer);
 		recvRequest(request);
 	}
-    user->getPlayer(cityManager)->setConnected(false);
-    user->getPlayer(cityManager)->setUserManager(nullptr);
-    setActiveCity(nullptr);
+    disconnectUser();
+}
+
+void UserManager::disconnectUser(){
+    if(user != nullptr && cityManager != nullptr){
+        user->getPlayer(cityManager)->setConnected(false);
+        user->getPlayer(cityManager)->setUserManager(nullptr);
+        setActiveCity(nullptr);
+    }
     server->LOG("User '"+getUserName()+"' with IP "+clientSocket.getClientIP()+" is now disconnected.");
 }
 

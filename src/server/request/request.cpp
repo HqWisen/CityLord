@@ -82,7 +82,7 @@ namespace request{
             cityManager->addPlayer(userManager->getActivePlayer());
             server->LOG("User " + userManager->getUserName() + " joined the city "+cityManager->getName());
             answer.setTopic("success");
-            answer.set("filename", cityManager->getMapFileName());
+            answer.set("mapstring", cityManager->getMap()->toString());
         }else{
             answer.setTopic("failure");
             answer.set("reason", "The city "+cityManager->getName()+" is full.");

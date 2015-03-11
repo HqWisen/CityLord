@@ -136,7 +136,8 @@ Map<FieldType>::Map(string fileName){
             tmpChar = tmpString.at(2);
             if (tmpChar == 'B') {
                 tmpChar = tmpString.at(1);
-                int player = tmpChar;
+                int playerid = atoi(&tmpChar);
+                cout<<"PLAYERID A = "<<row<<", "<<"0"<<playerid<<endl;
                 tmpChar = tmpString.at(3);
                 int building = (int) tmpChar;
                 BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
@@ -144,10 +145,10 @@ Map<FieldType>::Map(string fileName){
                 if (level == 0){
                     level = 10;
                 }
-                if (player > 47){
+                if (playerid < 9){
                     caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
                     if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))) {
-                        field->setOwnerID(player-8);
+                        field->setOwnerID(playerid);
                     }
                     dynamic_cast<FieldType*>(caseMatrix[row/2][0])->buildBuilding(type, level);
                 }else {
@@ -161,11 +162,13 @@ Map<FieldType>::Map(string fileName){
                 spawnList.push_back(dynamic_cast<BuildingSpawn*>(caseMatrix[row/2][0]));
             }else if (tmpChar == 'F'){
                 tmpChar = tmpString.at(1);
-                int player = tmpChar;
-                if (player > 47){
+                int playerid = atoi(&tmpChar);
+
+                cout<<"PLAYERID B = "<<row<<", "<<"0"<<playerid<<endl;
+                if (playerid < 9){
                     caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
                     if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))) {
-                        field->setOwnerID(player-8);
+                        field->setOwnerID(playerid);
                     }
                 }else {
                     caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
@@ -194,7 +197,9 @@ Map<FieldType>::Map(string fileName){
                 tmpChar = tmpString.at((col*4)+2);
                 if (tmpChar == 'B') {
                     tmpChar = tmpString.at((col*4)+1);
-                    int player = tmpChar;
+                    int playerid = atoi(&tmpChar);
+                    cout<<"PLAYERID C = "<<row<<", "<<col<<playerid<<endl;
+
                     tmpChar = tmpString.at((col*4)+3);
                     int building = (int) tmpChar;
                     BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
@@ -202,10 +207,10 @@ Map<FieldType>::Map(string fileName){
                     if (level == 0){
                         level = 10;
                     }
-                    if (player > 47){
+                    if (playerid < 9){
                         caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
                         if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
-                            field->setOwnerID(player-8);
+                            field->setOwnerID(playerid);
                         }
                         dynamic_cast<FieldType*>(caseMatrix[row/2][col])->buildBuilding(type, level);
                     }else {
@@ -219,11 +224,13 @@ Map<FieldType>::Map(string fileName){
                     spawnList.push_back(dynamic_cast<BuildingSpawn*>(caseMatrix[row/2][col]));
                 }else if (tmpChar == 'F'){
                     tmpChar = tmpString.at(1);
-                    int player = tmpChar;
-                    if (player > 47){
+                    int playerid = atoi(&tmpChar);
+                    cout<<"PLAYERID D = "<<row<<", "<<col<<playerid<<endl;
+
+                    if (playerid < 9){
                         caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
                         if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
-                            field->setOwnerID(player-8);
+                            field->setOwnerID(playerid);
                         }
                     }else {
                         caseMatrix[row/2][col] = new FieldType(Location(row/2,col));

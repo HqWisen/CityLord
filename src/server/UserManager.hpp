@@ -37,6 +37,7 @@ class UserManager : public Thread{
 		CityManager* getActiveCity();
 		std::string getIP();
 		std::string getUserName();
+        void disconnectUser();
 		void recvRequest(SocketMessage&);
 		void sendAnswer(SocketMessage);
         void sendUpdate(SocketMessage);
