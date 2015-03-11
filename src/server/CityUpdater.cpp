@@ -65,7 +65,7 @@ std::vector<Location> CityUpdater::creatWay(Visitor* visitor, Location loc){
 
 	row += 1;
 	loc.setRow(row);	
-	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
+	if( (dynamic_cast<Road*>(cityMap->getCase(loc))) and row>=0 and row<cityMap->getNumberOfRows() and col>=0 and col<cityMap->getNumberOfCols()){
 		std::cout<<"1"<<std::endl;
 		std::vector<Location> newAdd = creatWay(visitor ,loc);
 		unsigned count = 0;
@@ -80,7 +80,7 @@ std::vector<Location> CityUpdater::creatWay(Visitor* visitor, Location loc){
 
 	row -= 2;
 	loc.setRow(row);	
-	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
+	if(dynamic_cast<Road*>(cityMap->getCase(loc)) and row>=0 and row<cityMap->getNumberOfRows() and col>=0 and col<cityMap->getNumberOfCols()){
 		std::cout<<"2"<<std::endl;
 		std::vector<Location> newAdd = creatWay(visitor ,loc);
 		unsigned count = 0;
@@ -97,7 +97,7 @@ std::vector<Location> CityUpdater::creatWay(Visitor* visitor, Location loc){
 	loc.setRow(row);
 	col +=1;
 	loc.setCol(col);	
-	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
+	if(dynamic_cast<Road*>(cityMap->getCase(loc)) and row>=0 and row<cityMap->getNumberOfRows() and col>=0 and col<cityMap->getNumberOfCols()){
 		std::cout<<"3"<<std::endl;
 		std::vector<Location> newAdd = creatWay(visitor ,loc);
 		unsigned count = 0;
@@ -112,7 +112,7 @@ std::vector<Location> CityUpdater::creatWay(Visitor* visitor, Location loc){
 
 	col-=2;
 	loc.setCol(col);	
-	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
+	if(dynamic_cast<Road*>(cityMap->getCase(loc)) and row>=0 and row<cityMap->getNumberOfRows() and col>=0 and col<cityMap->getNumberOfCols()){
 		std::cout<<"4"<<std::endl;
 		std::vector<Location> newAdd = creatWay(visitor ,loc);
 		unsigned count = 0;
@@ -170,13 +170,13 @@ void CityUpdater::makeVisitorsAdvance(){
 			int row = loc.getRow();
 			Location locTest(col+1,row);
 			/*
-			Utilise la fonction choose de visitor pour voir si il rentre dans le batiment
+			
 			if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
 				enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
 				if(!enter){
 					locTest = Location(col-1,row);
 				} else {
-					enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap.getCase(locTest))->getBuilding());
+					enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
 					if(!enter){
 						locTest = Location(col-1,row);
 					}
