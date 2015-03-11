@@ -8,19 +8,23 @@ CityUpdater::CityUpdater(Map<Field>* map){
 
 void CityUpdater::run(){
     bool stop = false;
-    while(not stop){
-        unsigned long timer = 10;
-        Timer t;
-        t.start();
+    unsigned long timer = 10;
+    Timer t;
+    t.start();
+    while(not stop){ 
         while(true){
             if(t.elapsedTime() < timer) {
             }
             else{
                 timer += 10;
                 updateCity();
-                if(timer == 20){  //nouveau jour
-                    makeOwnersPay();
-                    timer = 0;
+                if(t.elapsedTime() < 20){  //nouveau jour
+                    
+                }
+                else{
+                	makeOwnersPay();
+                    t.start();
+                    timer = 10;
                 }
             }
         }
@@ -30,7 +34,6 @@ void CityUpdater::run(){
 
 
 void CityUpdater::makeOwnersPay(){
-<<<<<<< HEAD
 	std::cout<<"test Make Owner"<<std::endl;
 	/*
 	Location currentLocation;
