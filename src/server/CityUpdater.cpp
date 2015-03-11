@@ -33,10 +33,10 @@ void CityUpdater::run(){
 
 void CityUpdater::makeOwnersPay(){
 	/*Location currentLocation;
-	for(int i = 0; i<cityMap.getDimensionX(); i++){
-		for(int j = 0; i<cityMap.getDimensionY(); j++){
-			currentLocation = Location(x,y);
-			Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation));
+	for(int col = 0; col<cityMap->getCol(); col++){
+		for(int row = 0; row<cityMap->getRow(); row++){
+			currentLocation = Location(col,row);
+			Field* concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation));
 			if(concernedField->hasOwner()){
 				concernedField->getOwner()->setMoney()(concernedField->getOwner()->getMoney() - concernedField->getBuilding()->dailyCost);
 			}
@@ -79,10 +79,10 @@ void CityUpdater::generateVisitors(){
 
 void CityUpdater::updateBuildings(){
     /*Location currentLocation;
-	for(int i = 0; i<cityMap.getDimensionX(); i++){
-		for(int j = 0; i<cityMap.getDimensionY(); j++){
-			currentLocation = Location(x,y);
-			Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation));
+	for(int col = 0; col<cityMap->getCol(); col++){
+		for(int row = 0; row<cityMap->getRow(); row++){
+			currentLocation = Location(col,row);
+			Field* concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation));
 			if(concernedField->hasBuilding()){;
 				concernedField->getBuilding()->removeVisitor();
 			}
@@ -92,77 +92,69 @@ void CityUpdater::updateBuildings(){
 }
 
 void CityUpdater::makeVisitorsAdvance(){	
-<<<<<<< HEAD
-	for(int i = 0; i < map.getMaxVisitors(); i++){
-		if(map->getVisitor(i) != nullptr){
-			map->getVisitor(i)->move();
-			bool enter = false;
-			Building test;
-			Location loc = map->getVisitor(i)->getLoc();
-=======
+
 	for(int i = 0; i < cityMap->getMaxVisitors(); i++){
 		if(cityMap->getVisitor(i) != nullptr){
 			cityMap->getVisitor(i)->move();
 			bool enter = false;
 			Building test;
 			Location loc = cityMap->getVisitor(i)->getLoc();
->>>>>>> 62ef8da56d7f2e763ba972f666e1cf316a7ad119
 			int col = loc.getCol();
 			int row = loc.getRow();
 			Location locTest(col+1,row);
 			/*
 			Utilise la fonction choose de visitor pour voir si il rentre dans le batiment
-			if(dynamic_cast<Field*>(map->getCase(locTest))->hasBuilding()){
-				enter = map->getVisitor(i)->choose(dynamic_cast<Field*>(map->getCase(locTest))->getBuilding());
+			if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+				enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
 				if(!enter){
 					locTest = Location(col-1,row);
 				} else {
-					enter = map->getVisitor(i)->enter(dynamic_cast<Field*>(map.getCase(locTest))->getBuilding());
+					enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap.getCase(locTest))->getBuilding());
 					if(!enter){
 						locTest = Location(col-1,row);
 					}
 					else{
-						map->deleteVisitor(i);
+						cityMap->deleteVisitor(i);
 					}
 				}
 			}
 			if(!enter){
-				if(dynamic_cast<Field*>(map->getCase(locTest))->hasBuilding()){
-					enter = map->getVisitor(i)->choose(dynamic_cast<Field*>(map->getCase(locTest))->getBuilding());
+				if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+					enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
 					if(!enter){
 						locTest = Location(col,row+1);
 					} else {
-						enter = map->getVisitor(i)->enter(dynamic_cast<Field*>(map->getCase(locTest))->getBuilding());
+						enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
 						if(!enter){
 							locTest = Location(col,row+1);
 						} else {
-							map->deleteVisitor(i);
+							cityMap->deleteVisitor(i);
 						}
 					}
 				}
 			}
 			if(!enter){
-				if(dynamic_cast<Field*>(map->getCase(locTest))->hasBuilding()){
-					enter = map->getVisitor(i)->choose(dynamic_cast<Field*>(map->getCase(locTest))->getBuilding());
+				if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+					enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
 					if(!enter){
 						locTest = Location(col,row-1);
 					} else {
-						enter = map->getVisitor(i)->enter(dynamic_cast<Field*>(map->getCase(locTest))->getBuilding());
+						enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
 						if(!enter){
 							locTest = Location(col,row-1);
 						} else {
-							map->deleteVisitor(i);
+							cityMap->deleteVisitor(i);
 						}
 					}
 				}
 			}
 			if(!enter){
-				if(dynamic_cast<Field*>(map->getCase(locTest))->hasBuilding()){
-					enter = map.getVisitor(i)->choose(dynamic_cast<Field*>(map->getCase(locTest))->getBuilding());
+				if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+					enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
 					if(enter){
-						enter = map->getVisitor(i)->enter(dynamic_cast<Field*>(map->getCase(locTest))->getBuilding());
+						enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
 						if(enter){
-							map->deleteVisitor(i);
+							cityMap->deleteVisitor(i);
 					}
 				}
             }*/
