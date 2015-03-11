@@ -2,7 +2,7 @@
 
 # -- client
 CLIENT = citylord
-DEPC = client socket lib
+DEPC = client socket lib update thread
 
 # -- server
 SERVER = citylordserver
@@ -60,6 +60,8 @@ $(BIN_DIR)/server.a:
 	$(MAKE) -C src/server
 $(BIN_DIR)/request.a:
 	$(MAKE) -C src/server/request
+$(BIN_DIR)/update.a:
+	$(MAKE) -C src/client/update
 $(BIN_DIR)/test.a:
 	$(MAKE) -C src/test
 cleanexe:

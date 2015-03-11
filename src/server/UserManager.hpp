@@ -2,6 +2,7 @@
 #define USERMANAGER_HPP_
 
 #include "../common/socket/ClientSocket.hpp"
+#include "../common/socket/ServerSocket.hpp"
 #include "../common/socket/SocketMessage.hpp"
 #include "../common/thread/Thread.hpp"
 #include "request/request.hpp"
@@ -22,10 +23,11 @@ class UserManager : public Thread{
 
     CityLordServer* server = nullptr;
     ClientSocket clientSocket;
+    ClientSocket* updateSocket;
     User* user = nullptr;
     CityManager* cityManager = nullptr;
 	public:
-		UserManager(CityLordServer*, ClientSocket);
+        UserManager(CityLordServer*, ClientSocket, ServerSocket);
 		void run() override;
 		void setUser(User*);
         User* getUser();
@@ -37,6 +39,7 @@ class UserManager : public Thread{
 		std::string getUserName();
 		void recvRequest(SocketMessage&);
 		void sendAnswer(SocketMessage);
+        void sendUpdate(SocketMessage);
 };
 
 #endif // USERMANAGER_HPP_

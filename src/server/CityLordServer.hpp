@@ -16,7 +16,9 @@
 #define SERVERNAME "CityLordServer"
 
 class CityLordServer{
-	ServerSocket serverSocket;
+    int port;
+    ServerSocket serverSocket;
+    ServerSocket updateClientSocket;
 	std::map<std::string, User> userMap;
 	static const std::vector<std::string> mapNameVector;
 	std::vector<CityManager*> cityManagerVector;
@@ -26,6 +28,7 @@ class CityLordServer{
 	public:
 		CityLordServer(int port);
 		CityLordServer(const CityLordServer&) = default;
+        ~CityLordServer();
 		void run();
         User* createAccount(std::string, std::string);
 		bool accountExist(std::string);
@@ -34,6 +37,7 @@ class CityLordServer{
 		CityManager* getCity(int);
 		int getNumberOfCity();
 		User* getUser(std::string);
+        int getPort();
 		void LOG(std::string);
 		static const std::vector<std::string>& getMapNameVector();
 

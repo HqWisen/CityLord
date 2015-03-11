@@ -90,21 +90,13 @@ namespace request{
 		return answer;
 	}
 
-	SocketMessage mapsize(CityLordServer* server, UserManager* userManager, SocketMessage message){
-		SocketMessage answer;
-        Map<Field>* map = userManager->getActiveCity()->getMap();
-        answer.set("x", std::to_string(map->getNumberOfCols()));
-        answer.set("y", std::to_string(map->getNumberOfRows()));
-		return answer;
-	}
-
 	SocketMessage selectfield(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
         Map<Field>* map = userManager->getActiveCity()->getMap();
-		int x = std::stoi(message.get("x"));
-		int y = std::stoi(message.get("y"));
+        int row = std::stoi(message.get("row"));
+        int col = std::stoi(message.get("col"));
         Field* field;
-        if((field = dynamic_cast<Field*>(map->getCase(Location(x, y))))){
+        if((field = dynamic_cast<Field*>(map->getCase(Location(row, col))))){
             if(field->getOwner() == userManager->getActivePlayer()){
 				answer.setTopic("owner");
 			}else if(field->getOwner() == nullptr){
@@ -132,7 +124,7 @@ namespace request{
 
 	SocketMessage showcatalog(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		std::vector<Field*> fieldVector = userManager->getActiveCity()->getPurchasableFields();
+        std::vector<Field*> fieldVector = userManager->getActiveCity()->getPurchasableFields();
 		int i = 0;
 		for (std::vector<Field*>::iterator it = fieldVector.begin(); it != fieldVector.end(); it++){
             answer.set((*it)->getLocation().toString(), (*it)->toString());
@@ -143,11 +135,11 @@ namespace request{
 
 	SocketMessage buy(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
-		int x = std::stoi(message.get("x"));
-		int y = std::stoi(message.get("y"));
+        int row = std::stoi(message.get("row"));
+        int col = std::stoi(message.get("col"));
 		CityManager* cityManager = userManager->getActiveCity();
 		Player* player = userManager->getActivePlayer();
-		answer = cityManager->makePurchase(player, Location(x, y));
+        answer = cityManager->makePurchase(player, Location(row, col));
 		return answer;
 	}
 	

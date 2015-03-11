@@ -2,15 +2,17 @@
 #include <string>
 #include <map>
 
-#include "../common/lib/Map.hpp"
+#include "../common/lib/Location.hpp"
 
 int main(){
 	/* main de test */
 	std::cout<<">>> Beginning test <<<"<<std::endl;
-    Map map("src/resources/maps/Citytown.txt");
-    std::cout<<map.getNumberOfRows()<<std::endl;
-    std::cout<<map.getNumberOfCols()<<std::endl;
-    map.display();
+    Location location(267,852);
+    std::string source = location.toString();
+    Location parsed = Location::parse(source);
+    std::cout<<parsed.getRow()<<std::endl;
+    std::cout<<parsed.getCol()<<std::endl;
+
     return 0;
 
 }

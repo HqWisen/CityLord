@@ -2,6 +2,7 @@
 #define LOCATION_HPP_
 
 #include <string>
+#include <iostream>
 
 class Location{
     int row, col;
@@ -17,6 +18,7 @@ class Location{
         void setRow(int);
         void setCol(int);
 		std::string toString();
+        static Location parse(std::string);
 
 };
 

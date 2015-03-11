@@ -5,7 +5,12 @@ const std::vector<std::string> CityLordServer::mapNameVector = {
     "ROADRED"
 };
 
-CityLordServer::CityLordServer(int port) : serverSocket(port){}
+CityLordServer::CityLordServer(int port_) : port(port_), serverSocket(port), updateClientSocket(port+1){}
+
+CityLordServer::~CityLordServer(){
+    // TODO Implement (delete usermanger and citymanager)
+}
+
 
 void CityLordServer::run(){
 	
@@ -13,13 +18,15 @@ void CityLordServer::run(){
 	
 	LOG("Server is running...");
 	serverSocket.listenClients();
+    updateClientSocket.listenClients();
 	while(true){
 		clientSocketPtr = serverSocket.acceptClient();
 		LOG("A client with IP " + clientSocketPtr->getClientIP() + " is connected to " + SERVERNAME);
 		// TODO désalloué quand un client se deconnecte
-		new UserManager(this, *clientSocketPtr);
+        new UserManager(this, *clientSocketPtr, updateClientSocket);
 	}
 }
+
 
 User* CityLordServer::createAccount(std::string username, std::string password){
 	if(!accountExist(username)){
@@ -56,6 +63,10 @@ int CityLordServer::getNumberOfCity(){
 
 User* CityLordServer::getUser(std::string username){
 	return &(userMap[username]);
+}
+
+int CityLordServer::getPort(){
+    return port;
 }
 
 void CityLordServer::LOG(std::string info){

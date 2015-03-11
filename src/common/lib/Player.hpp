@@ -9,6 +9,7 @@
 using namespace std;
 
 class Field;
+class UserManager;
 
 class Player{
 
@@ -20,6 +21,8 @@ class Player{
 	vector<Field*> fieldVector;
 	//City* city;
 	string nickname;
+    bool connected;
+    UserManager* userManager;
 public:
     static const string COLOR[8];
 public:
@@ -33,6 +36,10 @@ public:
     void addField(Field*);
 	void buildBuilding();
 	void destroyBuilding();
+    bool isConnected();
+    void setConnected(bool);
+    UserManager* getUserManager();
+    void setUserManager(UserManager*);
 	
 	/*void createBuilding();
 	void removeBuilding();

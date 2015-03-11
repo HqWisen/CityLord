@@ -2,6 +2,7 @@
 #include <sstream>
 
 #include "Player.hpp"
+#include "../../server/UserManager.hpp"
 
 using namespace std;
 
@@ -56,6 +57,23 @@ void Player::buildBuilding(){
 void Player::destroyBuilding(){
 	nBuilding--;
 }
+
+bool Player::isConnected(){
+    return connected;
+}
+
+void Player::setConnected(bool c){
+    connected = c;
+}
+
+UserManager* Player::getUserManager(){
+    return userManager;
+}
+
+void Player::setUserManager(UserManager* um){
+    userManager = um;
+}
+
 
 /*
 //bool Player::isBankrupt(){return money<0;}

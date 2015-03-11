@@ -15,13 +15,10 @@ class Catalog{
 		Catalog() = default;
 		void putOnMarket(Field*);
 		bool isOnMarket(Field*);
-		std::vector<Field*> getPurchasableFields();
 		void give(Field*, Player*);
+        std::vector<Field*> getPurchasableFields();
+
 };
-	/*void getOffer(Player,Field*,int);
-	void acceptOffer(Player,Field*,int);
-	
-};
-*/
+
 #endif // CATALOG_HPP_
 

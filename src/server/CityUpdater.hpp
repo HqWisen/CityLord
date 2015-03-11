@@ -10,11 +10,11 @@
 
 
 class CityUpdater : public Thread{
-	Map<Field> map;
-	std::vector<Spawn*> spawn;  //=map.getListSpawn
+    Map<Field>* map;
+    std::vector<Spawn*> spawn;
 	public:
-		CityUpdater(Map<Field>);
-		void run() override;
+        CityUpdater(Map<Field>*);
+        void run() override;
         void generateVisitors();
         void updateBuildings();
         void makeVisitorsAdvance();

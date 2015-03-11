@@ -22,7 +22,18 @@ void Location::setCol(int c){
 std::string Location::toString(){
 	std::string result;
 	result +="(";
-    result += "row="+std::to_string(row)+", ";
-    result += "col="+std::to_string(col)+")";
+    result += std::to_string(row)+",";
+    result += std::to_string(col)+")";
 	return result;
+}
+
+Location Location::parse(std::string source){
+    int row, col;
+    int index;
+    index = source.find(",");
+    row = std::stoi(source.substr(1, index-1));
+    source.erase(0, index+1);
+    source.erase(source.size()-1, source.size());
+    col = std::stoi(source);
+    return Location(row, col);
 }

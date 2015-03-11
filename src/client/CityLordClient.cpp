@@ -1,11 +1,20 @@
 #include "CityLordClient.hpp"
 
-CityLordClient::CityLordClient(char* hostname, int port) : connectionSocket(hostname, port), map(nullptr){}
+#include <stdexcept>
+
+CityLordClient::CityLordClient(char* hostname, int port) : connectionSocket(hostname, port), updateSocket(hostname, port+1), map(nullptr), updater(nullptr){}
 
 void CityLordClient::run(){
-	SocketMessage quitRequest("quit");
+    SocketMessage updateMessage, quitRequest("quit");
 	connectionSocket.connectHost();
-	LOG("Welcome in CityLord !");
+    recvAnswer(updateMessage);
+    if(updateMessage.getTopic() == "update"){
+        updateSocket.connectHost();
+    }else{
+        throw std::invalid_argument("Cannot connect the user updater.");
+    }
+    updater = new Updater(this, updateSocket);
+    LOG("Welcome in CityLord !");
 	beginConnection();
 	chooseCity();
 	bool disconnected = false;
@@ -43,6 +52,7 @@ void CityLordClient::run(){
 
 CityLordClient::~CityLordClient(){
     delete map;
+    delete updater;
 }
 
 void CityLordClient::beginConnection(){
@@ -182,25 +192,20 @@ void CityLordClient::showMap(){
 
 void CityLordClient::selectField(){
 	SocketMessage request;
-	SocketMessage answer; //la réponse doit etre l'appartenance de la parcelle
-	request.setTopic("mapsize");
-	sendRequest(request);
-	recvAnswer(answer);
-	int dimx = std::stoi(answer.get("x"));
-	int dimy = std::stoi(answer.get("y"));
-	LOG("Choose the col (x dimension)");
-	int cx = makeChoice(1, dimx);
-	LOG("Choose the row (y dimension)");
-	int cy = makeChoice(1, dimy);
+    SocketMessage answer;
+    LOG("Choose the row :");
+    int crow = makeChoice(1, map->getNumberOfRows());
+    LOG("Choose the column :");
+    int ccol = makeChoice(1, map->getNumberOfCols());
 	request.setTopic("selectfield");
-	request.set("x", std::to_string(cx-1));
-	request.set("y", std::to_string(cy-1));
+    request.set("row", std::to_string(crow-1));
+    request.set("col", std::to_string(ccol-1));
     sendRequest(request);
 	recvAnswer(answer);
 	if(answer.getTopic() == "owner"){ 
         std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		std::cout<<"It's your field, what would you want to do ?"<<std::endl;
-		std::cout<<"1 - Build"<<std::endl;
+        /*std::cout<<"1 - Build"<<std::endl;
 		//std::cout<<"2 - Sell"<<std::endl;
 		std::cout<<"2 - Show information"<<std::endl;
 		std::cout<<"3 - Upgrade"<<std::endl;
@@ -237,21 +242,22 @@ void CityLordClient::selectField(){
 			sendRequest(request);
 			recvAnswer(answer);
 			LOG(answer.getTopic() + " - " + answer.get("reason"));
-		}
+        }*/
 	}
 	else if(answer.getTopic() == "other"){ 
-		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-		std::cout<<"It's another player field"<<std::endl;
+        /*std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
+
+        std::cout<<"It's another player field"<<std::endl;
 		std::cout<<"1 - Show information"<<std::endl;
 		std::cout<<"2 - Quit"<<std::endl;
 		int choice = makeChoice(1, 2);
 		if(choice == 1){
 			std::cout<<answer.get("info")<<std::endl;
-		}
+        }*/
 	}
 	else if(answer.getTopic() == "purchasable"){ 
 		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-		std::cout<<"It's a purchasable field"<<std::endl;
+        LOG("This field is free for sale");
 		std::cout<<"1 - Show information"<<std::endl;
 		std::cout<<"2 - Buy"<<std::endl;
 		std::cout<<"3 - Quit"<<std::endl;
@@ -268,7 +274,7 @@ void CityLordClient::selectField(){
 	else{
 		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 		std::cout<<"The field selected is not selectable ! (Tree, road, ...)"<<std::endl;
-	}
+    }
 }
 
 void CityLordClient::build(){ // La parcelle est déjà selectionnée
@@ -325,6 +331,10 @@ int CityLordClient::makeChoice(int min, int max){
 	}
 	return choice;
 } 
+
+Map<ClientField>* CityLordClient::getMap(){
+    return map;
+}
 
 void CityLordClient::LOG(std::string info){
 	time_t now = time(0);

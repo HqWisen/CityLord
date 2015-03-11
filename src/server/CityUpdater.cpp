@@ -1,11 +1,35 @@
 #include "CityUpdater.hpp"
 
-CityUpdater::CityUpdater(Map<Field> newMap){
-	map = newMap;
-	spawn = map.getSpawnList();
+CityUpdater::CityUpdater(Map<Field>* map){
+    cityMap = map;
+    //spawn = map.getSpawnList();
     this->start();
     //std::cout<<"testeuh"<<std::endl;
 }
+
+void CityUpdater::run(){
+    bool stop = false;
+    while(not stop){
+        unsigned long timer = 10;
+        Timer t;
+        t.start();
+        while(true){
+            if(t.elapsedTime() < timer) {
+
+            }
+            else{
+                timer += 10;
+                updateCity();
+                if(timer == 720){  //nouveau jour
+                    makeOwnersPay();
+                    timer = 0;
+                }
+            }
+        }
+    }
+}
+
+
 
 void CityUpdater::makeOwnersPay(){
 	/*Location currentLocation;
@@ -17,21 +41,21 @@ void CityUpdater::makeOwnersPay(){
 				concernedField->getOwner()->setMoney()(concernedField->getOwner()->getMoney() - concernedField->getBuilding()->dailyCost);
 			}
 		}
-    }
-    */
+    }*/
+
 }
 
 std::vector<Location> CityUpdater::creatWay(Visitor* visitor){
-	std::vector<Location> newLoc;
+    std::vector<Location> newLoc;
 	Location previousLoc = visitor->getLoc();
 	//newLoc.insert(visitor->getLoc());
 	bool end = false;
 	bool enter = false;
 	bool goBack = false;
 	while(!end and !enter){
-		end = true;
+        end = true;
 	}
-	return newLoc;
+    return newLoc;
 	
 }
 
@@ -55,8 +79,8 @@ void CityUpdater::updateBuildings(){
 				concernedField->getBuilding()->removeVisitor();
 			}
 		}
-    }
-    */
+    }*/
+
 }
 
 void CityUpdater::makeVisitorsAdvance(){	
@@ -97,7 +121,7 @@ void CityUpdater::makeVisitorsAdvance(){
 				if(dynamic_cast<Field*>(map.getCase(locTest))->hasBuilding()){
 					enter = map.getVisitor(i)->enter(dynamic_cast<Field*>(map.getCase(locTest))->getBuilding()); //Enter doit retourner un bool
 				}
-			}*/
+            }*/
 		}
 	}
 }
@@ -109,25 +133,5 @@ void CityUpdater::updateCity(){
 	std::cout<<"Fin updateCity"<<std::endl;
 }
 
-void CityUpdater::run(){
-	bool stop = false;
-	while(not stop){
-		unsigned long timer = 10;
-		Timer t;
-		t.start();
-		while(true){
-        	if(t.elapsedTime() < timer) {
-     
-        	}
-        	else{
-                timer += 10; 
-				updateCity();
-				if(timer == 720){  //nouveau jour
-					makeOwnersPay();
-					timer = 0;
-				}				
-			}
-		}
-	}
-}
+
 
