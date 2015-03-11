@@ -272,8 +272,14 @@ void Map<FieldType>::display(){
     string color;
     Road* road;
     FieldType* field;
+    cout<<"    ";
+	for (int col=1; col<=numberOfCols; col++) {
+    	printf( " %3s", (to_string(col)).c_str());
+	}
+	cout<<"\n";
     for (int row=0; row<((numberOfRows*2)+1); row++) {
         if (row == (numberOfRows*2)) {
+			cout<<"    ";
             for (int col=0; col<numberOfCols; col++) {
                 if((road = dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col])) && road->isOpen(Road::SOUTH)){
                     cout<<"+ ║ ";
@@ -283,6 +289,7 @@ void Map<FieldType>::display(){
             }
             cout<<"+"<<endl;
         }else if ((row % 2) == 0) {
+			cout<<"    ";
             for (int col=0; col<numberOfCols; col++) {
                 if((road = dynamic_cast<Road*>(caseMatrix[row/2][col])) && road->isOpen(Road::NORTH)){
                     cout<<"+ ║ ";
@@ -292,6 +299,7 @@ void Map<FieldType>::display(){
             }
             cout<<"+"<<endl;
         }else{
+        	printf( "%3s ", (to_string(row)).c_str());
             for (int col=0; col<numberOfCols; col++) {
                 if(((road = dynamic_cast<Road*>(caseMatrix[row/2][col]))) && road->isOpen(Road::WEST)){
                     cout<<"═";
