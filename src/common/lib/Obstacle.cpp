@@ -6,5 +6,5 @@ Obstacle::Obstacle(Location location) : Case(location){
 }
 
 std::string Obstacle::print(){
-	return " ♦ ";
+	return " O ";
 }

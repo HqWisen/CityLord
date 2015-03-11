@@ -55,10 +55,8 @@ class Map{
         Visitor* getVisitor(int);
         int getMaxVisitors();
         bool isFull();
-
-
-/*      string getMapString();
-        static void parseMap(string, string);*/
+		string toString();
+        static void parseMap(string filePath, string map);
 };
 
 template <typename FieldType>
@@ -274,7 +272,6 @@ void Map<FieldType>::display(){
     string color;
     Road* road;
     FieldType* field;
-
     for (int row=0; row<((numberOfRows*2)+1); row++) {
         if (row == (numberOfRows*2)) {
             for (int col=0; col<numberOfCols; col++) {
@@ -366,6 +363,65 @@ Location Map<FieldType>::findSpawnPoint(Location location){
     }
     return location;
 }
+
+template <typename FieldType>
+string Map<FieldType>::toString(){
+	cout<<"Printing map"<<endl;
+    string output = "";
+    Road* road;
+    output += (to_string(numberOfCols)) + "\n";
+    output += (to_string(numberOfRows)) + "\n";
+    for (int row=0; row<((numberOfRows*2)+1); row++) {
+        if (row == (numberOfRows*2)) {
+            for (int col=0; col<numberOfCols; col++) {
+                if((road = dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col])) && road->isOpen(Road::SOUTH)){
+                    output += "+   ";
+                }else {
+                    output += "+---";
+                }
+            }
+            output += "+\n";
+        }else if ((row % 2) == 0) {
+            for (int col=0; col<numberOfCols; col++) {
+                if((road = dynamic_cast<Road*>(caseMatrix[row/2][col])) && road->isOpen(Road::NORTH)){
+                    output += "+   ";
+                }else {
+                    output += "+---";
+                }
+            }
+            output += "+\n";
+        } else {
+            for (int col=0; col<numberOfCols; col++) {
+                if((road = dynamic_cast<Road*>(caseMatrix[row/2][col]))) {
+                	if ((road->isOpen(Road::WEST))) {
+                    	output += "  R ";
+                	}else {
+                		output += "| R ";
+                	}
+                }else {
+					output += "|";
+					output += (caseMatrix[row/2][col])->print();
+                }
+            }
+            if((road = dynamic_cast<Road*>(caseMatrix[row/2][numberOfCols-1])) && road->isOpen(Road::EAST)){
+                output += " \n";
+            }else {
+                output += "|\n";
+            }
+        }
+    }
+    cout<<output<<endl;
+    return output;
+}
+
+template <typename FieldType>
+void Map<FieldType>::parseMap(string filePath, string map){
+    ofstream file (filePath);
+    file << map;
+    file.close();
+}
+
+//=========================================== Visitor ==========================================
 
 template <typename FieldType>
 void Map<FieldType>::addVisitor(Visitor* newVisitor){
