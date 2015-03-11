@@ -40,6 +40,7 @@ public:
     void setConnected(bool);
     UserManager* getUserManager();
     void setUserManager(UserManager*);
+    void gainMoney(int);
 	
 	/*void createBuilding();
 	void removeBuilding();

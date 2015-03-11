@@ -38,6 +38,10 @@ void Player::setMoney(int newMoney){
 	money = newMoney;
 }
 
+void Player::gainMoney(int newMoney){
+	money += newMoney;
+}
+
 void Player::addField(Field* field){
 	fieldVector.push_back(field);
 }

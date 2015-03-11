@@ -34,14 +34,14 @@ void CityUpdater::run(){
 
 
 void CityUpdater::makeOwnersPay(){
-	std::cout<<"test Make Owner"<<std::endl;
+	std::cout<<"test nouveau jour"<<std::endl;
 	/*
 	Location currentLocation;
 	for(int i = 0; i < 10 ; i++){ //cityMap->getDimensionX()
 		for(int j = 0; i < 10; j++){ //cityMap->getDimensionX()
 			currentLocation = Location(i,j);
 =======
-	/*Location currentLocation;
+	Location currentLocation;
 	for(int col = 0; col<cityMap->getCol(); col++){
 		for(int row = 0; row<cityMap->getRow(); row++){
 			currentLocation = Location(col,row);
@@ -56,44 +56,107 @@ void CityUpdater::makeOwnersPay(){
 
 }
 
-std::vector<Location> CityUpdater::creatWay(Visitor* visitor){
-    std::vector<Location> newLoc;
-	Location previousLoc = visitor->getLoc();
-	newLoc.push_back(previousLoc);
-	bool end = false;
-	bool goOut = false;
-	bool goBack = false;
-	while(!end and !goOut){
-        end = true;
-	}
-    return newLoc;
+std::vector<Location> CityUpdater::creatWay(Visitor* visitor, Location loc){
+    std::vector<Location> newLoc;	
+	newLoc.push_back(loc);
 	
+	int row = loc.getRow();
+	int col = loc.getCol();
+
+	row += 1;
+	loc.setRow(row);	
+	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
+		std::cout<<"1"<<std::endl;
+		std::vector<Location> newAdd = creatWay(visitor ,loc);
+		unsigned count = 0;
+		for(unsigned i=0; i < newAdd.size(); i++){
+			newLoc.push_back(newAdd[i]);
+			count += 1;
+		}
+		for(unsigned i=0; i < count; i++){
+			newLoc.pop_back();
+		}
+	}
+
+	row -= 2;
+	loc.setRow(row);	
+	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
+		std::cout<<"2"<<std::endl;
+		std::vector<Location> newAdd = creatWay(visitor ,loc);
+		unsigned count = 0;
+		for(unsigned i=0; i < newAdd.size(); i++){
+			newLoc.push_back(newAdd[i]);
+			count += 1;
+		}
+		for(unsigned i=0; i < count; i++){
+			newLoc.pop_back();
+		}	
+	}
+
+	row += 1;
+	loc.setRow(row);
+	col +=1;
+	loc.setCol(col);	
+	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
+		std::cout<<"3"<<std::endl;
+		std::vector<Location> newAdd = creatWay(visitor ,loc);
+		unsigned count = 0;
+		for(unsigned i=0; i < newAdd.size(); i++){
+			newLoc.push_back(newAdd[i]);
+			count += 1;
+		}
+		for(unsigned i=0; i < count; i++){
+			newLoc.pop_back();
+		}
+	}
+
+	col-=2;
+	loc.setCol(col);	
+	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
+		std::cout<<"4"<<std::endl;
+		std::vector<Location> newAdd = creatWay(visitor ,loc);
+		unsigned count = 0;
+		for(unsigned i=0; i < newAdd.size(); i++){
+			newLoc.push_back(newAdd[i]);
+			count += 1;
+		}
+		for(unsigned i=0; i < count; i++){
+			newLoc.pop_back();
+		}	
+	}
+
+    return newLoc;	
 }
 
 void CityUpdater::generateVisitors(){
     int size = spawn.size();
+    std::cout<<"Taille de la liste de spawn :"<< spawn.size() <<std::endl;
     int luck = rand() %  (size-1);
     Spawn* newSpawn = spawn[luck];
     Location newLocation = newSpawn->getSpawnPoint();
     Visitor* newVisitor = new Visitor(newLocation);
-    std::vector<Location> newWay = creatWay(newVisitor);
+    std::vector<Location> newWay = creatWay(newVisitor, newLocation);
+    std::cout<<"Taille du chemin donné :"<< newWay.size() <<std::endl;
     newVisitor->setPath(newWay);
     cityMap->addVisitor(newVisitor);
 }
 
 void CityUpdater::updateBuildings(){
-    /*Location currentLocation;
-	for(int col = 0; col<cityMap->getCol(); col++){
-		for(int row = 0; row<cityMap->getRow(); row++){
+	/*
+    Location currentLocation;
+	for(int col = 0; col < cityMap->getNumberOfCols(); col++){
+		for(int row = 0; row < cityMap->getNumberOfRows(); row++){
 			currentLocation = Location(col,row);
 			Field* concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation));
 			if(concernedField->hasBuilding()){;
 				concernedField->getBuilding()->removeVisitor();
 			}
 		}
-    }*/
-
+    }
+    */
 }
+
+//gainMoney()
 
 void CityUpdater::makeVisitorsAdvance(){	
 

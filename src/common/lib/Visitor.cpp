@@ -19,14 +19,18 @@ void Visitor::setPath(std::vector<Location> way){
 
 void Visitor::move(){
 	count += 1;
-	/*
-	if(count == path.size()){
-		delete this;
-	}
-	else{		
-		currentLocation = path[count];
-	}
-	*/
+	//TEST
+	Location test = currentLocation;
+	int x = test.getRow();
+	int y = test.getCol();
+	std::cout<<"-----"<<std::endl;
+	std::cout<<"de "<< x << "-" << y <<std::endl;
+	currentLocation = path[count];
+	test = currentLocation;
+	x = test.getRow();
+	y = test.getCol();
+	std::cout<<"à "<< x << "-" << y <<std::endl;
+	std::cout<<"-----"<<std::endl;
 }
 
 /*
