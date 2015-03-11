@@ -2,7 +2,7 @@
 
 CityUpdater::CityUpdater(Map<Field>* map){
     cityMap = map;
-    //spawn = map.getSpawnList();
+    spawn = map->getSpawnList();
     this->start();
     //std::cout<<"testeuh"<<std::endl;
 }
@@ -51,7 +51,7 @@ std::vector<Location> CityUpdater::creatWay(Visitor* visitor){
 	//newLoc.insert(visitor->getLoc());
 	bool end = false;
 	bool enter = false;
-	bool goBack = false;
+	//bool goBack = false;
 	while(!end and !enter){
         end = true;
 	}
@@ -60,13 +60,21 @@ std::vector<Location> CityUpdater::creatWay(Visitor* visitor){
 }
 
 void CityUpdater::generateVisitors(){
+	std::cout<<"1"<<std::endl;
     int size = spawn.size();
+    std::cout<<"2"<<std::endl;
     int luck = rand() %  (size-1);
-    Location newLocation = spawn[luck]->getSpawnPoint();
+    std::cout<<"3"<<std::endl;
+    Spawn* newSpawn = spawn[luck];
+    std::cout<<"4"<<std::endl;
+    Location newLocation = newSpawn->getSpawnPoint();
     Visitor* newVisitor = new Visitor(newLocation);
+    std::cout<<"5"<<std::endl;
     std::vector<Location> newWay = creatWay(newVisitor);
+    std::cout<<"6"<<std::endl;
     newVisitor->setPath(newWay);
-    map.addVisitor(newVisitor);
+    std::cout<<"7"<<std::endl;
+    cityMap->addVisitor(newVisitor);
 }
 
 void CityUpdater::updateBuildings(){
@@ -84,12 +92,12 @@ void CityUpdater::updateBuildings(){
 }
 
 void CityUpdater::makeVisitorsAdvance(){	
-	for(int i = 0; i < map.getMaxVisitors(); i++){
-		if(map.getVisitor(i) != nullptr){
-			map.getVisitor(i)->move();
+	for(int i = 0; i < cityMap->getMaxVisitors(); i++){
+		if(cityMap->getVisitor(i) != nullptr){
+			cityMap->getVisitor(i)->move();
 			bool enter = false;
 			Building test;
-			Location loc = map.getVisitor(i)->getLoc();
+			Location loc = cityMap->getVisitor(i)->getLoc();
 			int col = loc.getCol();
 			int row = loc.getRow();
 			Location locTest(col+1,row);
