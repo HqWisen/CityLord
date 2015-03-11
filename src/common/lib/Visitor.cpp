@@ -65,7 +65,7 @@ bool Visitor::enter(Building build){
 }
 */
 
-bool Visitor::choose(){  //Building build en parametre
+bool Visitor::choose(Building* build){  //Building build en parametre
 	if(true){   //preference = build.getType
 		int luck = rand() %  10 + 1;
 		if(luck <= 6){  
