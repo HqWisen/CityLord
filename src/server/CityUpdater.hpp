@@ -10,7 +10,7 @@
 
 
 class CityUpdater : public Thread{
-    Map<Field>* map;
+    Map<Field>* cityMap;
     std::vector<Spawn*> spawn;
 	public:
         CityUpdater(Map<Field>*);
