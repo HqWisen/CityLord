@@ -382,12 +382,8 @@ void Map<FieldType>::addVisitor(Visitor* newVisitor){
 
 template <typename FieldType>
 void Map<FieldType>::deleteVisitor(int index){
-    if(index<visitorMax && index>=0){
-        if(visitorList[index] != nullptr){
-            delete visitorList[index];
-            visitorList[index] == nullptr;
-        }
-    }
+	delete this->visitorList[index];
+	this->visitorList[index] = nullptr;
 }
 
 template <typename FieldType>
