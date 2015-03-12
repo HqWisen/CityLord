@@ -2,3 +2,5 @@ gérer les deconnexion
 ambiguité entre quitter partie et déconnecté du serveur
 mutex lock quand achat + voir ou utilisé des mutex
 empecher le demarrage du client si pas de serveur
+SLEEP when waiting for update
+on commence toujours avec une map vierge

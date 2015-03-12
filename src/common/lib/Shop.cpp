@@ -4,7 +4,7 @@
 #include "Shop.hpp"
 
 using namespace std;
-
+/*
 Shop::Shop(int lvl){
 	//type="Shop";
 	level = lvl;
@@ -25,7 +25,7 @@ Shop::Shop(int lvl){
 	}
 }
 
-/*
+
 const BuildingType BuildingType::SHOP = BuildingType("SHOP",\
 	 50000, 15000, 40, 200, 0,\
 		2, 8, 18, 20, 25500, 19000);

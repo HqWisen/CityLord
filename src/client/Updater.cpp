@@ -1,7 +1,10 @@
 #include "Updater.hpp"
 
 const std::map<std::string, update_ptr> Updater::updatemap = {
-    {"changeowner", update::changeowner}
+    {"changeowner", update::changeowner},
+    {"changeownerwithbuilding", update::changeownerwithbuilding},
+    {"build", update::build},
+    {"destroy", update::destroy}
 
 };
 

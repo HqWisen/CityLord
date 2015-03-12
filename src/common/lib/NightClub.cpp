@@ -3,7 +3,7 @@
 #include "NightClub.hpp"
 
 using namespace std;
-
+/*
 NightClub::NightClub(int lvl){
 	//type="NightClub";
 	level = lvl;
@@ -24,7 +24,7 @@ NightClub::NightClub(int lvl){
 	}
 }
 
-/*
+
 const BuildingType BuildingType::NIGHT_CLUB = BuildingType("NIGHT CLUB",\
 	 90000, 35000, 50, 700, 0,\
 	 	5, 21, 6, 69, 49500, 41000);

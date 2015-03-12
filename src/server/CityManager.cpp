@@ -3,12 +3,12 @@
 
 const int CityManager::DEFAULTMAXPLAYER = 3;
 
-CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), cityMap(getMapFileName()), id(cityid), creator(cr), catalog(), nPlayer(0), playerVector(), MAXPLAYER(DEFAULTMAXPLAYER){
+CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), cityMap(new Map<Field>(getMapFileName())), id(cityid), creator(cr), catalog(), nPlayer(0), playerVector(), MAXPLAYER(DEFAULTMAXPLAYER){
     Field* concernedField;
-    for(int row = 0; row<cityMap.getNumberOfRows(); row++){
-        for(int col = 0; col<cityMap.getNumberOfCols(); col++){
+    for(int row = 0; row<cityMap->getNumberOfRows(); row++){
+        for(int col = 0; col<cityMap->getNumberOfCols(); col++){
             Location currentLocation = Location (row, col);
-            if((concernedField = dynamic_cast<Field*>(cityMap.getCase(currentLocation)))){
+            if((concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation)))){
                 catalog.putOnMarket(concernedField);
 			}
 		}
@@ -18,6 +18,7 @@ CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), ci
 
 CityManager::~CityManager(){
     delete updater;
+    delete cityMap;
 }
 
 std::string CityManager::getMapFileName(){
@@ -65,7 +66,7 @@ bool CityManager::alreadyInCity(Player* player){
 }
 
 Map<Field>* CityManager::getMap(){
-	return &cityMap;
+    return cityMap;
 }
 
 User* CityManager::getCreator(){
@@ -83,12 +84,18 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
 	// Si non, un message est envoyé
     SocketMessage message, update;
     Field* concernedField;
-    if((concernedField = dynamic_cast<Field*>(cityMap.getCase(location)))){;
+    if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(catalog.isOnMarket(concernedField)){
 			if(concernedField->hasBuilding()){
 				if(player->getMoney() >= concernedField->getPrice() + concernedField->getBuilding()->getPrice()){
 					player->setMoney(player->getMoney() - (concernedField->getPrice() + concernedField->getBuilding()->getPrice()));
 					catalog.give(concernedField, player);
+                    update.setTopic("changeownerwithbuilding");
+                    update.set("ownerid", std::to_string(player->getPlayerID()));
+                    update.set("typeindex", std::to_string(BuildingType::getIndexByType(concernedField->getBuilding()->getType())));
+                    update.set("level", std::to_string(concernedField->getBuilding()->getLevel()));
+                    update.set("location", location.toString());
+                    sendUpdateToPlayers(update);
                     message.setTopic("success");
                     message.set("reason", "Field has been successfully purchased!");
 				}else{
@@ -123,17 +130,22 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
 
 
 
-SocketMessage CityManager::buildBuilding(Player* player, Location coordinates, BuildingType buildingType){
-	SocketMessage message;
+SocketMessage CityManager::buildBuilding(Player* player, Location location, BuildingType buildingType){
+    SocketMessage message, update;
     Field* concernedField;
-    if((concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates)))){;
+    if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(concernedField->getOwner() == player){
 			if(!concernedField->hasBuilding()){
 				if(player->getMoney() >= buildingType.price){
 					player->setMoney(player->getMoney() - buildingType.price);
 					player->buildBuilding();
 					concernedField->buildBuilding(buildingType);
-					message.setTopic("success");
+                    update.setTopic("build");
+                    update.set("location", location.toString());
+                    update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
+                    update.set("level", std::to_string(concernedField->getBuilding()->getLevel()));
+                    sendUpdateToPlayers(update);
+                    message.setTopic("success");
 					message.set("reason", "Building has been successfully built!");
 				}else{
 					message.setTopic("failure");
@@ -154,11 +166,11 @@ SocketMessage CityManager::buildBuilding(Player* player, Location coordinates, B
 		return message;
 }
 
-SocketMessage CityManager::upgradeBuilding(Player* player, Location coordinates){
+SocketMessage CityManager::upgradeBuilding(Player* player, Location location){
 
 	SocketMessage message;
     Field* concernedField;
-    if((concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates)))){;
+    if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){
 				if(player->getMoney() >= concernedField->getBuilding()->getType().upgradeCost){
@@ -185,17 +197,19 @@ SocketMessage CityManager::upgradeBuilding(Player* player, Location coordinates)
 	return message;
 }
 
-SocketMessage CityManager::destroyBuilding(Player* player, Location coordinates){
-	SocketMessage message;
+SocketMessage CityManager::destroyBuilding(Player* player, Location location){
+    SocketMessage message, update;
     Field* concernedField;
-    if((concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates)))){;
-		Field* concernedField = dynamic_cast<Field*>(cityMap.getCase(coordinates));
-		if(concernedField->getOwner() == player){
+    if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
+        if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){
 				if(player->getMoney() >= concernedField->getBuilding()->getDestructionCost()){
 					player->setMoney(player->getMoney() - concernedField->getBuilding()->getDestructionCost());
 					player->destroyBuilding();
 					concernedField->destroyBuilding();
+                    update.setTopic("destroy");
+                    update.set("location", location.toString());
+                    sendUpdateToPlayers(update);
 					message.setTopic("success");
 					message.set("reason", "Building has been successfully destroyed!");
 				}else{

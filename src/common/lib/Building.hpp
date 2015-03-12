@@ -7,33 +7,35 @@
 using namespace std;
 
 class Building {
-	public:
-		int maxCapacity;
-		int price;
-		int openTime;
-		int closeTime;
-		int income;
-		int attractiveness;
-		int dailyCost;
-		int visitorCounter;
-		int level;
-		int destructionCost;
-		BuildingType type;
-		//string type
-	
-	public:
-		Building(BuildingType, int level = 1);
-		Building();
-		~Building() = default;
-		int getLevel();
-		BuildingType getType();
-		//string getType(){return this->type;};
-		int getPrice(){return this->price;};
+    private:
+        string name;
+        int constructionCost;
+        int destructionCost;
+        int openTime;
+        int stayTime;
+        int closeTime;
+        int income;
+        int price;
+        int maxCapacity;
+        int attractiveness;
+        int dailyCost;
+        int visitorCounter;
+        int level;
+        int upgradeCost;
+        BuildingType type;
+
+    public:
+        Building(BuildingType, int level = 1);
+        Building();
+        ~Building() = default;
+        int getLevel();
+        int getPrice(){return this->price;};
 		int getDestructionCost(){return this->destructionCost;};
+        BuildingType getType();
 		void upgrade();
 		bool addVisitor();
 		void removeVisitor();
-		bool isFull(){return visitorCounter==maxCapacity;};
+        bool isFull(){return visitorCounter==maxCapacity;};
 
 };
 #endif // BUILDING_HPP_

@@ -5,7 +5,7 @@
 #include <sstream>
 #include "Building.hpp"
 #include <string>
-
+/*
 class Bar : public Building{
     public:
         Bar(int level = 1);
@@ -16,7 +16,7 @@ class Bar : public Building{
         //void upgrade();
         //bool addVisitor();
         //void removeVisitor();
-};
+};*/
 
 #endif // BAR_HPP_
 

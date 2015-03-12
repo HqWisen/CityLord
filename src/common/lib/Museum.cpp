@@ -3,7 +3,7 @@
 #include "Museum.hpp"
 
 using namespace std;
-
+/*
 Museum::Museum(int lvl){
 	//type="Museum";
 	level = lvl;
@@ -24,7 +24,7 @@ Museum::Museum(int lvl){
 	}
 }
 
-/*
+
 const BuildingType BuildingType::MUSEUM = BuildingType("MUSEUM",\
 	 85000, 30000, 90, 600, 0,\
 		3, 10, 18, 15, 38500, 37000);

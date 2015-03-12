@@ -9,6 +9,9 @@ class CityLordClient;
 
 namespace update{
     void changeowner(CityLordClient*, SocketMessage);
+    void changeownerwithbuilding(CityLordClient*, SocketMessage);
+    void build(CityLordClient*, SocketMessage);
+    void destroy(CityLordClient*, SocketMessage);
 }
 
 #endif // UPDATE_HPP_

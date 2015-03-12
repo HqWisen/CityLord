@@ -27,7 +27,7 @@ int BuildingType::getIndexByType(BuildingType type){
 			return i;
 		}
 	}
-	return -1; //ne devrait JAMAIS arriver
+    return -1;
 }
 
 const BuildingType BuildingType::BAR = BuildingType("BAR",\

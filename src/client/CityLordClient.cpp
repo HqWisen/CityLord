@@ -182,9 +182,10 @@ void CityLordClient::joinCity(){
         }else{
             fail = false;
             //map = new Map<ClientField>(answer.get("filename"));
-            std::string path = "src/resources/tmp/out.txt";
+            /*std::string path = "src/resources/tmp/out.txt";
             Map<ClientField>::parseMap(path, answer.get("mapstring"));
-            map = new Map<ClientField>(path);
+            map = new Map<ClientField>(path);*/
+            map = new Map<ClientField>(answer.get("filename"));
         }
     }
 }
@@ -207,8 +208,8 @@ void CityLordClient::selectField(){
 	recvAnswer(answer);
 	if(answer.getTopic() == "owner"){ 
         std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-		std::cout<<"It's your field, what would you want to do ?"<<std::endl;
-        /*std::cout<<"1 - Build"<<std::endl;
+        LOG("You own this field.");
+        std::cout<<"1 - Build"<<std::endl;
 		//std::cout<<"2 - Sell"<<std::endl;
 		std::cout<<"2 - Show information"<<std::endl;
 		std::cout<<"3 - Upgrade"<<std::endl;
@@ -218,45 +219,42 @@ void CityLordClient::selectField(){
 		int choice = makeChoice(1, 6);
 		if(choice == 1){
 			request.setTopic("build");
-			std::cout<<"1 - BAR"<<std::endl;
-			std::cout<<"2 - SHOP"<<std::endl;
-			int buildChoice = makeChoice(1, 2);
-			if(buildChoice == 1){
-				request.set("type", "bar");
-			}else if(buildChoice == 2){
-				request.set("type", "shop");
-			}
+            for(int i=0;i<BuildingType::typesLength;i++){
+                std::cout<<i+1<<" - "<<BuildingType::types[i].buildingName<<std::endl;
+            }
+            int buildChoice = makeChoice(1, BuildingType::typesLength);
+            request.set("typeindex", std::to_string(buildChoice-1));
 			sendRequest(request);
 			recvAnswer(answer);
 			LOG(answer.getTopic() + " - " + answer.get("reason"));
-		}
-		else if(choice == 2){
+        }
+        else if(choice == 2){
 			std::cout<<answer.get("info")<<std::endl;
 		}
-		else if(choice == 3){
+        else if(choice == 3){
 			request.setTopic("upgrade");
 			sendRequest(request);
 			recvAnswer(answer);
 			LOG(answer.getTopic() + " - " + answer.get("reason"));
 		
 		}
-		else if(choice == 4){
+        else if(choice == 4){
 			request.setTopic("destroy");
 			sendRequest(request);
 			recvAnswer(answer);
-			LOG(answer.getTopic() + " - " + answer.get("reason"));
-        }*/
+            LOG(answer.getTopic() + " - " + answer.get("reason"));
+        }
 	}
 	else if(answer.getTopic() == "other"){ 
-        /*std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
+        std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 
-        std::cout<<"It's another player field"<<std::endl;
+        LOG("It's another player's field");
 		std::cout<<"1 - Show information"<<std::endl;
 		std::cout<<"2 - Quit"<<std::endl;
 		int choice = makeChoice(1, 2);
 		if(choice == 1){
 			std::cout<<answer.get("info")<<std::endl;
-        }*/
+        }
 	}
 	else if(answer.getTopic() == "purchasable"){ 
 		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
@@ -306,7 +304,7 @@ void CityLordClient::showInfo(){
 
 void CityLordClient::showCatalog(){
 	SocketMessage request("showcatalog");
-	SocketMessage answer; // les parcelles vendables avec leurs infos
+    SocketMessage answer;
 	sendRequest(request);
 	recvAnswer(answer);
 	std::map<std::string, std::string> map = answer.getMap();

@@ -21,7 +21,7 @@ class CityManager{
     static const int DEFAULTMAXPLAYER;
 
     std::string mapname;
-    Map<Field> cityMap;
+    Map<Field>* cityMap;
     CityUpdater* updater;
 	int id;
     User* creator;

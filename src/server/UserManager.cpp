@@ -37,12 +37,13 @@ void UserManager::run(){
 }
 
 void UserManager::disconnectUser(){
-    if(user != nullptr && cityManager != nullptr){
+
+    server->LOG("User '"+getUserName()+"' with IP "+clientSocket.getClientIP()+" is now disconnected.");
+    if(user != nullptr && cityManager != nullptr &&  user->getPlayer(cityManager) != nullptr){
         user->getPlayer(cityManager)->setConnected(false);
         user->getPlayer(cityManager)->setUserManager(nullptr);
         setActiveCity(nullptr);
     }
-    server->LOG("User '"+getUserName()+"' with IP "+clientSocket.getClientIP()+" is now disconnected.");
 }
 
 void UserManager::setUser(User* user_){

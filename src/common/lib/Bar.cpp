@@ -4,7 +4,7 @@
 #include "Bar.hpp"
 
 using namespace std;
-
+/*
 Bar::Bar(int lvl){
 	//type="Bar";
 	level = lvl;
@@ -25,7 +25,7 @@ Bar::Bar(int lvl){
 	}
 }
 
-/*
+
 const BuildingType BuildingType::BAR = BuildingType("BAR",\
 	 70000, 25000, 70, 400, 0,\
 		3, 12, 2, 30, 35500, 32000);

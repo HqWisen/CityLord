@@ -5,22 +5,21 @@
 using namespace std;
 
 Building::Building(BuildingType buildingtype, int lvl) : type(buildingtype){
-	level = lvl;
+    level = lvl;
 	visitorCounter = 0;
-	maxCapacity = type.maxCapacity;
-	price = type.price;
-	openTime = type.openTime;
-	closeTime = type.closeTime;
-	income = type.income;
-	attractiveness = type.attractiveness;
-	dailyCost = type.dailyCost;
-	destructionCost = type.destructionCost;
-	if (level > 1){
-		for (int i=1; i<level; i++){
-			this->upgrade();
-			level -= 1;
-		}
-	}
+    maxCapacity = type.maxCapacity;
+    price = type.price;
+    openTime = type.openTime;
+    closeTime = type.closeTime;
+    income = type.income;
+    attractiveness = type.attractiveness;
+    dailyCost = type.dailyCost;
+    destructionCost = type.destructionCost;
+    if (level > 1){
+        for (int i=1; i<level; i++){
+            this->upgrade();
+        }
+    }
 }
 
 Building::Building(){}
@@ -34,12 +33,12 @@ BuildingType Building::getType(){
 }
 
 /*void Building::upgrade(){
-	maxCapacity += (maxCapacity/2);
-	income += (income/2);
-	attractiveness += (attractiveness/2);
-	dailyCost += (dailyCost/1.75);
-	level += 1;
-	destructionCost += (destructionCost/2);
+    maxCapacity += (maxCapacity/2);
+    income += (income/2);
+    attractiveness += (attractiveness/2);
+    dailyCost += (dailyCost/1.75);
+    level += 1;
+    destructionCost += (destructionCost/2);
 }*/
 
 void Building::upgrade(){
