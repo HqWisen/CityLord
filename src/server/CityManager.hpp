@@ -46,10 +46,12 @@ class CityManager{
         bool canJoin(Player*);
         bool alreadyInCity(Player*);
 		std::vector<Field*> getPurchasableFields();
+		std::vector<Offer*> getOffers();
 		SocketMessage makePurchase(Player*, Location);
 		SocketMessage buildBuilding(Player*, Location, BuildingType);
 		SocketMessage upgradeBuilding(Player*, Location);
 		SocketMessage destroyBuilding(Player*, Location);
+		SocketMessage makeTrade(Player*, Player*, Location);
         void sendUpdateToPlayers(SocketMessage);
 
 		std::vector<Location> giveWay();
