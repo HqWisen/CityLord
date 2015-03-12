@@ -9,7 +9,7 @@ int px = 0, py = 0;
 QPointF lastPos;
 
 CityLordView::CityLordView(QWidget* parent) :
-    QGraphicsView(parent), scene(new QGraphicsScene(this)), BASE("base1.png"){
+    QGraphicsView(parent), scene(new QGraphicsScene(this)), BASE("src/resources/img/base.png"){
     resize(WIDTH, HEIGHT);
     setScene(scene);
     setSceneRect(-((WIDTH/2)-(BASE.width()/2)), 0, WIDTH-2, HEIGHT-2);
@@ -34,8 +34,8 @@ void CityLordView::addBaseOn(int row, int col){
 
 void CityLordView::addBar(){
 
-    QPixmap b("barred.png");
-    QPixmap b1("bar.png");
+    QPixmap b("src/resources/img/barred.png");
+    QPixmap b1("src/resources/img/bar.png");
     int height = BASE.height();
     int row, col;
     row = 8;
@@ -53,7 +53,7 @@ void CityLordView::addBar(){
 
     item = scene->addPixmap(b1);
     //item->setOffset(isoX, isoY);
-    item->setOffset(carToIso((col+1)*height, row*height, -b.height()+BASE.height()));
+    item->setOffset(carToIso((col+1)*height, row*height, -b1.height()+BASE.height()));
 }
 
 void CityLordView::mousePressEvent(QMouseEvent * e){

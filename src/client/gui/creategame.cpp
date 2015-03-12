@@ -50,7 +50,7 @@ void CreateGame::on_createButton_clicked(){
     if(clientManager->requestFailed()){
         // TODO handle failure
     }else{
-        clientManager->setCurrentWidget(ClientManager::MAINMENU);
+        clientManager->setCurrentWidget(ClientManager::JOINGAME);
     }
 }
 

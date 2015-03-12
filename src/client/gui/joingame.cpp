@@ -1,9 +1,9 @@
 #include "joingame.h"
 #include "ui_joingame.h"
 
-JoinGame::JoinGame(QWidget* parent, ClientManager* cm) :
-    DefaultWidget(parent, cm), ui(new Ui::JoinGame){
 
+JoinGame::JoinGame(QWidget* parent, ClientManager* cm) :
+    DefaultWidget(parent, cm), ui(new Ui::JoinGame), tableItemArray(nullptr), headerLabels(), choice(-1){
     displayDefaultBackground();
     ui->setupUi(this);
     for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
@@ -11,33 +11,9 @@ JoinGame::JoinGame(QWidget* parent, ClientManager* cm) :
         ui->tableWidget->horizontalHeader()->setSectionResizeMode(
             c, QHeaderView::Stretch);
     }
-    QStringList headerLabels;
-    headerLabels << "Map name" << "Creator" << "Players";
-    ui->tableWidget->setColumnCount(3);
+    headerLabels << "City" << "Map" << "Creator"<<"Players";
+    ui->tableWidget->setColumnCount(headerLabels.size());
     ui->tableWidget->setHorizontalHeaderLabels(headerLabels);
-    QTableWidgetItem *item0 = new QTableWidgetItem("Map1.txt");
-    QTableWidgetItem *item1 = new QTableWidgetItem("Map2.txt");
-    QTableWidgetItem *item0b = new QTableWidgetItem("Fish");
-    QTableWidgetItem *item1b = new QTableWidgetItem("Hakim");
-    QTableWidgetItem *item0c = new QTableWidgetItem("0/8");
-    QTableWidgetItem *item1c = new QTableWidgetItem("0/6");
-
-    //items not Editable
-    item0->setFlags(item0->flags() & ~Qt::ItemIsEditable);
-    item1->setFlags(item1->flags() & ~Qt::ItemIsEditable);
-    item0b->setFlags(item0b->flags() & ~Qt::ItemIsEditable);
-    item1b->setFlags(item1b->flags() & ~Qt::ItemIsEditable);
-    item0c->setFlags(item0c->flags() & ~Qt::ItemIsEditable);
-    item1c->setFlags(item1c->flags() & ~Qt::ItemIsEditable);
-
-    ui->tableWidget->setItem(0, 0, item0);
-    ui->tableWidget->setItem(1, 0, item1);
-    ui->tableWidget->setItem(0, 1, item0b);
-    ui->tableWidget->setItem(1, 1, item1b);
-    ui->tableWidget->setItem(0, 2, item0c);
-    ui->tableWidget->setItem(1, 2, item1c);
-    ui->tableWidget->item(0,2)->setTextAlignment(Qt::AlignRight);
-    ui->tableWidget->item(1,2)->setTextAlignment(Qt::AlignRight);
 }
 
 JoinGame::~JoinGame()
@@ -47,6 +23,75 @@ JoinGame::~JoinGame()
 
 
 void JoinGame::refresh(){
+    if(tableItemArray != nullptr){
+        delete[] tableItemArray;
+    }
+    ui->errorLabel->setText("");
+    int numberOfCity;
+    clientManager->setRequest("numberofcity");
+    clientManager->sendRequestAndRecv();
+    numberOfCity = std::stoi(clientManager->getInfo("numberofcity"));
+    ui->tableWidget->setRowCount(numberOfCity);
+    tableItemArray = new QTableWidgetItem**[numberOfCity];
+    for (int i=0; i<numberOfCity; i++) {
+        tableItemArray[i] = new QTableWidgetItem*[headerLabels.size()];
+        for (int j=0; j<headerLabels.size(); j++) {
+            tableItemArray[i][j] = new QTableWidgetItem;
+        }
+    }
+    int cityid = 0;
+    clientManager->setRequest("cityinfo");
+    clientManager->addInfo("cityid", std::to_string(cityid));
+    clientManager->sendRequestAndRecv();
+    std::string players;
+    while(!clientManager->requestFailed()){
+        tableItemArray[cityid][0] = new QTableWidgetItem(clientManager->getInfo("name").c_str());
+        tableItemArray[cityid][1] = new QTableWidgetItem(clientManager->getInfo("mapname").c_str());
+        tableItemArray[cityid][2] = new QTableWidgetItem(clientManager->getInfo("creator").c_str());
+        players = clientManager->getInfo("nplayer") +"/"+clientManager->getInfo("maxplayer");
+        tableItemArray[cityid][3] = new QTableWidgetItem(players.c_str());
+        cityid++;
+        clientManager->setRequest("cityinfo");
+        clientManager->addInfo("cityid", std::to_string(cityid));
+        clientManager->sendRequestAndRecv();
+    }
+
+
+
+    for(int i=0;i<numberOfCity;i++){
+        for(int j=0;j<headerLabels.size();j++){
+            tableItemArray[i][j]->setFlags(tableItemArray[i][j]->flags() & ~Qt::ItemIsEditable);
+            ui->tableWidget->setItem(i, j, tableItemArray[i][j]);
+        }
+    }
+}
+
+void JoinGame::on_joinButton_clicked(){
+    QItemSelectionModel* selectionModel = ui->tableWidget->selectionModel();
+    QModelIndexList selected = selectionModel->selectedRows();
+    if(selected.count() == 0){
+        ui->errorLabel->setText("Please select a city.");
+    }else{
+        for(int i= 0; i< selected.count();i++){
+            QModelIndex index = selected.at(i);
+            choice = index.row();
+        }
+        std::cout<<"CHOICE = "<<choice<<std::endl;
+        clientManager->setRequest("joincity");
+        clientManager->addInfo("cityid", std::to_string(choice));
+        clientManager->sendRequestAndRecv();
+        if(clientManager->requestFailed()){
+            ui->errorLabel->setText(clientManager->getFailureReason().c_str());
+        }else{
+            clientManager->setCurrentWidget(ClientManager::INGAME);
+            // TODO CREATE MAP
+            //map = new Map<ClientField>(answer.get("filename"));
+            /*std::string path = "src/resources/tmp/out.txt";
+            Map<ClientField>::parseMap(path, answer.get("mapstring"));
+            map = new Map<ClientField>(path);*/
+           // map = new Map<ClientField>(answer.get("filename"));
+        }
+    }
 
 }
 

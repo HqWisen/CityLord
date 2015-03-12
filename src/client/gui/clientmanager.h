@@ -25,6 +25,7 @@ public:
     QVBoxLayout* getLayout();
     void setRequest(std::string);
     void addInfo(std::string, std::string);
+    std::string getInfo(std::string);
     void cleanMessage();
     void sendRequestAndRecv();
     void sendRequest();

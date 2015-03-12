@@ -54,7 +54,14 @@ namespace request{
 		// TODO send failure if creation failed*/
 		return answer;		
 	}
-	
+
+    SocketMessage numberofcity(CityLordServer* server, UserManager* userManager, SocketMessage message){
+        SocketMessage answer;
+        string numberOfCity = std::to_string(server->getNumberOfCity());
+        answer.set("numberofcity", numberOfCity);
+        return answer;
+    }
+
     SocketMessage cityinfo(CityLordServer* server, UserManager* userManager, SocketMessage message){
 		SocketMessage answer;
         int cityid = std::stoi(message.get("cityid"));
