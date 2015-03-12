@@ -78,6 +78,9 @@ void ClientManager::setRequest(std::string request){
 void ClientManager::addInfo(std::string key, std::string value){
     message.set(key, value);
 }
+std::string ClientManager::getInfo(std::string key){
+    return message.get(key);
+}
 
 void ClientManager::cleanMessage(){
     message = SocketMessage();

@@ -13,7 +13,11 @@ CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), ci
 			}
 		}
 	}
+<<<<<<< HEAD
     updater = new CityUpdater(getMap(), playerVector);
+=======
+    //updater = new CityUpdater(getMap());
+>>>>>>> a3a0b7559a241a48a694d8286e93d1e47e569220
 }
 
 CityManager::~CityManager(){
