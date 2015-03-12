@@ -7,9 +7,10 @@ const int CityLordView::HEIGHT = 804;
 
 int px = 0, py = 0;
 QPointF lastPos;
+QPointF startMouse;
 
 CityLordView::CityLordView(QWidget* parent) :
-    QGraphicsView(parent), scene(new QGraphicsScene(this)), BASE("base1.png"){
+    QGraphicsView(parent), scene(new QGraphicsScene(this)), BASE("src/resources/img/base.png"){
     resize(WIDTH, HEIGHT);
     setScene(scene);
     setSceneRect(-((WIDTH/2)-(BASE.width()/2)), 0, WIDTH-2, HEIGHT-2);
@@ -61,7 +62,7 @@ void CityLordView::mousePressEvent(QMouseEvent * e){
     /*QPointF pt = mapToScene(e->pos());
     scale(1.2, 1.2);*/
     std::cout<<"PRESSED"<<std::endl;
-
+    startMouse = mapToScene(e->pos());
     //rotate(-10);
 
 }
@@ -73,39 +74,32 @@ void CityLordView::mouseReleaseEvent(QMouseEvent * e){
     //rotate(-10);
 
 }
+
 void CityLordView::mouseMoveEvent(QMouseEvent * e){
 
-
     QPointF currentPos = mapToScene(e->pos());
-    if(lastPos.x() < currentPos.x()){
-        //px--;
-        //px--;
-        //px--;
-        px-=30;
-
+    if(startMouse.x() < currentPos.x()){
+        int move = currentPos.x()-startMouse.x();
+        px-= move;
+        lastPos.setX(px);
     }else{
-        //px++;
-        //px++;
-        //px++;
-        px+=30;
-
+        int move = startMouse.x()-currentPos.x();
+        px+= move;
+        lastPos.setX(px);
     }
-    if(lastPos.y() < currentPos.y()){
-        //py--;
-        //py--;
-        //py--;
-        py-=30;
+    if(startMouse.y() < currentPos.y()){
+        int move = currentPos.y()-startMouse.y();
+        py-=move;
+        lastPos.setY(py);
     }else{
-        //py++;
-        //py++;
-        //py++;
-        py+=30;
+        int move = startMouse.y()-currentPos.y();
+        py+=move;
+        lastPos.setY(py);
     }
     lastPos = currentPos;
     setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
 
-
-    /*scale(1.2, 1.2);*/
+    //scale(1.2, 1.2);
     std::cout<<"MOVED X = "<<px<<std::endl;
     std::cout<<"MOVED Y = "<<py<<std::endl;
     //std::cout<<rect().x()<<std::endl;
