@@ -1,5 +1,4 @@
 #include "citylordview.h"
-
 #include <iostream>
 
 const int CityLordView::WIDTH = 1152;
@@ -26,6 +25,30 @@ CityLordView::~CityLordView(){
 QPointF CityLordView::carToIso(int x, int y, int lagy = 0){
     return QPointF(x-y, ((x+y)/2) + lagy);
 }
+
+
+void CityLordView::isoToLoc(QPointF position){
+    int posX,posY;
+    posX=position.x();
+    posY=position.y();
+
+    int hauteur=75;
+    int longueur=152;
+
+    int xDep=0;
+    int yDep=76;
+
+
+    //Isometric to Cartesian:
+
+    int cartX = ((2*(posY-37) + posX )/2)/75; // 152;
+    int cartY = (((2*posY - posX )/2)+37)/75; // 75;
+
+    std::cout<<" X = "<< cartX <<" Y = "<< cartY<<std::endl;
+
+    //return Location(cartX,cartY);
+}
+
 
 void CityLordView::addBaseOn(int row, int col){
     int height = BASE.height();
@@ -65,6 +88,7 @@ void CityLordView::mousePressEvent(QMouseEvent * e){
     scale(1.2, 1.2);*/
     startMouse = mapToScene(e->pos());
     std::cout<<"PRESSED"<<" X = "<< startMouse.x() <<" Y = "<< startMouse.y()<<std::endl;
+    isoToLoc(startMouse);
     //rotate(-10);
 
 }

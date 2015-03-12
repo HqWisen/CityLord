@@ -8,6 +8,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 
+
 class CityLordView : public QGraphicsView{
 
 static const int WIDTH, HEIGHT;
@@ -28,6 +29,9 @@ public:
     //void contextMenuPolicy()Event(QContextMenuEvent*) override;
     //void mouse
     void keyPressEvent(QKeyEvent *event);
+
+    //Location isoToLoc(QPointF );  bug
+    void isoToLoc(QPointF );
 
 private:
     QPointF carToIso(int, int, int);
