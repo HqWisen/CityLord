@@ -35,8 +35,8 @@ void CityLordView::addBaseOn(int row, int col){
 
 void CityLordView::addBar(){
 
-    QPixmap b("barred.png");
-    QPixmap b1("bar.png");
+    QPixmap b("src/resources/img/barred.png");
+    QPixmap b1("src/resources/img/bar.png");
     int height = BASE.height();
     int row, col;
     row = 8;
@@ -54,15 +54,15 @@ void CityLordView::addBar(){
 
     item = scene->addPixmap(b1);
     //item->setOffset(isoX, isoY);
-    item->setOffset(carToIso((col+1)*height, row*height, -b.height()+BASE.height()));
+    item->setOffset(carToIso((col+1)*height, row*height, -b1.height()+BASE.height()));
 }
 
 void CityLordView::mousePressEvent(QMouseEvent * e){
 
     /*QPointF pt = mapToScene(e->pos());
     scale(1.2, 1.2);*/
-    std::cout<<"PRESSED"<<std::endl;
     startMouse = mapToScene(e->pos());
+    std::cout<<"PRESSED"<<" X = "<< startMouse.x() <<" Y = "<< startMouse.y()<<std::endl;
     //rotate(-10);
 
 }
@@ -81,20 +81,20 @@ void CityLordView::mouseMoveEvent(QMouseEvent * e){
     if(startMouse.x() < currentPos.x()){
         int move = currentPos.x()-startMouse.x();
         px-= move;
-        lastPos.setX(px);
+        lastPos.setX(lastPos.x()-move);
     }else{
         int move = startMouse.x()-currentPos.x();
         px+= move;
-        lastPos.setX(px);
+        lastPos.setX(lastPos.x()+move);
     }
     if(startMouse.y() < currentPos.y()){
         int move = currentPos.y()-startMouse.y();
         py-=move;
-        lastPos.setY(py);
+        lastPos.setY(lastPos.y()-move);
     }else{
         int move = startMouse.y()-currentPos.y();
         py+=move;
-        lastPos.setY(py);
+        lastPos.setY(lastPos.y()+move);
     }
     lastPos = currentPos;
     setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);

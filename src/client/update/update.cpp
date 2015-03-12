@@ -29,6 +29,12 @@ namespace update{
         field->destroyBuilding();
     }
 
+    void visitormove(CityLordClient* client, SocketMessage update){
+        Location firstLocation = Location::parse(update.get("firstLocation"));    
+        Location lastLocation = Location::parse(update.get("lastLocation"));
+        //Visitor.moveGui ??
+    }
+
 }
 
 

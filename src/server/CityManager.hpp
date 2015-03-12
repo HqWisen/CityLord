@@ -41,6 +41,7 @@ class CityManager{
         int getNextID();
 		void addPlayer(Player*);
         Map<Field>* getMap();
+        //std::vector<Player*>* getPlayerVector();
         User* getCreator();
         std::string getName();
         bool canJoin(Player*);
@@ -53,7 +54,7 @@ class CityManager{
 		SocketMessage destroyBuilding(Player*, Location);
 		SocketMessage makeTrade(Player*, Player*, Location);
         void sendUpdateToPlayers(SocketMessage);
-
+        SocketMessage visitorMove(Player*, Location, Location);
 		std::vector<Location> giveWay();
         //Spawnable getRandomSpawn();
 };

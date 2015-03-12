@@ -13,7 +13,7 @@ CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), ci
 			}
 		}
 	}
-    updater = new CityUpdater(getMap());
+    updater = new CityUpdater(getMap(), &playerVector);
 }
 
 CityManager::~CityManager(){
@@ -69,6 +69,12 @@ Map<Field>* CityManager::getMap(){
     return cityMap;
 }
 
+/*
+std::vector<Player*>* CityManager::getPlayerVector(){
+	return playerVector;
+}
+*/
+
 User* CityManager::getCreator(){
     return creator;
 }
@@ -77,9 +83,24 @@ std::vector<Field*> CityManager::getPurchasableFields(){
 	return catalog.getPurchasableFields();
 }
 
+
 std::vector<Offer*> CityManager::getOffers(){
 	return catalog.getOffers();
 }
+
+//-------------------------------
+
+SocketMessage CityManager::visitorMove(Player* player, Location firstLocation, Location lastLocation){
+	SocketMessage update;
+	update.setTopic("visitormove");
+	update.set("firstlocation", firstLocation.toString());
+	update.set("lastlocation", lastLocation.toString());
+
+	return update;
+
+}
+
+//------------------------------
 
 SocketMessage CityManager::makePurchase(Player* player, Location location){
 	//Regarde si le joueur 1 a assez d'argent
@@ -98,7 +119,7 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
                     update.set("typeindex", std::to_string(BuildingType::getIndexByType(concernedField->getBuilding()->getType())));
                     update.set("level", std::to_string(concernedField->getBuilding()->getLevel()));
                     update.set("location", location.toString());
-                    sendUpdateToPlayers(update);
+                    updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
                     message.set("reason", "Field has been successfully purchased!");
 				}else{
@@ -112,7 +133,7 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
                     update.setTopic("changeowner");
                     update.set("ownerid", std::to_string(player->getPlayerID()));
                     update.set("location", location.toString());
-                    sendUpdateToPlayers(update);
+                    updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
 					message.set("reason", "Field has been successfully purchased!");
 				}else{
@@ -147,7 +168,7 @@ SocketMessage CityManager::buildBuilding(Player* player, Location location, Buil
                     update.set("location", location.toString());
                     update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
                     update.set("level", std::to_string(concernedField->getBuilding()->getLevel()));
-                    sendUpdateToPlayers(update);
+                    updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
 					message.set("reason", "Building has been successfully built!");
 				}else{
@@ -211,7 +232,7 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
 					concernedField->destroyBuilding();
                     update.setTopic("destroy");
                     update.set("location", location.toString());
-                    sendUpdateToPlayers(update);
+                    updater->sendUpdateToPlayers(update);
 					message.setTopic("success");
 					message.set("reason", "Building has been successfully destroyed!");
 				}else{
@@ -233,16 +254,7 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
 	return message;
 }
 
-void CityManager::sendUpdateToPlayers(SocketMessage update){
-    Player* player;
-    for (std::vector<Player*>::iterator it = playerVector.begin(); it != playerVector.end(); it++){
-        player = *it;
-        if(player->isConnected()){
-            player->getUserManager()->sendUpdate(update);
-        }
 
-    }
-}
 
 /*Spawnable CityManager::getRandomSpawn(){
     int size = listSpawnable.size();
