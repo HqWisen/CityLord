@@ -61,8 +61,8 @@ void CityLordView::mousePressEvent(QMouseEvent * e){
 
     /*QPointF pt = mapToScene(e->pos());
     scale(1.2, 1.2);*/
-    std::cout<<"PRESSED"<<std::endl;
     startMouse = mapToScene(e->pos());
+    std::cout<<"PRESSED"<<" X = "<< startMouse.x() <<" Y = "<< startMouse.y()<<std::endl;
     //rotate(-10);
 
 }
@@ -81,20 +81,20 @@ void CityLordView::mouseMoveEvent(QMouseEvent * e){
     if(startMouse.x() < currentPos.x()){
         int move = currentPos.x()-startMouse.x();
         px-= move;
-        lastPos.setX(px);
+        lastPos.setX(lastPos.x()-move);
     }else{
         int move = startMouse.x()-currentPos.x();
         px+= move;
-        lastPos.setX(px);
+        lastPos.setX(lastPos.x()+move);
     }
     if(startMouse.y() < currentPos.y()){
         int move = currentPos.y()-startMouse.y();
         py-=move;
-        lastPos.setY(py);
+        lastPos.setY(lastPos.y()-move);
     }else{
         int move = startMouse.y()-currentPos.y();
         py+=move;
-        lastPos.setY(py);
+        lastPos.setY(lastPos.y()+move);
     }
     lastPos = currentPos;
     setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
