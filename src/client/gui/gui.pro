@@ -11,7 +11,9 @@ SOURCES += main.cpp\
     defaultwidget.cpp \
     creategame.cpp \
     clientmanager.cpp \
-    joingame.cpp
+    joingame.cpp \
+    citylordview.cpp \
+    ingame.cpp
 
 HEADERS  += \
     login.h \
@@ -22,7 +24,9 @@ HEADERS  += \
     defaultwidget.h \
     creategame.h \
     clientmanager.h \
-    joingame.h
+    joingame.h \
+    citylordview.h \
+    ingame.h
 
 
 FORMS    += \
@@ -32,7 +36,8 @@ FORMS    += \
     mainwindow.ui \
     createaccount.ui \
     creategame.ui \
-    joingame.ui
+    joingame.ui \
+    ingame.ui
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic -Wno-write-strings

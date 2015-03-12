@@ -10,7 +10,7 @@ MainWindow::MainWindow(char* hostname, int port) :
 
     clientManager->set(ClientManager::LOGIN, new Login(this, clientManager));
     clientManager->set(ClientManager::MAINMENU, new MainMenu(this, clientManager));
-    //clientManager->se(ClientManager::INPLAY, new InPlay(this, clientManager));
+    clientManager->set(ClientManager::INGAME, new InGame(this, clientManager));
     clientManager->set(ClientManager::CREATEACCOUNT, new CreateAccount(this, clientManager));
     clientManager->set(ClientManager::CREATEGAME, new CreateGame(this, clientManager));
     clientManager->set(ClientManager::JOINGAME, new JoinGame(this, clientManager));

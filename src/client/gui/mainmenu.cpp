@@ -25,12 +25,12 @@ void MainMenu::on_disconnectButton_clicked(){
 }
 
 void MainMenu::on_quitButton_clicked(){
-    clientManager->quit();
-    QApplication::quit();
+    /*clientManager->quit();
+    QApplication::quit();*/
+    clientManager->setCurrentWidget(ClientManager::INGAME);
 }
 
-void MainMenu::on_joinButton_clicked()
-{
+void MainMenu::on_joinButton_clicked(){
     clientManager->setCurrentWidget(ClientManager::JOINGAME);
 }
 

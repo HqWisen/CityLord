@@ -4,3 +4,11 @@ mutex lock quand achat + voir ou utilisé des mutex
 empecher le demarrage du client si pas de serveur
 SLEEP when waiting for update
 on commence toujours avec une map vierge
+SLEEP UN PEU PARTOUT POUR EVITER LES PROBLEMES DE CONCURENCE
+time et fin de partie
+makeOffer
+sell
+destroy waiting time
+sell and put in catalog
+show catalog
+

@@ -4,15 +4,24 @@
 const key_type ClientManager::LOGIN = 0;
 const key_type ClientManager::CREATEACCOUNT = 1;
 const key_type ClientManager::MAINMENU = 2;
-const key_type ClientManager::INPLAY = 3;
+const key_type ClientManager::INGAME = 3;
 const key_type ClientManager::CREATEGAME = 4;
 const key_type ClientManager::JOINGAME = 5;
 
 ClientManager::ClientManager(char* hostname, int port) :
     stackedWidget(new QStackedWidget), layout(new QVBoxLayout), pages(), \
-    socket(hostname, port), message(){
+    socket(hostname, port),  updateSocket(hostname, port+1), message(){
 
+    SocketMessage updateMessage;
     socket.connectHost();
+    updateMessage = SocketMessage::parse(socket.read());
+    if(updateMessage.getTopic() == "update"){
+        updateSocket.connectHost();
+    }else{
+        throw std::invalid_argument("Cannot connect the user updater.");
+    }
+    //updater = new Updater(this, updateSocket);
+
     layout->setContentsMargins(0,0,0,0);
     layout->addWidget(stackedWidget);
 

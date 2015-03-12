@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "inplay.h"
+#include "ingame.h"
 #include "login.h"
 #include "mainmenu.h"
 #include "createaccount.h"
@@ -14,17 +14,15 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow{
     Q_OBJECT
-
 public:
     explicit MainWindow(char*, int);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
-    QWidget *centralWidget;
+    QWidget* centralWidget;
     ClientManager* clientManager;
 };
 

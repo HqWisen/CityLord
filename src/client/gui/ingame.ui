@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InGame</class>
+ <widget class="QWidget" name="InGame">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1152</width>
+    <height>864</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Widget</string>
+  </property>
+  <widget class="QLabel" name="timeLabel">
+   <property name="geometry">
+    <rect>
+     <x>990</x>
+     <y>800</y>
+     <width>151</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>30</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>00 : 00</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="moneyLabel">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>800</y>
+     <width>191</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>25</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(0, 220, 0)</string>
+   </property>
+   <property name="text">
+    <string>58673 $</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>810</y>
+     <width>521</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="buyButton">
+      <property name="text">
+       <string>Buy</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="buildButton">
+      <property name="text">
+       <string>Build</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="upgradeButton">
+      <property name="text">
+       <string>Upgrade</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="sellButton">
+      <property name="text">
+       <string>Sell</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="demolishButton">
+      <property name="text">
+       <string>Demolish</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

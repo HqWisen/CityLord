@@ -14,7 +14,7 @@ class DefaultWidget;
 
 class ClientManager{
 public:
-    static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INPLAY, CREATEGAME, JOINGAME;
+    static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INGAME, CREATEGAME, JOINGAME;
 public:
     ClientManager(char*, int);
     ~ClientManager();
@@ -38,6 +38,7 @@ private:
     QVBoxLayout* layout;
     std::map<key_type, DefaultWidget*> pages;
     ConnectionSocket socket;
+    ConnectionSocket updateSocket;
     SocketMessage message;
 
 };
