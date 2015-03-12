@@ -13,7 +13,7 @@ CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), ci
 			}
 		}
 	}
-    //updater = new CityUpdater(getMap());
+    updater = new CityUpdater(getMap());
 }
 
 CityManager::~CityManager(){

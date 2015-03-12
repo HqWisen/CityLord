@@ -130,54 +130,64 @@ std::vector<Location> CityUpdater::creatWay(Visitor* visitor, Location loc){
 }
 */
 
-std::vector<Location> CityUpdater::creatWay(Location start, Location end, std::vector<Location> path){
-	std::vector<Location> res;
+std::vector<Location>* CityUpdater::creatWay(Location start, Location end, std::vector<Location>* path){
+	std::vector<Location>* res;
 	int row = start.getRow();
 	int col = start.getCol();
-	if(start.isEqual(end)){res= path;}
+	std::cout<<"1"<<std::endl;
+	if(start.isEqual(end)){
+		std::cout<<"Fin"<<std::endl;
+		res = path;}	
 	else{
 		Location next = Location(row,col);
 		if(row+1 < cityMap->getNumberOfRows()){
+			std::cout<<"2"<<std::endl;
 			next.setRow(row+1);
 			next.setCol(col);
-			if (path.empty() or !path.back().isEqual(next)){
+			if (path->empty() or !path->back().isEqual(next)){
+				std::cout<<"22"<<std::endl;
 				if(dynamic_cast<Road*>(cityMap->getCase(next))){
-					path.push_back(next);
+					std::cout<<"222"<<std::endl;
+					path->push_back(next);
+					std::cout<<"2222"<<std::endl;
 					res = creatWay(next, end, path);
-					path.pop_back();
+					path->pop_back();
 				}
 			}
 		}
 		if(row-1 >= 0){
+			std::cout<<"3"<<std::endl;
 			next.setRow(row-1);
 			next.setCol(col);
-			if (path.empty() or !path.back().isEqual(next)){
+			if (path->empty() or !path->back().isEqual(next)){
 				if(dynamic_cast<Road*>(cityMap->getCase(next))){
-					path.push_back(next);
+					path->push_back(next);
 					res = creatWay(next, end, path);
-					path.pop_back();
+					path->pop_back();
 				}
 			}
 		}
 		if(col+1 < cityMap->getNumberOfCols()){
+			std::cout<<"5"<<std::endl;
 			next.setRow(row);
 			next.setCol(col+1);
-			if (path.empty() or !path.back().isEqual(next)){
+			if (path->empty() or !path->back().isEqual(next)){
 				if(dynamic_cast<Road*>(cityMap->getCase(next))){
-					path.push_back(next);
+					path->push_back(next);
 					res = creatWay(next, end, path);
-					path.pop_back();
+					path->pop_back();
 				}
 			}
 		}
 		if(col-1 >=0){
+			std::cout<<"1"<<std::endl;
 			next.setRow(row);
 			next.setCol(col-1);
-			if (path.empty() or !path.back().isEqual(next)){
+			if (path->empty() or !path->back().isEqual(next)){
 				if(dynamic_cast<Road*>(cityMap->getCase(next))){
-					path.push_back(next);
+					path->push_back(next);
 					res = creatWay(next, end, path);
-					path.pop_back();
+					path->pop_back();
 				}
 			}
 		}
@@ -202,12 +212,12 @@ void CityUpdater::generateVisitors(){
     std::cout<<"Second Spawn"<<std::endl;
     
     //std::vector<Location> newWay = creatWay(newVisitor, startLocation);
-    std::vector<Location> path;
-    std::vector<Location> newWay = creatWay(startLocation,endLocation,path);
+    std::vector<Location>* path;
+    std::vector<Location>* newWay = creatWay(startLocation,endLocation,path);
     std::cout<<"Got Way"<<std::endl;
 
     Visitor* newVisitor = new Visitor(startLocation);
-    std::cout<<"Taille du chemin donné :"<< newWay.size() <<std::endl;
+    std::cout<<"Taille du chemin donné :"<< newWay->size() <<std::endl;
     newVisitor->setPath(newWay);
     cityMap->addVisitor(newVisitor);
 }
@@ -234,7 +244,7 @@ void CityUpdater::makeVisitorsAdvance(){
 	for(int i = 0; i < cityMap->getMaxVisitors(); i++){
 		if(cityMap->getVisitor(i) != nullptr){
 			cityMap->getVisitor(i)->move();
-			bool enter = false;
+			//bool enter = false;
 			Building test;
 			Location loc = cityMap->getVisitor(i)->getLoc();
 			int col = loc.getCol();

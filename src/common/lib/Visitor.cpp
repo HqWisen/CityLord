@@ -13,13 +13,14 @@ Location Visitor::getLoc(){
 
 //void Visitor::displayGUI(){}
 
-void Visitor::setPath(std::vector<Location> way){ 
+void Visitor::setPath(std::vector<Location>* way){ 
 	path = way;
 }
 
 void Visitor::move(){
 	count += 1;
 	//TEST
+	/*
 	Location test = currentLocation;
 	int x = test.getRow();
 	int y = test.getCol();
@@ -31,6 +32,7 @@ void Visitor::move(){
 	y = test.getCol();
 	std::cout<<"à "<< x << "-" << y <<std::endl;
 	std::cout<<"-----"<<std::endl;
+	*/
 }
 
 /*
