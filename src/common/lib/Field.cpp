@@ -42,11 +42,11 @@ Field::Field(int newColor, Location location, Building* newBuilding) : Case(loca
 string BasicField::print(){
     string ownerStr = " ";
     if (hasOwner()){
-        ownerStr = to_string(getOwnerID());
+        ownerStr = to_string(this->getOwnerID());
     }
     if (hasBuilding()){
-        int type = BuildingType::getIndexByType(getBuilding()->getType());
-        int level = getBuilding()->getLevel();
+        int type = BuildingType::getIndexByType(this->getBuilding()->getType());
+        int level = this->getBuilding()->getLevel();
         if (level == 10){
             level = 0;
         }

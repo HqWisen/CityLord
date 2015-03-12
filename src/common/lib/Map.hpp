@@ -144,15 +144,10 @@ Map<FieldType>::Map(string fileName){
                 if (level == 0){
                     level = 10;
                 }
-                if (player > 47){
-                    caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
-                    if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))) {
-                        field->setOwnerID(player-8);
-                    }
-                    dynamic_cast<FieldType*>(caseMatrix[row/2][0])->buildBuilding(type, level);
-                }else {
-                    caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
-                    dynamic_cast<FieldType*>(caseMatrix[row/2][0])->buildBuilding(type, level);
+                caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
+                dynamic_cast<FieldType*>(caseMatrix[row/2][0])->buildBuilding(type, level);
+                if ((player > 47) && (field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))){
+                    field->setOwnerID(player-48);
                 }
             }else if (tmpChar == 'O') {
                 caseMatrix[row/2][0] = new Obstacle(Location(row/2, 0));
@@ -162,13 +157,9 @@ Map<FieldType>::Map(string fileName){
             }else if (tmpChar == 'F'){
                 tmpChar = tmpString.at(1);
                 int player = tmpChar;
-                if (player > 47){
-                    caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
-                    if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))) {
-                        field->setOwnerID(player-8);
-                    }
-                }else {
-                    caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
+                caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
+                if ((player > 47) && (field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))){
+                    field->setOwnerID(player-48);
                 }
             }else if(tmpChar == 'R'){
                 if (caseMatrix[row/2][0] == nullptr) {
@@ -202,15 +193,10 @@ Map<FieldType>::Map(string fileName){
                     if (level == 0){
                         level = 10;
                     }
-                    if (player > 47){
-                        caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
-                        if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
-                            field->setOwnerID(player-8);
-                        }
-                        dynamic_cast<FieldType*>(caseMatrix[row/2][col])->buildBuilding(type, level);
-                    }else {
-                        caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
-                        dynamic_cast<FieldType*>(caseMatrix[row/2][col])->buildBuilding(type, level);
+                    caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
+                    dynamic_cast<FieldType*>(caseMatrix[row/2][col])->buildBuilding(type, level);
+                    if ((player > 47) && (field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
+                        field->setOwnerID(player-48);
                     }
                 }else if (tmpChar == 'O') {
                     caseMatrix[row/2][col] = new Obstacle(Location(row/2, col));
@@ -218,15 +204,11 @@ Map<FieldType>::Map(string fileName){
                     caseMatrix[row/2][col] = new BuildingSpawn(Location(row/2, col), findSpawnPoint(Location(row/2, col)));
                     spawnList.push_back(dynamic_cast<BuildingSpawn*>(caseMatrix[row/2][col]));
                 }else if (tmpChar == 'F'){
-                    tmpChar = tmpString.at(1);
+                    tmpChar = tmpString.at((col*4)+1);
                     int player = tmpChar;
-                    if (player > 47){
-                        caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
-                        if ((field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
-                            field->setOwnerID(player-8);
-                        }
-                    }else {
-                        caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
+                    caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
+                    if ((player > 47) && (field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
+                        field->setOwnerID(player-48);
                     }
                 }else if(tmpChar == 'R') {
                     if (caseMatrix[row/2][col] == nullptr){
@@ -272,8 +254,14 @@ void Map<FieldType>::display(){
     string color;
     Road* road;
     FieldType* field;
+    cout<<"    ";
+    for (int col=1; col<=numberOfCols; col++) {
+        printf( " %3s", (to_string(col)).c_str());
+    }
+    cout<<"\n";
     for (int row=0; row<((numberOfRows*2)+1); row++) {
         if (row == (numberOfRows*2)) {
+            cout<<"    ";
             for (int col=0; col<numberOfCols; col++) {
                 if((road = dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col])) && road->isOpen(Road::SOUTH)){
                     cout<<"+ ║ ";
@@ -283,6 +271,7 @@ void Map<FieldType>::display(){
             }
             cout<<"+"<<endl;
         }else if ((row % 2) == 0) {
+            cout<<"    ";
             for (int col=0; col<numberOfCols; col++) {
                 if((road = dynamic_cast<Road*>(caseMatrix[row/2][col])) && road->isOpen(Road::NORTH)){
                     cout<<"+ ║ ";
@@ -292,6 +281,7 @@ void Map<FieldType>::display(){
             }
             cout<<"+"<<endl;
         }else{
+            printf( "%3s ", (to_string((row/2)+1)).c_str());
             for (int col=0; col<numberOfCols; col++) {
                 if(((road = dynamic_cast<Road*>(caseMatrix[row/2][col]))) && road->isOpen(Road::WEST)){
                     cout<<"═";
