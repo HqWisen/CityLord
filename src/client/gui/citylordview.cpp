@@ -28,18 +28,8 @@ QPointF CityLordView::carToIso(int x, int y, int lagy = 0){
 
 
 void CityLordView::isoToLoc(QPointF position){
-    int posX,posY;
-    posX=position.x();
-    posY=position.y();
-
-    int hauteur=75;
-    int longueur=152;
-
-    int xDep=0;
-    int yDep=76;
-
-
-    //Isometric to Cartesian:
+    int posX=position.x();
+    int posY=position.y();
 
     int cartX = ((2*(posY-37) + posX )/2)/75; // 152;
     int cartY = (((2*posY - posX )/2)+37)/75; // 75;
