@@ -12,6 +12,7 @@ namespace update{
     void changeownerwithbuilding(CityLordClient*, SocketMessage);
     void build(CityLordClient*, SocketMessage);
     void destroy(CityLordClient*, SocketMessage);
+    void visitormove(CityLordClient*, SocketMessage);
 }
 
 #endif // UPDATE_HPP_

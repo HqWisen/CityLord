@@ -4,7 +4,8 @@ const std::map<std::string, update_ptr> Updater::updatemap = {
     {"changeowner", update::changeowner},
     {"changeownerwithbuilding", update::changeownerwithbuilding},
     {"build", update::build},
-    {"destroy", update::destroy}
+    {"destroy", update::destroy},
+    {"visitorMove", update::visitormove}
 
 };
 

@@ -77,6 +77,20 @@ std::vector<Field*> CityManager::getPurchasableFields(){
 	return catalog.getPurchasableFields();
 }
 
+//-------------------------------
+
+SocketMessage CityManager::visitorMove(Player* player, Location firstLocation, Location lastLocation){
+	SocketMessage update;
+	update.setTopic("visitormove");
+	update.set("firstlocation", firstLocation.toString());
+	update.set("lastlocation", lastLocation.toString());
+
+	return update;
+
+}
+
+//------------------------------
+
 
 SocketMessage CityManager::makePurchase(Player* player, Location location){
 	//Regarde si le joueur 1 a assez d'argent
