@@ -13,95 +13,120 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
-  <widget class="QLabel" name="timeLabel">
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>990</x>
-     <y>800</y>
-     <width>151</width>
-     <height>51</height>
+     <x>0</x>
+     <y>790</y>
+     <width>1152</width>
+     <height>71</height>
     </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>30</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>00 : 00</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="moneyLabel">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>800</y>
-     <width>191</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>25</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color:rgb(0, 220, 0)</string>
+    <string notr="true">#frame {border:4px ridge #2F2F2F; border-radius:25px; background-image:url(&quot;&quot;); background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #1C1C1C, stop: 0.4 #2F2F2F, stop:1 #5D5D5D)}</string>
    </property>
-   <property name="text">
-    <string>58673 $</string>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
    </property>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>810</y>
-     <width>521</width>
-     <height>41</height>
-    </rect>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QPushButton" name="buyButton">
-      <property name="text">
-       <string>Buy</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="buildButton">
-      <property name="text">
-       <string>Build</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="upgradeButton">
-      <property name="text">
-       <string>Upgrade</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="sellButton">
-      <property name="text">
-       <string>Sell</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="demolishButton">
-      <property name="text">
-       <string>Demolish</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>10</y>
+      <width>521</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="buyButton">
+       <property name="text">
+        <string>Buy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buildButton">
+       <property name="text">
+        <string>Build</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="upgradeButton">
+       <property name="text">
+        <string>Upgrade</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="sellButton">
+       <property name="text">
+        <string>Sell</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="demolishButton">
+       <property name="text">
+        <string>Demolish</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="moneyLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>191</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:rgb(0, 220, 0)</string>
+    </property>
+    <property name="text">
+     <string>58673 $</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="timeLabel">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>10</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>30</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{color:white}</string>
+    </property>
+    <property name="text">
+     <string>00 : 00</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

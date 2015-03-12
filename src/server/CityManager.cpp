@@ -13,11 +13,7 @@ CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), ci
 			}
 		}
 	}
-<<<<<<< HEAD
-    updater = new CityUpdater(getMap(), playerVector);
-=======
-    //updater = new CityUpdater(getMap());
->>>>>>> a3a0b7559a241a48a694d8286e93d1e47e569220
+    updater = new CityUpdater(getMap(), &playerVector);
 }
 
 CityManager::~CityManager(){
@@ -133,7 +129,7 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
                     update.setTopic("changeowner");
                     update.set("ownerid", std::to_string(player->getPlayerID()));
                     update.set("location", location.toString());
-                    sendUpdateToPlayers(update);
+                    updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
 					message.set("reason", "Field has been successfully purchased!");
 				}else{
