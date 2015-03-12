@@ -23,7 +23,7 @@ class Visitor{
 		void move();
 		//void moveGUI();
 		//void displayGUI();
-		//void enter(Building);
+		bool enter(Building*);
 		bool choose(Building*); //Building en paramètre
 		void setPath(std::vector<Location>*);
 };
