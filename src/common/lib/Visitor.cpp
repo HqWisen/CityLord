@@ -59,13 +59,12 @@ void Visitor::moveGUI(){
 }
 */
 
-/*
-bool Visitor::enter(Building build){
-	//if(build.addVisitor());
+
+bool Visitor::enter(Building* build){
+	//if(build->addVisitor());
 		//return true;
 	//return false
 }
-*/
 
 bool Visitor::choose(Building* build){  //Building build en parametre
 	if(true){   //preference = build.getType

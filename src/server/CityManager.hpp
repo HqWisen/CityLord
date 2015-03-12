@@ -50,6 +50,7 @@ class CityManager{
 		SocketMessage buildBuilding(Player*, Location, BuildingType);
 		SocketMessage upgradeBuilding(Player*, Location);
 		SocketMessage destroyBuilding(Player*, Location);
+        SocketMessage visitorMove(Player*, Location, Location);
         void sendUpdateToPlayers(SocketMessage);
 
 		std::vector<Location> giveWay();
