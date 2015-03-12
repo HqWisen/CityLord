@@ -9,28 +9,29 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr){
 }
 
 void CityUpdater::run(){
-    bool stop = false;
+    int dayRemaining = 3;
     unsigned long timer = 10;
     Timer t;
     t.start();
-    while(not stop){ 
-        while(true){
-            if(t.elapsedTime() < timer) {
+    while(dayRemaining!=0){
+        if(t.elapsedTime() < timer) {
+        }
+        else{
+            timer += 10;
+            updateCity();
+            if(t.elapsedTime() < 20){  //nouveau jour
+                 
             }
             else{
-                timer += 10;
-                updateCity();
-                if(t.elapsedTime() < 20){  //nouveau jour
-                    
-                }
-                else{
-                	makeOwnersPay();
-                    t.start();
-                    timer = 10;
-                }
+            	makeOwnersPay();
+                t.start();
+                timer = 10;
+                dayRemaining -= 1;
+                std::cout<<"Day : "<<dayRemaining<<std::endl;
             }
         }
     }
+    std::cout<<"fin du game"<<std::endl;
 }
 
 void CityUpdater::sendUpdateToPlayers(SocketMessage update){

@@ -34,6 +34,26 @@ std::vector<Field*> Catalog::getPurchasableFields(){
     return fieldVector;
 }
 
+void Catalog::putOfferOnMarket(Offer* offer){
+	offerVector.push_back(offer);
+}
+
+int Catalog::isOfferOnMarket(Field* concernedField){
+	for(int i = 0; i<offerVector.size(); i++){
+		if(offerVector[i]->getField() == concernedField){
+			return i;
+		}
+	}
+	return -1;
+}
+
+void Catalog::removeOffer(int index){
+	offerVector.erase(offerVector.begin()+index);
+}
+
+std::vector<Offer*> Catalog::getOffers(){
+	return offerVector;
+}	
 
 /*
 void Catalog::getOffer(Player player,Field* field, int money){

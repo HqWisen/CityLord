@@ -83,6 +83,11 @@ std::vector<Field*> CityManager::getPurchasableFields(){
 	return catalog.getPurchasableFields();
 }
 
+
+std::vector<Offer*> CityManager::getOffers(){
+	return catalog.getOffers();
+}
+
 //-------------------------------
 
 SocketMessage CityManager::visitorMove(Player* player, Location firstLocation, Location lastLocation){
@@ -96,7 +101,6 @@ SocketMessage CityManager::visitorMove(Player* player, Location firstLocation, L
 }
 
 //------------------------------
-
 
 SocketMessage CityManager::makePurchase(Player* player, Location location){
 	//Regarde si le joueur 1 a assez d'argent
@@ -187,7 +191,6 @@ SocketMessage CityManager::buildBuilding(Player* player, Location location, Buil
 }
 
 SocketMessage CityManager::upgradeBuilding(Player* player, Location location){
-
 	SocketMessage message;
     Field* concernedField;
     if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
@@ -260,37 +263,47 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
 }*/
 
 
-/*
-SocketMessage CityLordManager::makeTrade(Player& player1, Player& player2, Location coordinates, int offeredMoney){
+
+SocketMessage CityManager::makeTrade(Player* offeringPlayer, Player* purchasingPlayer, Location location){
 	//Regarde si le joueur 1 a assez d'argent
 	//	Si oui, l'échange est effectué et des messages sont envoyés
 	//	Si non, un message est envoyé au joueur 1
 	SocketMessage message = SocketMessage();
-	if(cityMap.getCase(coordinates).getType() == "Field"){;
-		Field *concernedField = cityMap.getCase(coordinates);
-		if(*concernedField.getOwner() == player2.number){
-			if(player1.getMoney() >= offeredMoney){
-				player1.setMoney(player1.getMoney() - offeredMoney);
-				player2.setMoney(player2.getMoney() + offeredMoney);
-				*concernedField.setOwner(player1);
-				message.setTopic(TOPIC_SUCCESS);
-				message.set("reason", "Trade has been successful!");
+	Field* concernedField;
+	int offerIndex;
+	if((dynamic_cast<Field*>(cityMap->getCase(location)))){;
+		concernedField = dynamic_cast<Field*>(cityMap->getCase(location));
+		if(concernedField->getOwner() == offeringPlayer){
+			offerIndex = catalog.isOfferOnMarket(concernedField);
+			if(offerIndex != -1){
+				int price = (catalog.getOffers())[offerIndex]->getPrice();
+				if(purchasingPlayer->getMoney() >= price){
+					offeringPlayer->setMoney(offeringPlayer->getMoney() + price);
+					purchasingPlayer->setMoney(purchasingPlayer->getMoney() - price);
+					concernedField->setOwner(purchasingPlayer);
+					catalog.removeOffer(offerIndex);
+					message.setTopic("success");
+					message.set("reason", "Trade has been successful!");
+				}else{
+					message.setTopic("failure");
+					message.set("reason", "The purchasing player does not have enough money!");
+				}
 			}else{
-				message.setTopic(TOPIC_FAILURE);
-				message.set("reason", "The purchasing player does not have enough money!");
+				message.setTopic("failure");
+				message.set("reason", "This Field has not been offered!");
 			}
 		}else{
-			message.setTopic(TOPIC_FAILURE);
-			message.set("reason", "The offering player does not have this case!");
+			message.setTopic("failure");
+			message.set("reason", "The offering player does not have this Field!");
 		}
 	}else{
-		message.setTopic(TOPIC_FAILURE);
+		message.setTopic("failure");
 		message.set("reason", "This is not a Field!");
 	}
-	return message;*
+	return message;
 }
 
-
+/*
 std::string showCatalog(){
 	//Envoie le statut du catalogue de la ville
 	std::string message = ""
