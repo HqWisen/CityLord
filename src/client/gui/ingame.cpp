@@ -6,8 +6,8 @@ InGame::InGame(QWidget* parent, ClientManager* cm) :
     DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this)){
 
     int ROWS, COLS;
-    ROWS = 50;
-    COLS = 50;
+    ROWS = 25;
+    COLS = 25;
 
     ui->setupUi(this);
     for(int row=0;row<ROWS;row++){

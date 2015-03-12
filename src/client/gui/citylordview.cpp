@@ -8,6 +8,7 @@ const int CityLordView::HEIGHT = 804;
 int px = 0, py = 0;
 QPointF lastPos;
 QPointF startMouse;
+QGraphicsPixmapItem* itemtest;
 
 CityLordView::CityLordView(QWidget* parent) :
     QGraphicsView(parent), scene(new QGraphicsScene(this)), BASE("src/resources/img/base.png"){
@@ -35,8 +36,8 @@ void CityLordView::addBaseOn(int row, int col){
 
 void CityLordView::addBar(){
 
-    QPixmap b("src/resources/img/barred.png");
-    QPixmap b1("src/resources/img/bar.png");
+    QPixmap b("src/resources/img/grass75_darkBlue.png");
+    QPixmap b1("src/resources/img/road.png");
     int height = BASE.height();
     int row, col;
     row = 8;
@@ -49,12 +50,13 @@ void CityLordView::addBar(){
     isoY = ((x + y) / 2)-b.height() + height;
     QGraphicsPixmapItem* item;
     item = scene->addPixmap(b);
+    itemtest = item;
     //item->setOffset(isoX, isoY);
-    item->setOffset(carToIso((col+0)*height, row*height, -b.height()+BASE.height()));
+    item->setOffset(carToIso((col+0)*height, (row+0)*height, -b.height()+BASE.height()));
 
     item = scene->addPixmap(b1);
     //item->setOffset(isoX, isoY);
-    item->setOffset(carToIso((col+1)*height, row*height, -b1.height()+BASE.height()));
+    item->setOffset(carToIso((col+0)*height, (row+1)*height, -b1.height()+BASE.height()));
 }
 
 void CityLordView::mousePressEvent(QMouseEvent * e){
@@ -67,6 +69,8 @@ void CityLordView::mousePressEvent(QMouseEvent * e){
 
 }
 void CityLordView::mouseReleaseEvent(QMouseEvent * e){
+    QPixmap b("src/resources/img/museum_purple.png");
+    itemtest->setPixmap(b);
 
     /*QPointF pt = mapToScene(e->pos());
     scale(1.2, 1.2);*/
