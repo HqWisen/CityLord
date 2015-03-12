@@ -1,9 +1,11 @@
 #include "CityUpdater.hpp"
+#include "UserManager.hpp"
 
-CityUpdater::CityUpdater(Map<Field>* map){
+CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*> playersVector){
     cityMap = map;
     spawn = map->getSpawnList();
     this->start();
+    playersList = playersVector;
 }
 
 void CityUpdater::run(){
@@ -31,6 +33,16 @@ void CityUpdater::run(){
     }
 }
 
+void CityUpdater::sendUpdateToPlayers(SocketMessage update){
+    Player* player;
+    for (std::vector<Player*>::iterator it = playersList.begin(); it != playersList.end(); it++){
+        player = *it;
+        if(player->isConnected()){
+            player->getUserManager()->sendUpdate(update);
+        }
+
+    }
+}
 
 
 void CityUpdater::makeOwnersPay(){

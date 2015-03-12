@@ -41,6 +41,7 @@ class CityManager{
         int getNextID();
 		void addPlayer(Player*);
         Map<Field>* getMap();
+        //std::vector<Player*>* getPlayerVector();
         User* getCreator();
         std::string getName();
         bool canJoin(Player*);
