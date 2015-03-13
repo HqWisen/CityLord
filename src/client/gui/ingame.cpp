@@ -71,5 +71,6 @@ void InGame::disableAllButtons(){
 
 void InGame::on_exitButton_clicked()
 {
-    clientManager->setCurrentWidget(ClientManager::MAINMENU);
+    clientManager->setCurrentWidget(ClientManagerGUI::MAINMENU);
+
 }
