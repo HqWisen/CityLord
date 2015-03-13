@@ -31,10 +31,6 @@ QPointF CityLordView::carToIso(Location location, const QPixmap& pixmap){
     return QPointF(isoX, isoY);
 }
 
-<<<<<<< HEAD
-/*void CityLordView::addBaseOn(int row, int col){
-=======
-
 void CityLordView::isoToLoc(QPointF position){
     int posX=position.x();
     int posY=position.y();
@@ -47,9 +43,8 @@ void CityLordView::isoToLoc(QPointF position){
     //return Location(cartX,cartY);
 }
 
-
+/*
 void CityLordView::addBaseOn(int row, int col){
->>>>>>> 5847d4ddef5642f1100f4cf896ab4d54b4c3616e
     int height = BASE.height();
     QGraphicsPixmapItem* item;
     item = scene->addPixmap(BASE);
@@ -87,12 +82,9 @@ void CityLordView::mousePressEvent(QMouseEvent * e){
     scale(1.2, 1.2);
     startMouse = mapToScene(e->pos());
     std::cout<<"PRESSED"<<" X = "<< startMouse.x() <<" Y = "<< startMouse.y()<<std::endl;
-<<<<<<< HEAD
     //rotate(-10);*/
-=======
     isoToLoc(startMouse);
-    //rotate(-10);
->>>>>>> 5847d4ddef5642f1100f4cf896ab4d54b4c3616e
+
 
 }
 void CityLordView::mouseReleaseEvent(QMouseEvent * e){
