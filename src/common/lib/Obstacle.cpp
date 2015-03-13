@@ -9,5 +9,5 @@ std::string Obstacle::print(){
     return " O ";
 }
 std::string Obstacle::getImageName(){
-    return "tree";
+    return "obstacle";
 }

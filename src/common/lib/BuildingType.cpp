@@ -38,7 +38,7 @@ const BuildingType BuildingType::MUSEUM = BuildingType("MUSEUM",\
 	 85000, 30000, 90, 600, 0,\
 		3, 10, 18, 15, 38500, 37000);
 
-const BuildingType BuildingType::NIGHT_CLUB = BuildingType("NIGHT CLUB",\
+const BuildingType BuildingType::NIGHT_CLUB = BuildingType("NIGHTCLUB",\
 	 90000, 35000, 50, 700, 0,\
 	 	5, 21, 6, 69, 49500, 41000);
 

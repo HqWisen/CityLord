@@ -162,8 +162,8 @@ void CityLordView::keyPressEvent(QKeyEvent *event)
 }
 
 const char* CityLordView::getImagePath(std::string imagename){
-    std::string path = "src/resources/img/"+imagename+".png";
-    std::cout<<path.c_str()<<std::endl;
+    std::string path = QCoreApplication::applicationDirPath().toStdString()+"/src/resources/img/"+imagename+".png";
+
     return path.c_str();
 }
 
