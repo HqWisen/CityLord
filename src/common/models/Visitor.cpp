@@ -13,7 +13,7 @@ Location Visitor::getLoc(){
 
 //void Visitor::displayGUI(){}
 
-void Visitor::setPath(std::vector<Location>* way){ 
+void Visitor::setPath(std::vector<Location> way){ 
 	path = way;
 }
 

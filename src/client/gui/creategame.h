@@ -9,7 +9,7 @@ class CreateGame;
 
 class CreateGame : public DefaultWidget{
     Q_OBJECT
-    static const std::string MAP1PICTURE, MAP2PICTURE;
+    static const std::string MAP1PICTURE, MAP2PICTURE, MAP3PICTURE;
     static const std::string CLICKCOLOR, UNCLICKCOLOR;
 public:
     CreateGame(QWidget*, ClientManager*);
@@ -18,6 +18,7 @@ public:
 private slots:
     void on_map1Button_clicked();
     void on_map2Button_clicked();
+    void on_map3Button_clicked();
     void on_createButton_clicked();
     void on_cancelButton_clicked();
 private:

@@ -152,7 +152,7 @@ Map<FieldType>::Map(string fileName){
             }else if (tmpChar == 'O') {
                 caseMatrix[row/2][0] = new Obstacle(Location(row/2, 0));
             }else if (tmpChar == 'S') {
-                caseMatrix[row/2][0] = new BuildingSpawn(Location(row/2, 0), findSpawnPoint(Location(row/2, 0)));
+                caseMatrix[row/2][0] = new BuildingSpawn(Location(row/2, 0));
                 spawnList.push_back(dynamic_cast<BuildingSpawn*>(caseMatrix[row/2][0]));
             }else if (tmpChar == 'F'){
                 tmpChar = tmpString.at(1);
@@ -201,7 +201,7 @@ Map<FieldType>::Map(string fileName){
                 }else if (tmpChar == 'O') {
                     caseMatrix[row/2][col] = new Obstacle(Location(row/2, col));
                 }else if (tmpChar == 'S') {
-                    caseMatrix[row/2][col] = new BuildingSpawn(Location(row/2, col), findSpawnPoint(Location(row/2, col)));
+                    caseMatrix[row/2][col] = new BuildingSpawn(Location(row/2, col));
                     spawnList.push_back(dynamic_cast<BuildingSpawn*>(caseMatrix[row/2][col]));
                 }else if (tmpChar == 'F'){
                     tmpChar = tmpString.at((col*4)+1);
@@ -223,6 +223,12 @@ Map<FieldType>::Map(string fileName){
                 caseMatrix[row/2][numberOfCols-1] = new BorderSpawn(Location(row/2, numberOfCols-1), dynamic_cast<Road*>(caseMatrix[row/2][numberOfCols-1]));
                 spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[row/2][numberOfCols-1]));
             }
+        }
+    }
+    BuildingSpawn* buildingSpawn;
+    for (int i=0; i<spawnList.size(); i++) {
+        if ((buildingSpawn = dynamic_cast<BuildingSpawn*>(spawnList[i]))) {
+            buildingSpawn->setSpawnPoint(findSpawnPoint(Location(buildingSpawn->getLocation().getRow(), buildingSpawn->getLocation().getCol())));
         }
     }
     file.close();
@@ -351,6 +357,7 @@ Location Map<FieldType>::findSpawnPoint(Location location){
             return road->getLocation();
         }
     }
+    cout<<"WARNING BAD SPAWN"<<endl;
     return location;
 }
 
@@ -440,19 +447,15 @@ int Map<FieldType>::getMaxVisitors(){
     return visitorMax;
 }
 
-/*template <typename FieldType>
+template <typename FieldType>
 bool Map<FieldType>::isFull(){
-    int numberOfVisitors = 0;
     for(int i=0; i<visitorMax; i++){
-        if(visitorList[i] != nullptr){
-            numberOfVisitors++;
+        if(visitorList[i] == nullptr){
+            return false;
         }
     }
-    if(numberOfVisitors==visitorMax){
-        return true;
-    return false;
     return true;
-}*/
+}
 
 #endif // MAP_HPP_
 
