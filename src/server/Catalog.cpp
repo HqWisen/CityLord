@@ -39,7 +39,7 @@ void Catalog::putOfferOnMarket(Offer* offer){
 }
 
 int Catalog::isOfferOnMarket(Field* concernedField){
-	for(int i = 0; i<offerVector.size(); i++){
+	for(unsigned int i = 0; i<offerVector.size(); i++){
 		if(offerVector[i]->getField() == concernedField){
 			return i;
 		}

@@ -49,7 +49,7 @@ class CityUpdater : public Thread{
     unsigned popTimer = 8;
     unsigned dayTimer = 288;
     bool night = false;
-	public:
+    public:
         CityUpdater(Map<Field>*,std::vector<Player*>*);
         void run() override;
         void generateVisitors();
@@ -58,7 +58,9 @@ class CityUpdater : public Thread{
         void makeOwnersPay();
         void updateCity();
         void createPath(Location start, Location end, std::vector<Location> &path);
-        SocketMessage visitorMove(Location, Location);
+        SocketMessage visitorCreate(int, Location);
+        SocketMessage visitorMove(int, Location, Location);
+        SocketMessage visitorRemove(int);
         void sendUpdateToPlayers(SocketMessage);
         int getTimeRemaining();
         int getRealTimeRemaining();

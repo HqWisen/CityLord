@@ -1,6 +1,5 @@
 #include "update.hpp"
 
-
 void UpdateMethods::changeowner(ClientManager* client, SocketMessage update){
     Location location = Location::parse(update.get("location"));
     int ownerid = std::stoi(update.get("ownerid"));
@@ -33,12 +32,28 @@ void UpdateMethods::destroy(ClientManager* client, SocketMessage update){
     client->repaint();
 }
 
+void UpdateMethods::visitorcreate(ClientManager* client, SocketMessage update){
+    int id = atoi(update.get("visitorid").c_str());
+    Location spawnLocation = Location::parse(update.get("spawnlocation"));
+    //client->getMap()->addVisitor(id, spawnLocation);
+    //std::cout<<"Visitor "<<id<<" added"<<std::endl;
+}
+
 void UpdateMethods::visitormove(ClientManager* client, SocketMessage update){
-    Location firstLocation = Location::parse(update.get("firstLocation"));
-    Location lastLocation = Location::parse(update.get("lastLocation"));
+    int id = atoi(update.get("visitorid").c_str());
+    Location firstLocation = Location::parse(update.get("firstlocation"));
+    Location lastLocation = Location::parse(update.get("lastlocation"));
+    //client->getMap()->getVisitor(id)->getLoc().setRow(lastLocation.getRow());
+    //client->getMap()->getVisitor(id)->getLoc().setCol(lastLocation.getCol());
+    //std::cout<<"Visitor "<<id<<" moved"<<std::endl;
     //Visitor.moveGui ??
 }
 
+void UpdateMethods::visitorremove(ClientManager* client, SocketMessage update){
+    int id = atoi(update.get("visitorid").c_str());
+    client->getMap()->deleteVisitor(id);
+   // std::cout<<"Visitor "<<id<<" removed"<<std::endl;
+}
 
 
 
