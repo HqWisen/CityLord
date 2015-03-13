@@ -60,7 +60,7 @@ bool Building::addVisitor(){
 }
 
 void Building::removeVisitor(){
-	if{visitorCounter > 0{
+	if(visitorCounter > 0){
 		visitorCounter -= 1;
 	}
 }
