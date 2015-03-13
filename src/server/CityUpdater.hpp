@@ -46,7 +46,7 @@ class CityUpdater : public Thread{
     Timer t;
     unsigned moveTimer = 1;
     unsigned dayRemaining = 3;
-    unsigned popTimer = 8;
+    unsigned spawnTimer = 8;
     unsigned dayTimer = 288;
     bool night = false;
     public:

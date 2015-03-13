@@ -18,21 +18,14 @@ void Visitor::setPath(std::vector<Location> way){
 }
 
 void Visitor::move(){
-	count += 1;
-	//TEST
-	/*
-	Location test = currentLocation;
-	int x = test.getRow();
-	int y = test.getCol();
-	std::cout<<"-----"<<std::endl;
-	std::cout<<"de "<< x << "-" << y <<std::endl;
-	currentLocation = path[count];
-	test = currentLocation;
-	x = test.getRow();
-	y = test.getCol();
-	std::cout<<"à "<< x << "-" << y <<std::endl;
-	std::cout<<"-----"<<std::endl;
-	*/
+	currentLocation.setRow(path[0].getRow());
+	currentLocation.setCol(path[0].getCol());
+	std::cout<<"Visitor moved to "<<path[0].getRow()<<" . "<<path[0].getCol()<<std::endl;
+	path.erase(path.begin(),path.begin()+1);
+}
+
+bool Visitor::hasReachedEnd(){
+	return (path.size() == 0);
 }
 
 /*
