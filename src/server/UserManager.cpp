@@ -14,11 +14,12 @@ const std::map<std::string, request_ptr> UserManager::requestmap = {
 	{"buy", request::buy},
 	{"build", request::build},
 	{"upgrade", request::upgrade},
-	{"destroy", request::destroy}
+    {"destroy", request::destroy},
+    {"mapfullupdate", request::mapfullupdate}
 };
 
 UserManager::UserManager(CityLordServer* cserver, ClientSocket socket, ServerSocket updateClientSocket) : server(cserver), clientSocket(socket), \
-    updateSocket(nullptr){
+    updateSocket(nullptr), mymutex(PTHREAD_MUTEX_INITIALIZER){
     SocketMessage answer;
     answer.setTopic("update");
     sendAnswer(answer);
@@ -94,7 +95,10 @@ void UserManager::sendAnswer(SocketMessage answer){
 }
 
 void UserManager::sendUpdate(SocketMessage update){
+    pthread_mutex_lock(&mymutex);
     updateSocket->write(update.toString());
+    updateSocket->read(); // wait for finish signal
+    pthread_mutex_unlock(&mymutex);
 }
 
 

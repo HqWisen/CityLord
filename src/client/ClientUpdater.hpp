@@ -22,6 +22,7 @@ class ClientUpdater : public Thread{
         ClientUpdater(ClientManager*, Socket);
         void run() override;
         void recvUpdate(SocketMessage&);
+        void sendAnswer(SocketMessage);
 
 };
 

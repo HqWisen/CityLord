@@ -172,15 +172,41 @@ namespace request{
 		return answer;
 	}
 	
-	SocketMessage destroy(CityLordServer* server, UserManager* userManager, SocketMessage message){
-		SocketMessage answer;
+    SocketMessage destroy(CityLordServer* server, UserManager* userManager, SocketMessage message){
+        SocketMessage answer;
         int row = std::stoi(message.get("row"));
         int col = std::stoi(message.get("col"));
-		CityManager* cityManager = userManager->getActiveCity();
-		Player* player = userManager->getActivePlayer();
+        CityManager* cityManager = userManager->getActiveCity();
+        Player* player = userManager->getActivePlayer();
         answer = cityManager->destroyBuilding(player, Location(row, col));
-		return answer;
-	}
+        return answer;
+    }
+
+    SocketMessage mapfullupdate(CityLordServer* server, UserManager* userManager, SocketMessage message){
+        SocketMessage answer, update;
+        Map<Field>* map = userManager->getActiveCity()->getMap();
+        Field* field;
+        for(int row=0;row<map->getNumberOfRows();row++){
+            for(int col=0;col<map->getNumberOfCols();col++){
+                if((field = dynamic_cast<Field*>(map->getCase(Location(row, col))))){
+                    if(field->hasOwner()){
+                        update.setTopic("changeowner");
+                        update.set("ownerid", std::to_string(field->getOwnerID()));
+                        update.set("location", field->getLocation().toString());
+                        userManager->sendUpdate(update);
+                    }
+                    if(field->hasBuilding()){
+                        update.setTopic("build");
+                        update.set("location", field->getLocation().toString());
+                        update.set("typeindex", std::to_string(BuildingType::getIndexByType(field->getBuilding()->getType())));
+                        update.set("level", std::to_string(field->getBuilding()->getLevel()));
+                        userManager->sendUpdate(update);
+                    }
+                }
+            }
+        }
+        return answer;
+    }
 
 }
 

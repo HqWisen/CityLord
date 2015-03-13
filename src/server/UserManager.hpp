@@ -1,6 +1,7 @@
 #ifndef USERMANAGER_HPP_
 #define USERMANAGER_HPP_
 
+#include <pthread.h>
 #include "../common/socket/ClientSocket.hpp"
 #include "../common/socket/ServerSocket.hpp"
 #include "../common/socket/SocketMessage.hpp"
@@ -26,6 +27,7 @@ class UserManager : public Thread{
     ClientSocket* updateSocket;
     User* user = nullptr;
     CityManager* cityManager = nullptr;
+    pthread_mutex_t mymutex;
 	public:
         UserManager(CityLordServer*, ClientSocket, ServerSocket);
 		void run() override;
