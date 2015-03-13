@@ -139,12 +139,14 @@ void CityUpdater::run(){
     1 seconde = 5 min dans le jeu
     */
     unsigned timer = popTimer;
+    unsigned timer2 = moveTimer;
     t.start();
     while(dayRemaining!=0){
-        if(t.elapsedTime() < moveTimer){
+        if(t.elapsedTime() < timer2){
 
         }
         else{
+            timer2 += moveTimer;
             makeVisitorsAdvance();
         }
         if(t.elapsedTime() < timer) {
