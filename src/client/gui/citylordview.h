@@ -7,32 +7,36 @@
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include "../../common/lib/Case.hpp"
 
 class CityLordView : public QGraphicsView{
 
 static const int WIDTH, HEIGHT;
 
 QGraphicsScene* scene;
-const QPixmap BASE;
+const QPixmap BASE, OUT;
 
 public:
     CityLordView(QWidget*);
     ~CityLordView();
     void addBaseOn(int, int);
     void addBar();
-    //void addBaseOn(QPointF);
     void mousePressEvent(QMouseEvent*) override;
     void mouseReleaseEvent(QMouseEvent*) override;
     void mouseMoveEvent(QMouseEvent*) override;
     void wheelEvent(QWheelEvent*) override;
-    //void contextMenuPolicy()Event(QContextMenuEvent*) override;
-    //void mouse
     void keyPressEvent(QKeyEvent *event);
+    const char* getImagePath(std::string);
+    void display(Case*);
 
 private:
-    QPointF carToIso(int, int, int);
+    QPointF carToIso(Location, const QPixmap&);
     //QPointF isoToCar(int, int);
-
+private:
+    //QPixmap pixmapArray[20][20];
+    int px, py;
+    QPointF lastPos;
+    QPointF startMouse;
 };
 
 #endif // CITYLORDVIEW_H

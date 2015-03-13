@@ -5,39 +5,44 @@
 const int CityLordView::WIDTH = 1152;
 const int CityLordView::HEIGHT = 804;
 
-int px = 0, py = 0;
-QPointF lastPos;
-QPointF startMouse;
-QGraphicsPixmapItem* itemtest;
-
-CityLordView::CityLordView(QWidget* parent) :
-    QGraphicsView(parent), scene(new QGraphicsScene(this)), BASE("src/resources/img/base.png"){
+CityLordView::CityLordView(QWidget* parent):
+    QGraphicsView(parent), scene(new QGraphicsScene(this)), BASE(getImagePath("base")){
     resize(WIDTH, HEIGHT);
     setScene(scene);
     setSceneRect(-((WIDTH/2)-(BASE.width()/2)), 0, WIDTH-2, HEIGHT-2);
-    this->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-    this->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+    this->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 CityLordView::~CityLordView(){
     delete scene;
 }
 
-QPointF CityLordView::carToIso(int x, int y, int lagy = 0){
+/*QPointF CityLordView::carToIso(int x, int y, int lagy = 0){
     return QPointF(x-y, ((x+y)/2) + lagy);
+}*/
+
+QPointF CityLordView::carToIso(Location location, const QPixmap& pixmap){
+    int x, y, lag, isoX, isoY;
+    x = location.getCol()*BASE.height();
+    y = location.getRow()*BASE.height();
+    lag = BASE.height() - pixmap.height();
+    isoX = x-y;
+    isoY = ((x+y)/2) + lag;
+    return QPointF(isoX, isoY);
 }
 
-void CityLordView::addBaseOn(int row, int col){
+/*void CityLordView::addBaseOn(int row, int col){
     int height = BASE.height();
     QGraphicsPixmapItem* item;
     item = scene->addPixmap(BASE);
     item->setOffset(carToIso(col*height, row*height));
-}
+}*/
 
-void CityLordView::addBar(){
+/*void CityLordView::addBar(){
 
     QPixmap b("src/resources/img/grass75_darkBlue.png");
-    QPixmap b1("src/resources/img/road.png");
+    QPixmap b1("src/resources/img/bar_purple.png");
     int height = BASE.height();
     int row, col;
     row = 8;
@@ -50,36 +55,38 @@ void CityLordView::addBar(){
     isoY = ((x + y) / 2)-b.height() + height;
     QGraphicsPixmapItem* item;
     item = scene->addPixmap(b);
-    itemtest = item;
     //item->setOffset(isoX, isoY);
     item->setOffset(carToIso((col+0)*height, (row+0)*height, -b.height()+BASE.height()));
 
     item = scene->addPixmap(b1);
     //item->setOffset(isoX, isoY);
     item->setOffset(carToIso((col+0)*height, (row+1)*height, -b1.height()+BASE.height()));
-}
+}*/
 
 void CityLordView::mousePressEvent(QMouseEvent * e){
 
+    startMouse = mapToScene(e->pos());
     /*QPointF pt = mapToScene(e->pos());
-    scale(1.2, 1.2);*/
+    scale(1.2, 1.2);
     startMouse = mapToScene(e->pos());
     std::cout<<"PRESSED"<<" X = "<< startMouse.x() <<" Y = "<< startMouse.y()<<std::endl;
-    //rotate(-10);
+    //rotate(-10);*/
 
 }
 void CityLordView::mouseReleaseEvent(QMouseEvent * e){
-    QPixmap b("src/resources/img/museum_purple.png");
+    /*QPixmap b("src/resources/img/museum_purple.png");
     itemtest->setPixmap(b);
 
-    /*QPointF pt = mapToScene(e->pos());
-    scale(1.2, 1.2);*/
+    QPointF pt = mapToScene(e->pos());
+    scale(1.2, 1.2);
     std::cout<<"RELEASE"<<std::endl;
-    //rotate(-10);
+    rotate(-10);*/
 
 }
 
 void CityLordView::mouseMoveEvent(QMouseEvent * e){
+
+
 
     QPointF currentPos = mapToScene(e->pos());
     if(startMouse.x() < currentPos.x()){
@@ -102,14 +109,6 @@ void CityLordView::mouseMoveEvent(QMouseEvent * e){
     }
     lastPos = currentPos;
     setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
-
-    //scale(1.2, 1.2);
-    std::cout<<"MOVED X = "<<px<<std::endl;
-    std::cout<<"MOVED Y = "<<py<<std::endl;
-    //std::cout<<rect().x()<<std::endl;
-    //rect().;
-    //rotate(-10);
-
 }
 
 void CityLordView::wheelEvent(QWheelEvent* e){
@@ -124,11 +123,6 @@ void CityLordView::wheelEvent(QWheelEvent* e){
 
 
 }
-
-/*
-void CityLordView::contextMenuEvent(QContextMenuEvent* e){
-    std::cout<<"SOUFIANE"<<std::endl;
-}*/
 
 void CityLordView::keyPressEvent(QKeyEvent *event)
 {
@@ -151,4 +145,20 @@ void CityLordView::keyPressEvent(QKeyEvent *event)
             break;
     }
     setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
+}
+
+const char* CityLordView::getImagePath(std::string imagename){
+    std::string path = "src/resources/img/"+imagename+".png";
+    std::cout<<path.c_str()<<std::endl;
+    return path.c_str();
+}
+
+void CityLordView::display(Case* caze){
+    QPixmap pixmap(getImagePath(caze->getImageName()));
+    QGraphicsPixmapItem* item;
+    item = scene->addPixmap(pixmap);
+    item->setOffset(carToIso(caze->getLocation(), pixmap));
+
+
+
 }

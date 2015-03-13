@@ -16,6 +16,7 @@ class Road : public Case{
 		Road(Location);
 		~Road() = default;
         std::string print() override;
+        std::string getImageName() override;
         void open(direction_type);
         bool isOpen(direction_type);
         std::string toString();

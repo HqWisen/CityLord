@@ -2,6 +2,7 @@
 #define FIELD_HPP_
 
 #include <sstream>
+#include <algorithm>
 #include "Case.hpp"
 #include "BuildingType.hpp"
 #include "Player.hpp"
@@ -16,6 +17,7 @@ class BasicField : public Case{
         BasicField(Location);
         virtual ~BasicField() = default;
         string print() override;
+
         //void buildBuilding(string);
         void buildBuilding(BuildingType, int level = 1);
         void destroyBuilding();
@@ -26,6 +28,7 @@ class BasicField : public Case{
         virtual int getOwnerID() = 0;
         virtual bool hasOwner() = 0;
         string getOwnerColor();
+        std::string getImageName() override;
 };
 
 class Field : public BasicField{

@@ -43,7 +43,11 @@ const BuildingType BuildingType::NIGHT_CLUB = BuildingType("NIGHT CLUB",\
 	 	5, 21, 6, 69, 49500, 41000);
 
 const BuildingType BuildingType::SHOP = BuildingType("SHOP",\
-	 50000, 15000, 40, 200, 0,\
-		2, 8, 18, 20, 25500, 19000);
+     50000, 15000, 40, 200, 0,\
+        2, 8, 18, 20, 25500, 19000);
 
-const BuildingType BuildingType::types[] = {BuildingType::BAR, BuildingType::MUSEUM, BuildingType::NIGHT_CLUB, BuildingType::SHOP};
+const BuildingType BuildingType::HOTEL = BuildingType("HOTEL",\
+     110000, 35000, 100, 450, 0,\
+        12, 0, 24, 100, 40000, 20000);
+
+const BuildingType BuildingType::types[] = {BuildingType::BAR, BuildingType::MUSEUM, BuildingType::NIGHT_CLUB, BuildingType::SHOP, BuildingType::HOTEL};

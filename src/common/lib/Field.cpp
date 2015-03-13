@@ -62,6 +62,30 @@ string BasicField::print(){
     }
 }
 
+string BasicField::getImageName(){
+    std::string buildingName;
+    if(hasBuilding()){
+       buildingName = building->getType().buildingName;
+       std::transform(buildingName.begin(), buildingName.end(), buildingName.begin(), ::tolower);
+        return buildingName;
+    }else{
+        return "base";
+    }
+    /*if(hasOwner()){
+        if(hasBuilding()){
+            return buildingName + "_" + Player::COLORNAME[getOwnerID()];
+        }else{
+            return "base" + "_" + Player::COLORNAME[getOwnerID()];
+        }
+    }else{
+        if(hasBuilding()){
+            return buildingName;
+        }else{
+            return "base";
+        }
+    }*/
+}
+
 void BasicField::buildBuilding(BuildingType buildingType, int level){
     building = new Building(buildingType, level);
 }

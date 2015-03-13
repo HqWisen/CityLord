@@ -4,18 +4,18 @@
 
 InGame::InGame(QWidget* parent, ClientManager* cm) :
     DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this)){
-
-    int ROWS, COLS;
-    ROWS = 25;
-    COLS = 25;
-
+    clientManager->setMapView(view);
     ui->setupUi(this);
+
+    /*int ROWS, COLS;
+    ROWS = 20;
+    COLS = 20;
     for(int row=0;row<ROWS;row++){
         for(int col=0;col<COLS;col++){
             view->addBaseOn(row, col);
         }
     }
-    view->addBar();
+    view->addBar();*/
 }
 
 InGame::~InGame(){
@@ -29,7 +29,7 @@ void InGame::refresh(){
 
 void InGame::updateMoney(int amount){
     if(amount>0){ui->moneyLabel->setStyleSheet("QLabel { color:rgb(0, 220, 0); }");}
-    else{ui->moneyLabel->setStyleSheet("QLabel { color : red; }");};\
+    else{ui->moneyLabel->setStyleSheet(ui->moneyLabel->styleSheet() + "QLabel { color : red; }");};\
     std::ostringstream moneyStr;
     moneyStr << amount << " $";
     ui->moneyLabel->setText(QString::fromStdString(moneyStr.str()));

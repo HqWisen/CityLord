@@ -15,6 +15,7 @@ using namespace std;
  * \033[1;46m light blue  \033[1;47m  white
 */
 const string Player::COLOR[8] = {"\033[1;40m", "\033[1;41m", "\033[1;42m", "\033[1;43m", "\033[1;44m", "\033[1;45m", "\033[1;46m", "\033[1;47m"};
+const string Player::COLORNAME[8] = {"darkgrey", "red", "green", "yellow", "darkblue", "purple", "lightblue", "white"};
 
 Player::Player(int number, string nn){
 	playerID = number;

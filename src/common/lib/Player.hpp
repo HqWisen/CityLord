@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 #include "Location.hpp"
-//#include "City.hpp"
 
 using namespace std;
 
@@ -24,7 +23,7 @@ class Player{
     bool connected;
     UserManager* userManager;
 public:
-    static const string COLOR[8];
+    static const string COLOR[8], COLORNAME[8];
 public:
 	Player(int, string);
 	int getPlayerID();

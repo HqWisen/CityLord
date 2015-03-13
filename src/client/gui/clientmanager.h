@@ -5,6 +5,8 @@
 #include <QVBoxLayout>
 #include <map>
 #include <string>
+#include "citylordview.h"
+#include "../../common/lib/Map.hpp"
 #include "../../common/socket/ConnectionSocket.hpp"
 #include "../../common/socket/SocketMessage.hpp"
 
@@ -15,6 +17,7 @@ class DefaultWidget;
 class ClientManager{
 public:
     static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INGAME, CREATEGAME, JOINGAME;
+    static const int SQUAREMAPSIZE;
 public:
     ClientManager(char*, int);
     ~ClientManager();
@@ -22,6 +25,8 @@ public:
     DefaultWidget* get(key_type);
     bool alreadySet(key_type);
     void setCurrentWidget(key_type);
+    void buildMap(std::string);
+    void setMapView(CityLordView*);
     QVBoxLayout* getLayout();
     void setRequest(std::string);
     void addInfo(std::string, std::string);
@@ -38,6 +43,8 @@ private:
     QStackedWidget* stackedWidget;
     QVBoxLayout* layout;
     std::map<key_type, DefaultWidget*> pages;
+    Map<ClientField>* map;
+    CityLordView* mapView;
     ConnectionSocket socket;
     ConnectionSocket updateSocket;
     SocketMessage message;

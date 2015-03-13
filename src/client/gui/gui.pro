@@ -44,7 +44,7 @@ QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic -Wno-write-strings
 
 DESTDIR = ../../../bin
 
-LIBS += $$DESTDIR/socket.a
+LIBS += $$DESTDIR/socket.a $$DESTDIR/lib.a
 
 OBJECTS_DIR = $$DESTDIR/gui/
 MOC_DIR = $$DESTDIR/gui/.moc

@@ -8,7 +8,8 @@ class BuildingSpawn : public Case, public Spawn{
 	public:
 		BuildingSpawn(Location, Location);
         std::string print() override;
-		~BuildingSpawn() = default;
+        std::string getImageName() override;
+        ~BuildingSpawn() = default;
 		//Location spawn() override;
 		//void despawn(Visitor*) override;
 };

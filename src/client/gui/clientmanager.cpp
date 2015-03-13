@@ -8,9 +8,11 @@ const key_type ClientManager::INGAME = 3;
 const key_type ClientManager::CREATEGAME = 4;
 const key_type ClientManager::JOINGAME = 5;
 
+const int ClientManager::SQUAREMAPSIZE = 20;
+
 ClientManager::ClientManager(char* hostname, int port) :
     stackedWidget(new QStackedWidget), layout(new QVBoxLayout), pages(), \
-    socket(hostname, port),  updateSocket(hostname, port+1), message(){
+    map(nullptr), socket(hostname, port),  updateSocket(hostname, port+1), message(){
 
     SocketMessage updateMessage;
     socket.connectHost();
@@ -28,6 +30,7 @@ ClientManager::ClientManager(char* hostname, int port) :
 }
 
 ClientManager::~ClientManager(){
+    delete map;
     // FIXME SEGMENTION FAULT
     //delete layout;
     //delete stackedWidget;
@@ -68,6 +71,19 @@ void ClientManager::setCurrentWidget(key_type key){
 
 QVBoxLayout* ClientManager::getLayout(){
     return layout;
+}
+
+void ClientManager::buildMap(std::string filename){
+    map = new Map<ClientField>(filename);
+    for(int row=0;row<map->getNumberOfRows();row++){
+        for(int col=0;col<map->getNumberOfCols();col++){
+            mapView->display(map->getCase(Location(row, col)));
+        }
+    }
+}
+
+void ClientManager::setMapView(CityLordView* view){
+    mapView = view;
 }
 
 void ClientManager::setRequest(std::string request){

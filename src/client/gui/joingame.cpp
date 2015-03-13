@@ -76,7 +76,6 @@ void JoinGame::on_joinButton_clicked(){
             QModelIndex index = selected.at(i);
             choice = index.row();
         }
-        std::cout<<"CHOICE = "<<choice<<std::endl;
         clientManager->setRequest("joincity");
         clientManager->addInfo("cityid", std::to_string(choice));
         clientManager->sendRequestAndRecv();
@@ -84,12 +83,7 @@ void JoinGame::on_joinButton_clicked(){
             ui->errorLabel->setText(clientManager->getFailureReason().c_str());
         }else{
             clientManager->setCurrentWidget(ClientManager::INGAME);
-            // TODO CREATE MAP
-            //map = new Map<ClientField>(answer.get("filename"));
-            /*std::string path = "src/resources/tmp/out.txt";
-            Map<ClientField>::parseMap(path, answer.get("mapstring"));
-            map = new Map<ClientField>(path);*/
-           // map = new Map<ClientField>(answer.get("filename"));
+            clientManager->buildMap(clientManager->getInfo("filename"));
         }
     }
 

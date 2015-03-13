@@ -15,6 +15,11 @@ std::string Road::print(){
     //return toString();
 }
 
+std::string Road::getImageName(){
+    return "road";
+    //return toString();
+}
+
 // ╬ ╝ ═ ║ ╚ ╠ ╣ ╔ ╗ ╦ ╩ □
 
 void Road::open(direction_type dir){

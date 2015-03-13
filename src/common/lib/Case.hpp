@@ -14,6 +14,7 @@ class Case{
         void setLocation(Location);
         virtual ~Case() = default;
         virtual std::string print() = 0;
+        virtual std::string getImageName() = 0;
 };
 
 #endif // CASE_HPP_

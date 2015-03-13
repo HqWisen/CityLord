@@ -8,6 +8,7 @@ class Obstacle: public Case{
 		Obstacle(Location);
 		~Obstacle() = default;
         std::string print() override;
+        std::string getImageName() override;
 };
 
 #endif // OBSTACLE_HPP_

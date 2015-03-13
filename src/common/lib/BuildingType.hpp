@@ -13,7 +13,8 @@ class BuildingType{
 		static const BuildingType BAR;
 		static const BuildingType NIGHT_CLUB;
 		static const BuildingType SHOP;
-		static const BuildingType MUSEUM;
+        static const BuildingType MUSEUM;
+        static const BuildingType HOTEL;
 
         std::string buildingName;
 		int constructionCost;

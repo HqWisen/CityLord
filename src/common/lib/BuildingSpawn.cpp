@@ -5,7 +5,10 @@ BuildingSpawn::BuildingSpawn(Location location, Location spawnRoad) : Case(locat
 }
 
 std::string BuildingSpawn::print(){
-	return " S ";
+    return " S ";
+}
+std::string BuildingSpawn::getImageName(){
+    return "metro";
 }
 
 //Visitor* BuildingSpawn::spawn() {return nullptr;}

@@ -6,5 +6,8 @@ Obstacle::Obstacle(Location location) : Case(location){
 }
 
 std::string Obstacle::print(){
-	return " O ";
+    return " O ";
+}
+std::string Obstacle::getImageName(){
+    return "tree";
 }
