@@ -10,7 +10,6 @@
 #include "../common/models/Visitor.hpp"
 
 // ========================================= Dijkstra ===================================
-#include <iostream>
 #include <vector>
 #include <string>
  
@@ -59,16 +58,17 @@ class CityUpdater : public Thread{
         void makeOwnersPay();
         void updateCity();
         void createPath(Location start, Location end, std::vector<Location> &path);
+        SocketMessage visitorMove(Location, Location);
         void sendUpdateToPlayers(SocketMessage);
         int getTimeRemaining();
         int getRealTimeRemaining();
         bool getNight();
     private:
-    void DijkstraComputePaths(vertex_t source, \
+        void DijkstraComputePaths(vertex_t source, \
                           const adjacency_list_t &adjacency_list, \
                           std::vector<weight_t> &min_distance, \
                           std::vector<vertex_t> &previous);
-    std::vector<vertex_t> DijkstraGetShortestPathTo( \
+        std::vector<vertex_t> DijkstraGetShortestPathTo( \
                         vertex_t vertex, const std::vector<vertex_t> &previous);
         void getRoadMap();
         void getAdjacencyList();

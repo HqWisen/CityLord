@@ -49,7 +49,8 @@ public:
 	//std::vector<Location> getOwnedBuildings();
 	//std::vector<Location> getOwnedFields();
 	//void addBuilding(Building);
-	void loseMoney(int);*/
+	*/
+	void loseMoney(int);
 };
 
 #endif // PLAYER_HPP_

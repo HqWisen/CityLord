@@ -87,8 +87,8 @@ void Player::setUserManager(UserManager* um){
 //std::vector<Building*> Player::getOwnedBuildings(){return buildingList;}
 //std::vector<Field*> Player::getOwnedFields(){return fieldList;}
 //void Player::addBuilding(Building building){BuildingList.push_back(building);}
+*/
+
 void Player::loseMoney(int amount){
 	money -= amount;
 }
-
-*/

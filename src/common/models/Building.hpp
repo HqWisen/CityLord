@@ -31,6 +31,7 @@ class Building {
         int getLevel();
         int getPrice(){return this->price;};
 		int getDestructionCost(){return this->destructionCost;};
+        int getDailyCost(){return this->dailyCost;};
         BuildingType getType();
 		void upgrade();
 		bool addVisitor();
