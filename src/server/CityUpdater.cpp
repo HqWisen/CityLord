@@ -366,6 +366,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                 locTest = Location(row-1,col);
                             }
                             else{
+								dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                 SocketMessage update = visitorRemove(i);
                                 sendUpdateToPlayers(update);
                                 cityMap->deleteVisitor(i);
@@ -388,6 +389,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                 if(!enter){
                                     locTest = Location(row,col+1);
                                 } else {
+									dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                     SocketMessage update = visitorRemove(i);
                                     sendUpdateToPlayers(update);
                                     cityMap->deleteVisitor(i);
@@ -411,6 +413,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                 if(!enter){
                                     locTest = Location(row,col-1);
                                 } else {
+									dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                     SocketMessage update = visitorRemove(i);
                                     sendUpdateToPlayers(update);
                                     cityMap->deleteVisitor(i);
@@ -430,6 +433,7 @@ void CityUpdater::makeVisitorsAdvance(){
                             if(enter){
                                 enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
                                 if(enter){
+									dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                     SocketMessage update = visitorRemove(i);
                                     sendUpdateToPlayers(update);
                                     cityMap->deleteVisitor(i);
