@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "ingame.h"
+#include "build.h"
 #include "login.h"
 #include "mainmenu.h"
 #include "createaccount.h"

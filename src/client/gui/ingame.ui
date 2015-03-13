@@ -57,7 +57,7 @@
       <rect>
        <x>170</x>
        <y>0</y>
-       <width>751</width>
+       <width>711</width>
        <height>71</height>
       </rect>
      </property>
@@ -91,9 +91,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="demolishButton">
+       <widget class="QPushButton" name="destroyButton">
         <property name="text">
-         <string>Demolish</string>
+         <string>Destroy</string>
         </property>
        </widget>
       </item>
@@ -129,10 +129,10 @@ QLabel{background:transparent;color:rgb(0, 220, 0)}</string>
     <widget class="QLabel" name="timeLabel">
      <property name="geometry">
       <rect>
-       <x>930</x>
-       <y>10</y>
+       <x>900</x>
+       <y>-10</y>
        <width>141</width>
-       <height>51</height>
+       <height>81</height>
       </rect>
      </property>
      <property name="font">
@@ -155,8 +155,8 @@ QLabel{background:transparent;color:rgb(0, 220, 0)}</string>
     <widget class="QPushButton" name="exitButton">
      <property name="geometry">
       <rect>
-       <x>1078</x>
-       <y>14</y>
+       <x>1050</x>
+       <y>10</y>
        <width>46</width>
        <height>46</height>
       </rect>

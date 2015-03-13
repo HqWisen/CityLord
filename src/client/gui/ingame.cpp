@@ -4,15 +4,46 @@
 
 InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
     DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this)){
-    clientManager->setMapView(view);
+    view->setClientManager(clientManager);
     ui->setupUi(this);
     QObject::connect(clientManager->getRepaintSignaler(), SIGNAL(repaintView()), this, SLOT(repaintView()));
+    QObject::connect(clientManager->getRepaintSignaler(), SIGNAL(activeButton(std::string, Location)), this, SLOT(activeButton(std::string, Location)));
     ui->exitButton->setStyleSheet("background-image: url(src/resources/img/exit40_40.png)");
     ui->exitButton->setText("");
-}
 
+    ui->buildButton->setEnabled(false);
+    ui->buyButton->setEnabled(false);
+    ui->upgradeButton->setEnabled(false);
+    ui->destroyButton->setEnabled(false);
+    ui->sellButton->setEnabled(false);
+}
 void InGame::repaintView(){
     view->repaintView();
+}
+
+void InGame::activeButton(std::string info, Location location){
+    lastLocation = location;
+    if(info == "owner"){
+        ui->buildButton->setEnabled(true);
+        ui->buyButton->setEnabled(false);
+        ui->upgradeButton->setEnabled(true);
+        ui->destroyButton->setEnabled(true);
+    }else if(info == "purchasable"){
+        ui->buildButton->setEnabled(false);
+        ui->buyButton->setEnabled(true);
+        ui->upgradeButton->setEnabled(false);
+        ui->destroyButton->setEnabled(false);
+    }else if(info == "other"){
+        ui->buildButton->setEnabled(false);
+        ui->buyButton->setEnabled(false);
+        ui->upgradeButton->setEnabled(false);
+        ui->destroyButton->setEnabled(false);
+    }else if(info == "notfield"){
+        ui->buildButton->setEnabled(false);
+        ui->buyButton->setEnabled(false);
+        ui->upgradeButton->setEnabled(false);
+        ui->destroyButton->setEnabled(false);
+    }
 }
 
 InGame::~InGame(){
@@ -21,7 +52,6 @@ InGame::~InGame(){
 }
 
 void InGame::refresh(){
-
 }
 
 void InGame::updateMoney(int amount){
@@ -43,32 +73,52 @@ void InGame::updateTime(int time){
     ui->timeLabel->setText(QString::fromStdString(timeStr.str()));
 }
 
-void InGame::on_demolishButton_clicked()
-{
-    this->updateTime(945);
-}
-
-void InGame::on_buyButton_clicked()
-{
-    this->updateMoney(15684);
-    ui->buyButton->setEnabled(false);
+void InGame::on_buyButton_clicked(){
+    clientManager->setRequest("buy");
+    clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
+    clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
+    clientManager->sendRequestAndRecv();
+    QMessageBox::warning(this, "Buy", clientManager->getAnswerInfos().c_str());
 }
 
 void InGame::on_buildButton_clicked()
 {
-    this->updateMoney(-3682);
-    ui->buyButton->setEnabled(true);
+
+    clientManager->setRequest("build");
+    clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
+    clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
+    clientManager->setCurrentWidget(ClientManagerGUI::BUILD);
 }
+
+void InGame::on_upgradeButton_clicked()
+{
+    clientManager->setRequest("upgrade");
+    clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
+    clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
+    clientManager->sendRequestAndRecv();
+    QMessageBox::warning(this, "Upgrade", clientManager->getAnswerInfos().c_str());
+
+}
+
+void InGame::on_destroyButton_clicked()
+{
+    clientManager->setRequest("destroy");
+    clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
+    clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
+    clientManager->sendRequestAndRecv();
+    QMessageBox::warning(this, "Destroy", clientManager->getAnswerInfos().c_str());
+
+}
+
 
 void InGame::disableAllButtons(){
     ui->buyButton->setEnabled(false);
     ui->buildButton->setEnabled(false);
     ui->upgradeButton->setEnabled(false);
     ui->sellButton->setEnabled(false);
-    ui->demolishButton->setEnabled(false);
+    ui->destroyButton->setEnabled(false);
 }
 
-void InGame::on_exitButton_clicked()
-{
+void InGame::on_exitButton_clicked(){
     clientManager->setCurrentWidget(ClientManagerGUI::MAINMENU);
 }

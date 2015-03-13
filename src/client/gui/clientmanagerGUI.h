@@ -5,7 +5,6 @@
 #include <QVBoxLayout>
 #include <map>
 #include <string>
-#include "citylordview.h"
 #include "../ClientManager.hpp"
 #include "repaintsignaler.h"
 
@@ -16,7 +15,7 @@ class DefaultWidget;
 class ClientManagerGUI : public ClientManager{
 
 public:
-    static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INGAME, CREATEGAME, JOINGAME;
+    static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INGAME, CREATEGAME, JOINGAME, BUILD;
     static const int SQUAREMAPSIZE;
 public:
     ClientManagerGUI(char*, int);
@@ -27,7 +26,6 @@ public:
     void setCurrentWidget(key_type);
     QVBoxLayout* getLayout();
     void buildMap(std::string) override;
-    void setMapView(CityLordView*);
     void repaint() override;
     RepaintSignaler* getRepaintSignaler();
 private:
@@ -35,8 +33,6 @@ private:
     QVBoxLayout* layout;
     std::map<key_type, DefaultWidget*> pages;
     RepaintSignaler* repaintSignaler;
-    CityLordView* mapView;
-
 
 };
 

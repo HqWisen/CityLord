@@ -7,12 +7,13 @@ const key_type ClientManagerGUI::MAINMENU = 2;
 const key_type ClientManagerGUI::INGAME = 3;
 const key_type ClientManagerGUI::CREATEGAME = 4;
 const key_type ClientManagerGUI::JOINGAME = 5;
+const key_type ClientManagerGUI::BUILD = 6;
 
 const int ClientManagerGUI::SQUAREMAPSIZE = 20;
 
 ClientManagerGUI::ClientManagerGUI(char* hostname, int port) :
     ClientManager(hostname, port),
-    stackedWidget(new QStackedWidget), layout(new QVBoxLayout), pages(), repaintSignaler(new RepaintSignaler), mapView(nullptr){
+    stackedWidget(new QStackedWidget), layout(new QVBoxLayout), pages(), repaintSignaler(new RepaintSignaler){
 
     layout->setContentsMargins(0,0,0,0);
     layout->addWidget(stackedWidget);
@@ -64,14 +65,8 @@ QVBoxLayout* ClientManagerGUI::getLayout(){
 }
 
 void ClientManagerGUI::buildMap(std::string filename){
-    map = new Map<ClientField>(filename);
-    mapView->setPlayedMap(map);
-    mapView->setRepaintSignaler(repaintSignaler);
+    ClientManager::buildMap(filename);
     repaint();
-}
-
-void ClientManagerGUI::setMapView(CityLordView* view){
-    mapView = view;
 }
 
 void ClientManagerGUI::repaint(){

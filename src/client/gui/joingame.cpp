@@ -84,9 +84,6 @@ void JoinGame::on_joinButton_clicked(){
         }else{
             clientManager->setCurrentWidget(ClientManagerGUI::INGAME);
             clientManager->buildMap(clientManager->getInfo("filename"));
-            clientManager->setRequest("mapfullupdate");
-            /*** Bloqué tant que la map n'est pas totalement construite ***/
-            clientManager->sendRequestAndRecv();
         }
     }
 

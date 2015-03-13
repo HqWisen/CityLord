@@ -2,6 +2,7 @@
 #define INGAME_H
 
 #include <QWidget>
+#include <QMessageBox>
 
 #include <sstream>
 #include <string>
@@ -25,10 +26,12 @@ public:
     void updateTime(int);
 public slots:
     void repaintView();
+    void activeButton(std::string, Location);
 private slots:
-    void on_demolishButton_clicked();
     void on_buyButton_clicked();
     void on_buildButton_clicked();
+    void on_upgradeButton_clicked();
+    void on_destroyButton_clicked();
     void disableAllButtons();
 
     void on_exitButton_clicked();
@@ -36,6 +39,7 @@ private slots:
 private:
     Ui::InGame* ui;
     CityLordView* view;
+    Location lastLocation;
 
 };
 

@@ -2,7 +2,7 @@
 
 # -- client
 CLIENT = citylord
-DEPC = client socket models update thread server
+DEPC = client socket update thread models server 
 
 # -- server
 SERVER = citylordserver

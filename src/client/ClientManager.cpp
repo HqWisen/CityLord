@@ -25,6 +25,10 @@ ClientManager::~ClientManager(){
 
 void ClientManager::buildMap(std::string filename){
     map = new Map<ClientField>(filename);
+    setRequest("mapfullupdate");
+    /*** Bloqué tant que la map n'est pas totalement construite ***/
+    sendRequestAndRecv();
+
 }
 
 void ClientManager::displayMap(){

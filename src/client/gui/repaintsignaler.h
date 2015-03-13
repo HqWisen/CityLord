@@ -2,6 +2,7 @@
 #define REPAINTSIGNALER_H
 
 #include <QObject>
+#include "../../common/models/Location.hpp"
 
 class RepaintSignaler : public QObject
 {
@@ -9,8 +10,10 @@ class RepaintSignaler : public QObject
 public:
     explicit RepaintSignaler();
     void signalRepainting();
+    void signalActiving(std::string, Location);
 signals:
     void repaintView();
+    void activeButton(std::string, Location);
 public slots:
 
 };

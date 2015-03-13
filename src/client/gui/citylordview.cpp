@@ -7,7 +7,7 @@ const int CityLordView::HEIGHT = 804;
 
 
 CityLordView::CityLordView(QWidget* parent):
-    QGraphicsView(parent), scene(new QGraphicsScene(this)), BASE(getImagePath("base")), map(nullptr), previousSelectedLocation(-1, -1){
+    QGraphicsView(parent), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(nullptr) {
     resize(WIDTH, HEIGHT);
     setScene(scene);
     setSceneRect(-((WIDTH/2)-(BASE.width()/2)), 0, WIDTH-2, HEIGHT-2);
@@ -28,9 +28,6 @@ CityLordView::~CityLordView(){
     delete[] itemArray;
 }
 
-/*QPointF CityLordView::carToIso(int x, int y, int lagy = 0){
-    return QPointF(x-y, ((x+y)/2) + lagy);
-}*/
 
 const char* CityLordView::getImagePath(std::string imagename){
     std::string path = QCoreApplication::applicationDirPath().toStdString()+"/src/resources/img/"+imagename+".png";
@@ -57,47 +54,40 @@ Location CityLordView::isoToLoc(QPointF position){
     return Location(cartY, cartX);
 }
 
-void CityLordView::setPlayedMap(Map<ClientField>* mapPlayed){
-    map = mapPlayed;
+void CityLordView::selectField(Location location){
+    clientManager->setRequest("selectfield");
+    clientManager->addInfo("row", std::to_string(location.getRow()));
+    clientManager->addInfo("col", std::to_string(location.getCol()));
+    clientManager->sendRequestAndRecv();
+    clientManager->getRepaintSignaler()->signalActiving(clientManager->getMessage().getTopic(), location);
 }
-
-void CityLordView::setRepaintSignaler(RepaintSignaler* s){
-    signaler = s;
-}
-
 
 void CityLordView::mousePressEvent(QMouseEvent * e){
 
     startMouse = mapToScene(e->pos());
     Location location = isoToLoc(startMouse);
     if(goodLocation(location)){
-        if(map->getCase(location)->isField()){
-            dynamic_cast<ClientField*>(map->getCase(location))->setShowOwnerColor(true);
+        selectField(location);
+        if(clientManager->getMap()->getCase(location)->isField()){
+            dynamic_cast<ClientField*>(clientManager->getMap()->getCase(location))->setShowOwnerColor(true);
        }
     }
    if(goodLocation(previousSelectedLocation) && !previousSelectedLocation.isEqual(location)){
-        if(map->getCase(previousSelectedLocation)->isField()){
-            dynamic_cast<ClientField*>(map->getCase(previousSelectedLocation))->setShowOwnerColor(false);
+        if(clientManager->getMap()->getCase(previousSelectedLocation)->isField()){
+            dynamic_cast<ClientField*>(clientManager->getMap()->getCase(previousSelectedLocation))->setShowOwnerColor(false);
         }
     }
     previousSelectedLocation = location;
-    signaler->repaintView();
+    clientManager->getRepaintSignaler()->repaintView();
 }
 
 bool CityLordView::goodLocation(Location location){
-    return map != nullptr && location.getRow() > -1 && location.getRow() < map->getNumberOfRows() &&\
-           location.getCol() > -1 && location.getCol() < map->getNumberOfCols();
+    return clientManager->getMap() != nullptr && location.getRow() > -1 && location.getRow() < clientManager->getMap()->getNumberOfRows() &&\
+           location.getCol() > -1 && location.getCol() < clientManager->getMap()->getNumberOfCols();
 }
 
 
 void CityLordView::mouseReleaseEvent(QMouseEvent * e){
-    /*QPixmap b("src/resources/img/museum_purple.png");
-    itemtest->setPixmap(b);
-
-    QPointF pt = mapToScene(e->pos());
-    scale(1.2, 1.2);
-    std::cout<<"RELEASE"<<std::endl;
-    rotate(-10);*/
 
 }
 
@@ -139,32 +129,39 @@ void CityLordView::wheelEvent(QWheelEvent* e){
 
 void CityLordView::keyPressEvent(QKeyEvent *event)
 {
-    switch(event->key()){
+    /*switch(event->key()){
         case Qt::Key_Up:
             py-=30;
             lastPos.setY(lastPos.y() - 30);
+            setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
             break;
         case Qt::Key_Left:
             px-=30;
             lastPos.setX(lastPos.x() - 30);
+            setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
             break;
         case Qt::Key_Right:
             px+=30;
             lastPos.setX(lastPos.x() +30);
+            setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
             break;
         case Qt::Key_Down:
             py+=30;
-           lastPos.setY(lastPos.y() + 30);
+            lastPos.setY(lastPos.y() + 30);
+            setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
             break;
-    }
-    setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
+    }*/
+}
+
+void CityLordView::setClientManager(ClientManagerGUI* cm){
+    clientManager = cm;
 }
 
 void CityLordView::repaintView(){
     QPixmap pixmap;
-    for(int row=0;row<map->getNumberOfRows();row++){
-        for(int col=0;col<map->getNumberOfCols();col++){
-            pixmap = QPixmap(getImagePath(map->getCase(Location(row, col))->getImageName()));
+    for(int row=0;row<clientManager->getMap()->getNumberOfRows();row++){
+        for(int col=0;col<clientManager->getMap()->getNumberOfCols();col++){
+            pixmap = QPixmap(getImagePath(clientManager->getMap()->getCase(Location(row, col))->getImageName()));
             itemArray[row][col]->setPixmap(pixmap);
             itemArray[row][col]->setOffset(carToIso(Location(row, col), pixmap));
         }

@@ -11,6 +11,7 @@
 #include "repaintsignaler.h"
 #include "../../common/models/Case.hpp"
 #include "../../common/models/Map.hpp"
+#include "clientmanagerGUI.h"
 
 
 class CityLordView : public QGraphicsView{
@@ -30,11 +31,12 @@ public:
     void wheelEvent(QWheelEvent*) override;
     void keyPressEvent(QKeyEvent *event);
     bool goodLocation(Location);
+    void setClientManager(ClientManagerGUI*);
     void repaintView();
     Location isoToLoc(QPointF);
-    void setPlayedMap(Map<ClientField>*);
-    void setRepaintSignaler(RepaintSignaler*);
     const char* getImagePath(std::string);
+    void selectField(Location);
+
 
 private:
     QPointF carToIso(Location, const QPixmap&);
@@ -43,8 +45,7 @@ private:
     QPointF lastPos;
     Location previousSelectedLocation;
     QPointF startMouse;
-    Map<ClientField>* map;
-    RepaintSignaler* signaler;
+    ClientManagerGUI* clientManager;
     QGraphicsPixmapItem*** itemArray;
 
 };
