@@ -6,7 +6,7 @@
 
 class BuildingSpawn : public Case, public Spawn{
 	public:
-		BuildingSpawn(Location, Location);
+		BuildingSpawn(Location);
         std::string print() override;
         std::string getImageName() override;
         ~BuildingSpawn() = default;

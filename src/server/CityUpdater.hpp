@@ -62,7 +62,6 @@ class CityUpdater : public Thread{
                           std::vector<vertex_t> &previous);
     std::vector<vertex_t> DijkstraGetShortestPathTo( \
                         vertex_t vertex, const std::vector<vertex_t> &previous);
-        int findRoad(Location);
         void getRoadMap();
         void getAdjacencyList();
 };

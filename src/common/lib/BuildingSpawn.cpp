@@ -1,7 +1,6 @@
 #include "BuildingSpawn.hpp"
 
-BuildingSpawn::BuildingSpawn(Location location, Location spawnRoad) : Case(location) {
-	spawnPoint = spawnRoad;
+BuildingSpawn::BuildingSpawn(Location location) : Case(location) {
 }
 
 std::string BuildingSpawn::print(){

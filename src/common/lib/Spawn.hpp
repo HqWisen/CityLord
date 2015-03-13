@@ -9,6 +9,7 @@ class Spawn{
 		Location spawnPoint;
 	public:
 		Location getSpawnPoint(){return spawnPoint;};
+		void setSpawnPoint(Location newSpawnPoint){spawnPoint = newSpawnPoint;};
         virtual ~Spawn() = default;
         //virtual Visitor* spawn() = 0;
         //virtual void despawn(Visitor*) = 0;

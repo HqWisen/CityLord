@@ -196,35 +196,53 @@ void CityUpdater::createPath(Location start, Location end, std::vector<Location>
     std::vector<vertex_t> previous;
     DijkstraComputePaths(startIndex, adjacencyList, min_distance, previous);
     std::vector<vertex_t> tmpPath = DijkstraGetShortestPathTo(endIndex, previous);
-    for (int i=0; i<tmpPath.size(); i++){
+    for (int i=1; i<tmpPath.size(); i++){
+    std::cout<<roadMap[tmpPath[i]]->getLocation().getRow()<<","<<roadMap[tmpPath[i]]->getLocation().getCol()<<std::endl;
     	path.push_back(roadMap[tmpPath[i]]->getLocation());
     }
 }
 
 void CityUpdater::generateVisitors(){
-    /*int size = spawn.size();
-    std::cout<<"Taille de la liste de spawn :"<< spawn.size() <<std::endl;
+    int size = spawn.size();
     int luck = rand() %  (size-1);
     Spawn* startSpawn = spawn[luck];
     Location startLocation = startSpawn->getSpawnPoint();
-	std::cout<<"First Spawn"<<std::endl;
+    std::cout<<"Start "<<startLocation.getRow()<<","<<startLocation.getCol()<<std::endl;
     luck = rand() %  (size-1);
     Spawn* endSpawn = spawn[luck];
-    while(endSpawn==startSpawn){
+    while(endSpawn == startSpawn){
     	luck = rand() %  (size-1);
     	endSpawn = spawn[luck];
     }
     Location endLocation = endSpawn->getSpawnPoint();
-    std::cout<<"Second Spawn"<<std::endl;
-    
+    std::cout<<"End "<<endLocation.getRow()<<","<<endLocation.getCol()<<std::endl;
+
     std::vector<Location> path;
-    std::vector<Location> newWay = createPath(startLocation,endLocation,path);
-    std::cout<<"Got Way"<<std::endl;
+    path.push_back(startLocation);
+
+    luck = 0;
+    int badLuck = 2;
+    size = checkPointsList.size();
+    Location lastLocation = startLocation;
+    Location nextLocation;
+   	luck = rand() % (badLuck);
+    while(luck == 0){
+    	luck = rand() % (size-1);
+    	nextLocation = checkPointsList[luck]->getLocation();
+    	std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
+    	createPath(lastLocation,nextLocation,path);
+    	lastLocation = nextLocation;
+    	badLuck += 1;
+    	luck = rand() % (badLuck);
+    }
+
+    createPath(lastLocation,endLocation,path);
+    std::cout<<"Got Path"<<std::endl;
 
     Visitor* newVisitor = new Visitor(startLocation);
-    std::cout<<"Taille du chemin donné :"<< newWay->size() <<std::endl;
-    newVisitor->setPath(newWay);
-    cityMap->addVisitor(newVisitor);*/
+    std::cout<<"Taille du chemin donné :"<< path.size() <<std::endl;
+    newVisitor->setPath(path);
+    cityMap->addVisitor(newVisitor);
 }
 
 void CityUpdater::updateBuildings(){
