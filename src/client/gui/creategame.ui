@@ -73,10 +73,10 @@ QLabel{color:white;}</string>
   <widget class="QPushButton" name="map1Button">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>20</x>
      <y>250</y>
-     <width>450</width>
-     <height>300</height>
+     <width>360</width>
+     <height>250</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -89,10 +89,10 @@ QLabel{color:white;}</string>
   <widget class="QPushButton" name="map2Button">
    <property name="geometry">
     <rect>
-     <x>580</x>
+     <x>400</x>
      <y>250</y>
-     <width>450</width>
-     <height>300</height>
+     <width>360</width>
+     <height>250</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -100,6 +100,19 @@ QLabel{color:white;}</string>
    </property>
    <property name="text">
     <string>Map2</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="map3Button">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>250</y>
+     <width>360</width>
+     <height>250</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Map3</string>
    </property>
   </widget>
  </widget>

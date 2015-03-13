@@ -75,7 +75,7 @@ QVBoxLayout* ClientManager::getLayout(){
 
 void ClientManager::buildMap(std::string filename){
     map = new Map<ClientField>(filename);
-    dynamic_cast<ClientField*>(map->getCase(Location(0, 3)))->buildBuilding(BuildingType::MUSEUM);
+    //dynamic_cast<ClientField*>(map->getCase(Location(0, 3)))->buildBuilding(BuildingType::MUSEUM);
     for(int row=0;row<map->getNumberOfRows();row++){
         for(int col=0;col<map->getNumberOfCols();col++){
             mapView->display(map->getCase(Location(row, col)));
