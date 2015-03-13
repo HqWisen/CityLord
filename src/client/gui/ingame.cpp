@@ -6,7 +6,7 @@ InGame::InGame(QWidget* parent, ClientManager* cm) :
     DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this)){
     clientManager->setMapView(view);
     ui->setupUi(this);
-    ui->exitButton->setStyleSheet("background-image: url(src/resources/img/exit48_48.png)");
+    ui->exitButton->setStyleSheet("background-image: url(src/resources/img/exit40_40.png)");
     ui->exitButton->setText("");
     /*int ROWS, COLS;
     ROWS = 20;
