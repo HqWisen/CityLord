@@ -76,48 +76,48 @@ void CityUpdater::getRoadMap() {
 }
 
 void CityUpdater::getAdjacencyList() {
-	Location location(0,0);
-	Road* road;
+    Location location(0,0);
+    Road* road;
     for (int i=0; i<roadMap.size(); i++) {
-		vector<neighbor> tmpVector;
-    	if (roadMap[i]->isOpen(Road::NORTH) && ((roadMap[i]->getLocation().getRow())-1 > 0)) {
-    		//
-    		location.setRow(roadMap[i]->getLocation().getRow()-1);
-    		location.setCol(roadMap[i]->getLocation().getCol());
-    		road = dynamic_cast<Road*>(cityMap->getCase(location));
-    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-    		tmpVector.push_back(neighbor(index, 1));
-    		//
-    	}
-    	if (roadMap[i]->isOpen(Road::WEST) && ((roadMap[i]->getLocation().getCol())-1 > 0)) {
-    		//
-    		location.setRow(roadMap[i]->getLocation().getRow());
-    		location.setCol(roadMap[i]->getLocation().getCol()-1);
-    		road = dynamic_cast<Road*>(cityMap->getCase(location));
-    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-    		tmpVector.push_back(neighbor(index, 1));
-    		//
-    	}
-      	if (roadMap[i]->isOpen(Road::SOUTH) && ((roadMap[i]->getLocation().getRow())+1 < cityMap->getNumberOfRows())) {
-      		//
-    		location.setRow(roadMap[i]->getLocation().getRow()+1);
-    		location.setCol(roadMap[i]->getLocation().getCol());
-    		road = dynamic_cast<Road*>(cityMap->getCase(location));
-    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-    		tmpVector.push_back(neighbor(index, 1));
-    		//
-    	}
-    	if (roadMap[i]->isOpen(Road::EAST) && ((roadMap[i]->getLocation().getCol())+1 < cityMap->getNumberOfCols())) {
-    		//
-    		location.setRow(roadMap[i]->getLocation().getRow());
-    		location.setCol(roadMap[i]->getLocation().getCol()+1);
-    		road = dynamic_cast<Road*>(cityMap->getCase(location));
-    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-    		tmpVector.push_back(neighbor(index, 1));
-    		//
-    	}
-    	adjacencyList.push_back(tmpVector);
-    	tmpVector.clear();
+        vector<neighbor> tmpVector;
+        if (roadMap[i]->isOpen(Road::NORTH) && ((roadMap[i]->getLocation().getRow())-1 >= 0)) {
+            //
+            location.setRow(roadMap[i]->getLocation().getRow()-1);
+            location.setCol(roadMap[i]->getLocation().getCol());
+            road = dynamic_cast<Road*>(cityMap->getCase(location));
+            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+            tmpVector.push_back(neighbor(index, 1));
+            //
+        }
+        if (roadMap[i]->isOpen(Road::WEST) && ((roadMap[i]->getLocation().getCol())-1 >= 0)) {
+            //
+            location.setRow(roadMap[i]->getLocation().getRow());
+            location.setCol(roadMap[i]->getLocation().getCol()-1);
+            road = dynamic_cast<Road*>(cityMap->getCase(location));
+            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+            tmpVector.push_back(neighbor(index, 1));
+            //
+        }
+        if (roadMap[i]->isOpen(Road::SOUTH) && ((roadMap[i]->getLocation().getRow())+1 < cityMap->getNumberOfRows())) {
+            //
+            location.setRow(roadMap[i]->getLocation().getRow()+1);
+            location.setCol(roadMap[i]->getLocation().getCol());
+            road = dynamic_cast<Road*>(cityMap->getCase(location));
+            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+            tmpVector.push_back(neighbor(index, 1));
+            //
+        }
+        if (roadMap[i]->isOpen(Road::EAST) && ((roadMap[i]->getLocation().getCol())+1 < cityMap->getNumberOfCols())) {
+            //
+            location.setRow(roadMap[i]->getLocation().getRow());
+            location.setCol(roadMap[i]->getLocation().getCol()+1);
+            road = dynamic_cast<Road*>(cityMap->getCase(location));
+            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+            tmpVector.push_back(neighbor(index, 1));
+            //
+        }
+        adjacencyList.push_back(tmpVector);
+        tmpVector.clear();
     }
 }
 // ======================================================================================
@@ -248,34 +248,38 @@ void CityUpdater::generateVisitors(){
     Spawn* startSpawn = spawn[luck];
     Location startLocation = startSpawn->getSpawnPoint();
     std::cout<<"Start "<<startLocation.getRow()<<","<<startLocation.getCol()<<std::endl;
+
     luck = rand() %  (size-1);
     Spawn* endSpawn = spawn[luck];
     while(endSpawn == startSpawn){
-    	luck = rand() %  (size-1);
-    	endSpawn = spawn[luck];
+        luck = rand() %  (size-1);
+        endSpawn = spawn[luck];
     }
     Location endLocation = endSpawn->getSpawnPoint();
-    std::cout<<"End "<<endLocation.getRow()<<","<<endLocation.getCol()<<std::endl;
 
     std::vector<Location> path;
     path.push_back(startLocation);
 
-    luck = 0;
-    int badLuck = 2;
-    size = checkPointsList.size();
     Location lastLocation = startLocation;
-    Location nextLocation;
-   	luck = rand() % (badLuck);
-    while(luck == 0){
-    	luck = rand() % (size-1);
-    	nextLocation = checkPointsList[luck]->getLocation();
-    	std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
-    	createPath(lastLocation,nextLocation,path);
-    	lastLocation = nextLocation;
-    	badLuck += 1;
-    	luck = rand() % (badLuck);
+    size = checkPointsList.size();
+    if (size > 0) {
+        luck = 0;
+        int badLuck = 2;
+        Location nextLocation;
+        luck = rand() % (badLuck);
+        while(luck == 0){
+            luck = rand() % (size-1);
+            nextLocation = checkPointsList[luck]->getLocation();
+            createPath(lastLocation,nextLocation,path);
+            std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
+            lastLocation = nextLocation;
+            badLuck += 1;
+            luck = rand() % (badLuck);
+        }
     }
 
+
+    std::cout<<"End "<<endLocation.getRow()<<","<<endLocation.getCol()<<std::endl;
     createPath(lastLocation,endLocation,path);
     std::cout<<"Got Path"<<std::endl;
 

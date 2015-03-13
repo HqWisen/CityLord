@@ -332,11 +332,11 @@ Location Map<FieldType>::findSpawnPoint(Location location){
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()][location.getCol()+1]))) {
             return road->getLocation();
         }
-    }else if ((location.getRow()-1) > 0) {
+    }else if ((location.getRow()-1) >= 0) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()-1][location.getCol()]))) {
             return road->getLocation();
         }
-    }else if ((location.getCol()-1) > 0) {
+    }else if ((location.getCol()-1) >= 0) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()][location.getCol()-1]))) {
             return road->getLocation();
         }
@@ -344,15 +344,15 @@ Location Map<FieldType>::findSpawnPoint(Location location){
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()+1][location.getCol()+1]))) {
             return road->getLocation();
         }
-    }else if (((location.getRow()-1) > 0) && ((location.getCol()+1) < numberOfCols)) {
+    }else if (((location.getRow()-1) >= 0) && ((location.getCol()+1) < numberOfCols)) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()-1][location.getCol()+1]))) {
             return road->getLocation();
         }
-    }else if (((location.getRow()-1) > 0) && ((location.getCol()-1) > 0)) {
+    }else if (((location.getRow()-1) >= 0) && ((location.getCol()-1) >= 0)) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()-1][location.getCol()-1]))) {
             return road->getLocation();
         }
-    }else if (((location.getRow()+1) < numberOfRows) && ((location.getCol()-1) > 0)) {
+    }else if (((location.getRow()+1) < numberOfRows) && ((location.getCol()-1) >= 0)) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()+1][location.getCol()-1]))) {
             return road->getLocation();
         }
