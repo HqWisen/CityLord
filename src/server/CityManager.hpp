@@ -55,6 +55,8 @@ class CityManager{
 		SocketMessage makeTrade(Player*, Player*, Location);
         void sendUpdateToPlayers(SocketMessage);
         SocketMessage visitorMove(Player*, Location, Location);
+        SocketMessage getRealTimeRem(Player*);
+        SocketMessage getTimeRem(Player*);
 		std::vector<Location> giveWay();
         //Spawnable getRandomSpawn();
 };
