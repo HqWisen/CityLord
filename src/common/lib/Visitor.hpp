@@ -12,7 +12,7 @@
 
 class Visitor{
 	Location currentLocation;
-	std::vector<Location>* path;
+	std::vector<Location> path;
 	//BuildingType preference;
 	std::string preference;
 	std::vector<std::string> listOfBuildType = {"BAR","MUSEUM","NIGHT CLUB","SHOP"};
@@ -25,7 +25,7 @@ class Visitor{
 		//void displayGUI();
 		bool enter(Building*);
 		bool choose(Building*); //Building en paramètre
-		void setPath(std::vector<Location>*);
+		void setPath(std::vector<Location>);
 };
 
 #endif // MAP_HPP_

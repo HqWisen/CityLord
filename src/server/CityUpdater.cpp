@@ -1,11 +1,137 @@
 #include "CityUpdater.hpp"
 #include "UserManager.hpp"
 
+// ======================================================================================
+// ========================================= Dijkstra ===================================
+// ======================================================================================
+//		Solution temporaire (ou permanente) afin d'avoir un createPath qui marche
+// ======================================================================================
+void CityUpdater::DijkstraComputePaths(vertex_t source,
+                          const adjacency_list_t &adjacency_list,
+                          std::vector<weight_t> &min_distance,
+                          std::vector<vertex_t> &previous)
+{
+    int n = adjacency_list.size();
+    min_distance.clear();
+    min_distance.resize(n, max_weight);
+    min_distance[source] = 0;
+    previous.clear();
+    previous.resize(n, -1);
+    std::set<std::pair<weight_t, vertex_t> > vertex_queue;
+    vertex_queue.insert(std::make_pair(min_distance[source], source));
+ 
+    while (!vertex_queue.empty()) 
+    {
+        weight_t dist = vertex_queue.begin()->first;
+        vertex_t u = vertex_queue.begin()->second;
+        vertex_queue.erase(vertex_queue.begin());
+ 
+        // Visit each edge exiting u
+	const std::vector<neighbor> &neighbors = adjacency_list[u];
+        for (std::vector<neighbor>::const_iterator neighbor_iter = neighbors.begin();
+             neighbor_iter != neighbors.end();
+             neighbor_iter++)
+        {
+            vertex_t v = neighbor_iter->target;
+            weight_t weight = neighbor_iter->weight;
+            weight_t distance_through_u = dist + weight;
+	    if (distance_through_u < min_distance[v]) {
+	        vertex_queue.erase(std::make_pair(min_distance[v], v));
+ 
+	        min_distance[v] = distance_through_u;
+	        previous[v] = u;
+	        vertex_queue.insert(std::make_pair(min_distance[v], v));
+ 
+	    }
+ 
+        }
+    }
+}
+ 
+ 
+std::vector<vertex_t> CityUpdater::DijkstraGetShortestPathTo(
+    vertex_t vertex, const std::vector<vertex_t> &previous)
+{
+    std::vector<vertex_t> path;
+    for ( ; vertex != -1; vertex = previous[vertex])
+        path.insert(path.begin(), vertex);
+    return path;
+}
+
+void CityUpdater::getRoadMap() {
+	Location location(0,0);
+	Road* road;
+    for (int row=0; row<(cityMap->getNumberOfRows()); row++) {
+        for (int col=0; col<(cityMap->getNumberOfCols()); col++) {
+    		location.setRow(row);
+    		location.setCol(col);
+            if((road = dynamic_cast<Road*>(cityMap->getCase(location)))) {
+            	roadMap.push_back(road);
+                if ((road->print() == "═□ ") || (road->print() == " □ ") || (road->print() == " □═")) {
+                    checkPointsList.push_back(road);
+                }
+            }
+        }
+    }
+}
+
+void CityUpdater::getAdjacencyList() {
+	Location location(0,0);
+	Road* road;
+    for (int i=0; i<roadMap.size(); i++) {
+		vector<neighbor> tmpVector;
+    	if (roadMap[i]->isOpen(Road::NORTH) && ((roadMap[i]->getLocation().getRow())-1 > 0)) {
+    		//
+    		location.setRow(roadMap[i]->getLocation().getRow()-1);
+    		location.setCol(roadMap[i]->getLocation().getCol());
+    		road = dynamic_cast<Road*>(cityMap->getCase(location));
+    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+    		tmpVector.push_back(neighbor(index, 1));
+    		//
+    	}
+    	if (roadMap[i]->isOpen(Road::WEST) && ((roadMap[i]->getLocation().getCol())-1 > 0)) {
+    		//
+    		location.setRow(roadMap[i]->getLocation().getRow());
+    		location.setCol(roadMap[i]->getLocation().getCol()-1);
+    		road = dynamic_cast<Road*>(cityMap->getCase(location));
+    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+    		tmpVector.push_back(neighbor(index, 1));
+    		//
+    	}
+      	if (roadMap[i]->isOpen(Road::SOUTH) && ((roadMap[i]->getLocation().getRow())+1 < cityMap->getNumberOfRows())) {
+      		//
+    		location.setRow(roadMap[i]->getLocation().getRow()+1);
+    		location.setCol(roadMap[i]->getLocation().getCol());
+    		road = dynamic_cast<Road*>(cityMap->getCase(location));
+    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+    		tmpVector.push_back(neighbor(index, 1));
+    		//
+    	}
+    	if (roadMap[i]->isOpen(Road::EAST) && ((roadMap[i]->getLocation().getCol())+1 < cityMap->getNumberOfCols())) {
+    		//
+    		location.setRow(roadMap[i]->getLocation().getRow());
+    		location.setCol(roadMap[i]->getLocation().getCol()+1);
+    		road = dynamic_cast<Road*>(cityMap->getCase(location));
+    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+    		tmpVector.push_back(neighbor(index, 1));
+    		//
+    	}
+    	adjacencyList.push_back(tmpVector);
+    	tmpVector.clear();
+    }
+}
+// ======================================================================================
+// ======================================================================================
+// ======================================================================================
+
 CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr){
     cityMap = map;
     spawn = map->getSpawnList();
-    this->start();
     playerVectorPtr = pvPtr;
+    getRoadMap();
+    getAdjacencyList();
+    this->start();
+    
 }
 
 void CityUpdater::run(){
@@ -62,143 +188,17 @@ void CityUpdater::makeOwnersPay(){
     }
 }
 
-/*
-std::vector<Location> CityUpdater::creatWay(Visitor* visitor, Location loc){
-    std::vector<Location> newLoc;	
-	newLoc.push_back(loc);
-	
-	int row = loc.getRow();
-	int col = loc.getCol();
-
-	row += 1;
-	loc.setRow(row);	
-	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
-		std::cout<<"1"<<std::endl;
-		std::vector<Location> newAdd = creatWay(visitor ,loc);
-		unsigned count = 0;
-		for(unsigned i=0; i < newAdd.size(); i++){
-			newLoc.push_back(newAdd[i]);
-			count += 1;
-		}
-		for(unsigned i=0; i < count; i++){
-			newLoc.pop_back();
-		}
-	}
-
-	row -= 2;
-	loc.setRow(row);	
-	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
-		std::cout<<"2"<<std::endl;
-		std::vector<Location> newAdd = creatWay(visitor ,loc);
-		unsigned count = 0;
-		for(unsigned i=0; i < newAdd.size(); i++){
-			newLoc.push_back(newAdd[i]);
-			count += 1;
-		}
-		for(unsigned i=0; i < count; i++){
-			newLoc.pop_back();
-		}	
-	}
-
-	row += 1;
-	loc.setRow(row);
-	col +=1;
-	loc.setCol(col);	
-	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
-		std::cout<<"3"<<std::endl;
-		std::vector<Location> newAdd = creatWay(visitor ,loc);
-		unsigned count = 0;
-		for(unsigned i=0; i < newAdd.size(); i++){
-			newLoc.push_back(newAdd[i]);
-			count += 1;
-		}
-		for(unsigned i=0; i < count; i++){
-			newLoc.pop_back();
-		}
-	}
-
-	col-=2;
-	loc.setCol(col);	
-	if(dynamic_cast<Road*>(cityMap->getCase(loc))){
-		std::cout<<"4"<<std::endl;
-		std::vector<Location> newAdd = creatWay(visitor ,loc);
-		unsigned count = 0;
-		for(unsigned i=0; i < newAdd.size(); i++){
-			newLoc.push_back(newAdd[i]);
-			count += 1;
-		}
-		for(unsigned i=0; i < count; i++){
-			newLoc.pop_back();
-		}	
-	}
-
-    return newLoc;	
-}
-*/
-
-std::vector<Location>* CityUpdater::creatWay(Location start, Location end, std::vector<Location>* path){
-	/*std::vector<Location>* res;
-	int row = start.getRow();
-	int col = start.getCol();
-	std::cout<<"1"<<std::endl;
-	if(start.isEqual(end)){
-		std::cout<<"Fin"<<std::endl;
-		res = path;}	
-	else{
-		Location next = Location(row,col);
-		if(row+1 < cityMap->getNumberOfRows()){
-			std::cout<<"2"<<std::endl;
-			next.setRow(row+1);
-			next.setCol(col);
-			if (path->empty() or !path->back().isEqual(next)){
-				std::cout<<"22"<<std::endl;
-				if(dynamic_cast<Road*>(cityMap->getCase(next))){
-					std::cout<<"222"<<std::endl;
-					path->push_back(next);
-					std::cout<<"2222"<<std::endl;
-					res = creatWay(next, end, path);
-					path->pop_back();
-				}
-			}
-		}
-		if(row-1 >= 0){
-			std::cout<<"3"<<std::endl;
-			next.setRow(row-1);
-			next.setCol(col);
-			if (path->empty() or !path->back().isEqual(next)){
-				if(dynamic_cast<Road*>(cityMap->getCase(next))){
-					path->push_back(next);
-					res = creatWay(next, end, path);
-					path->pop_back();
-				}
-			}
-		}
-		if(col+1 < cityMap->getNumberOfCols()){
-			std::cout<<"5"<<std::endl;
-			next.setRow(row);
-			next.setCol(col+1);
-			if (path->empty() or !path->back().isEqual(next)){
-				if(dynamic_cast<Road*>(cityMap->getCase(next))){
-					path->push_back(next);
-					res = creatWay(next, end, path);
-					path->pop_back();
-				}
-			}
-		}
-		if(col-1 >=0){
-			std::cout<<"1"<<std::endl;
-			next.setRow(row);
-			next.setCol(col-1);
-			if (path->empty() or !path->back().isEqual(next)){
-				if(dynamic_cast<Road*>(cityMap->getCase(next))){
-					path->push_back(next);
-					res = creatWay(next, end, path);
-					path->pop_back();
-				}
-			}
-		}
-	}
-	return res;*/
+void CityUpdater::createPath(Location start, Location end, std::vector<Location> &path){
+	// VOIR DIJKSTRA EN HAUT !!!!
+	int startIndex = std::find(roadMap.begin(), roadMap.end(), cityMap->getCase(start)) - roadMap.begin();
+	int endIndex = std::find(roadMap.begin(), roadMap.end(), cityMap->getCase(end)) - roadMap.begin();
+    std::vector<weight_t> min_distance;
+    std::vector<vertex_t> previous;
+    DijkstraComputePaths(startIndex, adjacencyList, min_distance, previous);
+    std::vector<vertex_t> tmpPath = DijkstraGetShortestPathTo(endIndex, previous);
+    for (int i=0; i<tmpPath.size(); i++){
+    	path.push_back(roadMap[tmpPath[i]]->getLocation());
+    }
 }
 
 void CityUpdater::generateVisitors(){
@@ -217,9 +217,8 @@ void CityUpdater::generateVisitors(){
     Location endLocation = endSpawn->getSpawnPoint();
     std::cout<<"Second Spawn"<<std::endl;
     
-    //std::vector<Location> newWay = creatWay(newVisitor, startLocation);
-    std::vector<Location>* path;
-    std::vector<Location>* newWay = creatWay(startLocation,endLocation,path);
+    std::vector<Location> path;
+    std::vector<Location> newWay = createPath(startLocation,endLocation,path);
     std::cout<<"Got Way"<<std::endl;
 
     Visitor* newVisitor = new Visitor(startLocation);

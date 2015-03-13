@@ -440,19 +440,15 @@ int Map<FieldType>::getMaxVisitors(){
     return visitorMax;
 }
 
-/*template <typename FieldType>
+template <typename FieldType>
 bool Map<FieldType>::isFull(){
-    int numberOfVisitors = 0;
     for(int i=0; i<visitorMax; i++){
-        if(visitorList[i] != nullptr){
-            numberOfVisitors++;
+        if(visitorList[i] == nullptr){
+            return false;
         }
     }
-    if(numberOfVisitors==visitorMax){
-        return true;
-    return false;
     return true;
-}*/
+}
 
 #endif // MAP_HPP_
 
