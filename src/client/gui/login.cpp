@@ -4,9 +4,10 @@
 Login::Login(QWidget* parent, ClientManagerGUI* cm) :
     DefaultWidget(parent, cm), ui(new Ui::Login){
 
-    displayDefaultBackground();
+    //displayDefaultBackground();
     displayLogo(this,376,357);
     ui->setupUi(this);
+    setWindowOpacity(0);
 }
 
 Login::~Login(){

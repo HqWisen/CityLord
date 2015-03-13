@@ -7,11 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1152</width>
-    <height>864</height>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">

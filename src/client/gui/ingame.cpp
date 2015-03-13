@@ -79,6 +79,7 @@ void InGame::on_buyButton_clicked(){
     clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
     clientManager->sendRequestAndRecv();
     QMessageBox::warning(this, "Buy", clientManager->getAnswerInfos().c_str());
+    activeButton("owner", lastLocation);
 }
 
 void InGame::on_buildButton_clicked()

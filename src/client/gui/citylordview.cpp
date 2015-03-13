@@ -13,6 +13,20 @@ CityLordView::CityLordView(QWidget* parent):
     setSceneRect(-((WIDTH/2)-(BASE.width()/2)), 0, WIDTH-2, HEIGHT-2);
     this->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    scale(0.35, 0.35);
+
+    /*********************/
+    int WIDTHOUT = 30;
+    QPixmap pixmap;
+    for(int row=-WIDTHOUT;row<20+WIDTHOUT;row++){
+        for(int col=-WIDTHOUT;col<20+WIDTHOUT;col++){
+            pixmap = QPixmap(getImagePath("base"));
+            scene->addPixmap(pixmap)->setOffset(carToIso(Location(row, col), pixmap));
+        }
+    }
+    /**********************/
+
     itemArray = new QGraphicsPixmapItem**[20];
     for(int i=0;i<20;i++){
         itemArray[i] = new QGraphicsPixmapItem*[20];
