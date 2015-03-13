@@ -76,48 +76,48 @@ void CityUpdater::getRoadMap() {
 }
 
 void CityUpdater::getAdjacencyList() {
-	Location location(0,0);
-	Road* road;
+    Location location(0,0);
+    Road* road;
     for (int i=0; i<roadMap.size(); i++) {
-		vector<neighbor> tmpVector;
-    	if (roadMap[i]->isOpen(Road::NORTH) && ((roadMap[i]->getLocation().getRow())-1 > 0)) {
-    		//
-    		location.setRow(roadMap[i]->getLocation().getRow()-1);
-    		location.setCol(roadMap[i]->getLocation().getCol());
-    		road = dynamic_cast<Road*>(cityMap->getCase(location));
-    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-    		tmpVector.push_back(neighbor(index, 1));
-    		//
-    	}
-    	if (roadMap[i]->isOpen(Road::WEST) && ((roadMap[i]->getLocation().getCol())-1 > 0)) {
-    		//
-    		location.setRow(roadMap[i]->getLocation().getRow());
-    		location.setCol(roadMap[i]->getLocation().getCol()-1);
-    		road = dynamic_cast<Road*>(cityMap->getCase(location));
-    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-    		tmpVector.push_back(neighbor(index, 1));
-    		//
-    	}
-      	if (roadMap[i]->isOpen(Road::SOUTH) && ((roadMap[i]->getLocation().getRow())+1 < cityMap->getNumberOfRows())) {
-      		//
-    		location.setRow(roadMap[i]->getLocation().getRow()+1);
-    		location.setCol(roadMap[i]->getLocation().getCol());
-    		road = dynamic_cast<Road*>(cityMap->getCase(location));
-    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-    		tmpVector.push_back(neighbor(index, 1));
-    		//
-    	}
-    	if (roadMap[i]->isOpen(Road::EAST) && ((roadMap[i]->getLocation().getCol())+1 < cityMap->getNumberOfCols())) {
-    		//
-    		location.setRow(roadMap[i]->getLocation().getRow());
-    		location.setCol(roadMap[i]->getLocation().getCol()+1);
-    		road = dynamic_cast<Road*>(cityMap->getCase(location));
-    		int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-    		tmpVector.push_back(neighbor(index, 1));
-    		//
-    	}
-    	adjacencyList.push_back(tmpVector);
-    	tmpVector.clear();
+        vector<neighbor> tmpVector;
+        if (roadMap[i]->isOpen(Road::NORTH) && ((roadMap[i]->getLocation().getRow())-1 >= 0)) {
+            //
+            location.setRow(roadMap[i]->getLocation().getRow()-1);
+            location.setCol(roadMap[i]->getLocation().getCol());
+            road = dynamic_cast<Road*>(cityMap->getCase(location));
+            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+            tmpVector.push_back(neighbor(index, 1));
+            //
+        }
+        if (roadMap[i]->isOpen(Road::WEST) && ((roadMap[i]->getLocation().getCol())-1 >= 0)) {
+            //
+            location.setRow(roadMap[i]->getLocation().getRow());
+            location.setCol(roadMap[i]->getLocation().getCol()-1);
+            road = dynamic_cast<Road*>(cityMap->getCase(location));
+            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+            tmpVector.push_back(neighbor(index, 1));
+            //
+        }
+        if (roadMap[i]->isOpen(Road::SOUTH) && ((roadMap[i]->getLocation().getRow())+1 < cityMap->getNumberOfRows())) {
+            //
+            location.setRow(roadMap[i]->getLocation().getRow()+1);
+            location.setCol(roadMap[i]->getLocation().getCol());
+            road = dynamic_cast<Road*>(cityMap->getCase(location));
+            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+            tmpVector.push_back(neighbor(index, 1));
+            //
+        }
+        if (roadMap[i]->isOpen(Road::EAST) && ((roadMap[i]->getLocation().getCol())+1 < cityMap->getNumberOfCols())) {
+            //
+            location.setRow(roadMap[i]->getLocation().getRow());
+            location.setCol(roadMap[i]->getLocation().getCol()+1);
+            road = dynamic_cast<Road*>(cityMap->getCase(location));
+            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+            tmpVector.push_back(neighbor(index, 1));
+            //
+        }
+        adjacencyList.push_back(tmpVector);
+        tmpVector.clear();
     }
 }
 // ======================================================================================
@@ -243,46 +243,52 @@ void CityUpdater::createPath(Location start, Location end, std::vector<Location>
 }
 
 void CityUpdater::generateVisitors(){
-    int size = spawn.size();
-    int luck = rand() %  (size-1);
-    Spawn* startSpawn = spawn[luck];
-    Location startLocation = startSpawn->getSpawnPoint();
-    std::cout<<"Start "<<startLocation.getRow()<<","<<startLocation.getCol()<<std::endl;
-    luck = rand() %  (size-1);
-    Spawn* endSpawn = spawn[luck];
-    while(endSpawn == startSpawn){
-    	luck = rand() %  (size-1);
-    	endSpawn = spawn[luck];
+    if (!cityMap->isFull()){
+        int size = spawn.size();
+        int luck = rand() %  (size-1);
+        Spawn* startSpawn = spawn[luck];
+        Location startLocation = startSpawn->getSpawnPoint();
+        std::cout<<"Start "<<startLocation.getRow()<<","<<startLocation.getCol()<<std::endl;
+
+        luck = rand() %  (size-1);
+        Spawn* endSpawn = spawn[luck];
+        while(endSpawn == startSpawn){
+            luck = rand() %  (size-1);
+            endSpawn = spawn[luck];
+        }
+        Location endLocation = endSpawn->getSpawnPoint();
+
+        std::vector<Location> path;
+        path.push_back(startLocation);
+
+        Location lastLocation = startLocation;
+        size = checkPointsList.size();
+        if (size > 0) {
+            luck = 0;
+            int badLuck = 2;
+            Location nextLocation;
+            luck = rand() % (badLuck);
+            while(luck == 0){
+                luck = rand() % (size-1);
+                nextLocation = checkPointsList[luck]->getLocation();
+                createPath(lastLocation,nextLocation,path);
+                std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
+                lastLocation = nextLocation;
+                badLuck += 1;
+                luck = rand() % (badLuck);
+            }
+        }
+
+
+        std::cout<<"End "<<endLocation.getRow()<<","<<endLocation.getCol()<<std::endl;
+        createPath(lastLocation,endLocation,path);
+        std::cout<<"Got Path"<<std::endl;
+
+        Visitor* newVisitor = new Visitor(startLocation);
+        std::cout<<"Taille du chemin donné :"<< path.size() <<std::endl;
+        newVisitor->setPath(path);
+        cityMap->addVisitor(newVisitor);  
     }
-    Location endLocation = endSpawn->getSpawnPoint();
-    std::cout<<"End "<<endLocation.getRow()<<","<<endLocation.getCol()<<std::endl;
-
-    std::vector<Location> path;
-    path.push_back(startLocation);
-
-    luck = 0;
-    int badLuck = 2;
-    size = checkPointsList.size();
-    Location lastLocation = startLocation;
-    Location nextLocation;
-   	luck = rand() % (badLuck);
-    while(luck == 0){
-    	luck = rand() % (size-1);
-    	nextLocation = checkPointsList[luck]->getLocation();
-    	std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
-    	createPath(lastLocation,nextLocation,path);
-    	lastLocation = nextLocation;
-    	badLuck += 1;
-    	luck = rand() % (badLuck);
-    }
-
-    createPath(lastLocation,endLocation,path);
-    std::cout<<"Got Path"<<std::endl;
-
-    Visitor* newVisitor = new Visitor(startLocation);
-    std::cout<<"Taille du chemin donné :"<< path.size() <<std::endl;
-    newVisitor->setPath(path);
-    cityMap->addVisitor(newVisitor);
 }
 
 void CityUpdater::updateBuildings(){
@@ -314,68 +320,82 @@ void CityUpdater::makeVisitorsAdvance(){
 			int col = loc.getCol();
 			int row = loc.getRow();
 			Location locTest(row+1,col);
-			if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
-				if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
-					enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-					if(!enter){
-						locTest = Location(row-1,col);
-					} else {
-						enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-						if(!enter){
-							locTest = Location(row-1,col);
-						}
-						else{
-							cityMap->deleteVisitor(i);
-						}
-					}
-				}
-			}
-			if(!enter){
-				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
-					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
-						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-						if(!enter){
-							locTest = Location(row,col+1);
-						} else {
-							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-							if(!enter){
-								locTest = Location(row,col+1);
-							} else {
-								cityMap->deleteVisitor(i);
-							}
-						}
-					}
-				}
-			}
-			if(!enter){
-				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
-					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
-						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-						if(!enter){
-							locTest = Location(row,col-1);
-						} else {
-							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-							if(!enter){
-								locTest = Location(row,col-1);
-							} else {
-							cityMap->deleteVisitor(i);
-							}
-						}
-					}
-				}
-			}
-			if(!enter){
-				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
-					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
-						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-						if(enter){
-							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-							if(enter){
-								cityMap->deleteVisitor(i);
-							}
-						}
-					}
-				}
+            if(locTest.getRow() < cityMap->getNumberOfRows()) {
+                if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+                    if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+                        enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                        if(!enter){
+                            locTest = Location(row-1,col);
+                        } else {
+                            enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                            if(!enter){
+                                locTest = Location(row-1,col);
+                            }
+                            else{
+                                cityMap->deleteVisitor(i);
+                            }
+                        }
+                    }
+                }
+            }else {
+                locTest = Location(row-1,col);
+            }
+            if(locTest.getRow() >= 0) {
+    			if(!enter){
+    				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+    					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+    						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    						if(!enter){
+    							locTest = Location(row,col+1);
+    						} else {
+    							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    							if(!enter){
+    								locTest = Location(row,col+1);
+    							} else {
+    								cityMap->deleteVisitor(i);
+    							}
+    						}
+    					}
+    				}
+    			}
+            }else {
+               locTest = Location(row,col+1); 
+            }
+            if(locTest.getCol() < cityMap->getNumberOfCols()) {
+    			if(!enter){
+    				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+    					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+    						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    						if(!enter){
+    							locTest = Location(row,col-1);
+    						} else {
+    							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    							if(!enter){
+    								locTest = Location(row,col-1);
+    							} else {
+                                    cityMap->deleteVisitor(i);
+    							}
+    						}
+    					}
+    				}
+    			}
+            }else {
+                locTest = Location(row,col-1);
+            }
+            if(locTest.getCol() >= 0) {
+    			if(!enter){
+    				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+    					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+    						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    						if(enter){
+    							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    							if(enter){
+    								cityMap->deleteVisitor(i);
+    							}
+    						}
+    					}
+    				}
+                }
             }
 		}
 	}
