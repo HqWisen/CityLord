@@ -50,7 +50,8 @@ class Map{
         Location findSpawnPoint(Location);
         vector<Spawn*> getSpawnList();
         Case* getCase(Location);
-        void addVisitor(Visitor*);
+        int addVisitor(Visitor*);
+        void addVisitor(int, Location);
         void deleteVisitor(int);
         Visitor* getVisitor(int);
         int getMaxVisitors();
@@ -419,16 +420,22 @@ void Map<FieldType>::parseMap(string filePath, string map){
 //=========================================== Visitor ==========================================
 
 template <typename FieldType>
-void Map<FieldType>::addVisitor(Visitor* newVisitor){
-    int i = 0;
+int Map<FieldType>::addVisitor(Visitor* newVisitor){
+    int i = -1;
     bool spaceFound = false;
-    while(i<visitorMax && !spaceFound){
+    while(i<=visitorMax && !spaceFound){
+        i++;
         if(visitorList[i] == nullptr){
             spaceFound = true;
             visitorList[i] = newVisitor;
         }
-        i++;
     }
+    return i;
+}
+
+template <typename FieldType>
+void Map<FieldType>::addVisitor(int visitorID, Location spawnLocation){
+    visitorList[visitorID] = new Visitor(spawnLocation);
 }
 
 template <typename FieldType>

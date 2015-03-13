@@ -13,7 +13,9 @@ public:
     static void changeownerwithbuilding(ClientManager*, SocketMessage);
     static void build(ClientManager*, SocketMessage);
     static void destroy(ClientManager*, SocketMessage);
+    static void visitorcreate(ClientManager*, SocketMessage);
     static void visitormove(ClientManager*, SocketMessage);
+    static void visitorremove(ClientManager*, SocketMessage);
 };
 
 #endif // UPDATE_HPP_
