@@ -9,7 +9,7 @@
 
 #include "../common/socket/ServerSocket.hpp"
 #include "../common/socket/ClientSocket.hpp"
-#include "../common/lib/User.hpp"
+#include "User.hpp"
 #include "UserManager.hpp"
 #include "CityManager.hpp"
 

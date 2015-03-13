@@ -5,9 +5,13 @@
 #include <algorithm>
 #include "Case.hpp"
 #include "BuildingType.hpp"
-#include "Player.hpp"
 #include "Building.hpp"
 #include <string>
+
+#include "../../server/Player.hpp"
+
+
+class Player;
 
 class BasicField : public Case{
     protected:

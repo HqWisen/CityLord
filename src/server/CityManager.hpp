@@ -6,7 +6,7 @@
 #include <string>
 #include <cstdlib>
 
-#include "../common/lib/Catalog.hpp"
+#include "Catalog.hpp"
 #include "CityUpdater.hpp"
 #include <vector>
 #include <algorithm>

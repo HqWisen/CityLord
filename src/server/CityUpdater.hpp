@@ -3,12 +3,11 @@
 
 
 #include "../common/thread/Thread.hpp"
-#include "../common/lib/Catalog.hpp"
+#include "Catalog.hpp"
 #include "Timer.hpp"
 #include <iostream>
-#include "../common/lib/Map.hpp"
-#include "../common/lib/Visitor.hpp"
-//#include "../common/lib/Player.hpp"
+#include "../common/models/Map.hpp"
+#include "../common/models/Visitor.hpp"
 
 class CityUpdater : public Thread{
     Map<Field>* cityMap;

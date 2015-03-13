@@ -4,7 +4,7 @@
 #include "../UserManager.hpp"
 #include "../CityLordServer.hpp"
 #include "../../common/socket/SocketMessage.hpp"
-#include "../../common/lib/BuildingType.hpp"
+#include "../../common/models/BuildingType.hpp"
 
 #include <iostream>
 

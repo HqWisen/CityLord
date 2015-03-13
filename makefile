@@ -2,11 +2,11 @@
 
 # -- client
 CLIENT = citylord
-DEPC = client socket lib update thread
+DEPC = client socket models update thread server
 
 # -- server
 SERVER = citylordserver
-DEPS = server request socket thread lib
+DEPS = server request socket thread models
 
 # -- gui
 
@@ -14,7 +14,7 @@ GUI = citylordgui
 
 # -- test
 TEST = testexe
-DEPT = test lib
+DEPT = test models
 # -- 
 
 # -- Do not edit below this line --
@@ -52,8 +52,8 @@ $(BIN_DIR)/socket.a:
 	$(MAKE) -C src/common/socket
 $(BIN_DIR)/thread.a:	
 	$(MAKE) -C src/common/thread
-$(BIN_DIR)/lib.a:	
-	$(MAKE) -C src/common/lib
+$(BIN_DIR)/models.a:	
+	$(MAKE) -C src/common/models
 $(BIN_DIR)/client.a:
 	$(MAKE) -C src/client
 $(BIN_DIR)/server.a:

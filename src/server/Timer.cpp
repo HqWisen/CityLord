@@ -6,7 +6,7 @@ void Timer::start(){
 }
 
 unsigned long Timer::elapsedTime(){
-	 return ((unsigned long) clock() - startTime) / CLOCKS_PER_SEC;
+     return ((unsigned long) clock() - startTime) / CLOCKS_PER_SEC;
 }
 
 bool Timer::isTimeout(unsigned long seconds){

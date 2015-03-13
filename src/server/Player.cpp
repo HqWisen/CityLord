@@ -2,7 +2,7 @@
 #include <sstream>
 
 #include "Player.hpp"
-#include "../../server/UserManager.hpp"
+#include "UserManager.hpp"
 
 using namespace std;
 

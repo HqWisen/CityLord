@@ -7,11 +7,11 @@
 
 #include "../common/socket/ConnectionSocket.hpp"
 #include "../common/socket/SocketMessage.hpp"
-#include "../common/lib/Map.hpp"
-#include "../common/lib/Field.hpp"
-#include "Updater.hpp"
+#include "../common/models/Map.hpp"
+#include "../common/models/Field.hpp"
+#include "ClientUpdater.hpp"
 
-class Updater;
+class ClientUpdater;
 
 #define CLIENTNAME "CityLord"
 #define CINITEM "> "
@@ -20,7 +20,7 @@ class CityLordClient{
 	ConnectionSocket connectionSocket;
     ConnectionSocket updateSocket;
     Map<ClientField>* map;
-    Updater* updater;
+    ClientUpdater* updater;
 	public:
 		CityLordClient(char* hostname, int port);
 		CityLordClient(const CityLordClient&) = default;

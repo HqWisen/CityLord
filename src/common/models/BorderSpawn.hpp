@@ -9,6 +9,7 @@ class BorderSpawn : public Road, public Spawn{
 		BorderSpawn(Location);
         BorderSpawn(Location, Road*);
         ~BorderSpawn() = default;
+        std::string getImageName() override;
         //Visitor* spawn() override;
         //void despawn(Visitor*) override;
 };

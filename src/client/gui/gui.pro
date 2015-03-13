@@ -5,7 +5,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
     login.cpp \
     mainmenu.cpp \
-    inplay.cpp \
     mainwindow.cpp \
     createaccount.cpp \
     defaultwidget.cpp \
@@ -18,7 +17,6 @@ SOURCES += main.cpp\
 HEADERS  += \
     login.h \
     mainmenu.h \
-    inplay.h \
     mainwindow.h \
     createaccount.h \
     defaultwidget.h \
@@ -32,7 +30,6 @@ HEADERS  += \
 FORMS    += \
     login.ui \
     mainmenu.ui \
-    inplay.ui \
     mainwindow.ui \
     createaccount.ui \
     creategame.ui \
@@ -44,7 +41,7 @@ QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic -Wno-write-strings
 
 DESTDIR = ../../../bin
 
-LIBS += $$DESTDIR/socket.a $$DESTDIR/lib.a
+LIBS += $$DESTDIR/socket.a $$DESTDIR/models.a $$DESTDIR/server.a
 
 OBJECTS_DIR = $$DESTDIR/gui/
 MOC_DIR = $$DESTDIR/gui/.moc

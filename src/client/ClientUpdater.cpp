@@ -1,6 +1,6 @@
-#include "Updater.hpp"
+#include "ClientUpdater.hpp"
 
-const std::map<std::string, update_ptr> Updater::updatemap = {
+const std::map<std::string, update_ptr> ClientUpdater::updatemap = {
     {"changeowner", update::changeowner},
     {"changeownerwithbuilding", update::changeownerwithbuilding},
     {"build", update::build},
@@ -9,20 +9,20 @@ const std::map<std::string, update_ptr> Updater::updatemap = {
 
 };
 
-Updater::Updater(CityLordClient* cclient, Socket socket) : client(cclient), updateSocket(socket){
+ClientUpdater::ClientUpdater(CityLordClient* cclient, Socket socket) : client(cclient), updateSocket(socket){
 	this->start();
 }
 
-void Updater::run(){
+void ClientUpdater::run(){
     SocketMessage update;
     recvUpdate(update);
     while(update.getTopic() != "quit" && !update.getTopic().empty()){
-        Updater::updatemap.at(update.getTopic())(client, update);
+        ClientUpdater::updatemap.at(update.getTopic())(client, update);
         recvUpdate(update);
     }
 }
 
-void Updater::recvUpdate(SocketMessage& update){
+void ClientUpdater::recvUpdate(SocketMessage& update){
     update = SocketMessage::parse(updateSocket.read());
 }
 

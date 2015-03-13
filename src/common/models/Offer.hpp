@@ -2,7 +2,7 @@
 #define OFFER_HPP_
 
 #include "Field.hpp"
-#include "Player.hpp"
+#include "../../server/Player.hpp"
 
 class Offer{
 	Player* owner;

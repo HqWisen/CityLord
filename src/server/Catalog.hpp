@@ -2,8 +2,8 @@
 #define CATALOG_HPP_
 
 #include <vector>
-#include "Offer.hpp"
-#include "../socket/SocketMessage.hpp"
+#include "../common/models/Offer.hpp"
+#include "../common/socket/SocketMessage.hpp"
 
 
 class Catalog{

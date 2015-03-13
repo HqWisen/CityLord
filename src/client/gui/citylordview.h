@@ -7,7 +7,7 @@
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
-#include "../../common/lib/Case.hpp"
+#include "../../common/models/Case.hpp"
 
 
 class CityLordView : public QGraphicsView{

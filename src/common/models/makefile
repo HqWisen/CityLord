@@ -1,3 +1,3 @@
-NAME = lib
+NAME = models
 
 include ../../../rules.mk

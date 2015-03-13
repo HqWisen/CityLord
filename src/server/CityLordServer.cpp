@@ -2,7 +2,8 @@
 
 const std::vector<std::string> CityLordServer::mapNameVector = {
     "CITYBAY",
-    "ROADRED"
+    "ROADRED",
+    "EQUALAND"
 };
 
 CityLordServer::CityLordServer(int port_) : port(port_), serverSocket(port), updateClientSocket(port+1){}

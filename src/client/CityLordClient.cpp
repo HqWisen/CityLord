@@ -13,7 +13,7 @@ void CityLordClient::run(){
     }else{
         throw std::invalid_argument("Cannot connect the user updater.");
     }
-    updater = new Updater(this, updateSocket);
+    updater = new ClientUpdater(this, updateSocket);
     LOG("Welcome in CityLord !");
 	beginConnection();
 	chooseCity();

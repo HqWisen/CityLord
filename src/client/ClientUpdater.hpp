@@ -11,14 +11,14 @@ class CityLordClient;
 
 typedef void (* update_ptr)(CityLordClient*, SocketMessage);
 
-class Updater : public Thread{
+class ClientUpdater : public Thread{
 
     static const std::map<std::string, update_ptr> updatemap;
 
     CityLordClient* client = nullptr;
     Socket updateSocket;
     public:
-        Updater(CityLordClient*, Socket);
+        ClientUpdater(CityLordClient*, Socket);
 		void run() override;
         void recvUpdate(SocketMessage&);
 };

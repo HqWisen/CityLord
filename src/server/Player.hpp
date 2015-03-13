@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include "Location.hpp"
+#include "../common/models/Location.hpp"
 
 using namespace std;
 

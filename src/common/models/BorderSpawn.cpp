@@ -21,6 +21,10 @@ BorderSpawn::BorderSpawn(Location location, Road* oldRoad) : Road(location){
 	delete oldRoad;
 }
 
+std::string BorderSpawn::getImageName(){
+    return "stop_right";
+}
+
 //Visitor* BorderSpawn::spawn() {return nullptr;}
 
 //void BorderSpawn::despawn(Visitor*) {}

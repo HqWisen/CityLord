@@ -6,7 +6,7 @@
 #include "../common/socket/SocketMessage.hpp"
 #include "../common/thread/Thread.hpp"
 #include "request/request.hpp"
-#include "../common/lib/User.hpp"
+#include "User.hpp"
 #include "CityManager.hpp"
 
 class SocketMessage;

@@ -6,7 +6,7 @@
 #include <map>
 #include <string>
 #include "citylordview.h"
-#include "../../common/lib/Map.hpp"
+#include "../../common/models/Map.hpp"
 #include "../../common/socket/ConnectionSocket.hpp"
 #include "../../common/socket/SocketMessage.hpp"
 
