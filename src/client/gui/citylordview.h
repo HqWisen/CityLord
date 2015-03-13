@@ -9,6 +9,7 @@
 #include <QGraphicsPixmapItem>
 #include "../../common/lib/Case.hpp"
 
+
 class CityLordView : public QGraphicsView{
 
 static const int WIDTH, HEIGHT;
@@ -28,6 +29,9 @@ public:
     void keyPressEvent(QKeyEvent *event);
     const char* getImagePath(std::string);
     void display(Case*);
+
+    //Location isoToLoc(QPointF );  bug
+    void isoToLoc(QPointF );
 
 private:
     QPointF carToIso(Location, const QPixmap&);
