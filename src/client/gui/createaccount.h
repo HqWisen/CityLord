@@ -11,7 +11,7 @@ class CreateAccount;
 class CreateAccount : public DefaultWidget{
     Q_OBJECT
 public:
-    CreateAccount(QWidget*, ClientManager*);
+    CreateAccount(QWidget*, ClientManagerGUI*);
     ~CreateAccount();
     void refresh() override;
 private slots:

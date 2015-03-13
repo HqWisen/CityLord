@@ -2,20 +2,15 @@
 #include "ui_ingame.h"
 
 
-InGame::InGame(QWidget* parent, ClientManager* cm) :
+InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
     DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this)){
     clientManager->setMapView(view);
     ui->setupUi(this);
+    QObject::connect(clientManager->getRepaintSignaler(), SIGNAL(repaintView()), this, SLOT(repaintView()));
+}
 
-    /*int ROWS, COLS;
-    ROWS = 20;
-    COLS = 20;
-    for(int row=0;row<ROWS;row++){
-        for(int col=0;col<COLS;col++){
-            view->addBaseOn(row, col);
-        }
-    }
-    view->addBar();*/
+void InGame::repaintView(){
+    view->repaint(clientManager->getMap());
 }
 
 InGame::~InGame(){

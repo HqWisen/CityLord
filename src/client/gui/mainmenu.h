@@ -11,7 +11,7 @@ class MainMenu;
 class MainMenu : public DefaultWidget{
     Q_OBJECT
 public:
-    MainMenu(QWidget *parent, ClientManager*);
+    MainMenu(QWidget *parent, ClientManagerGUI*);
     ~MainMenu();
     void refresh() override;
 private slots:

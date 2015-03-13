@@ -1,7 +1,7 @@
 #include "login.h"
 #include "ui_login.h"
 
-Login::Login(QWidget* parent, ClientManager* cm) :
+Login::Login(QWidget* parent, ClientManagerGUI* cm) :
     DefaultWidget(parent, cm), ui(new Ui::Login){
 
     displayDefaultBackground();
@@ -30,7 +30,7 @@ void Login::login(){
     if(clientManager->requestFailed()){
         ui->errorLabel->setText(clientManager->getFailureReason().c_str());
     }else{
-        clientManager->setCurrentWidget(ClientManager::MAINMENU);
+        clientManager->setCurrentWidget(ClientManagerGUI::MAINMENU);
     }
 }
 
@@ -39,7 +39,7 @@ void Login::on_loginButton_clicked(){
 }
 
 void Login::on_createAccountButton_clicked(){
-    clientManager->setCurrentWidget(ClientManager::CREATEACCOUNT);
+    clientManager->setCurrentWidget(ClientManagerGUI::CREATEACCOUNT);
 }
 
 void Login::on_quitButton_clicked(){

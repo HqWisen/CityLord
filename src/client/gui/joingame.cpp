@@ -2,7 +2,7 @@
 #include "ui_joingame.h"
 
 
-JoinGame::JoinGame(QWidget* parent, ClientManager* cm) :
+JoinGame::JoinGame(QWidget* parent, ClientManagerGUI* cm) :
     DefaultWidget(parent, cm), ui(new Ui::JoinGame), tableItemArray(nullptr), headerLabels(), choice(-1){
     displayDefaultBackground();
     ui->setupUi(this);
@@ -82,7 +82,7 @@ void JoinGame::on_joinButton_clicked(){
         if(clientManager->requestFailed()){
             ui->errorLabel->setText(clientManager->getFailureReason().c_str());
         }else{
-            clientManager->setCurrentWidget(ClientManager::INGAME);
+            clientManager->setCurrentWidget(ClientManagerGUI::INGAME);
             clientManager->buildMap(clientManager->getInfo("filename"));
         }
     }
@@ -90,6 +90,6 @@ void JoinGame::on_joinButton_clicked(){
 }
 
 void JoinGame::on_cancelButton_clicked(){
-    clientManager->setCurrentWidget(ClientManager::MAINMENU);
+    clientManager->setCurrentWidget(ClientManagerGUI::MAINMENU);
 
 }

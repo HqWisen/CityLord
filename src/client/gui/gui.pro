@@ -9,10 +9,11 @@ SOURCES += main.cpp\
     createaccount.cpp \
     defaultwidget.cpp \
     creategame.cpp \
-    clientmanager.cpp \
     joingame.cpp \
     citylordview.cpp \
-    ingame.cpp
+    ingame.cpp \
+    clientmanagerGUI.cpp \
+    repaintsignaler.cpp
 
 HEADERS  += \
     login.h \
@@ -21,10 +22,11 @@ HEADERS  += \
     createaccount.h \
     defaultwidget.h \
     creategame.h \
-    clientmanager.h \
     joingame.h \
     citylordview.h \
-    ingame.h
+    ingame.h \
+    clientmanagerGUI.h \
+    repaintsignaler.h
 
 
 FORMS    += \
@@ -41,7 +43,7 @@ QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic -Wno-write-strings
 
 DESTDIR = ../../../bin
 
-LIBS += $$DESTDIR/socket.a $$DESTDIR/models.a $$DESTDIR/server.a
+LIBS += $$DESTDIR/models.a $$DESTDIR/server.a $$DESTDIR/client.a $$DESTDIR/update.a $$DESTDIR/socket.a $$DESTDIR/thread.a
 
 OBJECTS_DIR = $$DESTDIR/gui/
 MOC_DIR = $$DESTDIR/gui/.moc

@@ -5,22 +5,24 @@
 #include "../common/socket/SocketMessage.hpp"
 #include "../common/thread/Thread.hpp"
 #include "update/update.hpp"
-#include "CityLordClient.hpp"
+#include "ClientManager.hpp"
 
-class CityLordClient;
+class ClientManager;
 
-typedef void (* update_ptr)(CityLordClient*, SocketMessage);
+typedef void (* update_ptr)(ClientManager*, SocketMessage);
 
 class ClientUpdater : public Thread{
 
     static const std::map<std::string, update_ptr> updatemap;
 
-    CityLordClient* client = nullptr;
+
+    ClientManager* clientManager;
     Socket updateSocket;
     public:
-        ClientUpdater(CityLordClient*, Socket);
-		void run() override;
+        ClientUpdater(ClientManager*, Socket);
+        void run() override;
         void recvUpdate(SocketMessage&);
+
 };
 
 #endif // UPDATER_HPP_

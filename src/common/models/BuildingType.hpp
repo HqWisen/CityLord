@@ -8,7 +8,7 @@ using namespace std;
 class BuildingType{
 	public:
 		static const BuildingType types[];
-		static const int typesLength = 4;
+        static const int typesLength = 5;
         //
 		static const BuildingType BAR;
 		static const BuildingType NIGHT_CLUB;

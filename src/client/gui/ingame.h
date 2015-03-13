@@ -18,11 +18,13 @@ class InGame: public DefaultWidget{
     Q_OBJECT
 
 public:
-    InGame(QWidget*, ClientManager*);
+    InGame(QWidget*, ClientManagerGUI*);
     ~InGame();
     void refresh() override;
     void updateMoney(int);
     void updateTime(int);
+public slots:
+    void repaintView();
 private slots:
     void on_demolishButton_clicked();
     void on_buyButton_clicked();

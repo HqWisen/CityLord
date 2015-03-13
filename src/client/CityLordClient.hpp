@@ -9,18 +9,13 @@
 #include "../common/socket/SocketMessage.hpp"
 #include "../common/models/Map.hpp"
 #include "../common/models/Field.hpp"
-#include "ClientUpdater.hpp"
-
-class ClientUpdater;
+#include "ClientManager.hpp"
 
 #define CLIENTNAME "CityLord"
 #define CINITEM "> "
 
 class CityLordClient{
-	ConnectionSocket connectionSocket;
-    ConnectionSocket updateSocket;
-    Map<ClientField>* map;
-    ClientUpdater* updater;
+    ClientManager* clientManager;
 	public:
 		CityLordClient(char* hostname, int port);
 		CityLordClient(const CityLordClient&) = default;
@@ -34,13 +29,9 @@ class CityLordClient{
 		void joinCity();
 		void showMap();
 		void selectField();
-		void build();
 		void showCatalog();
 		void showInfo();
-		void sendRequest(SocketMessage);
-		void recvAnswer(SocketMessage&);
 		int makeChoice(int min = 1, int max = 1);
-        Map<ClientField>* getMap();
 		void LOG(std::string);
 };
 

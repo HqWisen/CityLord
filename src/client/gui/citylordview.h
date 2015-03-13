@@ -2,12 +2,14 @@
 #define CITYLORDVIEW_H
 
 #include <QtCore>
+#include <QObject>
 #include <QtGui>
 #include <QGraphicsView>
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include "../../common/models/Case.hpp"
+#include "../../common/models/Map.hpp"
 
 
 class CityLordView : public QGraphicsView{
@@ -19,7 +21,7 @@ const QPixmap BASE, OUT;
 
 public:
     CityLordView(QWidget*);
-    ~CityLordView();
+    virtual ~CityLordView();
     void addBaseOn(int, int);
     void addBar();
     void mousePressEvent(QMouseEvent*) override;
@@ -28,8 +30,7 @@ public:
     void wheelEvent(QWheelEvent*) override;
     void keyPressEvent(QKeyEvent *event);
     const char* getImagePath(std::string);
-    void display(Case*);
-
+    void repaint(Map<ClientField>*);
     //Location isoToLoc(QPointF );  bug
     void isoToLoc(QPointF );
 
@@ -37,10 +38,11 @@ private:
     QPointF carToIso(Location, const QPixmap&);
     //QPointF isoToCar(int, int);
 private:
-    //QPixmap pixmapArray[20][20];
+    QGraphicsPixmapItem* itemArray[20][20];
     int px, py;
     QPointF lastPos;
     QPointF startMouse;
+    QGraphicsPixmapItem* item;
 };
 
 #endif // CITYLORDVIEW_H

@@ -7,7 +7,7 @@
 #include "createaccount.h"
 #include "creategame.h"
 #include "joingame.h"
-#include "clientmanager.h"
+#include "clientmanagerGUI.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -23,7 +23,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QWidget* centralWidget;
-    ClientManager* clientManager;
+    ClientManagerGUI* clientManager;
 };
 
 #endif // MAINWINDOW_H

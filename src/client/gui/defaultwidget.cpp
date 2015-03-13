@@ -1,6 +1,6 @@
 #include "defaultwidget.h"
 
-DefaultWidget::DefaultWidget(QWidget *parent, ClientManager* cm) :
+DefaultWidget::DefaultWidget(QWidget *parent, ClientManagerGUI* cm) :
     QWidget(parent), clientManager(cm), backgroundFrame(this){
 }
 

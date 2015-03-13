@@ -1,19 +1,20 @@
 #ifndef UPDATE_HPP_
 #define UPDATE_HPP_
 
-#include "../CityLordClient.hpp"
+#include "../ClientManager.hpp"
 #include "../../common/socket/SocketMessage.hpp"
 #include <iostream>
 
-class CityLordClient;
+class ClientManager;
 
-namespace update{
-    void changeowner(CityLordClient*, SocketMessage);
-    void changeownerwithbuilding(CityLordClient*, SocketMessage);
-    void build(CityLordClient*, SocketMessage);
-    void destroy(CityLordClient*, SocketMessage);
-    void visitormove(CityLordClient*, SocketMessage);
-}
+class UpdateMethods{
+public:
+    static void changeowner(ClientManager*, SocketMessage);
+    static void changeownerwithbuilding(ClientManager*, SocketMessage);
+    static void build(ClientManager*, SocketMessage);
+    static void destroy(ClientManager*, SocketMessage);
+    static void visitormove(ClientManager*, SocketMessage);
+};
 
 #endif // UPDATE_HPP_
 

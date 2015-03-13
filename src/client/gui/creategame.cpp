@@ -8,7 +8,7 @@ const std::string CreateGame::CLICKCOLOR = "#B70101";
 const std::string CreateGame::UNCLICKCOLOR = "black";
 
 
-CreateGame::CreateGame(QWidget* parent, ClientManager* cm) :
+CreateGame::CreateGame(QWidget* parent, ClientManagerGUI* cm) :
     DefaultWidget(parent, cm), ui(new Ui::CreateGame){
 
     displayDefaultBackground();
@@ -63,12 +63,12 @@ void CreateGame::on_createButton_clicked(){
     if(clientManager->requestFailed()){
         // TODO handle failure
     }else{
-        clientManager->setCurrentWidget(ClientManager::JOINGAME);
+        clientManager->setCurrentWidget(ClientManagerGUI::JOINGAME);
     }
 }
 
 void CreateGame::on_cancelButton_clicked(){
-    clientManager->setCurrentWidget(ClientManager::MAINMENU);
+    clientManager->setCurrentWidget(ClientManagerGUI::MAINMENU);
 }
 
 QString CreateGame::getStyleSheet(std::string picture, std::string color){

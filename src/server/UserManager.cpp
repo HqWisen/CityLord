@@ -30,7 +30,7 @@ void UserManager::run(){
 	SocketMessage request, answer;
     recvRequest(request);
 	while(request.getTopic() != "quit" and !request.getTopic().empty()){
-		answer = UserManager::requestmap.at(request.getTopic())(server, this, request);
+        answer = UserManager::requestmap.at(request.getTopic())(server, this, request);
 		sendAnswer(answer);
 		recvRequest(request);
 	}

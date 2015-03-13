@@ -5,12 +5,17 @@ const int CityLordView::WIDTH = 1152;
 const int CityLordView::HEIGHT = 804;
 
 CityLordView::CityLordView(QWidget* parent):
-    QGraphicsView(parent), scene(new QGraphicsScene(this)), BASE(getImagePath("base")){
+    QGraphicsView(parent), scene(new QGraphicsScene(this)), BASE(getImagePath("base")), item(new QGraphicsPixmapItem){
     resize(WIDTH, HEIGHT);
     setScene(scene);
     setSceneRect(-((WIDTH/2)-(BASE.width()/2)), 0, WIDTH-2, HEIGHT-2);
     this->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    for(int i=0;i<20;i++){
+        for(int j=0;j<20;j++){
+            itemArray[i][j] = new QGraphicsPixmapItem;
+        }
+    }
 }
 
 CityLordView::~CityLordView(){
@@ -126,16 +131,12 @@ void CityLordView::mouseMoveEvent(QMouseEvent * e){
 }
 
 void CityLordView::wheelEvent(QWheelEvent* e){
-    QPointF currentPos = mapToScene(e->pos());
-
     if(e->delta() > 0){
         scale(1.1, 1.1);
     }
     else if(e->delta() < 0){
         scale(0.9, 0.9);
     }
-
-
 }
 
 void CityLordView::keyPressEvent(QKeyEvent *event)
@@ -167,12 +168,15 @@ const char* CityLordView::getImagePath(std::string imagename){
     return path.c_str();
 }
 
-void CityLordView::display(Case* caze){
-    QPixmap pixmap(getImagePath(caze->getImageName()));
+
+void CityLordView::repaint(Map<ClientField> * map){
     QGraphicsPixmapItem* item;
-    item = scene->addPixmap(pixmap);
-    item->setOffset(carToIso(caze->getLocation(), pixmap));
-
-
-
+    QPixmap pixmap;
+    for(int row=0;row<map->getNumberOfRows();row++){
+        for(int col=0;col<map->getNumberOfCols();col++){
+            pixmap = QPixmap(getImagePath(map->getCase(Location(row, col))->getImageName()));
+            item = scene->addPixmap(pixmap);
+            item->setOffset(carToIso(Location(row, col), pixmap));
+        }
+    }
 }

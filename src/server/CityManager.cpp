@@ -1,7 +1,7 @@
 #include "CityManager.hpp"
 #include "UserManager.hpp"
 
-const int CityManager::DEFAULTMAXPLAYER = 3;
+const int CityManager::DEFAULTMAXPLAYER = 8;
 
 CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), cityMap(new Map<Field>(getMapFileName())), id(cityid), creator(cr), catalog(), nPlayer(0), playerVector(), MAXPLAYER(DEFAULTMAXPLAYER){
     Field* concernedField;

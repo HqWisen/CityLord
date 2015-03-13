@@ -2,18 +2,11 @@
 
 #include <stdexcept>
 
-CityLordClient::CityLordClient(char* hostname, int port) : connectionSocket(hostname, port), updateSocket(hostname, port+1), map(nullptr), updater(nullptr){}
+CityLordClient::CityLordClient(char* hostname, int port) : clientManager(new ClientManager(hostname, port)){
+
+}
 
 void CityLordClient::run(){
-    SocketMessage updateMessage, quitRequest("quit");
-	connectionSocket.connectHost();
-    recvAnswer(updateMessage);
-    if(updateMessage.getTopic() == "update"){
-        updateSocket.connectHost();
-    }else{
-        throw std::invalid_argument("Cannot connect the user updater.");
-    }
-    updater = new ClientUpdater(this, updateSocket);
     LOG("Welcome in CityLord !");
 	beginConnection();
 	chooseCity();
@@ -47,12 +40,11 @@ void CityLordClient::run(){
 			disconnected= true;
 		}
 	}
-	sendRequest(quitRequest);
+    clientManager->quit();
 }
 
 CityLordClient::~CityLordClient(){
-    delete map;
-    delete updater;
+    delete clientManager;
 }
 
 void CityLordClient::beginConnection(){
@@ -66,27 +58,26 @@ void CityLordClient::beginConnection(){
 	}else if(choice == 2){
 		login();
 	}
-	// TODO print username
+    // TODO print username
 }
 
 void CityLordClient::login(){
 	bool fail = true;
     std::string username, password;
-	SocketMessage request("login"), answer;
-	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
+    std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	LOG("Enter your account nickname to log in.");
 	while(fail){
+        clientManager->setRequest("login");
         std::cout<<"Username : ";
         std::cin>>username;
-        request.set("username", username);
+        clientManager->addInfo("username", username);
         std::cout<<"Password : ";
         std::cin>>password;
-        request.set("password", password);
-        sendRequest(request);
-		recvAnswer(answer);
-		fail = (answer.getTopic() == "failure");
+        clientManager->addInfo("password", password);
+        clientManager->sendRequestAndRecv();
+        fail = clientManager->requestFailed();
 		if(fail){
-			LOG(answer.get("reason"));
+            LOG(clientManager->getFailureReason());
 		}
 	}
 }
@@ -95,23 +86,23 @@ void CityLordClient::createAccount(){
 	// TODO restriction du pseudo (nb max de char etc...)
 	bool fail = true;
     std::string username, password;
-	SocketMessage request("createaccount"), answer;
-	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
+    clientManager->setRequest("createaccount");
+    std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	LOG("To create an account enter your username.");
 	while(fail){
+        clientManager->setRequest("createaccount");
         std::cout<<"Username : ";
         std::cin>>username;
-        request.set("username", username);
+        clientManager->addInfo("username", username);
         std::cout<<"Password : ";
         std::cin>>password;
-        request.set("password", password);
-		sendRequest(request);
-		recvAnswer(answer);
-		fail = (answer.getTopic() == "failure");
-		if (fail){
-			LOG(answer.get("reason"));
-		}
-	}
+        clientManager->addInfo("password", password);
+        clientManager->sendRequestAndRecv();
+        fail = clientManager->requestFailed();
+        if(fail){
+            LOG(clientManager->getFailureReason());
+        }
+    }
 	LOG("Please save it to keep your account !");
 }
 void CityLordClient::chooseCity(){
@@ -128,11 +119,9 @@ void CityLordClient::chooseCity(){
 }
 
 void CityLordClient::createCity(){
-	SocketMessage request, answer;
-	request.setTopic("choicemap");
-	sendRequest(request);
-	recvAnswer(answer);
-	std::map<std::string, std::string> map = answer.getMap();
+    clientManager->setRequest("choicemap");
+    clientManager->sendRequestAndRecv();
+    std::map<std::string, std::string> map = clientManager->getMessage().getMap();
 	int i = 0;
 	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	LOG("Choose a map for the city");
@@ -141,11 +130,10 @@ void CityLordClient::createCity(){
 		std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
 	}
 	int choice = makeChoice(1, i);
-	request.setTopic("createcity");
-	request.set("number", std::to_string(choice));
-	sendRequest(request);
-	recvAnswer(answer);
-	if(answer.getTopic() == "success"){
+    clientManager->setRequest("createcity");
+    clientManager->addInfo("number", std::to_string(choice));
+    clientManager->sendRequestAndRecv();
+    if(!clientManager->requestFailed()){
 		LOG("The server created a new city with the map "+map[std::to_string(choice)]);
 	}else{
 		// TODO handle creation failure
@@ -154,59 +142,49 @@ void CityLordClient::createCity(){
 }
 
 void CityLordClient::joinCity(){
-	SocketMessage request, answer;
     std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
     LOG("Choose a city to play");
     bool fail = true;
     while(fail){
         int cityid = 0;
-        request.setTopic("cityinfo");
-        request.set("cityid", std::to_string(cityid));
-        sendRequest(request);
-        recvAnswer(answer);
-        while(answer.getTopic() != "failure"){
-            std::cout<<cityid+1<<" - "<<answer.get("name")<<" | "<<answer.get("mapname")<<" | " \
-            <<answer.get("creator")<<" | "<<answer.get("nplayer")<<"/"<<answer.get("maxplayer")<<std::endl;
+        clientManager->setRequest("cityinfo");
+        clientManager->addInfo("cityid", std::to_string(cityid));
+        clientManager->sendRequestAndRecv();
+        while(!clientManager->requestFailed()){
+            std::cout<<cityid+1<<" - "<<clientManager->getInfo("name")<<" | "<<clientManager->getInfo("mapname")<<" | " \
+            <<clientManager->getInfo("creator")<<" | "<<clientManager->getInfo("nplayer")<<"/"<<clientManager->getInfo("maxplayer")<<std::endl;
             cityid++;
-            request.set("cityid", std::to_string(cityid));
-            sendRequest(request);
-            recvAnswer(answer);
+            clientManager->setRequest("cityinfo");
+            clientManager->addInfo("cityid", std::to_string(cityid));
+            clientManager->sendRequestAndRecv();
         }
         int choice = makeChoice(1, cityid);
-        request.setTopic("joincity");
-        request.set("cityid", std::to_string(choice-1));
-        sendRequest(request);
-        recvAnswer(answer);
-        if(answer.getTopic() == "failure"){
-            LOG(answer.get("reason"));
+        clientManager->setRequest("joincity");
+        clientManager->addInfo("cityid", std::to_string(choice-1));
+        clientManager->sendRequestAndRecv();
+        if(clientManager->requestFailed()){
+            LOG(clientManager->getFailureReason());
         }else{
             fail = false;
-            //map = new Map<ClientField>(answer.get("filename"));
-            /*std::string path = "src/resources/tmp/out.txt";
-            Map<ClientField>::parseMap(path, answer.get("mapstring"));
-            map = new Map<ClientField>(path);*/
-            map = new Map<ClientField>(answer.get("filename"));
+            clientManager->buildMap(clientManager->getInfo("filename"));
         }
     }
 }
 
 void CityLordClient::showMap(){
-    map->display();
+    clientManager->displayMap();
 }
 
 void CityLordClient::selectField(){
-	SocketMessage request;
-    SocketMessage answer;
     LOG("Choose the row :");
-    int crow = makeChoice(1, map->getNumberOfRows());
+    int crow = makeChoice(1, clientManager->getMap()->getNumberOfRows());
     LOG("Choose the column :");
-    int ccol = makeChoice(1, map->getNumberOfCols());
-	request.setTopic("selectfield");
-    request.set("row", std::to_string(crow-1));
-    request.set("col", std::to_string(ccol-1));
-    sendRequest(request);
-	recvAnswer(answer);
-	if(answer.getTopic() == "owner"){ 
+    int ccol = makeChoice(1, clientManager->getMap()->getNumberOfCols());
+    clientManager->setRequest("selectfield");
+    clientManager->addInfo("row", std::to_string(crow-1));
+    clientManager->addInfo("col", std::to_string(ccol-1));
+    clientManager->sendRequestAndRecv();
+    if(clientManager->topicEquals("owner")){
         std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
         LOG("You own this field.");
         std::cout<<"1 - Build"<<std::endl;
@@ -218,45 +196,47 @@ void CityLordClient::selectField(){
 
 		int choice = makeChoice(1, 6);
 		if(choice == 1){
-			request.setTopic("build");
+            clientManager->setRequest("build");
+            clientManager->addInfo("row", std::to_string(crow-1));
+            clientManager->addInfo("col", std::to_string(ccol-1));
             for(int i=0;i<BuildingType::typesLength;i++){
                 std::cout<<i+1<<" - "<<BuildingType::types[i].buildingName<<std::endl;
             }
             int buildChoice = makeChoice(1, BuildingType::typesLength);
-            request.set("typeindex", std::to_string(buildChoice-1));
-			sendRequest(request);
-			recvAnswer(answer);
-			LOG(answer.getTopic() + " - " + answer.get("reason"));
+            clientManager->addInfo("typeindex", std::to_string(buildChoice-1));
+            clientManager->sendRequestAndRecv();
+            LOG(clientManager->getAnswerInfos());
         }
         else if(choice == 2){
-			std::cout<<answer.get("info")<<std::endl;
+            std::cout<<clientManager->getInfo("info")<<std::endl;
 		}
         else if(choice == 3){
-			request.setTopic("upgrade");
-			sendRequest(request);
-			recvAnswer(answer);
-			LOG(answer.getTopic() + " - " + answer.get("reason"));
-		
+            clientManager->setRequest("upgrade");
+            clientManager->addInfo("row", std::to_string(crow-1));
+            clientManager->addInfo("col", std::to_string(ccol-1));
+            clientManager->sendRequestAndRecv();
+            LOG(clientManager->getAnswerInfos());
+
 		}
         else if(choice == 4){
-			request.setTopic("destroy");
-			sendRequest(request);
-			recvAnswer(answer);
-            LOG(answer.getTopic() + " - " + answer.get("reason"));
-        }
+            clientManager->setRequest("destroy");
+            clientManager->addInfo("row", std::to_string(crow-1));
+            clientManager->addInfo("col", std::to_string(ccol-1));
+            clientManager->sendRequestAndRecv();
+            LOG(clientManager->getAnswerInfos());
+          }
 	}
-	else if(answer.getTopic() == "other"){ 
+    else if(clientManager->topicEquals("other")){
         std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-
         LOG("It's another player's field");
 		std::cout<<"1 - Show information"<<std::endl;
 		std::cout<<"2 - Quit"<<std::endl;
 		int choice = makeChoice(1, 2);
 		if(choice == 1){
-			std::cout<<answer.get("info")<<std::endl;
+            std::cout<<clientManager->getInfo("info")<<std::endl;
         }
 	}
-	else if(answer.getTopic() == "purchasable"){ 
+    else if(clientManager->topicEquals("purchasable")){
 		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
         LOG("This field is free for sale");
 		std::cout<<"1 - Show information"<<std::endl;
@@ -264,34 +244,28 @@ void CityLordClient::selectField(){
 		std::cout<<"3 - Quit"<<std::endl;
 		int choice = makeChoice(1, 3);
 		if(choice == 1){
-			std::cout<<answer.get("info")<<std::endl;
+            std::cout<<clientManager->getInfo("info")<<std::endl;
 		}else if(choice == 2){
-			request.setTopic("buy");
-			sendRequest(request);
-			recvAnswer(answer);
-			LOG(answer.getTopic() + " - " + answer.get("reason"));
+            clientManager->setRequest("buy");
+            clientManager->addInfo("row", std::to_string(crow-1));
+            clientManager->addInfo("col", std::to_string(ccol-1));
+            clientManager->sendRequestAndRecv();
+            LOG(clientManager->getAnswerInfos());
 		}
 	}
 	else{
 		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-		std::cout<<"The field selected is not selectable ! (Tree, road, ...)"<<std::endl;
+        std::cout<<"The field selected is not selectable ! (Tree, road, obstacle, ..)"<<std::endl;
     }
 }
 
-void CityLordClient::build(){ // La parcelle est déjà selectionnée
-	SocketMessage request("build");
-	SocketMessage answer; 
-}
-
 void CityLordClient::showInfo(){
-	SocketMessage request("showinfo");
-	SocketMessage answer; // les différentes informations
-	sendRequest(request);
-	recvAnswer(answer);
-	std::string money = answer.get("money");	
-	std::string nickname = answer.get("nickname");
-	std::string nBuilding = answer.get("nbuilding");
-	std::string nEmptyField = answer.get("nemptyfield");
+    clientManager->setRequest("showinfo");
+    clientManager->sendRequestAndRecv();
+    std::string money = clientManager->getInfo("money");
+    std::string nickname = clientManager->getInfo("nickname");
+    std::string nBuilding = clientManager->getInfo("nbuilding");
+    std::string nEmptyField = clientManager->getInfo("nemptyfield");
 	//std::string color = answer.get("color");
 
 	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
@@ -303,22 +277,13 @@ void CityLordClient::showInfo(){
 }
 
 void CityLordClient::showCatalog(){
-	SocketMessage request("showcatalog");
-    SocketMessage answer;
-	sendRequest(request);
-	recvAnswer(answer);
-	std::map<std::string, std::string> map = answer.getMap();
+    clientManager->setRequest("showcatalog");
+    clientManager->sendRequestAndRecv();
+    std::map<std::string, std::string> map = clientManager->getMessage().getMap();
 	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
 	for(std::map<std::string, std::string>::iterator iterator = map.begin(); iterator != map.end(); iterator++) {
 		std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
 	}
-}
-
-void CityLordClient::sendRequest(SocketMessage message){
-	connectionSocket.write(message.toString());
-}
-void CityLordClient::recvAnswer(SocketMessage& answer){
-	answer = SocketMessage::parse(connectionSocket.read());
 }
 
 int CityLordClient::makeChoice(int min, int max){
@@ -332,10 +297,6 @@ int CityLordClient::makeChoice(int min, int max){
 	}
 	return choice;
 } 
-
-Map<ClientField>* CityLordClient::getMap(){
-    return map;
-}
 
 void CityLordClient::LOG(std::string info){
 	time_t now = time(0);

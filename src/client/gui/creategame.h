@@ -12,7 +12,7 @@ class CreateGame : public DefaultWidget{
     static const std::string MAP1PICTURE, MAP2PICTURE, MAP3PICTURE;
     static const std::string CLICKCOLOR, UNCLICKCOLOR;
 public:
-    CreateGame(QWidget*, ClientManager*);
+    CreateGame(QWidget*, ClientManagerGUI*);
     ~CreateGame();
     void refresh() override;
 private slots:
