@@ -5,7 +5,9 @@ const std::map<std::string, update_ptr> ClientUpdater::updatemap = {
     //{"changeownerwithbuilding", UpdateMethods::changeownerwithbuilding},
     {"build", UpdateMethods::build},
     {"destroy", UpdateMethods::destroy},
-    {"visitorMove", UpdateMethods::visitormove}
+    {"visitorcreate", UpdateMethods::visitorcreate},
+    {"visitormove", UpdateMethods::visitormove},
+    {"visitorremove", UpdateMethods::visitorremove}
 
 };
 

@@ -4,7 +4,7 @@
 // ======================================================================================
 // ========================================= Dijkstra ===================================
 // ======================================================================================
-//		Solution temporaire (ou permanente) afin d'avoir un createPath qui marche
+//      Solution temporaire (ou permanente) afin d'avoir un createPath qui marche
 // ======================================================================================
 void CityUpdater::DijkstraComputePaths(vertex_t source,
                           const adjacency_list_t &adjacency_list,
@@ -27,7 +27,7 @@ void CityUpdater::DijkstraComputePaths(vertex_t source,
         vertex_queue.erase(vertex_queue.begin());
  
         // Visit each edge exiting u
-	const std::vector<neighbor> &neighbors = adjacency_list[u];
+    const std::vector<neighbor> &neighbors = adjacency_list[u];
         for (std::vector<neighbor>::const_iterator neighbor_iter = neighbors.begin();
              neighbor_iter != neighbors.end();
              neighbor_iter++)
@@ -35,14 +35,14 @@ void CityUpdater::DijkstraComputePaths(vertex_t source,
             vertex_t v = neighbor_iter->target;
             weight_t weight = neighbor_iter->weight;
             weight_t distance_through_u = dist + weight;
-	    if (distance_through_u < min_distance[v]) {
-	        vertex_queue.erase(std::make_pair(min_distance[v], v));
+        if (distance_through_u < min_distance[v]) {
+            vertex_queue.erase(std::make_pair(min_distance[v], v));
  
-	        min_distance[v] = distance_through_u;
-	        previous[v] = u;
-	        vertex_queue.insert(std::make_pair(min_distance[v], v));
+            min_distance[v] = distance_through_u;
+            previous[v] = u;
+            vertex_queue.insert(std::make_pair(min_distance[v], v));
  
-	    }
+        }
  
         }
     }
@@ -59,14 +59,14 @@ std::vector<vertex_t> CityUpdater::DijkstraGetShortestPathTo(
 }
 
 void CityUpdater::getRoadMap() {
-	Location location(0,0);
-	Road* road;
+    Location location(0,0);
+    Road* road;
     for (int row=0; row<(cityMap->getNumberOfRows()); row++) {
         for (int col=0; col<(cityMap->getNumberOfCols()); col++) {
-    		location.setRow(row);
-    		location.setCol(col);
+            location.setRow(row);
+            location.setCol(col);
             if((road = dynamic_cast<Road*>(cityMap->getCase(location)))) {
-            	roadMap.push_back(road);
+                roadMap.push_back(road);
                 if ((road->print() == "═□ ") || (road->print() == " □ ") || (road->print() == " □═")) {
                     checkPointsList.push_back(road);
                 }
@@ -78,7 +78,7 @@ void CityUpdater::getRoadMap() {
 void CityUpdater::getAdjacencyList() {
     Location location(0,0);
     Road* road;
-    for (int i=0; i<roadMap.size(); i++) {
+    for (unsigned int i=0; i<roadMap.size(); i++) {
         vector<neighbor> tmpVector;
         if (roadMap[i]->isOpen(Road::NORTH) && ((roadMap[i]->getLocation().getRow())-1 >= 0)) {
             //
@@ -158,7 +158,7 @@ void CityUpdater::run(){
                  
             }
             else{   //nouveau jour
-            	makeOwnersPay();
+                makeOwnersPay();
                 t.start();
                 timer = popTimer;
                 dayRemaining -= 1;
@@ -204,14 +204,29 @@ SocketMessage CityUpdater::sendTime(){
 }
 */
 
-SocketMessage CityUpdater::visitorMove(Location firstLocation, Location lastLocation){
+SocketMessage CityUpdater::visitorCreate(int visitorID, Location spawnLocation){
+    SocketMessage update;
+    update.setTopic("visitorcreate");
+    update.set("visitorid", to_string(visitorID));
+    update.set("spawnlocation", spawnLocation.toString());
+    return update;
+}
+
+SocketMessage CityUpdater::visitorMove(int visitorID, Location firstLocation, Location lastLocation){
     SocketMessage update;
     update.setTopic("visitormove");
+    update.set("visitorid", to_string(visitorID));
     update.set("firstlocation", firstLocation.toString());
     update.set("lastlocation", lastLocation.toString());
     return update;
 }
 
+SocketMessage CityUpdater::visitorRemove(int visitorID){
+    SocketMessage update;
+    update.setTopic("visitorremove");
+    update.set("visitorid", to_string(visitorID));
+    return update;
+}
 
 void CityUpdater::sendUpdateToPlayers(SocketMessage update){
     Player* player;
@@ -226,32 +241,32 @@ void CityUpdater::sendUpdateToPlayers(SocketMessage update){
 
 
 void CityUpdater::makeOwnersPay(){
-	std::cout<<"test nouveau jour"<<std::endl;
-	Location currentLocation;
-	Field* concernedField;
-	for(int col = 0; col < cityMap->getNumberOfCols(); col++){
-		for(int row = 0; row < cityMap->getNumberOfRows(); row++){
-			currentLocation = Location(row,col);
-			if((concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation)))){
-				if(concernedField->hasOwner()){
-					concernedField->getOwner()->loseMoney(concernedField->getBuilding()->getDailyCost());
-				}
-			}
-		}
+    std::cout<<"test nouveau jour"<<std::endl;
+    Location currentLocation;
+    Field* concernedField;
+    for(int col = 0; col < cityMap->getNumberOfCols(); col++){
+        for(int row = 0; row < cityMap->getNumberOfRows(); row++){
+            currentLocation = Location(row,col);
+            if((concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation)))){
+                if(concernedField->hasOwner()){
+                    concernedField->getOwner()->loseMoney(concernedField->getBuilding()->getDailyCost());
+                }
+            }
+        }
     }
 }
 
 void CityUpdater::createPath(Location start, Location end, std::vector<Location> &path){
-	// VOIR DIJKSTRA EN HAUT !!!!
-	int startIndex = std::find(roadMap.begin(), roadMap.end(), cityMap->getCase(start)) - roadMap.begin();
-	int endIndex = std::find(roadMap.begin(), roadMap.end(), cityMap->getCase(end)) - roadMap.begin();
+    // VOIR DIJKSTRA EN HAUT !!!!
+    int startIndex = std::find(roadMap.begin(), roadMap.end(), cityMap->getCase(start)) - roadMap.begin();
+    int endIndex = std::find(roadMap.begin(), roadMap.end(), cityMap->getCase(end)) - roadMap.begin();
     std::vector<weight_t> min_distance;
     std::vector<vertex_t> previous;
     DijkstraComputePaths(startIndex, adjacencyList, min_distance, previous);
     std::vector<vertex_t> tmpPath = DijkstraGetShortestPathTo(endIndex, previous);
-    for (int i=1; i<tmpPath.size(); i++){
+    for (unsigned int i=1; i<tmpPath.size(); i++){
     std::cout<<roadMap[tmpPath[i]]->getLocation().getRow()<<","<<roadMap[tmpPath[i]]->getLocation().getCol()<<std::endl;
-    	path.push_back(roadMap[tmpPath[i]]->getLocation());
+        path.push_back(roadMap[tmpPath[i]]->getLocation());
     }
 }
 
@@ -300,41 +315,45 @@ void CityUpdater::generateVisitors(){
         Visitor* newVisitor = new Visitor(startLocation);
         std::cout<<"Taille du chemin donné :"<< path.size() <<std::endl;
         newVisitor->setPath(path);
-        cityMap->addVisitor(newVisitor);  
+        int id = cityMap->addVisitor(newVisitor);  
+        SocketMessage update = visitorCreate(id, startLocation);
+        sendUpdateToPlayers(update);
     }
 }
 
 void CityUpdater::updateBuildings(){
-	std::cout<<"Update"<<endl;
+    std::cout<<"Update"<<endl;
     Location currentLocation;
     Field* concernedField;
-	for(int col = 0; col < cityMap->getNumberOfCols(); col++){
-		for(int row = 0; row < cityMap->getNumberOfRows(); row++){
-			currentLocation = Location(row,col);
-			if((concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation)))){
-				if(concernedField->hasBuilding()){
-					concernedField->getBuilding()->removeVisitor();
-				}
-			}
-		}
+    for(int col = 0; col < cityMap->getNumberOfCols(); col++){
+        for(int row = 0; row < cityMap->getNumberOfRows(); row++){
+            currentLocation = Location(row,col);
+            if((concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation)))){
+                if(concernedField->hasBuilding()){
+                    concernedField->getBuilding()->removeVisitor();
+                }
+            }
+        }
     }
 }
 
 //gainMoney()
 
 void CityUpdater::makeVisitorsAdvance(){
-	std::cout<<"Advance"<<endl;
-	for(int i = 0; i < cityMap->getMaxVisitors(); i++){
-		if(cityMap->getVisitor(i) != nullptr){
-			cityMap->getVisitor(i)->move();
-            //SocketMessage update = visitorMove(Location firstLocation, Location lastLocation);
-            //sendUpdateToPlayers(update);
-			bool enter = false;
-			Building test;
-			Location loc = cityMap->getVisitor(i)->getLoc();
-			int col = loc.getCol();
-			int row = loc.getRow();
-			Location locTest(row+1,col);
+    std::cout<<"Advance"<<endl;
+    for(int i = 0; i < cityMap->getMaxVisitors(); i++){
+        if(cityMap->getVisitor(i) != nullptr){
+            Location firstLocation = cityMap->getVisitor(i)->getLoc();
+            cityMap->getVisitor(i)->move();
+            Location lastLocation = cityMap->getVisitor(i)->getLoc();
+            SocketMessage update = visitorMove(i, firstLocation, lastLocation);
+            sendUpdateToPlayers(update);
+            bool enter = false;
+            Building test;
+            Location loc = cityMap->getVisitor(i)->getLoc();
+            int col = loc.getCol();
+            int row = loc.getRow();
+            Location locTest(row+1,col);
             if(locTest.getRow() < cityMap->getNumberOfRows()) {
                 if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
                     if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
@@ -347,6 +366,8 @@ void CityUpdater::makeVisitorsAdvance(){
                                 locTest = Location(row-1,col);
                             }
                             else{
+                                SocketMessage update = visitorRemove(i);
+                                sendUpdateToPlayers(update);
                                 cityMap->deleteVisitor(i);
                             }
                         }
@@ -356,70 +377,76 @@ void CityUpdater::makeVisitorsAdvance(){
                 locTest = Location(row-1,col);
             }
             if(locTest.getRow() >= 0) {
-    			if(!enter){
-    				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
-    					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
-    						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-    						if(!enter){
-    							locTest = Location(row,col+1);
-    						} else {
-    							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-    							if(!enter){
-    								locTest = Location(row,col+1);
-    							} else {
-    								cityMap->deleteVisitor(i);
-    							}
-    						}
-    					}
-    				}
-    			}
+                if(!enter){
+                    if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+                        if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+                            enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                            if(!enter){
+                                locTest = Location(row,col+1);
+                            } else {
+                                enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                                if(!enter){
+                                    locTest = Location(row,col+1);
+                                } else {
+                                    SocketMessage update = visitorRemove(i);
+                                    sendUpdateToPlayers(update);
+                                    cityMap->deleteVisitor(i);
+                                }
+                            }
+                        }
+                    }
+                }
             }else {
                locTest = Location(row,col+1); 
             }
             if(locTest.getCol() < cityMap->getNumberOfCols()) {
-    			if(!enter){
-    				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
-    					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
-    						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-    						if(!enter){
-    							locTest = Location(row,col-1);
-    						} else {
-    							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-    							if(!enter){
-    								locTest = Location(row,col-1);
-    							} else {
+                if(!enter){
+                    if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+                        if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+                            enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                            if(!enter){
+                                locTest = Location(row,col-1);
+                            } else {
+                                enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                                if(!enter){
+                                    locTest = Location(row,col-1);
+                                } else {
+                                    SocketMessage update = visitorRemove(i);
+                                    sendUpdateToPlayers(update);
                                     cityMap->deleteVisitor(i);
-    							}
-    						}
-    					}
-    				}
-    			}
+                                }
+                            }
+                        }
+                    }
+                }
             }else {
                 locTest = Location(row,col-1);
             }
             if(locTest.getCol() >= 0) {
-    			if(!enter){
-    				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
-    					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
-    						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-    						if(enter){
-    							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-    							if(enter){
-    								cityMap->deleteVisitor(i);
-    							}
-    						}
-    					}
-    				}
+                if(!enter){
+                    if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+                        if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+                            enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                            if(enter){
+                                enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                                if(enter){
+                                    SocketMessage update = visitorRemove(i);
+                                    sendUpdateToPlayers(update);
+                                    cityMap->deleteVisitor(i);
+                                }
+                            }
+                        }
+                    }
                 }
             }
-		}
-	}
+        }
+    }
 }
 
 void CityUpdater::updateCity(){
-	generateVisitors();
-	updateBuildings();
-	std::cout<<"Fin updateCity"<<std::endl;
+    generateVisitors();
+    updateBuildings();
+    std::cout<<"Fin updateCity"<<std::endl;
 }
 
 
