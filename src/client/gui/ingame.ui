@@ -57,7 +57,7 @@
       <rect>
        <x>170</x>
        <y>0</y>
-       <width>771</width>
+       <width>751</width>
        <height>71</height>
       </rect>
      </property>
@@ -104,7 +104,7 @@
       <rect>
        <x>20</x>
        <y>10</y>
-       <width>191</width>
+       <width>151</width>
        <height>51</height>
       </rect>
      </property>
@@ -122,13 +122,16 @@ QLabel{background:transparent;color:rgb(0, 220, 0)}</string>
      <property name="text">
       <string>58673 $</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
     <widget class="QLabel" name="timeLabel">
      <property name="geometry">
       <rect>
-       <x>960</x>
+       <x>930</x>
        <y>10</y>
-       <width>151</width>
+       <width>141</width>
        <height>51</height>
       </rect>
      </property>
@@ -145,10 +148,24 @@ QLabel{background:transparent;color:rgb(0, 220, 0)}</string>
      <property name="text">
       <string>00 : 00</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="exitButton">
+     <property name="geometry">
+      <rect>
+       <x>1078</x>
+       <y>14</y>
+       <width>46</width>
+       <height>46</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Exit</string>
+     </property>
     </widget>
    </widget>
-   <zorder>layoutWidget</zorder>
-   <zorder>frame</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
