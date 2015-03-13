@@ -144,10 +144,8 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
 				if(player->getMoney() >= concernedField->getPrice() + concernedField->getBuilding()->getPrice()){
 					player->setMoney(player->getMoney() - (concernedField->getPrice() + concernedField->getBuilding()->getPrice()));
 					catalog.give(concernedField, player);
-                    update.setTopic("changeownerwithbuilding");
+                    update.setTopic("changeowner");
                     update.set("ownerid", std::to_string(player->getPlayerID()));
-                    update.set("typeindex", std::to_string(BuildingType::getIndexByType(concernedField->getBuilding()->getType())));
-                    update.set("level", std::to_string(concernedField->getBuilding()->getLevel()));
                     update.set("location", location.toString());
                     updater->sendUpdateToPlayers(update);
                     message.setTopic("success");

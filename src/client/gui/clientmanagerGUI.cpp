@@ -12,7 +12,7 @@ const int ClientManagerGUI::SQUAREMAPSIZE = 20;
 
 ClientManagerGUI::ClientManagerGUI(char* hostname, int port) :
     ClientManager(hostname, port),
-    stackedWidget(new QStackedWidget), layout(new QVBoxLayout), pages(), repaintSignaler(new RepaintSignaler){
+    stackedWidget(new QStackedWidget), layout(new QVBoxLayout), pages(), repaintSignaler(new RepaintSignaler), mapView(nullptr){
 
     layout->setContentsMargins(0,0,0,0);
     layout->addWidget(stackedWidget);
@@ -58,9 +58,6 @@ void ClientManagerGUI::setCurrentWidget(key_type key){
     stackedWidget->setCurrentWidget(get(key));
 }
 
-void ClientManagerGUI::setMapView(CityLordView* view){
-    mapView = view;
-}
 
 QVBoxLayout* ClientManagerGUI::getLayout(){
     return layout;
@@ -68,7 +65,13 @@ QVBoxLayout* ClientManagerGUI::getLayout(){
 
 void ClientManagerGUI::buildMap(std::string filename){
     map = new Map<ClientField>(filename);
+    mapView->setPlayedMap(map);
+    mapView->setRepaintSignaler(repaintSignaler);
     repaint();
+}
+
+void ClientManagerGUI::setMapView(CityLordView* view){
+    mapView = view;
 }
 
 void ClientManagerGUI::repaint(){

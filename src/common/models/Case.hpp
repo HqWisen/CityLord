@@ -13,6 +13,7 @@ class Case{
         Location getLocation();
         void setLocation(Location);
         virtual ~Case() = default;
+        virtual bool isField();
         virtual std::string print() = 0;
         virtual std::string getImageName() = 0;
 };

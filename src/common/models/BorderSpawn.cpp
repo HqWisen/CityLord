@@ -22,7 +22,7 @@ BorderSpawn::BorderSpawn(Location location, Road* oldRoad) : Road(location){
 }
 
 std::string BorderSpawn::getImageName(){
-    return "stop_right";
+    return toString();
 }
 
 //Visitor* BorderSpawn::spawn() {return nullptr;}

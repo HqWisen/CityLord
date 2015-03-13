@@ -25,17 +25,17 @@ public:
     DefaultWidget* get(key_type);
     bool alreadySet(key_type);
     void setCurrentWidget(key_type);
-    void setMapView(CityLordView*);
     QVBoxLayout* getLayout();
     void buildMap(std::string) override;
+    void setMapView(CityLordView*);
     void repaint() override;
     RepaintSignaler* getRepaintSignaler();
 private:
     QStackedWidget* stackedWidget;
     QVBoxLayout* layout;
     std::map<key_type, DefaultWidget*> pages;
-    CityLordView* mapView;
     RepaintSignaler* repaintSignaler;
+    CityLordView* mapView;
 
 
 };

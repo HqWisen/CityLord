@@ -6,14 +6,13 @@ InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
     DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this)){
     clientManager->setMapView(view);
     ui->setupUi(this);
-
     QObject::connect(clientManager->getRepaintSignaler(), SIGNAL(repaintView()), this, SLOT(repaintView()));
     ui->exitButton->setStyleSheet("background-image: url(src/resources/img/exit40_40.png)");
     ui->exitButton->setText("");
 }
 
 void InGame::repaintView(){
-    view->repaint(clientManager->getMap());
+    view->repaintView();
 }
 
 InGame::~InGame(){
@@ -71,5 +70,5 @@ void InGame::disableAllButtons(){
 
 void InGame::on_exitButton_clicked()
 {
-    clientManager->setCurrentWidget(ClientManager::MAINMENU);
+    clientManager->setCurrentWidget(ClientManagerGUI::MAINMENU);
 }

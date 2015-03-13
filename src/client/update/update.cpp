@@ -8,7 +8,7 @@ void UpdateMethods::changeowner(ClientManager* client, SocketMessage update){
     field->setOwnerID(ownerid);
     client->repaint();
 }
-void UpdateMethods::changeownerwithbuilding(ClientManager* client, SocketMessage update){
+/*void UpdateMethods::changeownerwithbuilding(ClientManager* client, SocketMessage update){
     Location location = Location::parse(update.get("location"));
     int ownerid = std::stoi(update.get("ownerid"));
     int level = std::stoi(update.get("level"));
@@ -17,7 +17,7 @@ void UpdateMethods::changeownerwithbuilding(ClientManager* client, SocketMessage
     field->setOwnerID(ownerid);
     field->buildBuilding(type, level);
     client->repaint();
-}
+}*/
 void UpdateMethods::build(ClientManager* client, SocketMessage update){
     Location location = Location::parse(update.get("location"));
     int level = std::stoi(update.get("level"));

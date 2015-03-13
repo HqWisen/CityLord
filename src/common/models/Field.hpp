@@ -17,6 +17,7 @@ class BasicField : public Case{
     protected:
         int price = 15000;
         Building* building = nullptr;
+        bool showOwnerColor;
     public:
         BasicField(Location);
         virtual ~BasicField() = default;
@@ -32,6 +33,8 @@ class BasicField : public Case{
         virtual int getOwnerID() = 0;
         virtual bool hasOwner() = 0;
         string getOwnerColor();
+        bool isField() override;
+        void setShowOwnerColor(bool);
         std::string getImageName() override;
 };
 

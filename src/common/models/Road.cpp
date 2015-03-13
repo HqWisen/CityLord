@@ -16,8 +16,7 @@ std::string Road::print(){
 }
 
 std::string Road::getImageName(){
-    return "road";
-    //return toString();
+    return toString();
 }
 
 // ╬ ╝ ═ ║ ╚ ╠ ╣ ╔ ╗ ╦ ╩ □
@@ -80,7 +79,7 @@ std::string Road::toString(){
     std::string result = "";
     result +=  directions[NORTH] ? "N" :"" ;
     result +=  directions[SOUTH] ? "S" :"" ;
-    result +=  directions[WEST] ? "W" :"" ;
     result +=  directions[EAST] ? "E" :"" ;
+    result +=  directions[WEST] ? "W" :"" ;
     return result;
 }

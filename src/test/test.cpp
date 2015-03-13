@@ -2,13 +2,16 @@
 #include <string>
 #include <map>
 
-#include "../common/lib/Map.hpp"
+#include "../common/models/Field.hpp"
+
 
 int main(){
 	/* main de test */
 	std::cout<<">>> Beginning test <<<"<<std::endl;
-    Map<Field> map("src/resources/maps/CITYBAY.txt");
-    map.display();
+    ClientField* field = new ClientField(Location(0,0));
+    field->setShowOwnerColor(true);
+    field->setOwnerID(5);
+    std::cout<<field->getImageName()<<std::endl;
     return 0;
 
 }

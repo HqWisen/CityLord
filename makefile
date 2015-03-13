@@ -14,7 +14,7 @@ GUI = citylordgui
 
 # -- test
 TEST = testexe
-DEPT = test models
+DEPT = test models server
 # -- 
 
 # -- Do not edit below this line --

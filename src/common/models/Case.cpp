@@ -13,3 +13,7 @@ Location Case::getLocation(){
 void Case::setLocation(Location loc){
     location = loc;
 }
+
+bool Case::isField(){
+    return false;
+}

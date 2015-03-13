@@ -6,7 +6,7 @@ using namespace std;
 
 /* BASIC FIELD */
 
-BasicField::BasicField(Location location) : Case(location){
+BasicField::BasicField(Location location) : Case(location), showOwnerColor(false){
 }
 
 /*
@@ -64,27 +64,26 @@ string BasicField::print(){
 }
 
 string BasicField::getImageName(){
-    std::string buildingName;
+    std::string imagename, buildingName;
     if(hasBuilding()){
        buildingName = building->getType().buildingName;
        std::transform(buildingName.begin(), buildingName.end(), buildingName.begin(), ::tolower);
-        return buildingName;
+        imagename = buildingName;
     }else{
-        return "base";
+        imagename = "base";
     }
-    /*if(hasOwner()){
-        if(hasBuilding()){
-            return buildingName + "_" + Player::COLORNAME[getOwnerID()];
-        }else{
-            return "base" + "_" + Player::COLORNAME[getOwnerID()];
-        }
-    }else{
-        if(hasBuilding()){
-            return buildingName;
-        }else{
-            return "base";
-        }
-    }*/
+    if(hasOwner() && showOwnerColor){
+        imagename += "_" + Player::COLORNAME[getOwnerID()];
+    }
+    return imagename;
+}
+
+void BasicField::setShowOwnerColor(bool show){
+    showOwnerColor = show;
+}
+
+bool BasicField::isField(){
+    return true;
 }
 
 void BasicField::buildBuilding(BuildingType buildingType, int level){
@@ -145,7 +144,7 @@ void Field::setOwner(Player* newOwner){
 
 string Field::toString(){
     string result;
-    result += "Price : "+ std::to_string(price);
+    result += "Price : " + std::to_string(price);
     result += " - ";
     result += "Owner : ";
     if(hasOwner()){
@@ -154,7 +153,7 @@ string Field::toString(){
         result += "no owner";
     }
     if(hasBuilding()){
-        result += "# "+building->getType().buildingName;
+        result += " # "+building->getType().buildingName;
     }
     return result;
 }
