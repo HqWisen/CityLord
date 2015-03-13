@@ -31,6 +31,8 @@ private slots:
     void on_buildButton_clicked();
     void disableAllButtons();
 
+    void on_exitButton_clicked();
+
 private:
     Ui::InGame* ui;
     CityLordView* view;

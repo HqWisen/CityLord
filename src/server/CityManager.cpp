@@ -100,6 +100,36 @@ SocketMessage CityManager::visitorMove(Player* player, Location firstLocation, L
 
 }
 
+SocketMessage CityManager::getTimeRem(Player* player){
+	SocketMessage timeRem;
+
+	int x = updater->getTimeRemaining();
+	int hour = x/3600 ;
+	int min = x/60;
+	int sec = x-(hour*3600)-(min*60);
+	//timeRem.setTopic("gettimeremaining");
+	timeRem.set("hour", std::to_string(hour));
+	timeRem.set("min", std::to_string(min));
+	timeRem.set("sec", std::to_string(sec));
+
+	return timeRem;
+}
+
+SocketMessage CityManager::getRealTimeRem(Player* player){
+	SocketMessage realTimeRem;
+
+	int x = updater->getRealTimeRemaining();
+	int hour = x/3600 ;
+	int min = x/60;
+	int sec = x-(hour*3600)-(min*60);
+	//realTimeRem.setTopic("gettimeremaining");
+	realTimeRem.set("hour", std::to_string(hour));
+	realTimeRem.set("min", std::to_string(min));
+	realTimeRem.set("sec", std::to_string(sec));
+
+	return realTimeRem;
+}
+
 //------------------------------
 
 SocketMessage CityManager::makePurchase(Player* player, Location location){

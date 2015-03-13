@@ -44,6 +44,12 @@ class CityUpdater : public Thread{
     vector<Road*> checkPointsList;
     vector<Road*> roadMap;
     adjacency_list_t adjacencyList;
+    Timer t;
+    unsigned moveTimer = 1;
+    unsigned dayRemaining = 3;
+    unsigned popTimer = 8;
+    unsigned dayTimer = 288;
+    bool night = false;
 	public:
         CityUpdater(Map<Field>*,std::vector<Player*>*);
         void run() override;
@@ -54,6 +60,9 @@ class CityUpdater : public Thread{
         void updateCity();
         void createPath(Location start, Location end, std::vector<Location> &path);
         void sendUpdateToPlayers(SocketMessage);
+        int getTimeRemaining();
+        int getRealTimeRemaining();
+        bool getNight();
     private:
     void DijkstraComputePaths(vertex_t source, \
                           const adjacency_list_t &adjacency_list, \

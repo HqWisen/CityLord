@@ -135,23 +135,32 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr){
 }
 
 void CityUpdater::run(){
-    int dayRemaining = 3;
-    unsigned long timer = 10;
-    Timer t;
+    /*
+    1 seconde = 5 min dans le jeu
+    */
+    unsigned timer = popTimer;
+    unsigned timer2 = moveTimer;
     t.start();
     while(dayRemaining!=0){
+        if(t.elapsedTime() < timer2){
+
+        }
+        else{
+            timer2 += moveTimer;
+            makeVisitorsAdvance();
+        }
         if(t.elapsedTime() < timer) {
         }
         else{
-            timer += 10;
+            timer += popTimer;
             updateCity();
-            if(t.elapsedTime() < 20){  //nouveau jour
+            if(t.elapsedTime() < dayTimer){  
                  
             }
-            else{
+            else{   //nouveau jour
             	makeOwnersPay();
                 t.start();
-                timer = 10;
+                timer = popTimer;
                 dayRemaining -= 1;
                 std::cout<<"Day : "<<dayRemaining<<std::endl;
             }
@@ -159,6 +168,37 @@ void CityUpdater::run(){
     }
     std::cout<<"fin du game"<<std::endl;
 }
+
+int CityUpdater::getTimeRemaining(){
+    int x = dayRemaining;
+    int y = t.elapsedTime();
+    int minRemaining = (5*(dayTimer - y))*60;
+    if(dayRemaining == 0){
+        return minRemaining;
+    }
+    else{
+        int timeRemaining = x*24*60*60;
+        timeRemaining += minRemaining;
+        return timeRemaining;
+    }    
+}
+
+int CityUpdater::getRealTimeRemaining(){
+    int y = t.elapsedTime();
+    if(dayRemaining == 0){
+        return dayTimer - y;
+    }
+    else{
+        int x = dayTimer*dayRemaining;
+        x += y;
+        return x;
+    }
+}
+
+
+
+
+
 
 void CityUpdater::sendUpdateToPlayers(SocketMessage update){
     Player* player;
@@ -344,7 +384,6 @@ void CityUpdater::makeVisitorsAdvance(){
 void CityUpdater::updateCity(){
 	generateVisitors();
 	updateBuildings();
-	makeVisitorsAdvance();
 	std::cout<<"Fin updateCity"<<std::endl;
 }
 
