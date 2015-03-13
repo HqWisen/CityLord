@@ -320,7 +320,7 @@ void CityUpdater::updateBuildings(){
     }
 }
 
-//gainMoney()
+
 
 void CityUpdater::makeVisitorsAdvance(){
 	std::cout<<"Advance"<<endl;
@@ -347,7 +347,11 @@ void CityUpdater::makeVisitorsAdvance(){
                                 locTest = Location(row-1,col);
                             }
                             else{
+                                std::cout<<"ENTRE DANS BATIMENT"<<std::endl;
                                 cityMap->deleteVisitor(i);
+                                Player* owner = dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner();
+                                int gain = dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome();
+                                owner->gainMoney(gain);
                             }
                         }
                     }
@@ -367,7 +371,11 @@ void CityUpdater::makeVisitorsAdvance(){
     							if(!enter){
     								locTest = Location(row,col+1);
     							} else {
+                                    std::cout<<"ENTRE DANS BATIMENT"<<std::endl;
     								cityMap->deleteVisitor(i);
+                                    Player* owner = dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner();
+                                    int gain = dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome();
+                                    owner->gainMoney(gain);
     							}
     						}
     					}
@@ -388,7 +396,11 @@ void CityUpdater::makeVisitorsAdvance(){
     							if(!enter){
     								locTest = Location(row,col-1);
     							} else {
+                                    std::cout<<"ENTRE DANS BATIMENT"<<std::endl;
                                     cityMap->deleteVisitor(i);
+                                    Player* owner = dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner();
+                                    int gain = dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome();
+                                    owner->gainMoney(gain);
     							}
     						}
     					}
@@ -405,7 +417,11 @@ void CityUpdater::makeVisitorsAdvance(){
     						if(enter){
     							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
     							if(enter){
+                                    std::cout<<"ENTRE DANS BATIMENT"<<std::endl;
     								cityMap->deleteVisitor(i);
+                                    Player* owner = dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner();
+                                    int gain = dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome();
+                                    owner->gainMoney(gain);
     							}
     						}
     					}

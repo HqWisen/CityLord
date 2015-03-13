@@ -64,6 +64,7 @@ bool Visitor::enter(Building* build){
 	//if(build->addVisitor());
 		//return true;
 	//return false
+	return true;
 }
 
 bool Visitor::choose(Building* build){  //Building build en parametre
