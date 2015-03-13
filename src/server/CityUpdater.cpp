@@ -195,7 +195,14 @@ int CityUpdater::getRealTimeRemaining(){
     }
 }
 
-
+/*
+SocketMessage CityUpdater::sendTime(){
+    SocketMessage update;
+    update.setTopic("currentTime");
+    update.set("time", getImeRemaining().toString());
+    return update;
+}
+*/
 
 SocketMessage CityUpdater::visitorMove(Location firstLocation, Location lastLocation){
     SocketMessage update;

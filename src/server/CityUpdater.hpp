@@ -62,6 +62,7 @@ class CityUpdater : public Thread{
         void sendUpdateToPlayers(SocketMessage);
         int getTimeRemaining();
         int getRealTimeRemaining();
+        //SocketMessage sendTime();
         bool getNight();
     private:
         void DijkstraComputePaths(vertex_t source, \
