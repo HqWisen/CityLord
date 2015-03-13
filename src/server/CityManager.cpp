@@ -292,6 +292,61 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
 
 
 
+SocketMessage CityManager::sellOnMarket(Player* player, Location location, int price){
+	SocketMessage message = SocketMessage();
+	Field* concernedField;
+	if((dynamic_cast<Field*>(cityMap->getCase(location)))){
+		concernedField = dynamic_cast<Field*>(cityMap->getCase(location));
+		if(concernedField->getOwner() == player){
+			if(catalog.isOfferOnMarket(concernedField) == -1){
+				Offer* offer = new Offer(player, concernedField, price);
+				catalog.putOfferOnMarket(offer);
+				message.setTopic("success");
+				message.set("reason", "Offer has been successfully registered!");
+			}else{
+				message.setTopic("failure");
+				message.set("reason", "This Field has already been offered!");
+			}
+		}else{
+			message.setTopic("failure");
+			message.set("reason", "You do not own this Field!");
+		}
+	}else{
+		message.setTopic("failure");
+		message.set("reason", "This is not a Field");
+	}
+	return message;
+}
+
+
+SocketMessage CityManager::cancelOffer(Player* player, Location location){
+	SocketMessage message = SocketMessage();
+	Field* concernedField;
+	int offerIndex;
+	if((dynamic_cast<Field*>(cityMap->getCase(location)))){;
+		concernedField = dynamic_cast<Field*>(cityMap->getCase(location));
+		if(concernedField->getOwner() == player){
+			offerIndex = catalog.isOfferOnMarket(concernedField);
+			if(offerIndex != -1){
+				catalog.removeOffer(offerIndex);
+				message.setTopic("success");
+				message.set("reason", "Offer has been successfully removed!");
+			}else{
+				message.setTopic("success");
+				message.set("reason", "You have not offered this Field!");
+			}
+		}else{
+			message.setTopic("failure");
+			message.set("reason", "You do not own this Field!");
+		}
+	}else{
+		message.setTopic("failure");
+		message.set("reason", "This is not a Field");
+	}
+	return message;
+}
+			
+
 SocketMessage CityManager::makeTrade(Player* offeringPlayer, Player* purchasingPlayer, Location location){
 	//Regarde si le joueur 1 a assez d'argent
 	//	Si oui, l'échange est effectué et des messages sont envoyés

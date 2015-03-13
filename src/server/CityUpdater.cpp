@@ -195,9 +195,22 @@ int CityUpdater::getRealTimeRemaining(){
     }
 }
 
+/*
+SocketMessage CityUpdater::sendTime(){
+    SocketMessage update;
+    update.setTopic("currentTime");
+    update.set("time", getImeRemaining().toString());
+    return update;
+}
+*/
 
-
-
+SocketMessage CityUpdater::visitorMove(Location firstLocation, Location lastLocation){
+    SocketMessage update;
+    update.setTopic("visitormove");
+    update.set("firstlocation", firstLocation.toString());
+    update.set("lastlocation", lastLocation.toString());
+    return update;
+}
 
 
 void CityUpdater::sendUpdateToPlayers(SocketMessage update){
@@ -221,7 +234,7 @@ void CityUpdater::makeOwnersPay(){
 			currentLocation = Location(row,col);
 			if((concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation)))){
 				if(concernedField->hasOwner()){
-					//concernedField->getOwner()->setMoney()(concernedField->getOwner()->getMoney() - concernedField->getBuilding()->dailyCost);
+					concernedField->getOwner()->loseMoney(concernedField->getBuilding()->getDailyCost());
 				}
 			}
 		}
@@ -314,6 +327,8 @@ void CityUpdater::makeVisitorsAdvance(){
 	for(int i = 0; i < cityMap->getMaxVisitors(); i++){
 		if(cityMap->getVisitor(i) != nullptr){
 			cityMap->getVisitor(i)->move();
+            //SocketMessage update = visitorMove(Location firstLocation, Location lastLocation);
+            //sendUpdateToPlayers(update);
 			bool enter = false;
 			Building test;
 			Location loc = cityMap->getVisitor(i)->getLoc();
