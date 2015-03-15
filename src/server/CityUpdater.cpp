@@ -138,7 +138,7 @@ void CityUpdater::run(){
     /*
     1 seconde = 5 min dans le jeu
     */
-    unsigned timer = popTimer;
+    unsigned timer = spawnTimer;
     unsigned timer2 = moveTimer;
     t.start();
     while(dayRemaining!=0){
@@ -152,7 +152,7 @@ void CityUpdater::run(){
         if(t.elapsedTime() < timer) {
         }
         else{
-            timer += popTimer;
+            timer += spawnTimer;
             updateCity();
             if(t.elapsedTime() < dayTimer){  
                  
@@ -160,7 +160,8 @@ void CityUpdater::run(){
             else{   //nouveau jour
                 makeOwnersPay();
                 t.start();
-                timer = popTimer;
+                timer = spawnTimer;
+                timer2 = moveTimer;
                 dayRemaining -= 1;
                 std::cout<<"Day : "<<dayRemaining<<std::endl;
             }
@@ -244,8 +245,8 @@ void CityUpdater::makeOwnersPay(){
     std::cout<<"test nouveau jour"<<std::endl;
     Location currentLocation;
     Field* concernedField;
-    for(int col = 0; col < cityMap->getNumberOfCols(); col++){
-        for(int row = 0; row < cityMap->getNumberOfRows(); row++){
+    for(int row=0; row<cityMap->getNumberOfRows(); row++){
+        for(int col=0; col<cityMap->getNumberOfCols(); col++){
             currentLocation = Location(row,col);
             if((concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation)))){
                 if(concernedField->hasOwner()){
@@ -254,6 +255,7 @@ void CityUpdater::makeOwnersPay(){
             }
         }
     }
+    std::cout<<"cout deduit"<<std::endl;
 }
 
 void CityUpdater::createPath(Location start, Location end, std::vector<Location> &path){
@@ -287,7 +289,7 @@ void CityUpdater::generateVisitors(){
         Location endLocation = endSpawn->getSpawnPoint();
 
         std::vector<Location> path;
-        path.push_back(startLocation);
+        //path.push_back(startLocation);
 
         Location lastLocation = startLocation;
         size = checkPointsList.size();
@@ -343,100 +345,106 @@ void CityUpdater::makeVisitorsAdvance(){
     std::cout<<"Advance"<<endl;
     for(int i = 0; i < cityMap->getMaxVisitors(); i++){
         if(cityMap->getVisitor(i) != nullptr){
-            Location firstLocation = cityMap->getVisitor(i)->getLoc();
-            cityMap->getVisitor(i)->move();
-            Location lastLocation = cityMap->getVisitor(i)->getLoc();
-            SocketMessage update = visitorMove(i, firstLocation, lastLocation);
-            sendUpdateToPlayers(update);
-            bool enter = false;
-            Building test;
-            Location loc = cityMap->getVisitor(i)->getLoc();
-            int col = loc.getCol();
-            int row = loc.getRow();
-            Location locTest(row+1,col);
-            if(locTest.getRow() < cityMap->getNumberOfRows()) {
-                if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
-                    if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
-                        enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-                        if(!enter){
-                            locTest = Location(row-1,col);
-                        } else {
-                            enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-                            if(!enter){
-                                locTest = Location(row-1,col);
-                            }
-                            else{
-								dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
-                                SocketMessage update = visitorRemove(i);
-                                sendUpdateToPlayers(update);
-                                cityMap->deleteVisitor(i);
-                            }
-                        }
-                    }
-                }
+            if (cityMap->getVisitor(i)->hasReachedEnd()) {
+                SocketMessage update = visitorRemove(i);
+                sendUpdateToPlayers(update);
+                cityMap->deleteVisitor(i);
             }else {
-                locTest = Location(row-1,col);
-            }
-            if(locTest.getRow() >= 0) {
-                if(!enter){
+                Location firstLocation = cityMap->getVisitor(i)->getLoc();
+                cityMap->getVisitor(i)->move();
+                Location lastLocation = cityMap->getVisitor(i)->getLoc();
+                SocketMessage update = visitorMove(i, firstLocation, lastLocation);
+                sendUpdateToPlayers(update);
+                bool enter = false;
+                Building test;
+                Location loc = cityMap->getVisitor(i)->getLoc();
+                int col = loc.getCol();
+                int row = loc.getRow();
+                Location locTest(row+1,col);
+                if(locTest.getRow() < cityMap->getNumberOfRows()) {
                     if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
                         if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
                             enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
                             if(!enter){
-                                locTest = Location(row,col+1);
+                                locTest = Location(row-1,col);
                             } else {
                                 enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                                if(!enter){
+                                    locTest = Location(row-1,col);
+                                }
+                                else{
+                                    dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
+                                    SocketMessage update = visitorRemove(i);
+                                    sendUpdateToPlayers(update);
+                                    cityMap->deleteVisitor(i);
+                                }
+                            }
+                        }
+                    }
+                }else {
+                    locTest = Location(row-1,col);
+                }
+                if(locTest.getRow() >= 0) {
+                    if(!enter){
+                        if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+                            if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+                                enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
                                 if(!enter){
                                     locTest = Location(row,col+1);
                                 } else {
-									dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
-                                    SocketMessage update = visitorRemove(i);
-                                    sendUpdateToPlayers(update);
-                                    cityMap->deleteVisitor(i);
+                                    enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                                    if(!enter){
+                                        locTest = Location(row,col+1);
+                                    } else {
+                                        dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
+                                        SocketMessage update = visitorRemove(i);
+                                        sendUpdateToPlayers(update);
+                                        cityMap->deleteVisitor(i);
+                                    }
                                 }
                             }
                         }
                     }
+                }else {
+                   locTest = Location(row,col+1); 
                 }
-            }else {
-               locTest = Location(row,col+1); 
-            }
-            if(locTest.getCol() < cityMap->getNumberOfCols()) {
-                if(!enter){
-                    if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
-                        if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
-                            enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-                            if(!enter){
-                                locTest = Location(row,col-1);
-                            } else {
-                                enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                if(locTest.getCol() < cityMap->getNumberOfCols()) {
+                    if(!enter){
+                        if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+                            if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+                                enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
                                 if(!enter){
                                     locTest = Location(row,col-1);
                                 } else {
-									dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
-                                    SocketMessage update = visitorRemove(i);
-                                    sendUpdateToPlayers(update);
-                                    cityMap->deleteVisitor(i);
+                                    enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                                    if(!enter){
+                                        locTest = Location(row,col-1);
+                                    } else {
+                                        dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
+                                        SocketMessage update = visitorRemove(i);
+                                        sendUpdateToPlayers(update);
+                                        cityMap->deleteVisitor(i);
+                                    }
                                 }
                             }
                         }
                     }
+                }else {
+                    locTest = Location(row,col-1);
                 }
-            }else {
-                locTest = Location(row,col-1);
-            }
-            if(locTest.getCol() >= 0) {
-                if(!enter){
-                    if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
-                        if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
-                            enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
-                            if(enter){
-                                enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                if(locTest.getCol() >= 0) {
+                    if(!enter){
+                        if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+                            if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+                                enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
                                 if(enter){
-									dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
-                                    SocketMessage update = visitorRemove(i);
-                                    sendUpdateToPlayers(update);
-                                    cityMap->deleteVisitor(i);
+                                    enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                                    if(enter){
+                                        dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
+                                        SocketMessage update = visitorRemove(i);
+                                        sendUpdateToPlayers(update);
+                                        cityMap->deleteVisitor(i);
+                                    }
                                 }
                             }
                         }
