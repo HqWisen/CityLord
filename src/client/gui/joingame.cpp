@@ -80,7 +80,7 @@ void JoinGame::on_joinButton_clicked(){
         clientManager->addInfo("cityid", std::to_string(choice));
         clientManager->sendRequestAndRecv();
         if(clientManager->requestFailed()){
-            ui->errorLabel->setText(clientManager->getFailureReason().c_str());
+            ui->errorLabel->setText(clientManager->getReason().c_str());
         }else{
             clientManager->setCurrentWidget(ClientManagerGUI::INGAME);
             clientManager->buildMap(clientManager->getInfo("filename"));

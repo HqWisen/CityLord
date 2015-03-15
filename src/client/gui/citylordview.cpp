@@ -6,35 +6,13 @@ const int CityLordView::HEIGHT = 804;
 
 
 
-CityLordView::CityLordView(QWidget* parent):
-    QGraphicsView(parent), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(nullptr) {
+CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
+    QGraphicsView(parent), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(cm), itemArray(nullptr){
     resize(WIDTH, HEIGHT);
     setScene(scene);
     setSceneRect(-((WIDTH/2)-(BASE.width()/2)), 0, WIDTH-2, HEIGHT-2);
     this->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    scale(0.35, 0.35);
-
-    /*********************/
-    int WIDTHOUT = 30;
-    QPixmap pixmap;
-    for(int row=-WIDTHOUT;row<20+WIDTHOUT;row++){
-        for(int col=-WIDTHOUT;col<20+WIDTHOUT;col++){
-            pixmap = QPixmap(getImagePath("base"));
-            scene->addPixmap(pixmap)->setOffset(carToIso(Location(row, col), pixmap));
-        }
-    }
-    /**********************/
-
-    itemArray = new QGraphicsPixmapItem**[20];
-    for(int i=0;i<20;i++){
-        itemArray[i] = new QGraphicsPixmapItem*[20];
-        for(int j=0;j<20;j++){
-            itemArray[i][j] = new QGraphicsPixmapItem;
-            scene->addItem(itemArray[i][j]);
-        }
-    }
 }
 
 CityLordView::~CityLordView(){
@@ -73,7 +51,7 @@ void CityLordView::selectField(Location location){
     clientManager->addInfo("row", std::to_string(location.getRow()));
     clientManager->addInfo("col", std::to_string(location.getCol()));
     clientManager->sendRequestAndRecv();
-    clientManager->getRepaintSignaler()->signalActiving(clientManager->getMessage().getTopic(), location);
+    clientManager->getSignaler()->signalActiving(clientManager->getTopicMessage(), location);
 }
 
 void CityLordView::mousePressEvent(QMouseEvent * e){
@@ -92,7 +70,7 @@ void CityLordView::mousePressEvent(QMouseEvent * e){
         }
     }
     previousSelectedLocation = location;
-    clientManager->getRepaintSignaler()->repaintView();
+    repaintView();
 }
 
 bool CityLordView::goodLocation(Location location){
@@ -106,9 +84,6 @@ void CityLordView::mouseReleaseEvent(QMouseEvent * e){
 }
 
 void CityLordView::mouseMoveEvent(QMouseEvent * e){
-
-
-
     QPointF currentPos = mapToScene(e->pos());
     if(startMouse.x() < currentPos.x()){
         int move = currentPos.x()-startMouse.x();
@@ -167,10 +142,6 @@ void CityLordView::keyPressEvent(QKeyEvent *event)
     }*/
 }
 
-void CityLordView::setClientManager(ClientManagerGUI* cm){
-    clientManager = cm;
-}
-
 void CityLordView::repaintView(){
     QPixmap pixmap;
     for(int row=0;row<clientManager->getMap()->getNumberOfRows();row++){
@@ -180,4 +151,35 @@ void CityLordView::repaintView(){
             itemArray[row][col]->setOffset(carToIso(Location(row, col), pixmap));
         }
     }
+}
+
+void CityLordView::buildViewMap(){
+    /*int WIDTHOUT = 30;
+    QPixmap pixmap;
+    for(int row=-WIDTHOUT;row<20+WIDTHOUT;row++){
+        for(int col=-WIDTHOUT;col<20+WIDTHOUT;col++){
+            pixmap = QPixmap(getImagePath("base"));
+            scene->addPixmap(pixmap)->setOffset(carToIso(Location(row, col), pixmap));
+        }
+    }*/
+    /**********************/
+    //scale(0.35, 0.35);
+    if(clientManager == nullptr){
+        throw std::invalid_argument("clientManager is nullptr in the view.");
+    }else{
+        if(itemArray != nullptr){
+            delete[] itemArray;
+        }
+        int numberOfRows = clientManager->getMap()->getNumberOfRows();
+        int numberOfCols = clientManager->getMap()->getNumberOfCols();
+        itemArray = new QGraphicsPixmapItem**[numberOfRows];
+        for(int i=0;i<numberOfRows;i++){
+            itemArray[i] = new QGraphicsPixmapItem*[numberOfCols];
+            for(int j=0;j<numberOfCols;j++){
+                itemArray[i][j] = new QGraphicsPixmapItem;
+                scene->addItem(itemArray[i][j]);
+            }
+        }
+    }
+    repaintView();
 }

@@ -14,7 +14,6 @@ CreateGame::CreateGame(QWidget* parent, ClientManagerGUI* cm) :
     displayDefaultBackground();
     ui->setupUi(this);
     refresh();
-
 }
 
 CreateGame::~CreateGame(){

@@ -6,7 +6,7 @@
 #include <map>
 #include <string>
 #include "../ClientManager.hpp"
-#include "repaintsignaler.h"
+#include "signaler.h"
 
 typedef int key_type;
 
@@ -27,12 +27,12 @@ public:
     QVBoxLayout* getLayout();
     void buildMap(std::string) override;
     void repaint() override;
-    RepaintSignaler* getRepaintSignaler();
+    Signaler* getSignaler();
 private:
     QStackedWidget* stackedWidget;
     QVBoxLayout* layout;
     std::map<key_type, DefaultWidget*> pages;
-    RepaintSignaler* repaintSignaler;
+    Signaler* signaler;
 
 };
 

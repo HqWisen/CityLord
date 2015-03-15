@@ -1,21 +1,23 @@
-#ifndef REPAINTSIGNALER_H
-#define REPAINTSIGNALER_H
+#ifndef SIGNALER_H
+#define SIGNALER_H
 
 #include <QObject>
 #include "../../common/models/Location.hpp"
 
-class RepaintSignaler : public QObject
+class Signaler : public QObject
 {
     Q_OBJECT
 public:
-    explicit RepaintSignaler();
+    explicit Signaler();
     void signalRepainting();
+    void signalBuildViewMap();
     void signalActiving(std::string, Location);
 signals:
     void repaintView();
+    void buildViewMap();
     void activeButton(std::string, Location);
 public slots:
 
 };
 
-#endif // REPAINTSIGNALER_H
+#endif // SIGNALER_H

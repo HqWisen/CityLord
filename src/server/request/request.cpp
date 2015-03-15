@@ -214,6 +214,7 @@ SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* 
     SocketMessage answer, update;
     Map<Field>* map = userManager->getActiveCity()->getMap();
     Field* field;
+    map->display();
     for(int row=0;row<map->getNumberOfRows();row++){
         for(int col=0;col<map->getNumberOfCols();col++){
             if((field = dynamic_cast<Field*>(map->getCase(Location(row, col))))){

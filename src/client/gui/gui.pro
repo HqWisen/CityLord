@@ -13,8 +13,8 @@ SOURCES += main.cpp\
     citylordview.cpp \
     ingame.cpp \
     clientmanagerGUI.cpp \
-    repaintsignaler.cpp \
-    build.cpp
+    build.cpp \
+    signaler.cpp
 
 HEADERS  += \
     login.h \
@@ -27,8 +27,8 @@ HEADERS  += \
     citylordview.h \
     ingame.h \
     clientmanagerGUI.h \
-    repaintsignaler.h \
-    build.h
+    build.h \
+    signaler.h
 
 
 FORMS    += \

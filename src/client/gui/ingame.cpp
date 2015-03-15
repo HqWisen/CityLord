@@ -3,11 +3,11 @@
 
 
 InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
-    DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this)){
-    view->setClientManager(clientManager);
+    DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this, cm)){
     ui->setupUi(this);
-    QObject::connect(clientManager->getRepaintSignaler(), SIGNAL(repaintView()), this, SLOT(repaintView()));
-    QObject::connect(clientManager->getRepaintSignaler(), SIGNAL(activeButton(std::string, Location)), this, SLOT(activeButton(std::string, Location)));
+    QObject::connect(clientManager->getSignaler(), SIGNAL(repaintView()), this, SLOT(repaintView()));
+    QObject::connect(clientManager->getSignaler(), SIGNAL(buildViewMap()), this, SLOT(buildViewMap()));
+    QObject::connect(clientManager->getSignaler(), SIGNAL(activeButton(std::string, Location)), this, SLOT(activeButton(std::string, Location)));
     ui->exitButton->setStyleSheet("background-image: url(src/resources/img/exit40_40.png)");
     ui->exitButton->setText("");
 
@@ -21,24 +21,28 @@ void InGame::repaintView(){
     view->repaintView();
 }
 
-void InGame::activeButton(std::string info, Location location){
+void InGame::buildViewMap(){
+    view->buildViewMap();
+}
+
+void InGame::activeButton(std::string fieldinfo, Location location){
     lastLocation = location;
-    if(info == "owner"){
+    if(fieldinfo == "owner"){
         ui->buildButton->setEnabled(true);
         ui->buyButton->setEnabled(false);
         ui->upgradeButton->setEnabled(true);
         ui->destroyButton->setEnabled(true);
-    }else if(info == "purchasable"){
+    }else if(fieldinfo == "purchasable"){
         ui->buildButton->setEnabled(false);
         ui->buyButton->setEnabled(true);
         ui->upgradeButton->setEnabled(false);
         ui->destroyButton->setEnabled(false);
-    }else if(info == "other"){
+    }else if(fieldinfo == "other"){
         ui->buildButton->setEnabled(false);
         ui->buyButton->setEnabled(false);
         ui->upgradeButton->setEnabled(false);
         ui->destroyButton->setEnabled(false);
-    }else if(info == "notfield"){
+    }else if(fieldinfo == "notfield"){
         ui->buildButton->setEnabled(false);
         ui->buyButton->setEnabled(false);
         ui->upgradeButton->setEnabled(false);
@@ -73,18 +77,26 @@ void InGame::updateTime(int time){
     ui->timeLabel->setText(QString::fromStdString(timeStr.str()));
 }
 
+void InGame::openMessageBox(std::string title){
+    if(clientManager->requestFailed()){
+        QMessageBox::critical(this, title.c_str(), clientManager->getReason().c_str());
+    }else{
+        QMessageBox::information(this, title.c_str(), clientManager->getReason().c_str());
+    }
+}
+
 void InGame::on_buyButton_clicked(){
     clientManager->setRequest("buy");
     clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
     clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
     clientManager->sendRequestAndRecv();
-    QMessageBox::warning(this, "Buy", clientManager->getAnswerInfos().c_str());
-    activeButton("owner", lastLocation);
+    openMessageBox("Buy");
+    if(!clientManager->requestFailed()){
+        activeButton("owner", lastLocation);
+    }
 }
 
-void InGame::on_buildButton_clicked()
-{
-
+void InGame::on_buildButton_clicked(){
     clientManager->setRequest("build");
     clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
     clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
