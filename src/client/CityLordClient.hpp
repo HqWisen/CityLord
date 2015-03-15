@@ -20,7 +20,7 @@ class CityLordClient{
 		CityLordClient(char* hostname, int port);
 		CityLordClient(const CityLordClient&) = default;
         ~CityLordClient();
-		void run();
+		void runClient();
 		void beginConnection();
 		void login();
 		void createAccount();

@@ -13,7 +13,7 @@ CityLordServer::~CityLordServer(){
 }
 
 
-void CityLordServer::run(){
+void CityLordServer::runServer(){
 	
 	ClientSocket* clientSocketPtr;	
 	

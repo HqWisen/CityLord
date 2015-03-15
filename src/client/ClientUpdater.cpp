@@ -1,13 +1,12 @@
 #include "ClientUpdater.hpp"
 
 const std::map<std::string, update_ptr> ClientUpdater::updatemap = {
-    {"changeowner", UpdateMethods::changeowner},
-    //{"changeownerwithbuilding", UpdateMethods::changeownerwithbuilding},
-    {"build", UpdateMethods::build},
-    {"destroy", UpdateMethods::destroy},
-    {"visitorcreate", UpdateMethods::visitorcreate},
-    {"visitormove", UpdateMethods::visitormove},
-    {"visitorremove", UpdateMethods::visitorremove}
+    {"changeowner", UpdateSystem::changeowner},
+    {"build", UpdateSystem::build},
+    {"destroy", UpdateSystem::destroy},
+    {"visitorcreate", UpdateSystem::createvisitor},
+    {"visitormove", UpdateSystem::movevisitor},
+    {"visitorremove", UpdateSystem::removevisitor}
 
 };
 

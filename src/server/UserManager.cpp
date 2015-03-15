@@ -1,25 +1,25 @@
 #include "UserManager.hpp"
 
 const std::map<std::string, request_ptr> UserManager::requestmap = {
-	{"login", request::login},
-	{"createaccount", request::createaccount},
-	{"choicemap", request::choicemap},
-	{"createcity", request::createcity},
-    {"numberofcity", request::numberofcity},
-    {"cityinfo", request::cityinfo},
-	{"joincity", request::joincity},
-	{"selectfield", request::selectfield},
-	{"showinfo", request::showinfo},
-	{"showcatalog", request::showcatalog},
-	{"buy", request::buy},
-	{"build", request::build},
-	{"upgrade", request::upgrade},
-    {"destroy", request::destroy},
-    {"mapfullupdate", request::mapfullupdate}
+	{"login", RequestSystem::login},
+	{"createaccount", RequestSystem::createaccount},
+	{"choicemap", RequestSystem::choicemap},
+	{"createcity", RequestSystem::createcity},
+    {"numberofcity", RequestSystem::numberofcity},
+    {"cityinfo", RequestSystem::cityinfo},
+	{"joincity", RequestSystem::joincity},
+	{"selectfield", RequestSystem::selectfield},
+	{"showinfo", RequestSystem::showinfo},
+	{"showcatalog", RequestSystem::showcatalog},
+	{"buy", RequestSystem::buy},
+	{"build", RequestSystem::build},
+	{"upgrade", RequestSystem::upgrade},
+    {"destroy", RequestSystem::destroy},
+    {"mapfullupdate", RequestSystem::mapfullupdate}
 };
 
 UserManager::UserManager(CityLordServer* cserver, ClientSocket socket, ServerSocket updateClientSocket) : server(cserver), clientSocket(socket), \
-    updateSocket(nullptr), mymutex(PTHREAD_MUTEX_INITIALIZER){
+    updateSocket(nullptr), updatemutex(PTHREAD_MUTEX_INITIALIZER){
     SocketMessage answer;
     answer.setTopic("update");
     sendAnswer(answer);
@@ -95,10 +95,10 @@ void UserManager::sendAnswer(SocketMessage answer){
 }
 
 void UserManager::sendUpdate(SocketMessage update){
-    pthread_mutex_lock(&mymutex);
+    pthread_mutex_lock(&updatemutex);
     updateSocket->write(update.toString());
     updateSocket->read(); // wait for finish signal
-    pthread_mutex_unlock(&mymutex);
+    pthread_mutex_unlock(&updatemutex);
 }
 
 

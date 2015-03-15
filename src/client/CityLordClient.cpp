@@ -6,7 +6,7 @@ CityLordClient::CityLordClient(char* hostname, int port) : clientManager(new Cli
 
 }
 
-void CityLordClient::run(){
+void CityLordClient::runClient(){
     LOG("Welcome in CityLord !");
 	beginConnection();
 	chooseCity();

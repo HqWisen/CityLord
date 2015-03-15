@@ -27,7 +27,7 @@ class UserManager : public Thread{
     ClientSocket* updateSocket;
     User* user = nullptr;
     CityManager* cityManager = nullptr;
-    pthread_mutex_t mymutex;
+    pthread_mutex_t updatemutex;
 	public:
         UserManager(CityLordServer*, ClientSocket, ServerSocket);
 		void run() override;
