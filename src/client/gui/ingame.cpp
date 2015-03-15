@@ -120,6 +120,17 @@ void InGame::disableAllButtons(){
     ui->destroyButton->setEnabled(false);
 }
 
+void InGame::updateButtons(bool buyable, bool buildable, bool upgradable, bool owned, bool destroyable){
+    ui->buyButton->setEnabled(buyable);
+    ui->buildButton->setEnabled(buildable);
+    ui->upgradeButton->setEnabled(upgradable);
+    ui->sellButton->setEnabled(owned);
+    ui->destroyButton->setEnabled(destroyable);
+}
+
+
+
+
 void InGame::on_exitButton_clicked(){
     clientManager->setCurrentWidget(ClientManagerGUI::MAINMENU);
 }

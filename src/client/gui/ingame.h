@@ -33,6 +33,7 @@ private slots:
     void on_upgradeButton_clicked();
     void on_destroyButton_clicked();
     void disableAllButtons();
+    void updateButtons(bool,bool,bool,bool,bool);
 
     void on_exitButton_clicked();
 
