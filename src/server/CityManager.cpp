@@ -100,6 +100,7 @@ SocketMessage CityManager::visitorMove(Player* player, Location firstLocation, L
 
 }
 
+/*
 SocketMessage CityManager::getTimeRem(Player* player){
     SocketMessage timeRem;
 
@@ -129,6 +130,7 @@ SocketMessage CityManager::getRealTimeRem(Player* player){
 
 	return realTimeRem;
 }
+*/
 
 //------------------------------
 
