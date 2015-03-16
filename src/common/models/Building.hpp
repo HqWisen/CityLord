@@ -38,6 +38,7 @@ class Building {
 		bool addVisitor();
 		void removeVisitor();
         bool isFull(){return visitorCounter==maxCapacity;};
+        int getIncome();
 
 };
 #endif // BUILDING_HPP_

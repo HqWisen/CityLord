@@ -339,12 +339,79 @@ void CityUpdater::updateBuildings(){
     }
 }
 
-//gainMoney()
+
 
 void CityUpdater::makeVisitorsAdvance(){
     std::cout<<"Advance"<<endl;
     for(int i = 0; i < cityMap->getMaxVisitors(); i++){
         if(cityMap->getVisitor(i) != nullptr){
+<<<<<<< HEAD
+            Location firstLocation = cityMap->getVisitor(i)->getLoc();
+            cityMap->getVisitor(i)->move();
+            Location lastLocation = cityMap->getVisitor(i)->getLoc();
+            SocketMessage update = visitorMove(i, firstLocation, lastLocation);
+            sendUpdateToPlayers(update);
+            bool enter = false;
+            Building test;
+            Location loc = cityMap->getVisitor(i)->getLoc();
+            int col = loc.getCol();
+            int row = loc.getRow();
+            Location locTest(row+1,col);
+            if(locTest.getRow() < cityMap->getNumberOfRows()) {
+                if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+                    if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+                        enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                        if(!enter){
+                            locTest = Location(row-1,col);
+                        } else {
+                            enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                            if(!enter){
+                                locTest = Location(row-1,col);
+                            }
+                            else{
+<<<<<<< HEAD
+                                std::cout<<"ENTRE DANS BATIMENT"<<std::endl;
+=======
+                                SocketMessage update = visitorRemove(i);
+                                sendUpdateToPlayers(update);
+>>>>>>> a848249e9d235ef3cc3ea6feb70281cbbfdfcd1e
+                                cityMap->deleteVisitor(i);
+                                Player* owner = dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner();
+                                int gain = dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome();
+                                owner->gainMoney(gain);
+                            }
+                        }
+                    }
+                }
+            }else {
+                locTest = Location(row-1,col);
+            }
+            if(locTest.getRow() >= 0) {
+<<<<<<< HEAD
+    			if(!enter){
+    				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+    					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+    						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    						if(!enter){
+    							locTest = Location(row,col+1);
+    						} else {
+    							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    							if(!enter){
+    								locTest = Location(row,col+1);
+    							} else {
+                                    std::cout<<"ENTRE DANS BATIMENT"<<std::endl;
+    								cityMap->deleteVisitor(i);
+                                    Player* owner = dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner();
+                                    int gain = dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome();
+                                    owner->gainMoney(gain);
+    							}
+    						}
+    					}
+    				}
+    			}
+=======
+                if(!enter){
+=======
             if (cityMap->getVisitor(i)->hasReachedEnd()) {
                 SocketMessage update = visitorRemove(i);
                 sendUpdateToPlayers(update);
@@ -362,6 +429,7 @@ void CityUpdater::makeVisitorsAdvance(){
                 int row = loc.getRow();
                 Location locTest(row+1,col);
                 if(locTest.getRow() < cityMap->getNumberOfRows()) {
+>>>>>>> 3254de7673c64c106414387231052fe2836b3c56
                     if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
                         if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
                             enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
@@ -384,6 +452,44 @@ void CityUpdater::makeVisitorsAdvance(){
                 }else {
                     locTest = Location(row-1,col);
                 }
+<<<<<<< HEAD
+>>>>>>> a848249e9d235ef3cc3ea6feb70281cbbfdfcd1e
+            }else {
+               locTest = Location(row,col+1); 
+            }
+            if(locTest.getCol() < cityMap->getNumberOfCols()) {
+<<<<<<< HEAD
+    			if(!enter){
+    				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+    					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+    						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    						if(!enter){
+    							locTest = Location(row,col-1);
+    						} else {
+    							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    							if(!enter){
+    								locTest = Location(row,col-1);
+    							} else {
+                                    std::cout<<"ENTRE DANS BATIMENT"<<std::endl;
+                                    cityMap->deleteVisitor(i);
+                                    Player* owner = dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner();
+                                    int gain = dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome();
+                                    owner->gainMoney(gain);
+    							}
+    						}
+    					}
+    				}
+    			}
+=======
+                if(!enter){
+                    if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+                        if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+                            enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                            if(!enter){
+                                locTest = Location(row,col-1);
+                            } else {
+                                enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+=======
                 if(locTest.getRow() >= 0) {
                     if(!enter){
                         if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
@@ -413,6 +519,7 @@ void CityUpdater::makeVisitorsAdvance(){
                         if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
                             if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
                                 enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+>>>>>>> 3254de7673c64c106414387231052fe2836b3c56
                                 if(!enter){
                                     locTest = Location(row,col-1);
                                 } else {
@@ -432,11 +539,43 @@ void CityUpdater::makeVisitorsAdvance(){
                 }else {
                     locTest = Location(row,col-1);
                 }
+<<<<<<< HEAD
+>>>>>>> a848249e9d235ef3cc3ea6feb70281cbbfdfcd1e
+            }else {
+                locTest = Location(row,col-1);
+            }
+            if(locTest.getCol() >= 0) {
+<<<<<<< HEAD
+    			if(!enter){
+    				if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+    					if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+    						enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    						if(enter){
+    							enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+    							if(enter){
+                                    std::cout<<"ENTRE DANS BATIMENT"<<std::endl;
+    								cityMap->deleteVisitor(i);
+                                    Player* owner = dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner();
+                                    int gain = dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome();
+                                    owner->gainMoney(gain);
+    							}
+    						}
+    					}
+    				}
+=======
+                if(!enter){
+                    if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
+                        if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
+                            enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+                            if(enter){
+                                enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+=======
                 if(locTest.getCol() >= 0) {
                     if(!enter){
                         if(dynamic_cast<Field*>(cityMap->getCase(locTest))){
                             if(dynamic_cast<Field*>(cityMap->getCase(locTest))->hasBuilding()){
                                 enter = cityMap->getVisitor(i)->choose(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
+>>>>>>> 3254de7673c64c106414387231052fe2836b3c56
                                 if(enter){
                                     enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
                                     if(enter){
@@ -449,6 +588,7 @@ void CityUpdater::makeVisitorsAdvance(){
                             }
                         }
                     }
+>>>>>>> a848249e9d235ef3cc3ea6feb70281cbbfdfcd1e
                 }
             }
         }

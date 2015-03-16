@@ -32,6 +32,10 @@ BuildingType Building::getType(){
 	return type;
 }
 
+int Building::getIncome(){
+    return income;
+}
+
 /*void Building::upgrade(){
     maxCapacity += (maxCapacity/2);
     income += (income/2);
