@@ -18,7 +18,7 @@ public:
     void refresh();
     QPushButton* getCancelButton();
 private slots:
-   void on_buildButton_clicked();
+   void on_buildDialogButton_clicked();
    void on_cancelButton_clicked();
 
 private:

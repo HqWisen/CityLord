@@ -6,8 +6,8 @@ build::build(QWidget* parent, ClientManagerGUI* cm) :
     ui->setupUi(this);
     for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
     {
-        ui->tableWidget->horizontalHeader()->setSectionResizeMode(
-            c, QHeaderView::Stretch);
+        /*ui->tableWidget->horizontalHeader()->setSectionResizeMode(
+            c, QHeaderView::Stretch);*/
     }
     headerLabels << "Building type";
     ui->tableWidget->setColumnCount(headerLabels.size());
@@ -46,7 +46,7 @@ QPushButton* build::getCancelButton(){
     return ui->cancelButton;
 }
 
-void build::on_buildButton_clicked(){
+void build::on_buildDialogButton_clicked(){
     QItemSelectionModel* selectionModel = ui->tableWidget->selectionModel();
     QModelIndexList selected = selectionModel->selectedRows();
     if(selected.count() == 0){

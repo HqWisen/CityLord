@@ -33,7 +33,7 @@ public slots:
     void activeButton(std::string, Location);
 private slots:
     void on_buyButton_clicked();
-    void on_buildaButton_clicked();
+    void on_buildButton_clicked();
     void on_upgradeButton_clicked();
     void on_destroyButton_clicked();
     void disableAllButtons();
