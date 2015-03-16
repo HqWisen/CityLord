@@ -108,15 +108,15 @@ void InGame::on_buyButton_clicked(){
     }
 }
 
-void InGame::on_buildButton_clicked(){
-    std::cout<<"HAKIMAAAAAAAAA"<<std::endl;
-    /*clientManager->setRequest("Bd");
+void InGame::on_buildButton_clicked(){;
+    std::cout<<"CLICKED"<<std::endl;
+    clientManager->setRequest("build");
     clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
     clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
-    QObject::connect(ui->buildButton, SIGNAL(clicked()), buildDialog, SLOT(exec()));*/
-    //std::cout<<"CLICKED"<<std::endl;
-    /*ui->buildButton->clicked();
-    QObject::disconnect(ui->buildButton, SIGNAL(clicked()), buildDialog, SLOT(exec()));*/
+    //QObject::connect(ui->buildButton, SIGNAL(clicked()), buildDialog, SLOT(exec()));
+    //ui->buildButton->clicked();
+    //QObject::disconnect(ui->buildButton, SIGNAL(clicked()), buildDialog, SLOT(exec()));
+    buildDialog->exec();
 }
 
 void InGame::on_upgradeButton_clicked(){
