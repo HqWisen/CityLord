@@ -130,8 +130,10 @@ Map<FieldType>::Map(string fileName){
                 if(dynamic_cast<Road*>(caseMatrix[row][col]) != nullptr){
                     dynamic_cast<Road*>(caseMatrix[row][col])->open(Road::NORTH);
                     if (row == 0) {
-                        caseMatrix[0][col] = new BorderSpawn(Location(0, col), dynamic_cast<Road*>(caseMatrix[0][col]));
-                        spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[0][col]));
+                        if (dynamic_cast<BorderSpawn*>(caseMatrix[0][col]) == nullptr){
+                            caseMatrix[0][col] = new BorderSpawn(Location(0, col), dynamic_cast<Road*>(caseMatrix[0][col]));
+                            spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[0][col]));
+                        }
                     }
                 }else{
                     throw std::invalid_argument("The map tried to open a pathway to a case which wasn't a road.");
