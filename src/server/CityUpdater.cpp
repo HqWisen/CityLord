@@ -170,21 +170,26 @@ void CityUpdater::run(){
     std::cout<<"fin du game"<<std::endl;
 }
 
-int CityUpdater::getTimeRemaining(){
-    int x = dayRemaining;
+std::string CityUpdater::getTime(){
+    int x = 3-dayRemaining+1;
+    std::string day = to_string(x);
     int y = t.elapsedTime();
-    int minRemaining = (5*(dayTimer - y))*60;
-    if(dayRemaining == 0){
-        return minRemaining;
-    }
-    else{
-        int timeRemaining = x*24*60*60;
-        timeRemaining += minRemaining;
-        return timeRemaining;
-    }    
+    int res = dayTimer - y;
+    int hour = (res*5)/60;
+    int min = (res*5)%60;
+    std::string hourStr = to_string(hour);
+    std::string minStr = to_string(min);
+    std::string concat = "Day : " + day;
+    std::string concat2 = concat + "|Time : ";
+    std::string concat3 = concat2 + hourStr;
+    std::string concat4 = concat3 + ":";
+    std::string concat5 = concat4 + minStr;
+
+    return  concat5;
 }
 
-int CityUpdater::getRealTimeRemaining(){
+/*
+std::string CityUpdater::getRealTimeRemaining(){
     int y = t.elapsedTime();
     if(dayRemaining == 0){
         return dayTimer - y;
@@ -195,6 +200,7 @@ int CityUpdater::getRealTimeRemaining(){
         return x;
     }
 }
+*/
 
 /*
 SocketMessage CityUpdater::sendTime(){
@@ -373,7 +379,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                     locTest = Location(row-1,col);
                                 }
                                 else{
-                                    std::cout<<"ENTREEEEEE"<<std::endl;
+                                    std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
                                     dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                     SocketMessage update = visitorRemove(i);
                                     sendUpdateToPlayers(update);
@@ -397,7 +403,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                     if(!enter){
                                         locTest = Location(row,col+1);
                                     } else {
-                                        std::cout<<"ENTREEEEEE"<<std::endl;
+                                        std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
                                         dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                         SocketMessage update = visitorRemove(i);
                                         sendUpdateToPlayers(update);
@@ -422,7 +428,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                     if(!enter){
                                         locTest = Location(row,col-1);
                                     } else {
-                                        std::cout<<"ENTREEEEEE"<<std::endl;
+                                        std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
                                         dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                         SocketMessage update = visitorRemove(i);
                                         sendUpdateToPlayers(update);
@@ -443,7 +449,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                 if(enter){
                                     enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
                                     if(enter){
-                                        std::cout<<"ENTREEEEEE"<<std::endl;
+                                        std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
                                         dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                         SocketMessage update = visitorRemove(i);
                                         sendUpdateToPlayers(update);

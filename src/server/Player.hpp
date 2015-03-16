@@ -12,7 +12,7 @@ class UserManager;
 
 class Player{
 
-    const int INITIALBUDGET = 150000;
+    const int INITIALBUDGET = 1000000;
 	int money;
 	int playerID;
 	int nBuilding;
