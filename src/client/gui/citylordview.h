@@ -17,6 +17,7 @@
 class CityLordView : public QGraphicsView{
 
 static const int WIDTH, HEIGHT;
+int ZOOMLEVEL,COORDX,COORDY;
 const QPixmap BASE;
 QGraphicsScene* scene;
 

@@ -5,7 +5,6 @@ const int CityLordView::WIDTH = 1152;
 const int CityLordView::HEIGHT = 804;
 
 
-
 CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
     QGraphicsView(parent), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(cm), numberOfRows(0),  \
     numberOfCols(0), itemArray(nullptr){
@@ -14,6 +13,9 @@ CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
     setSceneRect(-((WIDTH/2)-(BASE.width()/2)), 0, WIDTH-2, HEIGHT-2);
     this->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ZOOMLEVEL=10;
+    COORDX=0;
+    COORDY=0;
 }
 
 CityLordView::~CityLordView(){
@@ -97,22 +99,26 @@ void CityLordView::mouseReleaseEvent(QMouseEvent * e){
 
 void CityLordView::mouseMoveEvent(QMouseEvent * e){
     QPointF currentPos = mapToScene(e->pos());
-    if(startMouse.x() < currentPos.x()){
+    if(startMouse.x() < currentPos.x() and COORDX>-75*10){
         int move = currentPos.x()-startMouse.x();
         px-= move;
+        COORDX-=move;
         lastPos.setX(lastPos.x()-move);
-    }else{
+    }else if(COORDX<75*10){
         int move = startMouse.x()-currentPos.x();
         px+= move;
+        COORDX+=move;
         lastPos.setX(lastPos.x()+move);
     }
-    if(startMouse.y() < currentPos.y()){
+    if(startMouse.y() < currentPos.y() and COORDY>-152*10){
         int move = currentPos.y()-startMouse.y();
         py-=move;
+        COORDY-=move;
         lastPos.setY(lastPos.y()-move);
-    }else{
+    }else if(COORDY<152*10){
         int move = startMouse.y()-currentPos.y();
         py+=move;
+        COORDY+=move;
         lastPos.setY(lastPos.y()+move);
     }
     lastPos = currentPos;
@@ -120,10 +126,14 @@ void CityLordView::mouseMoveEvent(QMouseEvent * e){
 }
 
 void CityLordView::wheelEvent(QWheelEvent* e){
-    if(e->delta() > 0){
+    if(e->delta() > 0 and ZOOMLEVEL<20){
+        ZOOMLEVEL+=1;
+        std::cout<<ZOOMLEVEL<<std::endl;
         scale(1.1, 1.1);
     }
-    else if(e->delta() < 0){
+    else if(e->delta() < 0 and ZOOMLEVEL>0){
+        ZOOMLEVEL-=1;
+        std::cout<<ZOOMLEVEL<<std::endl;
         scale(0.9, 0.9);
     }
 }
