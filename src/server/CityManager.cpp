@@ -194,6 +194,7 @@ SocketMessage CityManager::buildBuilding(Player* player, Location location, Buil
 					player->setMoney(player->getMoney() - buildingType.price);
 					player->buildBuilding();
 					concernedField->buildBuilding(buildingType);
+					updater->refreshBuildingsList();
                     update.setTopic("build");
                     update.set("location", location.toString());
                     update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
@@ -260,6 +261,7 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
 					player->setMoney(player->getMoney() - concernedField->getBuilding()->getDestructionCost());
 					player->destroyBuilding();
 					concernedField->destroyBuilding();
+					updater->refreshBuildingsList();
                     update.setTopic("destroy");
                     update.set("location", location.toString());
                     updater->sendUpdateToPlayers(update);

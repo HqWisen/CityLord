@@ -128,10 +128,10 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr){
     cityMap = map;
     spawn = map->getSpawnList();
     playerVectorPtr = pvPtr;
+    srand(time(NULL));
     getRoadMap();
     getAdjacencyList();
     this->start();
-    
 }
 
 void CityUpdater::run(){
@@ -249,19 +249,39 @@ void CityUpdater::sendUpdateToPlayers(SocketMessage update){
 
 void CityUpdater::makeOwnersPay(){
     std::cout<<"test nouveau jour"<<std::endl;
-    Location currentLocation;
+    Location currentLocation = Location(0, 0);
     Field* concernedField;
     for(int row=0; row<cityMap->getNumberOfRows(); row++){
         for(int col=0; col<cityMap->getNumberOfCols(); col++){
-            currentLocation = Location(row,col);
+            currentLocation.setRow(row);
+            currentLocation.setCol(col);
             if((concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation)))){
-                if(concernedField->hasOwner()){
+                if(concernedField->hasOwner() && concernedField->hasBuilding()){
                     concernedField->getOwner()->loseMoney(concernedField->getBuilding()->getDailyCost());
                 }
             }
         }
     }
     std::cout<<"cout deduit"<<std::endl;
+}
+
+void CityUpdater::refreshBuildingsList() {
+    buildingsList.clear();
+    Location location(0,0);
+    Road* road;
+    Field* field;
+    for (int row=0; row<(cityMap->getNumberOfRows()); row++) {
+        for (int col=0; col<(cityMap->getNumberOfCols()); col++) {
+            location.setRow(row);
+            location.setCol(col);
+            if((field = dynamic_cast<Field*>(cityMap->getCase(location))) && field->hasBuilding()) {
+                road = cityMap->findSpawnPoint(location);
+                if (road != nullptr) {
+                    buildingsList.push_back(road);
+                }
+            }
+        }
+    }
 }
 
 void CityUpdater::createPath(Location start, Location end, std::vector<Location> &path){
@@ -281,15 +301,15 @@ void CityUpdater::createPath(Location start, Location end, std::vector<Location>
 void CityUpdater::generateVisitors(){
     if (!cityMap->isFull()){
         int size = spawn.size();
-        int luck = rand() %  (size-1);
+        int luck = rand() %  (size);
         Spawn* startSpawn = spawn[luck];
         Location startLocation = startSpawn->getSpawnPoint();
         std::cout<<"Start "<<startLocation.getRow()<<","<<startLocation.getCol()<<std::endl;
 
-        luck = rand() %  (size-1);
+        luck = rand() %  (size);
         Spawn* endSpawn = spawn[luck];
         while(endSpawn == startSpawn){
-            luck = rand() %  (size-1);
+            luck = rand() %  (size);
             endSpawn = spawn[luck];
         }
         Location endLocation = endSpawn->getSpawnPoint();
@@ -298,23 +318,33 @@ void CityUpdater::generateVisitors(){
         //path.push_back(startLocation);
 
         Location lastLocation = startLocation;
-        size = checkPointsList.size();
-        if (size > 0) {
-            luck = 0;
-            int badLuck = 2;
-            Location nextLocation;
+        int size_buildings = buildingsList.size();
+        int size_checkPoints = checkPointsList.size();
+
+        int badLuck = 1;
+        int chances = 0;
+        Location nextLocation;
+        luck = rand() % (badLuck);
+        while (luck >= badLuck-1) {
+            if ((size_buildings-(badLuck-1)) > 0 && luck >= chances) {
+                luck = rand() % (size_buildings);
+                nextLocation = buildingsList[luck]->getLocation();
+                createPath(lastLocation,nextLocation,path);
+                std::cout<<"Building stop "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
+                lastLocation = nextLocation;
+            }
             luck = rand() % (badLuck);
-            while(luck == 0){
-                luck = rand() % (size-1);
+            if ((size_checkPoints-(badLuck-1)) > 0 && luck <= chances) {
+                luck = rand() % (size_checkPoints);
                 nextLocation = checkPointsList[luck]->getLocation();
                 createPath(lastLocation,nextLocation,path);
                 std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
                 lastLocation = nextLocation;
-                badLuck += 1;
-                luck = rand() % (badLuck);
             }
+            badLuck += 1;
+            chances = (ceil((badLuck)/2))-1;
+            luck = rand() % (badLuck);
         }
-
 
         std::cout<<"End "<<endLocation.getRow()<<","<<endLocation.getCol()<<std::endl;
         createPath(lastLocation,endLocation,path);

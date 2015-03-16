@@ -8,6 +8,7 @@
 #include <iostream>
 #include "../common/models/Map.hpp"
 #include "../common/models/Visitor.hpp"
+#include <cmath>
 
 // ========================================= Dijkstra ===================================
 #include <vector>
@@ -41,13 +42,14 @@ class CityUpdater : public Thread{
     std::vector<Spawn*> spawn;
     std::vector<Player*>* playerVectorPtr;
     vector<Road*> checkPointsList;
+    vector<Road*> buildingsList;
     vector<Road*> roadMap;
     adjacency_list_t adjacencyList;
     Timer t;
     unsigned moveTimer = 1;
-    unsigned dayRemaining = 3;
-    unsigned spawnTimer = 0.2;
-    unsigned dayTimer = 288;
+    unsigned dayRemaining = 15;
+    unsigned spawnTimer = 1;
+    unsigned dayTimer = 144;
     bool night = false;
     public:
         CityUpdater(Map<Field>*,std::vector<Player*>*);
@@ -66,6 +68,7 @@ class CityUpdater : public Thread{
         //std::string getRealTimeRemaining();
         //SocketMessage sendTime();
         bool getNight();
+        void refreshBuildingsList();
     private:
         void DijkstraComputePaths(vertex_t source, \
                           const adjacency_list_t &adjacency_list, \

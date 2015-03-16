@@ -47,7 +47,7 @@ class Map{
         int getNumberOfRows();
         int getNumberOfCols();
         void display();
-        Location findSpawnPoint(Location);
+        Road* findSpawnPoint(Location);
         vector<Spawn*> getSpawnList();
         Case* getCase(Location);
         int addVisitor(Visitor*);
@@ -95,12 +95,7 @@ Map<FieldType>::Map(string fileName){
             }else if (tmpChar == 'F'){
                 caseMatrix[row][col] = new FieldType(Location(row,col));
             }else if(tmpChar == 'R') {
-                if(row == 0 || row == numberOfRows-1 || col == 0 || col == numberOfCols-1){
-                    caseMatrix[row][col] = new BorderSpawn(Location(row, col));
-                    spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[row][col]));
-                }else{
-                    caseMatrix[row][col] = new Road(Location(row, col));
-                }
+                caseMatrix[row][col] = new Road(Location(row, col));
                 tmpChar = tmpStringBottom.at(col*4);
                 if(tmpChar == ' '){
                     dynamic_cast<Road*>(caseMatrix[row][col])->open(Road::WEST);
@@ -108,8 +103,11 @@ Map<FieldType>::Map(string fileName){
                         if(dynamic_cast<Road*>(caseMatrix[row][col-1]) != nullptr){
                             dynamic_cast<Road*>(caseMatrix[row][col-1])->open(Road::EAST);
                         }else{
-                            throw std::invalid_argument("The map try to open a case who is not a road.");
+                            throw std::invalid_argument("The map tried to open a pathway to a case which wasn't a road.");
                         }
+                    }else {
+                        caseMatrix[row][0] = new BorderSpawn(Location(row, 0), dynamic_cast<Road*>(caseMatrix[row][0]));
+                        spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[row][0]));
                     }
                 }
             }
@@ -119,8 +117,10 @@ Map<FieldType>::Map(string fileName){
         if(tmpChar == ' '){
             if(dynamic_cast<Road*>(caseMatrix[row][numberOfCols-1]) != nullptr){
                 dynamic_cast<Road*>(caseMatrix[row][numberOfCols-1])->open(Road::EAST);
+                caseMatrix[row][numberOfCols-1] = new BorderSpawn(Location(row, numberOfCols-1), dynamic_cast<Road*>(caseMatrix[row][numberOfCols-1]));
+                spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[row][numberOfCols-1]));
             }else{
-                throw std::invalid_argument("The map try to open a case who is not a road.");
+                throw std::invalid_argument("The map tried to open a pathway to a case which wasn't a road.");
             }
         }
         /* Ouverture des routes (NORD) */
@@ -129,14 +129,18 @@ Map<FieldType>::Map(string fileName){
             if(tmpChar == ' '){
                 if(dynamic_cast<Road*>(caseMatrix[row][col]) != nullptr){
                     dynamic_cast<Road*>(caseMatrix[row][col])->open(Road::NORTH);
+                    if (row == 0) {
+                        caseMatrix[0][col] = new BorderSpawn(Location(0, col), dynamic_cast<Road*>(caseMatrix[0][col]));
+                        spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[0][col]));
+                    }
                 }else{
-                    throw std::invalid_argument("The map try to open a case who is not a road.");
+                    throw std::invalid_argument("The map tried to open a pathway to a case which wasn't a road.");
                 }
                 if(row != 0){
                     if(dynamic_cast<Road*>(caseMatrix[row-1][col]) != nullptr){
                         dynamic_cast<Road*>(caseMatrix[row-1][col])->open(Road::SOUTH);
                     }else{
-                        throw std::invalid_argument("The map try to open a case who is not a road.");
+                        throw std::invalid_argument("The map tried to open a pathway to a case which wasn't a road.");
                     }
                 }
             }
@@ -150,15 +154,24 @@ Map<FieldType>::Map(string fileName){
         if(tmpChar == ' '){
             if(dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col]) != nullptr){
                 dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col])->open(Road::SOUTH);
+                if (dynamic_cast<BorderSpawn*>(caseMatrix[numberOfRows-1][col]) == nullptr){
+                    caseMatrix[numberOfRows-1][col] = new BorderSpawn(Location(numberOfRows-1, col), dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col]));
+                    spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[numberOfRows-1][col]));
+                }
             }else{
-                throw std::invalid_argument("The map try to open a case who is not a road.");
+                throw std::invalid_argument("The map tried to open a pathway to a case which wasn't a road.");
             }
        }
     }
     BuildingSpawn* buildingSpawn;
+    Road* road;
     for (int i=0; i<spawnList.size(); i++) {
         if ((buildingSpawn = dynamic_cast<BuildingSpawn*>(spawnList[i]))) {
-            buildingSpawn->setSpawnPoint(findSpawnPoint(Location(buildingSpawn->getLocation().getRow(), buildingSpawn->getLocation().getCol())));
+            road = findSpawnPoint(Location(buildingSpawn->getLocation().getRow(), buildingSpawn->getLocation().getCol()));
+            if (road == nullptr) {
+                throw std::invalid_argument("The map was unable to set a spawn point for a building.");
+            }
+            buildingSpawn->setSpawnPoint(road->getLocation());
         }
     }
     file.close();
@@ -253,43 +266,43 @@ Case* Map<FieldType>::getCase(Location location){
 }
 
 template <typename FieldType>
-Location Map<FieldType>::findSpawnPoint(Location location){
+Road* Map<FieldType>::findSpawnPoint(Location location){
     Road* road;
     if ((location.getRow()+1) < numberOfRows) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()+1][location.getCol()]))) {
-            return road->getLocation();
+            return road;
         }
     }else if ((location.getCol()+1) < numberOfCols) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()][location.getCol()+1]))) {
-            return road->getLocation();
+            return road;
         }
     }else if ((location.getRow()-1) >= 0) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()-1][location.getCol()]))) {
-            return road->getLocation();
+            return road;
         }
     }else if ((location.getCol()-1) >= 0) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()][location.getCol()-1]))) {
-            return road->getLocation();
+            return road;
         }
     }else if (((location.getRow()+1) < numberOfRows) && ((location.getCol()+1) < numberOfCols)) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()+1][location.getCol()+1]))) {
-            return road->getLocation();
+            return road;
         }
     }else if (((location.getRow()-1) >= 0) && ((location.getCol()+1) < numberOfCols)) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()-1][location.getCol()+1]))) {
-            return road->getLocation();
+            return road;
         }
     }else if (((location.getRow()-1) >= 0) && ((location.getCol()-1) >= 0)) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()-1][location.getCol()-1]))) {
-            return road->getLocation();
+            return road;
         }
     }else if (((location.getRow()+1) < numberOfRows) && ((location.getCol()-1) >= 0)) {
         if ((road = dynamic_cast<Road*>(caseMatrix[location.getRow()+1][location.getCol()-1]))) {
-            return road->getLocation();
+            return road;
         }
     }
     cout<<"WARNING BAD SPAWN"<<endl;
-    return location;
+    return nullptr;
 }
 
 //=========================================== Visitor ==========================================
