@@ -108,8 +108,8 @@ void InGame::on_buyButton_clicked(){
     }
 }
 
-void InGame::on_buildaButton_clicked(){
-    std::cout<<"HAKIM"<<std::endl;
+void InGame::on_buildButton_clicked(){
+    std::cout<<"HAKIMAAAAAAAAA"<<std::endl;
     /*clientManager->setRequest("Bd");
     clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
     clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
