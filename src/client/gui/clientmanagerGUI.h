@@ -6,7 +6,7 @@
 #include <map>
 #include <string>
 #include "../ClientManager.hpp"
-#include "repaintsignaler.h"
+#include "signaler.h"
 
 typedef int key_type;
 
@@ -15,7 +15,7 @@ class DefaultWidget;
 class ClientManagerGUI : public ClientManager{
 
 public:
-    static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INGAME, CREATEGAME, JOINGAME, BUILD;
+    static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INGAME, CREATEGAME, JOINGAME;
     static const int SQUAREMAPSIZE;
 public:
     ClientManagerGUI(char*, int);
@@ -27,12 +27,12 @@ public:
     QVBoxLayout* getLayout();
     void buildMap(std::string) override;
     void repaint() override;
-    RepaintSignaler* getRepaintSignaler();
+    Signaler* getSignaler();
 private:
     QStackedWidget* stackedWidget;
     QVBoxLayout* layout;
     std::map<key_type, DefaultWidget*> pages;
-    RepaintSignaler* repaintSignaler;
+    Signaler* signaler;
 
 };
 

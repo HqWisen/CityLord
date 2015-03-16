@@ -5,29 +5,32 @@
 #include "../CityLordServer.hpp"
 #include "../../common/socket/SocketMessage.hpp"
 #include "../../common/models/BuildingType.hpp"
-
+#include <pthread.h>
 #include <iostream>
 
 class UserManager;
 class CityLordServer;
 
-namespace request{
-	SocketMessage login(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage createaccount(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage choicemap(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage createcity(CityLordServer*, UserManager*, SocketMessage);
-    SocketMessage cityinfo(CityLordServer*, UserManager*, SocketMessage);
-    SocketMessage numberofcity(CityLordServer*, UserManager*, SocketMessage);
-    SocketMessage joincity(CityLordServer*, UserManager*, SocketMessage);
-    SocketMessage selectfield(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage showinfo(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage showcatalog(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage buy(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage build(CityLordServer*, UserManager*, SocketMessage);
-	SocketMessage upgrade(CityLordServer*, UserManager*, SocketMessage);
-    SocketMessage destroy(CityLordServer*, UserManager*, SocketMessage);
-    SocketMessage mapfullupdate(CityLordServer*, UserManager*, SocketMessage);
-}
+class RequestSystem{
+static pthread_mutex_t requestmutex;
+public:
+	static SocketMessage login(CityLordServer*, UserManager*, SocketMessage);
+	static SocketMessage createaccount(CityLordServer*, UserManager*, SocketMessage);
+	static SocketMessage choicemap(CityLordServer*, UserManager*, SocketMessage);
+	static SocketMessage createcity(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage cityinfo(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage numberofcity(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage joincity(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage selectfield(CityLordServer*, UserManager*, SocketMessage);
+	static SocketMessage showinfo(CityLordServer*, UserManager*, SocketMessage);
+	static SocketMessage showcatalog(CityLordServer*, UserManager*, SocketMessage);
+	static SocketMessage buy(CityLordServer*, UserManager*, SocketMessage);
+	static SocketMessage build(CityLordServer*, UserManager*, SocketMessage);
+	static SocketMessage upgrade(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage destroy(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage mapfullupdate(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage leavecity(CityLordServer*, UserManager*, SocketMessage);
+};
 
 #endif // REQUEST_HPP_
 

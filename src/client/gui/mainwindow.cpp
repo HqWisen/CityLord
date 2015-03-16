@@ -14,7 +14,6 @@ MainWindow::MainWindow(char* hostname, int port) :
     clientManager->set(ClientManagerGUI::CREATEACCOUNT, new CreateAccount(this, clientManager));
     clientManager->set(ClientManagerGUI::CREATEGAME, new CreateGame(this, clientManager));
     clientManager->set(ClientManagerGUI::JOINGAME, new JoinGame(this, clientManager));
-    clientManager->set(ClientManagerGUI::BUILD, new build(this, clientManager));
 
     centralWidget->setLayout(clientManager->getLayout());
     clientManager->setCurrentWidget(ClientManagerGUI::LOGIN);

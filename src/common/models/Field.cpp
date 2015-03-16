@@ -6,7 +6,7 @@ using namespace std;
 
 /* BASIC FIELD */
 
-BasicField::BasicField(Location location) : Case(location), showOwnerColor(false){
+BasicField::BasicField(Location location) : Case(location), price(15000), building(nullptr), showOwnerColor(false){
 }
 
 /*
@@ -43,7 +43,7 @@ Field::Field(int newColor, Location location, Building* newBuilding) : Case(loca
 string BasicField::print(){
     string ownerStr = " ";
     if (hasOwner()){
-        ownerStr = to_string(this->getOwnerID());
+        ownerStr = to_string(getOwnerID());
     }
     if (hasBuilding()){
         int type = BuildingType::getIndexByType(this->getBuilding()->getType());
@@ -72,8 +72,13 @@ string BasicField::getImageName(){
     }else{
         imagename = "base";
     }
-    if(hasOwner() && showOwnerColor){
-        imagename += "_" + Player::COLORNAME[getOwnerID()];
+    if(showOwnerColor){
+        if(hasOwner()){
+            imagename += "_" + Player::COLORNAME[getOwnerID()];
+        }
+        else{
+            imagename = "grass";
+        }
     }
     return imagename;
 }
@@ -129,7 +134,7 @@ string BasicField::getOwnerColor(){
 
 /* FIELD */
 
-Field::Field(Location location) : BasicField(location){
+Field::Field(Location location) : BasicField(location), owner(nullptr){
 }
 
 
@@ -168,7 +173,7 @@ bool Field::hasOwner(){
 
 /* CLIENTFIELD */
 
-ClientField::ClientField(Location location) : BasicField(location){
+ClientField::ClientField(Location location) : BasicField(location), ownerid(-1){
 }
 
 int ClientField::getOwnerID(){

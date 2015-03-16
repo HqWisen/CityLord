@@ -16,6 +16,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <stdexcept>
 
 #include "Case.hpp"
 #include "Road.hpp"
@@ -38,7 +39,6 @@ class Map{
     int numberOfRows;
     int numberOfCols;
     Case*** caseMatrix;
-    //Neighborhood neighborhoods[];
     public:
         Map() = default;
         Map(std::string);
@@ -56,18 +56,17 @@ class Map{
         Visitor* getVisitor(int);
         int getMaxVisitors();
         bool isFull();
-		string toString();
-        static void parseMap(string filePath, string map);
 };
 
 template <typename FieldType>
 Map<FieldType>::Map(string fileName){
-    string tmpString;
+    string tmpStringTop, tmpStringBottom;
+    char tmpChar;
     ifstream file(fileName);
-    getline(file, tmpString);
-    numberOfCols = atoi(tmpString.c_str());
-    getline(file, tmpString);
-    numberOfRows = atoi(tmpString.c_str());
+    getline(file, tmpStringTop);
+    numberOfCols = atoi(tmpStringTop.c_str());
+    getline(file, tmpStringTop);
+    numberOfRows = atoi(tmpStringTop.c_str());
     //----------------------------------------------- Matrice  --------------------------------
     caseMatrix = new Case**[numberOfRows];
     for (int i=0; i<numberOfRows; i++) {
@@ -82,149 +81,79 @@ Map<FieldType>::Map(string fileName){
         visitorList[k] = nullptr;
     }
     //----------------------------------------------- Parseur  --------------------------------
-    Road* road;
-    BorderSpawn* spawn;
-    ClientField* field;
-    for (int row=0; row<((numberOfRows*2)+1); row++) { //par ligne
-        getline(file, tmpString);
-        char tmpChar;
-        // ---------------------------------------- Premiere Ligne ----------------------------
-        if (row == 0) {
-            for (int col=0; col<numberOfCols; col++) { //par colonne
-                tmpChar = tmpString.at((col*4)+1);
-                if (tmpChar == ' ') {
-                    road = new BorderSpawn(Location(0, col));
-                    caseMatrix[0][col] = road;
-                    road->open(Road::NORTH);
-                    spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[0][col]));
-                }
-            }
-        // ---------------------------------------- Derniere Ligne ----------------------------
-        } else if (row == (numberOfRows*2)) {
-            for (int col=0; col<numberOfCols; col++){
-                tmpChar = tmpString.at((col*4)+1);
-                if (tmpChar == ' ') {
-                    road = dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col]);
-                    road->open(Road::SOUTH);
-                }
-            }
-        // ------------------- Lignes Intermediaires (partie au-dessus des cases) -------------
-        }else if ((row % 2) == 0) {
-            for (int col=0; col<numberOfCols; col++) {
-                tmpChar = tmpString.at((col*4)+1);
-                if (tmpChar == ' ') {
-                    if (caseMatrix[row/2][col] == nullptr) {
-                        caseMatrix[row/2][col] = new Road(Location(row/2, col));
-                    }
-                    dynamic_cast<Road*>(caseMatrix[row/2][col])->open(Road::NORTH);
-                    dynamic_cast<Road*>(caseMatrix[(row/2)-1][col])->open(Road::SOUTH);
-                }
-            }
-        // ------------------------ Lignes Intermediaires (milieu des cases) -------------------
-        } else {
-            // ---------------------------- Premiere case --------------------------------------
-            tmpChar = tmpString.at(0);
-            if (tmpChar == ' ') {
-                if (caseMatrix[row/2][0] == nullptr) {
-                    caseMatrix[row/2][0] = new BorderSpawn(Location(row/2, 0));
-                    spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[row/2][0]));
-                }else if (!(spawn = dynamic_cast<BorderSpawn*>(caseMatrix[row/2][0]))) {
-                    caseMatrix[row/2][0] = new BorderSpawn(Location(row/2, 0), dynamic_cast<Road*>(caseMatrix[row/2][0]));
-                    spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[row/2][0]));
-                }
-                dynamic_cast<Road*>(caseMatrix[row/2][0])->open(Road::WEST);
-            }
-            tmpChar = tmpString.at(2);
-            if (tmpChar == 'B') {
-                tmpChar = tmpString.at(1);
-                int player = tmpChar;
-                tmpChar = tmpString.at(3);
-                int building = (int) tmpChar;
-                BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
-                int level = (building%10);
-                if (level == 0){
-                    level = 10;
-                }
-                caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
-                dynamic_cast<FieldType*>(caseMatrix[row/2][0])->buildBuilding(type, level);
-                if ((player > 47) && (field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))){
-                    field->setOwnerID(player-48);
-                }
-            }else if (tmpChar == 'O') {
-                caseMatrix[row/2][0] = new Obstacle(Location(row/2, 0));
+    for(int row=0;row<numberOfRows;row++){
+        getline(file, tmpStringTop);
+        getline(file, tmpStringBottom);
+        /* Construction des objets selon la lettre + ouverture des route EAST - WEST */
+        for(int col=0;col<numberOfCols;col++){
+            tmpChar = tmpStringBottom.at(2+(col*4));
+            if (tmpChar == 'O') {
+                caseMatrix[row][col] = new Obstacle(Location(row, col));
             }else if (tmpChar == 'S') {
-                caseMatrix[row/2][0] = new BuildingSpawn(Location(row/2, 0));
-                spawnList.push_back(dynamic_cast<BuildingSpawn*>(caseMatrix[row/2][0]));
+                caseMatrix[row][col] = new BuildingSpawn(Location(row, col));
+                spawnList.push_back(dynamic_cast<BuildingSpawn*>(caseMatrix[row][col]));
             }else if (tmpChar == 'F'){
-                tmpChar = tmpString.at(1);
-                int player = tmpChar;
-                caseMatrix[row/2][0] = new FieldType(Location(row/2,0));
-                if ((player > 47) && (field = dynamic_cast<ClientField*>(caseMatrix[row/2][0]))){
-                    field->setOwnerID(player-48);
+                caseMatrix[row][col] = new FieldType(Location(row,col));
+            }else if(tmpChar == 'R') {
+                if(row == 0 || row == numberOfRows-1 || col == 0 || col == numberOfCols-1){
+                    caseMatrix[row][col] = new BorderSpawn(Location(row, col));
+                    spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[row][col]));
+                }else{
+                    caseMatrix[row][col] = new Road(Location(row, col));
                 }
-            }else if(tmpChar == 'R'){
-                if (caseMatrix[row/2][0] == nullptr) {
-                    caseMatrix[row/2][0] = new Road(Location(row/2, 0));
-                }
-            }
-            // -------------------------- Cases suivantes --------------------------------------
-            for (int col=1; col<numberOfCols; col++) {
-                tmpChar = tmpString.at((col*4));
-                if (tmpChar == ' ') {
-
-                    if (caseMatrix[row/2][col-1] == nullptr) {
-                        caseMatrix[row/2][col-1] = new Road(Location(row/2, col-1));
-                    }
-                    dynamic_cast<Road*>(caseMatrix[row/2][col-1])->open(Road::EAST);
-
-                    if (caseMatrix[row/2][col] == nullptr) {
-                        caseMatrix[row/2][col] = new Road(Location(row/2, col));
-                    }
-                    dynamic_cast<Road*>(caseMatrix[row/2][col])->open(Road::WEST);
-
-                }
-                tmpChar = tmpString.at((col*4)+2);
-                if (tmpChar == 'B') {
-                    tmpChar = tmpString.at((col*4)+1);
-                    int player = tmpChar;
-                    tmpChar = tmpString.at((col*4)+3);
-                    int building = (int) tmpChar;
-                    BuildingType type = BuildingType::getTypeByIndex((building/10)-2);
-                    int level = (building%10);
-                    if (level == 0){
-                        level = 10;
-                    }
-                    caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
-                    dynamic_cast<FieldType*>(caseMatrix[row/2][col])->buildBuilding(type, level);
-                    if ((player > 47) && (field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
-                        field->setOwnerID(player-48);
-                    }
-                }else if (tmpChar == 'O') {
-                    caseMatrix[row/2][col] = new Obstacle(Location(row/2, col));
-                }else if (tmpChar == 'S') {
-                    caseMatrix[row/2][col] = new BuildingSpawn(Location(row/2, col));
-                    spawnList.push_back(dynamic_cast<BuildingSpawn*>(caseMatrix[row/2][col]));
-                }else if (tmpChar == 'F'){
-                    tmpChar = tmpString.at((col*4)+1);
-                    int player = tmpChar;
-                    caseMatrix[row/2][col] = new FieldType(Location(row/2,col));
-                    if ((player > 47) && (field = dynamic_cast<ClientField*>(caseMatrix[row/2][col]))) {
-                        field->setOwnerID(player-48);
-                    }
-                }else if(tmpChar == 'R') {
-                    if (caseMatrix[row/2][col] == nullptr){
-                        caseMatrix[row/2][col] = new Road(Location(row/2, col));
+                tmpChar = tmpStringBottom.at(col*4);
+                if(tmpChar == ' '){
+                    dynamic_cast<Road*>(caseMatrix[row][col])->open(Road::WEST);
+                    if(col != 0){
+                        if(dynamic_cast<Road*>(caseMatrix[row][col-1]) != nullptr){
+                            dynamic_cast<Road*>(caseMatrix[row][col-1])->open(Road::EAST);
+                        }else{
+                            throw std::invalid_argument("The map try to open a case who is not a road.");
+                        }
                     }
                 }
-            }
-            // ---------------------------- Dernier 'mur' --------------------------------------
-            tmpChar = tmpString.at(numberOfCols*4);
-            if (tmpChar == ' ') {
-                dynamic_cast<Road*>(caseMatrix[row/2][numberOfCols-1])->open(Road::EAST);
-                caseMatrix[row/2][numberOfCols-1] = new BorderSpawn(Location(row/2, numberOfCols-1), dynamic_cast<Road*>(caseMatrix[row/2][numberOfCols-1]));
-                spawnList.push_back(dynamic_cast<BorderSpawn*>(caseMatrix[row/2][numberOfCols-1]));
             }
         }
+        /* Mur extreme EAST de la ligne*/
+        tmpChar = tmpStringBottom.at(numberOfCols*4);
+        if(tmpChar == ' '){
+            if(dynamic_cast<Road*>(caseMatrix[row][numberOfCols-1]) != nullptr){
+                dynamic_cast<Road*>(caseMatrix[row][numberOfCols-1])->open(Road::EAST);
+            }else{
+                throw std::invalid_argument("The map try to open a case who is not a road.");
+            }
+        }
+        /* Ouverture des routes (NORD) */
+        for(int col=0;col<numberOfCols;col++){
+            tmpChar = tmpStringTop.at(2+(col*4));
+            if(tmpChar == ' '){
+                if(dynamic_cast<Road*>(caseMatrix[row][col]) != nullptr){
+                    dynamic_cast<Road*>(caseMatrix[row][col])->open(Road::NORTH);
+                }else{
+                    throw std::invalid_argument("The map try to open a case who is not a road.");
+                }
+                if(row != 0){
+                    if(dynamic_cast<Road*>(caseMatrix[row-1][col]) != nullptr){
+                        dynamic_cast<Road*>(caseMatrix[row-1][col])->open(Road::SOUTH);
+                    }else{
+                        throw std::invalid_argument("The map try to open a case who is not a road.");
+                    }
+                }
+            }
+        }
+    }
+
+    /*Ouverture des routes de la derniere lignes (SOUTH)*/
+    getline(file, tmpStringTop);
+    for(int col=0;col<numberOfCols;col++){
+        tmpChar = tmpStringTop.at(2+(col*4));
+        if(tmpChar == ' '){
+            if(dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col]) != nullptr){
+                dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col])->open(Road::SOUTH);
+            }else{
+                throw std::invalid_argument("The map try to open a case who is not a road.");
+            }
+       }
     }
     BuildingSpawn* buildingSpawn;
     for (int i=0; i<spawnList.size(); i++) {
@@ -258,6 +187,7 @@ vector<Spawn*> Map<FieldType>::getSpawnList(){
 
 template <typename FieldType>
 void Map<FieldType>::display(){
+
     string color;
     Road* road;
     FieldType* field;
@@ -266,55 +196,55 @@ void Map<FieldType>::display(){
         printf( " %3s", (to_string(col)).c_str());
     }
     cout<<"\n";
-    for (int row=0; row<((numberOfRows*2)+1); row++) {
-        if (row == (numberOfRows*2)) {
-            cout<<"    ";
-            for (int col=0; col<numberOfCols; col++) {
-                if((road = dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col])) && road->isOpen(Road::SOUTH)){
-                    cout<<"+ ║ ";
-                }else{
-                    cout<<"+---";
-                }
-            }
-            cout<<"+"<<endl;
-        }else if ((row % 2) == 0) {
-            cout<<"    ";
-            for (int col=0; col<numberOfCols; col++) {
-                if((road = dynamic_cast<Road*>(caseMatrix[row/2][col])) && road->isOpen(Road::NORTH)){
-                    cout<<"+ ║ ";
-                }else {
-                    cout<<"+---";
-                }
-            }
-            cout<<"+"<<endl;
-        }else{
-            printf( "%3s ", (to_string((row/2)+1)).c_str());
-            for (int col=0; col<numberOfCols; col++) {
-                if(((road = dynamic_cast<Road*>(caseMatrix[row/2][col]))) && road->isOpen(Road::WEST)){
-                    cout<<"═";
-                    cout<<(caseMatrix[row/2][col]->print());
-                }else {
-                    cout<<"|";
-                    if((field = dynamic_cast<FieldType*>(caseMatrix[row/2][col]))){
-                        if(field->hasOwner()){
-                            color = field->getOwnerColor();
-                        }else{
-                            color="\033[0m";
-                        }
-                        string item = caseMatrix[row/2][col]->print();
-                        cout<<color<<(((item.replace(0,1," ")).replace(2,1," ")) + "\033[0m");
-                    }else {
-                        cout<<(caseMatrix[row/2][col]->print());
-                    }
-                }
-            }
-            if((road = dynamic_cast<Road*>(caseMatrix[row/2][numberOfCols-1])) && road->isOpen(Road::EAST)){
-                cout<<" "<<endl;
+    for(int row=0;row<numberOfRows;row++){
+        cout<<"    ";
+        /* Mur du haut */
+        for(int col=0;col<numberOfCols;col++){
+            if((road = dynamic_cast<Road*>(caseMatrix[row][col])) && road->isOpen(Road::NORTH)){
+                cout<<"+ ║ ";
             }else{
-                cout<<"|"<<endl;
+                cout<<"+---";
             }
         }
+        cout<<"+"<<endl;
+        /* Ligne des cases */
+        printf( "%3s ", (to_string((row+1)).c_str()));
+        for(int col=0;col<numberOfCols;col++){
+            if(((road = dynamic_cast<Road*>(caseMatrix[row][col]))) && road->isOpen(Road::WEST)){
+                cout<<"═";
+                cout<<(caseMatrix[row][col]->print());
+            }else {
+                cout<<"|";
+                if((field = dynamic_cast<FieldType*>(caseMatrix[row][col]))){
+                    if(field->hasOwner()){
+                        color = field->getOwnerColor();
+                    }else{
+                        color="\033[0m";
+                    }
+                    string item = caseMatrix[row][col]->print();
+                    cout<<color<<(((item.replace(0,1," ")).replace(2,1," ")) + "\033[0m");
+                }else {
+                    cout<<(caseMatrix[row][col]->print());
+                }
+            }
+        }
+        /* Mur d'extreme droite */
+        if(((road = dynamic_cast<Road*>(caseMatrix[row][numberOfCols-1]))) && road->isOpen(Road::EAST)){
+            cout<<"═"<<endl;
+        }else{
+            cout<<"|"<<endl;
+        }
     }
+    /* Mur tout en bas */
+    cout<<"    ";
+    for(int col = 0;col<numberOfCols;col++){
+        if((road = dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col])) && road->isOpen(Road::SOUTH)){
+            cout<<"+ ║ ";
+        }else{
+            cout<<"+---";
+        }
+    }
+    cout<<"+"<<endl;
 }
 
 template <typename FieldType>
@@ -360,61 +290,6 @@ Location Map<FieldType>::findSpawnPoint(Location location){
     }
     cout<<"WARNING BAD SPAWN"<<endl;
     return location;
-}
-
-template <typename FieldType>
-string Map<FieldType>::toString(){
-    string output = "";
-    Road* road;
-    output += (to_string(numberOfCols)) + "\n";
-    output += (to_string(numberOfRows)) + "\n";
-    for (int row=0; row<((numberOfRows*2)+1); row++) {
-        if (row == (numberOfRows*2)) {
-            for (int col=0; col<numberOfCols; col++) {
-                if((road = dynamic_cast<Road*>(caseMatrix[numberOfRows-1][col])) && road->isOpen(Road::SOUTH)){
-                    output += "+   ";
-                }else {
-                    output += "+---";
-                }
-            }
-            output += "+\n";
-        }else if ((row % 2) == 0) {
-            for (int col=0; col<numberOfCols; col++) {
-                if((road = dynamic_cast<Road*>(caseMatrix[row/2][col])) && road->isOpen(Road::NORTH)){
-                    output += "+   ";
-                }else {
-                    output += "+---";
-                }
-            }
-            output += "+\n";
-        } else {
-            for (int col=0; col<numberOfCols; col++) {
-                if((road = dynamic_cast<Road*>(caseMatrix[row/2][col]))) {
-                	if ((road->isOpen(Road::WEST))) {
-                    	output += "  R ";
-                	}else {
-                		output += "| R ";
-                	}
-                }else {
-					output += "|";
-					output += (caseMatrix[row/2][col])->print();
-                }
-            }
-            if((road = dynamic_cast<Road*>(caseMatrix[row/2][numberOfCols-1])) && road->isOpen(Road::EAST)){
-                output += " \n";
-            }else {
-                output += "|\n";
-            }
-        }
-    }
-    return output;
-}
-
-template <typename FieldType>
-void Map<FieldType>::parseMap(string filePath, string map){
-    ofstream file (filePath);
-    file << map;
-    file.close();
 }
 
 //=========================================== Visitor ==========================================

@@ -24,6 +24,9 @@ ClientManager::~ClientManager(){
 }
 
 void ClientManager::buildMap(std::string filename){
+    if(map != nullptr){
+        delete map;
+    }
     map = new Map<ClientField>(filename);
     setRequest("mapfullupdate");
     /*** Bloqué tant que la map n'est pas totalement construite ***/
@@ -60,7 +63,11 @@ bool ClientManager::topicEquals(std::string other){
 }
 
 std::string ClientManager::getAnswerInfos(){
-    return message.getTopic() + " - " + message.get("reason");
+    return getTopicMessage() + " - " + getReason();
+}
+
+std::string ClientManager::getTopicMessage(){
+    return message.getTopic();
 }
 
 void ClientManager::cleanMessage(){
@@ -84,8 +91,8 @@ bool ClientManager::requestFailed(){
     return message.getTopic() == "failure";
 }
 
-std::string ClientManager::getFailureReason(){
-    return message.get("reason");
+std::string ClientManager::getReason(){
+    return getInfo("reason");
 }
 
 void ClientManager::quit(){

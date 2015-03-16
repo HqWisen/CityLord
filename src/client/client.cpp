@@ -12,6 +12,6 @@ int main(int argc, char** argv){
 		hostname = argv[1];
 	}
     CityLordClient client(hostname, PORT);
-    client.run();
+    client.runClient();
 	return 0;
 }

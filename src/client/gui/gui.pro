@@ -13,7 +13,8 @@ SOURCES += main.cpp\
     citylordview.cpp \
     ingame.cpp \
     clientmanagerGUI.cpp \
-    repaintsignaler.cpp \
+    signaler.cpp \
+    buildold.cpp \
     build.cpp
 
 HEADERS  += \
@@ -27,7 +28,8 @@ HEADERS  += \
     citylordview.h \
     ingame.h \
     clientmanagerGUI.h \
-    repaintsignaler.h \
+    signaler.h \
+    buildold.h \
     build.h
 
 
@@ -39,6 +41,7 @@ FORMS    += \
     creategame.ui \
     joingame.ui \
     ingame.ui \
+    buildold.ui \
     build.ui
 
 CONFIG += c++11

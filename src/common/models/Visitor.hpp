@@ -21,6 +21,7 @@ class Visitor{
 		Visitor(Location); //le spawner donne la localistion
 		Location getLoc();
 		void move();
+		bool hasReachedEnd();
 		//void moveGUI();
 		//void displayGUI();
 		bool enter(Building*);

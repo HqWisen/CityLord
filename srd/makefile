@@ -7,5 +7,5 @@ $(DOC).pdf: $(DOC).tex
 	pdflatex $(DOC).tex
 
 clean:
-	$(RM) $(DOC).aux $(DOC).toc $(DOC).log $(DOC).out
+	$(RM) $(DOC).aux $(DOC).toc $(DOC).log $(DOC).out $(DOC).pdf
 

@@ -28,7 +28,7 @@ void Login::login(){
     clientManager->addInfo("password", password);
     clientManager->sendRequestAndRecv();
     if(clientManager->requestFailed()){
-        ui->errorLabel->setText(clientManager->getFailureReason().c_str());
+        ui->errorLabel->setText(clientManager->getReason().c_str());
     }else{
         clientManager->setCurrentWidget(ClientManagerGUI::MAINMENU);
     }

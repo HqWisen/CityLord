@@ -6,7 +6,6 @@
 *.fls
 *.out
 *.toc
-*.pdf
 *.synctex.gz
 
 ## c++ objects:

@@ -12,7 +12,7 @@ CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), ci
                 catalog.putOnMarket(concernedField);
 			}
 		}
-	}
+    }
     updater = new CityUpdater(getMap(), &playerVector);
 }
 
@@ -101,7 +101,7 @@ SocketMessage CityManager::visitorMove(Player* player, Location firstLocation, L
 }
 
 SocketMessage CityManager::getTimeRem(Player* player){
-	SocketMessage timeRem;
+    SocketMessage timeRem;
 
 	int x = updater->getTimeRemaining();
 	int hour = x/3600 ;
@@ -112,20 +112,20 @@ SocketMessage CityManager::getTimeRem(Player* player){
 	timeRem.set("min", std::to_string(min));
 	timeRem.set("sec", std::to_string(sec));
 
-	return timeRem;
+    return timeRem;
 }
 
 SocketMessage CityManager::getRealTimeRem(Player* player){
 	SocketMessage realTimeRem;
 
-	int x = updater->getRealTimeRemaining();
+    int x = updater->getRealTimeRemaining();
 	int hour = x/3600 ;
 	int min = x/60;
 	int sec = x-(hour*3600)-(min*60);
 	//realTimeRem.setTopic("gettimeremaining");
 	realTimeRem.set("hour", std::to_string(hour));
 	realTimeRem.set("min", std::to_string(min));
-	realTimeRem.set("sec", std::to_string(sec));
+    realTimeRem.set("sec", std::to_string(sec));
 
 	return realTimeRem;
 }
@@ -149,10 +149,10 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
                     update.set("location", location.toString());
                     updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
-                    message.set("reason", "Field has been successfully purchased!");
+                    message.set("reason", "Field has been successfully purchased !");
 				}else{
 					message.setTopic("failure");
-					message.set("reason", "You do not own enough money!");
+                    message.set("reason", "You do not own enough money !");
 				}
 			}else{
 				if(player->getMoney() >= concernedField->getPrice()){
@@ -163,10 +163,10 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
                     update.set("location", location.toString());
                     updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
-					message.set("reason", "Field has been successfully purchased!");
+                    message.set("reason", "Field has been successfully purchased !");
 				}else{
 					message.setTopic("failure");
-					message.set("reason", "You do not own enough money!");
+                    message.set("reason", "You do not own enough money !");
 				}
 			}
 		}else{
@@ -175,7 +175,7 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
 		}
 	}else{
 		message.setTopic("failure");
-		message.set("reason", "This is not a Field!");
+        message.set("reason", "This is not a Field !");
 	}
 	return message;
 }
@@ -198,22 +198,22 @@ SocketMessage CityManager::buildBuilding(Player* player, Location location, Buil
                     update.set("level", std::to_string(concernedField->getBuilding()->getLevel()));
                     updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
-					message.set("reason", "Building has been successfully built!");
+                    message.set("reason", "Building has been successfully built !");
 				}else{
 					message.setTopic("failure");
-					message.set("reason", "You do not have enough money!");
+                    message.set("reason", "You do not have enough money !");
 				}
 			}else{
 				message.setTopic("failure");
-				message.set("reason", "This Field already has a building!");
+                message.set("reason", "This Field already has a building !");
 			}
 		}else{
 			message.setTopic("failure");
-			message.set("reason", "You do not own this Field!");
+            message.set("reason", "You do not own this Field !");
 		}
 	}else{
 		message.setTopic("failure");
-		message.set("reason", "This is not a Field!");
+        message.set("reason", "This is not a Field !");
 	}
 		return message;
 }
@@ -228,22 +228,22 @@ SocketMessage CityManager::upgradeBuilding(Player* player, Location location){
 					player->setMoney(player->getMoney() - concernedField->getBuilding()->getType().upgradeCost);
 					concernedField->getBuilding()->upgrade();
 					message.setTopic("success");
-					message.set("reason", "Building has been successfully upgraded!");
+                    message.set("reason", "Building has been successfully upgraded !");
 				}else{
 					message.setTopic("failure");
-					message.set("reason", "You do not have enough money!");
+                    message.set("reason", "You do not have enough money !");
 				}
 			}else{
 				message.setTopic("failure");
-				message.set("reason", "This Field has no building!");
+                message.set("reason", "This Field has no building !");
 			}
 		}else{
 			message.setTopic("failure");
-			message.set("reason", "You do not own this Field!");
+            message.set("reason", "You do not own this Field !");
 		}
 	}else{
 		message.setTopic("failure");
-		message.set("reason", "This is not a Field!");
+        message.set("reason", "This is not a Field !");
 	}
 	return message;
 }
@@ -262,22 +262,22 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
                     update.set("location", location.toString());
                     updater->sendUpdateToPlayers(update);
 					message.setTopic("success");
-					message.set("reason", "Building has been successfully destroyed!");
+                    message.set("reason", "Building has been successfully destroyed !");
 				}else{
 					message.setTopic("failure");
-					message.set("reason", "You do not have enough money!");
+                    message.set("reason", "You do not have enough money !");
 				}
 			}else{
 				message.setTopic("failure");
-				message.set("reason", "This Field has no building!");
+                message.set("reason", "This Field has no building !");
 			}
 		}else{
 			message.setTopic("failure");
-			message.set("reason", "You do not own this Field!");
+            message.set("reason", "You do not own this Field !");
 		}
 	}else{
 		message.setTopic("failure");
-		message.set("reason", "This is not a Field!");
+        message.set("reason", "This is not a Field !");
 	}
 	return message;
 }
@@ -302,18 +302,18 @@ SocketMessage CityManager::sellOnMarket(Player* player, Location location, int p
 				Offer* offer = new Offer(player, concernedField, price);
 				catalog.putOfferOnMarket(offer);
 				message.setTopic("success");
-				message.set("reason", "Offer has been successfully registered!");
+                message.set("reason", "Offer has been successfully registered !");
 			}else{
 				message.setTopic("failure");
-				message.set("reason", "This Field has already been offered!");
+                message.set("reason", "This Field has already been offered !");
 			}
 		}else{
 			message.setTopic("failure");
-			message.set("reason", "You do not own this Field!");
+            message.set("reason", "You do not own this Field !");
 		}
 	}else{
 		message.setTopic("failure");
-		message.set("reason", "This is not a Field");
+        message.set("reason", "This is not a Field !");
 	}
 	return message;
 }

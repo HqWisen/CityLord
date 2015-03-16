@@ -5,6 +5,6 @@
 
 int main(){
 	CityLordServer server(PORT);
-	server.run();
+	server.runServer();
 	return 0;
 }

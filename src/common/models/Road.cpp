@@ -7,12 +7,11 @@ const int Road::NORTH = 1;
 const int Road::EAST = 2;
 const int Road::SOUTH = 3;
 
-Road::Road(Location location) : Case(location){
+Road::Road(Location location) : Case(location), image(" □ "){
 }
 
 std::string Road::print(){
     return image;
-    //return toString();
 }
 
 std::string Road::getImageName(){

@@ -1,25 +1,26 @@
 #include "UserManager.hpp"
 
 const std::map<std::string, request_ptr> UserManager::requestmap = {
-	{"login", request::login},
-	{"createaccount", request::createaccount},
-	{"choicemap", request::choicemap},
-	{"createcity", request::createcity},
-    {"numberofcity", request::numberofcity},
-    {"cityinfo", request::cityinfo},
-	{"joincity", request::joincity},
-	{"selectfield", request::selectfield},
-	{"showinfo", request::showinfo},
-	{"showcatalog", request::showcatalog},
-	{"buy", request::buy},
-	{"build", request::build},
-	{"upgrade", request::upgrade},
-    {"destroy", request::destroy},
-    {"mapfullupdate", request::mapfullupdate}
+	{"login", RequestSystem::login},
+	{"createaccount", RequestSystem::createaccount},
+	{"choicemap", RequestSystem::choicemap},
+	{"createcity", RequestSystem::createcity},
+    {"numberofcity", RequestSystem::numberofcity},
+    {"cityinfo", RequestSystem::cityinfo},
+	{"joincity", RequestSystem::joincity},
+	{"selectfield", RequestSystem::selectfield},
+	{"showinfo", RequestSystem::showinfo},
+	{"showcatalog", RequestSystem::showcatalog},
+	{"buy", RequestSystem::buy},
+	{"build", RequestSystem::build},
+	{"upgrade", RequestSystem::upgrade},
+    {"destroy", RequestSystem::destroy},
+    {"mapfullupdate", RequestSystem::mapfullupdate},
+    {"leavecity", RequestSystem::leavecity}
 };
 
 UserManager::UserManager(CityLordServer* cserver, ClientSocket socket, ServerSocket updateClientSocket) : server(cserver), clientSocket(socket), \
-    updateSocket(nullptr), mymutex(PTHREAD_MUTEX_INITIALIZER){
+    updateSocket(nullptr), updatemutex(PTHREAD_MUTEX_INITIALIZER){
     SocketMessage answer;
     answer.setTopic("update");
     sendAnswer(answer);
@@ -39,13 +40,15 @@ void UserManager::run(){
 }
 
 void UserManager::disconnectUser(){
-
+    pthread_mutex_lock(&updatemutex);
     server->LOG("User '"+getUserName()+"' with IP "+clientSocket.getClientIP()+" is now disconnected.");
     if(user != nullptr && cityManager != nullptr &&  user->getPlayer(cityManager) != nullptr){
-        user->getPlayer(cityManager)->setConnected(false);
         user->getPlayer(cityManager)->setUserManager(nullptr);
-        setActiveCity(nullptr);
+        leaveCity();
     }
+    updateSocket->closeSocket();
+    clientSocket.closeSocket();
+    pthread_mutex_unlock(&updatemutex);
 }
 
 void UserManager::setUser(User* user_){
@@ -58,6 +61,11 @@ User* UserManager::getUser(){
 
 void UserManager::setActiveCity(CityManager* cm){
 	cityManager = cm;
+}
+
+void UserManager::leaveCity(){
+    user->getPlayer(cityManager)->setConnected(false);
+    setActiveCity(nullptr);
 }
 
 void UserManager::initActivePlayer(int playerid){
@@ -95,10 +103,12 @@ void UserManager::sendAnswer(SocketMessage answer){
 }
 
 void UserManager::sendUpdate(SocketMessage update){
-    pthread_mutex_lock(&mymutex);
-    updateSocket->write(update.toString());
-    updateSocket->read(); // wait for finish signal
-    pthread_mutex_unlock(&mymutex);
+    pthread_mutex_lock(&updatemutex);
+    if(cityManager != nullptr){ // The user is playing
+        updateSocket->write(update.toString());
+        updateSocket->read(); // wait for finish signal
+        pthread_mutex_unlock(&updatemutex);
+    }
 }
 
 

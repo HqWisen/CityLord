@@ -13,10 +13,9 @@ CityLordServer::~CityLordServer(){
 }
 
 
-void CityLordServer::run(){
+void CityLordServer::runServer(){
 	
 	ClientSocket* clientSocketPtr;	
-	
 	LOG("Server is running...");
 	serverSocket.listenClients();
     updateClientSocket.listenClients();

@@ -35,7 +35,7 @@ void CreateAccount::on_createButton_clicked(){
         clientManager->addInfo("password", password);
         clientManager->sendRequestAndRecv();
         if(clientManager->requestFailed()){
-            ui->errorLabel->setText(QString(clientManager->getFailureReason().c_str()));
+            ui->errorLabel->setText(QString(clientManager->getReason().c_str()));
         }else{
             clientManager->setCurrentWidget(ClientManagerGUI::MAINMENU);
         }

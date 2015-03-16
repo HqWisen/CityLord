@@ -128,13 +128,16 @@ La partie s'achève lorsqu'il ne reste qu'un seul joueur en jeu, n'ayant pas fai
  \item \textbf{Host:} Action d'héberger une partie.
  \item \textbf{Join:} Action de rejoindre une partie.
 \end{itemize}
-	
-\newpage
+
 \section{Historique du document}
 
 \begin{tabular}{|c|c|c|c|}
 \hline
 Date de modification & Version & Modification apportée & Auteur \\
+\hline
+15/03/2015 & 2.8 & \parbox{7cm}{- \\ Modification de la description textuelle du UseCase [Construire-Améliorer-Détruire]. \\} & David \\
+\hline
+15/03/2015 & 2.7 & \parbox{7cm}{- \\ Diagramme de classe : ajoute de UpdateSystem, RequestSystem et ClientManager + liaison entre packages. \\} & Hakim \\
 \hline
 13/03/2015 & 2.7 & \parbox{7cm}{- \\ Mise à jour du diagramme de classe - mise en avant des packages. \\} & Hakim \\
 \hline
@@ -156,6 +159,12 @@ Date de modification & Version & Modification apportée & Auteur \\
 \hline
 14/12/2015 & 1.7 & \parbox{7cm}{-\\ Ajout des descriptions textuelles des use case (Premiers achats,Construire-Améliorer-Détruire,Achats entre joueurs).\\} & David\\
 \hline
+\end{tabular}
+\newpage
+\begin{tabular}{|c|c|c|c|}
+	\hline
+	Date de modification & Version & Modification apportée & Auteur \\
+	\hline
 12/12/2015 & 1.6 & \parbox{7cm}{-\\ Rajout et correction des descriptions textuelles des use case, ajout des éxigeances de domaine.\\} & Hakim \\
 \hline
 11/12/2015 & 1.5 & \parbox{7cm}{-\\ Description de Use Case interface de connexion.\\} & Kaio \\
@@ -381,63 +390,72 @@ Dès qu'un bâtiment n'as pas de prioritaire, le \textit{catalog} le met en vent
     }
     \caption{Use Case Buid/Upgrade/Destroy}
 \end{figure}
+
+\subsubsection{Select Location}
+\paragraph{Préconditions}
+\begin{itemize}
+	\item Le joueur est dans une partie, sur l'écran de jeu.
+\end{itemize}
+\paragraph{Postconditions}
+\begin{itemize}
+	\item Une propriété est séléctionnée.
+	\item Les informations sur cette propriété sont affichées.
+	\item Les boutons <Buy>,<Build>,<Upgrade>,<Sell>,<Demolish> s'activent ou se désactivent selon la propriété séléctionnée.
+\end{itemize}
+\paragraph{Cas général}
+Le joueur doit simplement cliquer, sur la carte, sur le terrain exigé.[Exception : Sélection invalide]
+\paragraph{Exceptions}
+\begin{itemize}
+	\item \textit{Sélection invalide:} Si l'emplacement séléctionné n'est pas un terrain/bâtiment (et donc une route ou un obstacle), la sélection n'est pas faite.
+\end{itemize}
+
 \subsubsection{Construire}
 \paragraph{Obligations spéciales}
 \begin{itemize}
- \item Inclut Select Building Map.
- \item Inclut Select Location.
+ \item Inclut Select Building Type.
 \end{itemize}
 \paragraph{Préconditions}
 \begin{itemize}
  \item La partie est en cours.
- \item Le joeur possède au moins 1 parcelles vides.
+ \item Le joeur à séléctionné une parcelle qui lui appartient et est vide. (Le boutton <Build> est activé).
 \end{itemize}
-\newpage
 \paragraph{Postconditions}
 \begin{itemize}
- \item Un bâtiment est construit.
+ \item Un bâtiment est construit et affiché sur la carte.
  \item Le joueur possède ce nouveau bâtiment.
  \item Le joueur a payé le prix de construction.
 \end{itemize}
 \paragraph{Cas général}
-Lorsque un joueur veut construire un nouveau bâtiment, il lui faudra simplement sélectionner l'option \og \textit{Construire} \fg, il entre alors en mode Construction. Il peut à tout moment quitter ce mode et annuler la construction, en appuyant sur \og \textit{-ESC-} \fg ou en cliquant sur \og \textit{annuler} \fg. Un \textit{catalog} de type de bâtiment lui sera proposé, après qu'il en ai sélectionné un, il devra cliquer sur le terrain vide lui appartenant sur lequel il veut construire.[Exception : Propriété sélectionnée non-valide] Il devra payer ensuite le prix indiqué par le \textit{catalog}. [Exception : Le joueur n'as pas assez d'argent]
+Lorsque un joueur veut construire un nouveau bâtiment, il lui faudra simplement sélectionner une parcelle qui lui appartient et est vide. Le boutton \og \textit{<Build>} \fg s'activera. Le joueur devra cliquer dessus, il entre alors en mode Construction; Un tableau s'affichera, permettant au joueur de séléction un type de bâtiment et affichant les informations sur ce type. Il peut à tout moment quitter ce mode et annuler la construction, en cliquant sur \og \textit{Annuler} \fg. Pour valider l'opération, le joueur cliquera sur \og \textit{<Ok>} \fg.[Exception : Le joueur n'as pas assez d'argent] Il devra payer ensuite le prix indiqué.
 \paragraph{Exceptions}
 \begin{itemize}
  \item \textit{Le joueur n'as pas assez d'argent:}  Une fenêtre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
- \item \textit{Propriété sélectionnée non-valide:}  Si le joueur sélectionné une propriété qui ne lui appartient pas, où qui ne possède déjà un bâtiment, une fenêtre s'ouvre indiquant au joueur sa mauvaise sélection.
 \end{itemize}
 \subsubsection{Upgrade}
-\paragraph{Obligations spéciales}
-\begin{itemize}
- \item Inclut Select location.
-\end{itemize}
 \paragraph{Préconditions}
 \begin{itemize}
  \item La partie est en cours.
  \item Le joueur possède au moins un bâtiment.
+ \item Le joeur à séléctionné une parcelle qui lui appartient et qui a un bâtiment améliorable. (Le boutton <Upgrade> est activé).
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
- \item Un bâtiment est amélioré d'un niveau.
- \item Le joueur a dépensé de l'argent pour l'Upgrade.
+ \item Un bâtiment séléctionné est amélioré d'un niveau.
+ \item Le joueur a dépensé de l'argent pour l'amélioration.
 \end{itemize}
 \paragraph{Cas général}
-Un joueur peut à tout moment améliorer un de ses bâtiments. Il lui suffit de cliquer sur l'option \og \textit{Améliorer} \fg, il entre alors en mode Amélioration. Il peut à tout moment quitter ce mode et annuler l'amélioration, en appuyant sur \og \textit{-ESC-} \fg ou en cliquant sur \og \textit{annuler} \fg. Et ensuite séléctionner une de ses propriétés.[Exception : Bâtiment amélioré au max]Des informations sur l'amélioration sont affichés, le prix de celle-ci, et les stats du bâtiments après celle-ci.Il ne reste plus qu'au joueur de confirmer l'amélioration en cliquant sur \og \textit{Ok} \fg ou annuler en cliquant sur \og \textit{Annuler} \fg.[Exception : Le joueur n'as pas assez d'argent][Exception : Propriété séléctionnée non-valide]
+Lorsque un joueur veut améliorer un bâtiment, il lui faudra simplement sélectionner une parcelle qui lui appartient et qui possède un bâtiment améliorable. Le boutton \og \textit{<Upgrade>} \fg s'activera. Le joueur devra cliquer dessus. Un tableau s'affichera, permettant au joueur de voir les informations sur le niveau supérieur de ce bâtiment.[Exception : Bâtiment amélioré au max] Pour valider l'opération, le joueur cliquera sur \og \textit{<Ok>} \fg.[Exception : Le joueur n'as pas assez d'argent] Il devra payer ensuite le prix indiqué.
 \paragraph{Exceptions}
 \begin{itemize}
  \item \textit{Le joueur n'as pas assez d'argent:}  Une fenètre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
- \item \textit{Propriété séléctionnée non-valide:}  Si le joueur séléctionne une proprité qui ne lui appartient pas, où qui ne possède pas de bâtiment, une fenètre s'ouvre indiquant au joueur sa mauvaise sélection.
  \item \textit{Bâtiment amélioré au max:}  Les bâtiments ont un niveau maximum d'amélioration Une fenètre s'ouvre indiquant au joueur qu'il ne peut plus améliorer ce bâtiment.
 \end{itemize}
 \subsubsection{Destroy}
-\paragraph{Obligations spéciales}
-\begin{itemize}
- \item Inclut Select location.
-\end{itemize}
 \paragraph{Préconditions}
 \begin{itemize}
  \item La partie est en cours.
  \item Le joueur possède au moins un bâtiment.
+ \item Le joeur à séléctionné une parcelle qui lui appartient et qui a un bâtiment. (Le boutton <Destroy> est activé).
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
@@ -445,12 +463,8 @@ Un joueur peut à tout moment améliorer un de ses bâtiments. Il lui suffit de 
  \item Le propriétaire gagne une somme d'argent équivalente à la moitié de la valeur du bâtiment détruit.
 \end{itemize}
 \paragraph{Cas général}
-Un joueur peut également détruire un de ses bâtiments. Il lui suffit de cliquer sur l'option \og \textit{Détruire} \fg, il entre alors en mode Destruction. Il peut à tout moment quitter ce mode et annuler la destruction, en appuyant sur \og \textit{-ESC-} \fg ou en cliquant sur \og \textit{annuler} \fg. Et ensuite séléctionner le bâtiment qu'il désire détruire. Une fois détruit, le bâtiment rapporte la moitié de la valeur de celui-ci à son propriétaire. [Exception : Propriété séléctionnée non-valide]
-\paragraph{Exceptions}
-\begin{itemize}
- \item \textit{Le joueur n'a pas assez d'argent:}  Une fenètre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
-  \item \textit{Propriété séléctionnée non-valide:}  Si le joueur séléctionne une proprité qui ne lui appartient pas, où qui ne possède pas de bâtiment, une fenètre s'ouvre indiquant au joueur sa mauvaise sélection.
-\end{itemize}
+Un joueur peut également détruire un de ses bâtiments. Il lui suffit de sélectionner une parcelle qui lui appartient et qui possède un bâtiment et ensuite de cliquer sur le bouton \og \textit{<Destroy>} \fg. Un tableau s'affichera montrant le gain de la destruction. Il peut à tout moment quitter ce mode et annuler la destruction en cliquant sur \og \textit{<Annuler>} \fg. Pour valider l'opération, le joueur cliquera sur \og \textit{<Ok>} \fg. Une fois détruit, le bâtiment rapporte la moitié de la valeur de celui-ci à son propriétaire.
+\newpage
 \subsubsection{Select Building type}
 \paragraph{Obligations spéciales}
 \begin{itemize}
@@ -463,33 +477,13 @@ Un joueur peut également détruire un de ses bâtiments. Il lui suffit de cliqu
 \paragraph{Postconditions}
 \begin{itemize}
  \item Un type est sélectionné pour la construction.
+ \item Les information lié à ce type sont affiché dans le tableau de construction.
 \end{itemize}
 \paragraph{Cas général}
 Un \textit{catalog} de types prédéfinis de bâtiment(bar,magasin,night-club,...) apparaît, pour chaque type les statistiques (prix, coûts, capacité, heures,..) sont affichés. Il suffit au joueur alors de cliquer sur le type désiré.
 \paragraph{Exceptions} Néant.
 
-\newpage
-\subsubsection{Select Location}
-\paragraph{Obligations spéciales}
-\begin{itemize}
- \item Est inclut dans Build.
- \item Est inclut dans Upgrade.
- \item Est inclut dans Destroy.
-\end{itemize}
-\paragraph{Préconditions}
-\begin{itemize}
- \item Le joueur demande la construction/amélioration/destruction d'un bâtiment.
-\end{itemize}
-\paragraph{Postconditions}
-\begin{itemize}
- \item Une propriété est séléctionnée pour la construction/amélioration/destruction et ses informations sont affichés.
-\end{itemize}
-\paragraph{Cas général}
-Le joueur doit simplement cliquer, sur la carte, sur le terrain exigé.[Exception : Sélection invalide]
-\paragraph{Exceptions}
-\begin{itemize}
- \item \textit{Sélection invalide:} Si l'emplacement séléctionné n'est pas un terrain/bâtiment (et donc une route ou un obstacle), la sélection n'est pas faite.
-\end{itemize}
+
 
 \newpage
 \subsection{Achats entre joueurs}
@@ -618,7 +612,7 @@ Sans cela, la communication avec le \textit{server} et entre les joueurs serait 
     \makebox[\linewidth]{
         \includegraphics[width=550pt]{uml/classDiagrams/CD.png}
     }
-    \caption{Diagramme de classe : Base du \textit{system}}
+    \caption{Diagramme de classe : Architecture du système}
 \end{figure}
 
 

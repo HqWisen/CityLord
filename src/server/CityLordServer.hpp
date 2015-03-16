@@ -29,7 +29,7 @@ class CityLordServer{
 		CityLordServer(int port);
 		CityLordServer(const CityLordServer&) = default;
         ~CityLordServer();
-		void run();
+		void runServer();
         User* createAccount(std::string, std::string);
 		bool accountExist(std::string);
         bool matchPassword(std::string, std::string);

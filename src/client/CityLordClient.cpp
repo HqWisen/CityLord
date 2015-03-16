@@ -6,7 +6,7 @@ CityLordClient::CityLordClient(char* hostname, int port) : clientManager(new Cli
 
 }
 
-void CityLordClient::run(){
+void CityLordClient::runClient(){
     LOG("Welcome in CityLord !");
 	beginConnection();
 	chooseCity();
@@ -77,7 +77,7 @@ void CityLordClient::login(){
         clientManager->sendRequestAndRecv();
         fail = clientManager->requestFailed();
 		if(fail){
-            LOG(clientManager->getFailureReason());
+            LOG(clientManager->getReason());
 		}
 	}
 }
@@ -100,7 +100,7 @@ void CityLordClient::createAccount(){
         clientManager->sendRequestAndRecv();
         fail = clientManager->requestFailed();
         if(fail){
-            LOG(clientManager->getFailureReason());
+            LOG(clientManager->getReason());
         }
     }
 	LOG("Please save it to keep your account !");
@@ -163,7 +163,7 @@ void CityLordClient::joinCity(){
         clientManager->addInfo("cityid", std::to_string(choice-1));
         clientManager->sendRequestAndRecv();
         if(clientManager->requestFailed()){
-            LOG(clientManager->getFailureReason());
+            LOG(clientManager->getReason());
         }else{
             fail = false;
             clientManager->buildMap(clientManager->getInfo("filename"));
