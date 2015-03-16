@@ -54,16 +54,16 @@ void Visitor::moveGUI(){
 
 
 bool Visitor::enter(Building* build){
-<<<<<<< HEAD
 	//if(build->addVisitor());
 		//return true;
 	//return false
 	return true;
-=======
+	/*
 	if(build->addVisitor());
 		return true;
 	return false;
->>>>>>> 3254de7673c64c106414387231052fe2836b3c56
+	*/
+
 }
 
 bool Visitor::choose(Building* build){  //Building build en parametre

@@ -19,7 +19,8 @@ DEPT = test models server
 
 # -- Do not edit below this line --
 
-TARGETS = $(CLIENT) $(SERVER) $(GUI)
+TARGETS = $(CLIENT) $(SERVER) 
+#$(GUI)
 # $(TEST)
 
 DEPCA = $(addsuffix .a,$(addprefix $(BIN_DIR)/,$(DEPC)))
