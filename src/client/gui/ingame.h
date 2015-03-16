@@ -9,7 +9,7 @@
 #include <iostream>
 #include "citylordview.h"
 #include "defaultwidget.h"
-
+#include "build.h"
 
 namespace Ui {
 class InGame;
@@ -22,6 +22,7 @@ public:
     InGame(QWidget*, ClientManagerGUI*);
     ~InGame();
     void refresh() override;
+    void moveEvent(QMoveEvent*) override;
 private:
     void updateMoney(int);
     void updateTime(int);
@@ -32,7 +33,7 @@ public slots:
     void activeButton(std::string, Location);
 private slots:
     void on_buyButton_clicked();
-    void on_buildButton_clicked();
+    void on_buildaButton_clicked();
     void on_upgradeButton_clicked();
     void on_destroyButton_clicked();
     void disableAllButtons();
@@ -41,6 +42,7 @@ private slots:
 private:
     Ui::InGame* ui;
     CityLordView* view;
+    build* buildDialog;
     Location lastLocation;
 
 };

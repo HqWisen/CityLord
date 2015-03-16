@@ -29,6 +29,7 @@ public:
 	static SocketMessage upgrade(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage destroy(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage mapfullupdate(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage leavecity(CityLordServer*, UserManager*, SocketMessage);
 };
 
 #endif // REQUEST_HPP_

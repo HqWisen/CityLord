@@ -13,8 +13,9 @@ SOURCES += main.cpp\
     citylordview.cpp \
     ingame.cpp \
     clientmanagerGUI.cpp \
-    build.cpp \
-    signaler.cpp
+    signaler.cpp \
+    buildold.cpp \
+    build.cpp
 
 HEADERS  += \
     login.h \
@@ -27,8 +28,9 @@ HEADERS  += \
     citylordview.h \
     ingame.h \
     clientmanagerGUI.h \
-    build.h \
-    signaler.h
+    signaler.h \
+    buildold.h \
+    build.h
 
 
 FORMS    += \
@@ -39,6 +41,7 @@ FORMS    += \
     creategame.ui \
     joingame.ui \
     ingame.ui \
+    buildold.ui \
     build.ui
 
 CONFIG += c++11

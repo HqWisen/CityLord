@@ -1,8 +1,9 @@
 #include "build.h"
 #include "ui_build.h"
-
+#include <QMessageBox>
+/*
 build::build(QWidget* parent, ClientManagerGUI* cm) :
-    QDialog(parent), ui(new Ui::build), clientManager(cm), tableItemArray(nullptr), headerLabels(), choice(-1){
+    DefaultWidget(parent, cm), ui(new Ui::build), tableItemArray(nullptr), headerLabels(), choice(-1){
     ui->setupUi(this);
     for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
     {
@@ -12,12 +13,11 @@ build::build(QWidget* parent, ClientManagerGUI* cm) :
     headerLabels << "Building type";
     ui->tableWidget->setColumnCount(headerLabels.size());
     ui->tableWidget->setHorizontalHeaderLabels(headerLabels);
-    setAttribute(Qt::WA_TranslucentBackground);
-    setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-    refresh();
+    //setWindowOpacity(0);
 }
 
-build::~build(){
+build::~build()
+{
     delete ui;
 }
 
@@ -26,6 +26,7 @@ void build::refresh(){
     if(tableItemArray != nullptr){
         delete[] tableItemArray;
     }
+
     ui->tableWidget->setRowCount(BuildingType::typesLength);
     tableItemArray = new QTableWidgetItem*[BuildingType::typesLength];
     for (int i=0; i<BuildingType::typesLength; i++) {
@@ -40,10 +41,7 @@ void build::refresh(){
     //clientManager->addInfo("typeindex", std::to_string(buildChoice-1));
     //clientManager->sendRequestAndRecv();
     //LOG(clientManager->getAnswerInfos());
-}
 
-QPushButton* build::getCancelButton(){
-    return ui->cancelButton;
 }
 
 void build::on_buildButton_clicked(){
@@ -56,17 +54,19 @@ void build::on_buildButton_clicked(){
             QModelIndex index = selected.at(i);
             choice = index.row();
         }
-        /* Request and location are set in ingame buildButton method */
-        std::cout<<"TOPIC = "<<clientManager->getTopicMessage()<<std::endl;
         clientManager->addInfo("typeindex", std::to_string(choice));
         clientManager->sendRequestAndRecv();
+        clientManager->setCurrentWidget(ClientManagerGUI::INGAME);
         QMessageBox::warning(this, "Build", clientManager->getAnswerInfos().c_str());
+
     }
 
 }
 
 void build::on_cancelButton_clicked(){
-    close();
-}
+    clientManager->setCurrentWidget(ClientManagerGUI::INGAME);
+
+}*/
+
 
 

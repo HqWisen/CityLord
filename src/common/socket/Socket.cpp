@@ -53,6 +53,8 @@ std::string Socket::read(){
 	return message;
 }
 
-
+void Socket::closeSocket(){
+    close(sockfd);
+}
 
 

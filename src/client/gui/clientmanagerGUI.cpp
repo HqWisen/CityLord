@@ -7,7 +7,6 @@ const key_type ClientManagerGUI::MAINMENU = 2;
 const key_type ClientManagerGUI::INGAME = 3;
 const key_type ClientManagerGUI::CREATEGAME = 4;
 const key_type ClientManagerGUI::JOINGAME = 5;
-const key_type ClientManagerGUI::BUILD = 6;
 
 const int ClientManagerGUI::SQUAREMAPSIZE = 20;
 

@@ -214,7 +214,6 @@ SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* 
     SocketMessage answer, update;
     Map<Field>* map = userManager->getActiveCity()->getMap();
     Field* field;
-    map->display();
     for(int row=0;row<map->getNumberOfRows();row++){
         for(int col=0;col<map->getNumberOfCols();col++){
             if((field = dynamic_cast<Field*>(map->getCase(Location(row, col))))){
@@ -238,5 +237,12 @@ SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* 
     return answer;
 }
 
+SocketMessage RequestSystem::leavecity(CityLordServer* server, UserManager* userManager, SocketMessage message){
+    pthread_mutex_lock(&requestmutex);
+    SocketMessage answer;
+    userManager->leaveCity();
+    pthread_mutex_unlock(&requestmutex);
+    return answer;
+}
 
 

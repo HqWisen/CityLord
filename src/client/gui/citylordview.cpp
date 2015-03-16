@@ -7,7 +7,8 @@ const int CityLordView::HEIGHT = 804;
 
 
 CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
-    QGraphicsView(parent), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(cm), itemArray(nullptr){
+    QGraphicsView(parent), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(cm), numberOfRows(0),  \
+    numberOfCols(0), itemArray(nullptr){
     resize(WIDTH, HEIGHT);
     setScene(scene);
     setSceneRect(-((WIDTH/2)-(BASE.width()/2)), 0, WIDTH-2, HEIGHT-2);
@@ -16,8 +17,19 @@ CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
 }
 
 CityLordView::~CityLordView(){
+    cleanItemArray();
     delete scene;
-    delete[] itemArray;
+}
+
+void CityLordView::cleanItemArray(){
+    if(itemArray != nullptr){
+        for(int row=0;row<numberOfRows;row++){
+            for(int col=0;col<numberOfCols;col++){
+                scene->removeItem(itemArray[row][col]);
+                delete itemArray[row][col];
+            }
+        }
+    }
 }
 
 
@@ -167,11 +179,10 @@ void CityLordView::buildViewMap(){
     if(clientManager == nullptr){
         throw std::invalid_argument("clientManager is nullptr in the view.");
     }else{
-        if(itemArray != nullptr){
-            delete[] itemArray;
-        }
-        int numberOfRows = clientManager->getMap()->getNumberOfRows();
-        int numberOfCols = clientManager->getMap()->getNumberOfCols();
+
+        cleanItemArray();
+        numberOfRows = clientManager->getMap()->getNumberOfRows();
+        numberOfCols = clientManager->getMap()->getNumberOfCols();
         itemArray = new QGraphicsPixmapItem**[numberOfRows];
         for(int i=0;i<numberOfRows;i++){
             itemArray[i] = new QGraphicsPixmapItem*[numberOfCols];

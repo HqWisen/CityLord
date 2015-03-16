@@ -23,6 +23,7 @@ QGraphicsScene* scene;
 public:
     CityLordView(QWidget*, ClientManagerGUI*);
     virtual ~CityLordView();
+    void cleanItemArray();
     void addBaseOn(int, int);
     void addBar();
     void mousePressEvent(QMouseEvent*) override;
@@ -46,6 +47,7 @@ private:
     Location previousSelectedLocation;
     QPointF startMouse;
     ClientManagerGUI* clientManager;
+    int numberOfRows, numberOfCols;
     QGraphicsPixmapItem*** itemArray;
 
 };

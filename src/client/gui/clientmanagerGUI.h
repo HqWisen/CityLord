@@ -15,7 +15,7 @@ class DefaultWidget;
 class ClientManagerGUI : public ClientManager{
 
 public:
-    static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INGAME, CREATEGAME, JOINGAME, BUILD;
+    static const key_type LOGIN, CREATEACCOUNT, MAINMENU, INGAME, CREATEGAME, JOINGAME;
     static const int SQUAREMAPSIZE;
 public:
     ClientManagerGUI(char*, int);

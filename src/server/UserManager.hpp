@@ -34,6 +34,7 @@ class UserManager : public Thread{
 		void setUser(User*);
         User* getUser();
 		void setActiveCity(CityManager*);
+        void leaveCity();
         void initActivePlayer(int);
 		Player* getActivePlayer();
 		CityManager* getActiveCity();
