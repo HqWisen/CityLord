@@ -61,6 +61,7 @@ void build::on_buildDialogButton_clicked(){
         clientManager->addInfo("typeindex", std::to_string(choice));
         clientManager->sendRequestAndRecv();
         QMessageBox::warning(this, "Build", clientManager->getAnswerInfos().c_str());
+        close();
     }
 
 }
