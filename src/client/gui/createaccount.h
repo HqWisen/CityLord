@@ -1,7 +1,7 @@
 #ifndef CREATEACCOUNT_H
 #define CREATEACCOUNT_H
 
-
+#include <QMessageBox>
 #include "defaultwidget.h"
 
 namespace Ui {

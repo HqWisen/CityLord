@@ -36,6 +36,9 @@ private slots:
     void on_buildButton_clicked();
     void on_upgradeButton_clicked();
     void on_destroyButton_clicked();
+    void on_ownerFieldButton_clicked();
+    void on_allFieldButton_clicked();
+    void on_defaultFieldButton_clicked();
     void disableAllButtons();
     void updateButtons(bool,bool,bool,bool,bool);
     void on_exitButton_clicked();

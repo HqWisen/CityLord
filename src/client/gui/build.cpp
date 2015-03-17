@@ -35,11 +35,6 @@ void build::refresh(){
     }
 
     ui->errorLabel->setText("");
-    //clientManager->setRequest("build");
-    //int buildChoice = makeChoice(1, BuildingType::typesLength);
-    //clientManager->addInfo("typeindex", std::to_string(buildChoice-1));
-    //clientManager->sendRequestAndRecv();
-    //LOG(clientManager->getAnswerInfos());
 }
 
 QPushButton* build::getCancelButton(){
@@ -57,10 +52,9 @@ void build::on_buildDialogButton_clicked(){
             choice = index.row();
         }
         /* Request and location are set in ingame buildButton method */
-        std::cout<<"TOPIC = "<<clientManager->getTopicMessage()<<std::endl;
         clientManager->addInfo("typeindex", std::to_string(choice));
         clientManager->sendRequestAndRecv();
-        QMessageBox::warning(this, "Build", clientManager->getAnswerInfos().c_str());
+        clientManager->addInfo("showmessagebox", "true");
         close();
     }
 

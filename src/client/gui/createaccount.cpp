@@ -5,6 +5,8 @@ CreateAccount::CreateAccount(QWidget* parent, ClientManagerGUI* cm) :
     DefaultWidget(parent, cm), ui(new Ui::CreateAccount){
 
     displayDefaultBackground();
+    displayLogo(this,376,200);
+    //displayLogo(this,376,357);
     ui->setupUi(this);
 }
 CreateAccount::~CreateAccount(){
@@ -38,6 +40,9 @@ void CreateAccount::on_createButton_clicked(){
             ui->errorLabel->setText(QString(clientManager->getReason().c_str()));
         }else{
             clientManager->setCurrentWidget(ClientManagerGUI::MAINMENU);
+            std::string message = "The account '"+username+"' has been successfully created !";
+            QMessageBox::information(this, "Create account", message.c_str());
+
         }
     }
 }

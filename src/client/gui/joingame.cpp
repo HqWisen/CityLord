@@ -8,8 +8,8 @@ JoinGame::JoinGame(QWidget* parent, ClientManagerGUI* cm) :
     ui->setupUi(this);
     for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
     {
-        /*ui->tableWidget->horizontalHeader()->setSectionResizeMode(
-            c, QHeaderView::Stretch);*/
+        ui->tableWidget->horizontalHeader()->setSectionResizeMode(
+            c, QHeaderView::Stretch);
     }
     headerLabels << "City" << "Map" << "Creator"<<"Players";
     ui->tableWidget->setColumnCount(headerLabels.size());

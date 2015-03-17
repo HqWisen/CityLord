@@ -37,13 +37,13 @@ QLabel{color:white;}</string>
      <number>300</number>
     </property>
     <property name="topMargin">
-     <number>500</number>
+     <number>400</number>
     </property>
     <property name="rightMargin">
      <number>300</number>
     </property>
     <property name="bottomMargin">
-     <number>185</number>
+     <number>285</number>
     </property>
     <property name="spacing">
      <number>0</number>

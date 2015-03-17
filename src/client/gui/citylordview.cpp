@@ -8,6 +8,7 @@ const int CityLordView::HEIGHT = 804;
 CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
     QGraphicsView(parent), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(cm), numberOfRows(0),  \
     numberOfCols(0), itemArray(nullptr){
+    setGeometry(0, 60, WIDTH, HEIGHT);
     resize(WIDTH, HEIGHT);
     setScene(scene);
     setSceneRect(-((WIDTH/2)-(BASE.width()/2)), 0, WIDTH-2, HEIGHT-2);

@@ -21,7 +21,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QLineEdit{background: white; border-style:solid;}
-QLabel{color:white;}</string>
+</string>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
@@ -37,13 +37,13 @@ QLabel{color:white;}</string>
      <number>250</number>
     </property>
     <property name="topMargin">
-     <number>455</number>
+     <number>355</number>
     </property>
     <property name="rightMargin">
      <number>250</number>
     </property>
     <property name="bottomMargin">
-     <number>185</number>
+     <number>285</number>
     </property>
     <property name="spacing">
      <number>0</number>
@@ -530,6 +530,9 @@ QLabel{color:white;}</string>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QLabel" name="usernameLabel">
+          <property name="styleSheet">
+           <string notr="true">QLabel{color:white;}</string>
+          </property>
           <property name="text">
            <string>Username: </string>
           </property>
@@ -552,6 +555,9 @@ QLabel{color:white;}</string>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLabel" name="passwordLabel">
+          <property name="styleSheet">
+           <string notr="true">QLabel{color:white;}</string>
+          </property>
           <property name="text">
            <string>Password: </string>
           </property>
@@ -578,6 +584,9 @@ QLabel{color:white;}</string>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
          <widget class="QLabel" name="retypePasswordLabel">
+          <property name="styleSheet">
+           <string notr="true">QLabel{color:white;}</string>
+          </property>
           <property name="text">
            <string>Retype password: </string>
           </property>

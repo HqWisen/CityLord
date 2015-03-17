@@ -14,7 +14,6 @@ SOURCES += main.cpp\
     ingame.cpp \
     clientmanagerGUI.cpp \
     signaler.cpp \
-    buildold.cpp \
     build.cpp
 
 HEADERS  += \
@@ -29,7 +28,6 @@ HEADERS  += \
     ingame.h \
     clientmanagerGUI.h \
     signaler.h \
-    buildold.h \
     build.h
 
 
@@ -41,7 +39,6 @@ FORMS    += \
     creategame.ui \
     joingame.ui \
     ingame.ui \
-    buildold.ui \
     build.ui
 
 CONFIG += c++11

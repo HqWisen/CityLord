@@ -39,22 +39,22 @@ void InGame::moveEvent(QMoveEvent* event){
 void InGame::activeButton(std::string fieldinfo, Location location){
     lastLocation = location;
     if(fieldinfo == "owner"){
-        //ui->buildButton->setEnabled(true);
+        ui->buildButton->setEnabled(true);
         ui->buyButton->setEnabled(false);
         ui->upgradeButton->setEnabled(true);
         ui->destroyButton->setEnabled(true);
     }else if(fieldinfo == "purchasable"){
-        //ui->buildButton->setEnabled(false);
+        ui->buildButton->setEnabled(false);
         ui->buyButton->setEnabled(true);
         ui->upgradeButton->setEnabled(false);
         ui->destroyButton->setEnabled(false);
     }else if(fieldinfo == "other"){
-        //ui->buildButton->setEnabled(false);
+        ui->buildButton->setEnabled(false);
         ui->buyButton->setEnabled(false);
         ui->upgradeButton->setEnabled(false);
         ui->destroyButton->setEnabled(false);
     }else if(fieldinfo == "notfield"){
-        //ui->buildButton->setEnabled(false);
+        ui->buildButton->setEnabled(false);
         ui->buyButton->setEnabled(false);
         ui->upgradeButton->setEnabled(false);
         ui->destroyButton->setEnabled(false);
@@ -109,14 +109,13 @@ void InGame::on_buyButton_clicked(){
 }
 
 void InGame::on_buildButton_clicked(){;
-    std::cout<<"CLICKED"<<std::endl;
     clientManager->setRequest("build");
     clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
     clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
-    //QObject::connect(ui->buildButton, SIGNAL(clicked()), buildDialog, SLOT(exec()));
-    //ui->buildButton->clicked();
-    //QObject::disconnect(ui->buildButton, SIGNAL(clicked()), buildDialog, SLOT(exec()));
     buildDialog->exec();
+    if(clientManager->getInfo("showmessagebox") == "true"){
+        openMessageBox("Build");
+    }
 }
 
 void InGame::on_upgradeButton_clicked(){
@@ -136,6 +135,19 @@ void InGame::on_destroyButton_clicked()
     openMessageBox("Destroy");
 }
 
+void InGame::on_ownerFieldButton_clicked(){
+    //view->showOwnerFieldColor();
+}
+void InGame::on_allFieldButton_clicked(){
+    //view->showAllFieldColor();
+}
+
+void InGame::on_defaultFieldButton_clicked(){
+    //view->defaul
+}
+
+
+
 void InGame::on_exitButton_clicked(){
     clientManager->setRequest("leavecity");
     clientManager->sendRequestAndRecv();
@@ -144,7 +156,7 @@ void InGame::on_exitButton_clicked(){
 
 void InGame::disableAllButtons(){
     ui->buyButton->setEnabled(false);
-    //ui->buildButton->setEnabled(false);
+    ui->buildButton->setEnabled(false);
     ui->upgradeButton->setEnabled(false);
     ui->sellButton->setEnabled(false);
     ui->destroyButton->setEnabled(false);
@@ -152,7 +164,7 @@ void InGame::disableAllButtons(){
 
 void InGame::updateButtons(bool buyable, bool buildable, bool upgradable, bool destroyable, bool sell){
     ui->buyButton->setEnabled(buyable);
-    //ui->buildButton->setEnabled(buildable);
+    ui->buildButton->setEnabled(buildable);
     ui->upgradeButton->setEnabled(upgradable);
     ui->destroyButton->setEnabled(destroyable);
     ui->sellButton->setEnabled(sell);
