@@ -27,6 +27,7 @@ typedef int vertex_t;
 typedef double weight_t;
  
 const weight_t max_weight = std::numeric_limits<double>::infinity();
+const int MAXFINDATTEMPTS = 3;
  
 struct neighbor {
     vertex_t target;
@@ -63,6 +64,7 @@ class CityUpdater : public Thread{
         void updateCity();
         void generateFullPath(Location start, Location end, std::vector<Location> &path);
         void createPath(Location start, Location end, std::vector<Location> &path);
+		bool isRoadFree(Road*);
         void blockRoad(Road*);
 		void freeRoad();
         SocketMessage visitorCreate(int, Location);

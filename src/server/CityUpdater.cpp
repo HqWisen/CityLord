@@ -306,25 +306,35 @@ void CityUpdater::generateFullPath(Location start, Location end, std::vector<Loc
     int luck = rand() % (badLuck);
     while (luck >= badLuck-1) {
         if ((size_buildings-(badLuck-1)) > 0 && luck >= chances) {
-            luck = rand() % (size_buildings);
-            nextLocation = buildingsList[luck]->getLocation();
-            createPath(lastLocation,nextLocation,path);
-            std::cout<<"Building stop "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
-            lastLocation = nextLocation;
+            for (int i=0; i<MAXFINDATTEMPTS; i++){
+                luck = rand() % (size_buildings);
+                if (isRoadFree(buildingsList[luck])){
+                    nextLocation = buildingsList[luck]->getLocation();
+                    createPath(lastLocation,nextLocation,path);
+                    std::cout<<"Building stop "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
+                    lastLocation = nextLocation;
+                    break;
+                }
+            }
+
         }
         luck = rand() % (badLuck);
         if ((size_checkPoints-(badLuck-1)) > 0 && luck <= chances) {
-            luck = rand() % (size_checkPoints);
-            nextLocation = checkPointsList[luck]->getLocation();
-            createPath(lastLocation,nextLocation,path);
-            std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
-            lastLocation = nextLocation;
+            for (int i=0; i<MAXFINDATTEMPTS; i++){
+                luck = rand() % (size_checkPoints);
+                if (isRoadFree(checkPointsList[luck])){
+                    nextLocation = checkPointsList[luck]->getLocation();
+                    createPath(lastLocation,nextLocation,path);
+                    std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
+                    lastLocation = nextLocation;
+                    break;
+                }
+            }
         }
         badLuck += 1;
         chances = (ceil((badLuck)/2))-1;
         luck = rand() % (badLuck);
     }
-
     createPath(lastLocation,end,path);
     std::cout<<"Got Path"<<std::endl;
 }
@@ -370,6 +380,17 @@ void CityUpdater::generateVisitors(){
         SocketMessage update = visitorCreate(id, startLocation);
         sendUpdateToPlayers(update);
     }
+}
+
+bool CityUpdater::isRoadFree(Road* road){
+    if (blockedRoads.size() > 0){
+        for (unsigned int i=0; i<blockedRoads.size(); i++){
+            if (blockedRoads[i] == road){
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 void CityUpdater::blockRoad(Road* toBlock){
