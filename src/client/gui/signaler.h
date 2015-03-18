@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "../../common/models/Location.hpp"
-
+#include "../../common/socket/SocketMessage.hpp"
 class Signaler : public QObject
 {
     Q_OBJECT
@@ -11,11 +11,13 @@ public:
     explicit Signaler();
     void signalRepainting();
     void signalBuildViewMap();
-    void signalActiving(std::string, Location);
+    void signalActiving(SocketMessage, Location);
+    void signalUpdatingMoney(int);
 signals:
     void repaintView();
     void buildViewMap();
-    void activeButton(std::string, Location);
+    void selectField(SocketMessage, Location);
+    void updateMoney(int);
 public slots:
 
 };

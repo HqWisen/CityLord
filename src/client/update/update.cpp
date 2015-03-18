@@ -31,6 +31,11 @@ void UpdateSystem::destroy(ClientManager* client, SocketMessage update){
 	pthread_mutex_unlock(&updatemutex);
 }
 
+void UpdateSystem::updatemoney(ClientManager* client, SocketMessage update){
+    pthread_mutex_lock(&updatemutex);
+    client->updateMoney(std::stoi(update.get("money")));
+    pthread_mutex_unlock(&updatemutex);
+}
 void UpdateSystem::createvisitor(ClientManager* client, SocketMessage update){
     pthread_mutex_lock(&updatemutex);
 	int id = atoi(update.get("visitorid").c_str());

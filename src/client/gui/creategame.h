@@ -2,6 +2,7 @@
 #define CREATEGAME_H
 
 #include "defaultwidget.h"
+#include <QMessageBox>
 
 namespace Ui {
 class CreateGame;

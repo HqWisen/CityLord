@@ -200,7 +200,7 @@ void CityLordClient::selectField(){
             clientManager->addInfo("row", std::to_string(crow-1));
             clientManager->addInfo("col", std::to_string(ccol-1));
             for(int i=0;i<BuildingType::typesLength;i++){
-                std::cout<<i+1<<" - "<<BuildingType::types[i].buildingName<<std::endl;
+                std::cout<<i+1<<" - "<<BuildingType::types[i].NAME<<std::endl;
             }
             int buildChoice = makeChoice(1, BuildingType::typesLength);
             clientManager->addInfo("typeindex", std::to_string(buildChoice-1));

@@ -12,7 +12,7 @@ const int ClientManagerGUI::SQUAREMAPSIZE = 20;
 
 ClientManagerGUI::ClientManagerGUI(char* hostname, int port) :
     ClientManager(hostname, port),
-    stackedWidget(new QStackedWidget), layout(new QVBoxLayout), pages(), signaler(new Signaler){
+    stackedWidget(new QStackedWidget), layout(new QVBoxLayout), pages(), signaler(new Signaler), currentPlayerID(-1){
 
     layout->setContentsMargins(0,0,0,0);
     layout->addWidget(stackedWidget);
@@ -72,9 +72,19 @@ void ClientManagerGUI::repaint(){
    signaler->signalRepainting();
 }
 
+void ClientManagerGUI::updateMoney(int newMoney){
+   signaler->signalUpdatingMoney(newMoney);
+}
+
 Signaler* ClientManagerGUI::getSignaler(){
     return signaler;
 }
 
+int ClientManagerGUI::getCurrentPlayerID(){
+    return currentPlayerID;
+}
 
+void ClientManagerGUI::setCurrentPlayerID(int newID){
+    currentPlayerID = newID;
+}
 

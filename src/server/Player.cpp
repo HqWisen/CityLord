@@ -14,6 +14,7 @@ using namespace std;
  * \033[1;44m dark blue   \033[1;45m   purple
  * \033[1;46m light blue  \033[1;47m  white
 */
+const int Player::INITIALBUDGET = 1000000;
 const string Player::COLOR[8] = {"\033[1;40m", "\033[1;41m", "\033[1;42m", "\033[1;43m", "\033[1;44m", "\033[1;45m", "\033[1;46m", "\033[1;47m"};
 const string Player::COLORNAME[8] = {"darkgrey", "red", "green", "yellow", "darkblue", "purple", "lightblue", "white"};
 
@@ -21,7 +22,9 @@ Player::Player(int number, string nn){
 	playerID = number;
 	nickname = nn;
     money = INITIALBUDGET;
-	nBuilding = 0;
+    buildingCounter = 0;
+    connected = false;
+    userManager = nullptr;
 }
 
 int Player::getPlayerID(){
@@ -33,34 +36,34 @@ string Player::getNickName(){
 }
 
 int Player::getMoney(){
-	return money;
-}
-void Player::setMoney(int newMoney){
-	money = newMoney;
+    return money;
 }
 
-void Player::gainMoney(int newMoney){
-	money += newMoney;
+void Player::setMoney(int newMoney){
+    money = newMoney;
+    /*SocketMessage update("updatemoney");
+    update.set("money", std::to_string(money));
+    userManager->sendUpdate(update);*/
+}
+
+void Player::gainMoney(int amount){
+    setMoney(money + amount);
+}
+
+void Player::loseMoney(int amount){
+    setMoney(money - amount);
 }
 
 void Player::addField(Field* field){
-	fieldVector.push_back(field);
+    fieldVector.push_back(field);
 }
 
-int Player::getNBuilding(){
-	return nBuilding;
+void Player::incBuildingCounter(){
+    buildingCounter++;
 }
 
-int Player::getNEmptyField(){
-	return fieldVector.size() - nBuilding;
-}
-
-void Player::buildBuilding(){
-	nBuilding++;
-}
-
-void Player::destroyBuilding(){
-	nBuilding--;
+void Player::decBuildingCounter(){
+    buildingCounter--;
 }
 
 bool Player::isConnected(){
@@ -79,16 +82,10 @@ void Player::setUserManager(UserManager* um){
     userManager = um;
 }
 
+int Player::getNBuilding(){
+    return buildingCounter;
+}
 
-/*
-//bool Player::isBankrupt(){return money<0;}
-
-
-//std::vector<Building*> Player::getOwnedBuildings(){return buildingList;}
-//std::vector<Field*> Player::getOwnedFields(){return fieldList;}
-//void Player::addBuilding(Building building){BuildingList.push_back(building);}
-*/
-
-void Player::loseMoney(int amount){
-	money -= amount;
+int Player::getNEmptyField(){
+    return fieldVector.size() - buildingCounter;
 }

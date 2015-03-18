@@ -12,45 +12,33 @@ class UserManager;
 
 class Player{
 
-    const int INITIALBUDGET = 1000000;
-	int money;
-	int playerID;
-	int nBuilding;
-	//vector<Location> buildingList;
-	vector<Field*> fieldVector;
-	//City* city;
-	string nickname;
+    static const int INITIALBUDGET;
+    int playerID;
+    string nickname;
+    vector<Field*> fieldVector;
+    int money;
+    int buildingCounter;
     bool connected;
     UserManager* userManager;
 public:
     static const string COLOR[8], COLORNAME[8];
 public:
 	Player(int, string);
-	int getPlayerID();
-	string getNickName();
-	int getNBuilding();
-	int getNEmptyField();
-	int getMoney();
-	void setMoney(int);
+    int getPlayerID();
+    string getNickName();
+    int getMoney();
+    void setMoney(int);
+    void gainMoney(int);
+    void loseMoney(int);
     void addField(Field*);
-	void buildBuilding();
-	void destroyBuilding();
+    void incBuildingCounter();
+    void decBuildingCounter();
     bool isConnected();
     void setConnected(bool);
     UserManager* getUserManager();
     void setUserManager(UserManager*);
-    void gainMoney(int);
-	
-	/*void createBuilding();
-	void removeBuilding();
-	void makeOffer();
-	void cancelOffer();
-	void isBankrupt();
-	//std::vector<Location> getOwnedBuildings();
-	//std::vector<Location> getOwnedFields();
-	//void addBuilding(Building);
-	*/
-	void loseMoney(int);
+    int getNBuilding();
+    int getNEmptyField();
 };
 
 #endif // PLAYER_HPP_

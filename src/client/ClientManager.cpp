@@ -1,6 +1,19 @@
 #include "ClientManager.hpp"
 #include <iostream>
 
+const std::string ClientManager::CURRENCY = "€";
+
+std::string ClientManager::strCurrency(int i){
+    std::string result = std::to_string(i);
+    result += CURRENCY;
+    return result;
+}
+
+std::string ClientManager::strCurrency(std::string str){
+    std::string result = str + CURRENCY;
+    return result;
+}
+
 
 ClientManager::ClientManager(char* hostname, int port) :
     map(nullptr), socket(hostname, port),  updateSocket(hostname, port+1), message(), updater(nullptr){
@@ -101,5 +114,9 @@ void ClientManager::quit(){
 }
 
 void ClientManager::repaint(){
+
+}
+
+void ClientManager::updateMoney(int newMoney){
 
 }

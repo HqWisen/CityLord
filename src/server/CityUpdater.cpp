@@ -392,7 +392,6 @@ void CityUpdater::makeVisitorsAdvance(){
                 SocketMessage update = visitorMove(i, firstLocation, lastLocation);
                 sendUpdateToPlayers(update);
                 bool enter = false;
-                Building test;
                 Location loc = cityMap->getVisitor(i)->getLoc();
                 int col = loc.getCol();
                 int row = loc.getRow();

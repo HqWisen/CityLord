@@ -11,6 +11,10 @@ void Signaler::signalBuildViewMap(){
     emit buildViewMap();
 }
 
-void Signaler::signalActiving(std::string info, Location location){
-    emit activeButton(info, location);
+void Signaler::signalActiving(SocketMessage message, Location location){
+    emit selectField(message, location);
+}
+
+void Signaler::signalUpdatingMoney(int newMoney){
+    emit updateMoney(newMoney);
 }

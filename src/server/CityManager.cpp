@@ -142,42 +142,26 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
     Field* concernedField;
     if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(catalog.isOnMarket(concernedField)){
-			if(concernedField->hasBuilding()){
-				if(player->getMoney() >= concernedField->getPrice() + concernedField->getBuilding()->getPrice()){
-					player->setMoney(player->getMoney() - (concernedField->getPrice() + concernedField->getBuilding()->getPrice()));
-					catalog.give(concernedField, player);
-                    update.setTopic("changeowner");
-                    update.set("ownerid", std::to_string(player->getPlayerID()));
-                    update.set("location", location.toString());
-                    updater->sendUpdateToPlayers(update);
-                    message.setTopic("success");
-                    message.set("reason", "Field has been successfully purchased !");
-				}else{
-					message.setTopic("failure");
-                    message.set("reason", "You do not own enough money !");
-				}
-			}else{
-				if(player->getMoney() >= concernedField->getPrice()){
-					player->setMoney(player->getMoney() - concernedField->getPrice());
-					catalog.give(concernedField, player);
-                    update.setTopic("changeowner");
-                    update.set("ownerid", std::to_string(player->getPlayerID()));
-                    update.set("location", location.toString());
-                    updater->sendUpdateToPlayers(update);
-                    message.setTopic("success");
-                    message.set("reason", "Field has been successfully purchased !");
-				}else{
-					message.setTopic("failure");
-                    message.set("reason", "You do not own enough money !");
-				}
-			}
-		}else{
+            if(player->getMoney() >= concernedField->getTotalPurchasePrice()){
+                player->loseMoney(concernedField->getTotalPurchasePrice());
+                catalog.give(concernedField, player);
+                update.setTopic("changeowner");
+                update.set("ownerid", std::to_string(player->getPlayerID()));
+                update.set("location", location.toString());
+                updater->sendUpdateToPlayers(update);
+                message.setTopic("success");
+                message.set("reason", "Field has been successfully purchased !");
+            }else{
+                message.setTopic("failure");
+                message.set("reason", "You do not own enough money !");
+            }
+        }else{
 			message.setTopic("failure");
-			message.set("reason", "Field is not on the catalog, therefore it was purchased by someone else");
+            message.set("reason", "Field is not on the catalog !");
 		}
 	}else{
 		message.setTopic("failure");
-        message.set("reason", "This is not a Field !");
+        message.set("reason", "This is not a field !");
 	}
 	return message;
 }
@@ -190,9 +174,9 @@ SocketMessage CityManager::buildBuilding(Player* player, Location location, Buil
     if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(concernedField->getOwner() == player){
 			if(!concernedField->hasBuilding()){
-				if(player->getMoney() >= buildingType.price){
-					player->setMoney(player->getMoney() - buildingType.price);
-					player->buildBuilding();
+                if(player->getMoney() >= buildingType.getTotalPurchasePrice()){
+                    player->loseMoney(buildingType.getTotalPurchasePrice());
+                    player->incBuildingCounter();
 					concernedField->buildBuilding(buildingType);
 					updater->refreshBuildingsList();
                     update.setTopic("build");
@@ -227,8 +211,8 @@ SocketMessage CityManager::upgradeBuilding(Player* player, Location location){
     if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){
-				if(player->getMoney() >= concernedField->getBuilding()->getType().upgradeCost){
-					player->setMoney(player->getMoney() - concernedField->getBuilding()->getType().upgradeCost);
+                if(player->getMoney() >= concernedField->getBuilding()->getType().UPGRADECOST){
+                    player->loseMoney(concernedField->getBuilding()->getType().UPGRADECOST);
 					concernedField->getBuilding()->upgrade();
 					message.setTopic("success");
                     message.set("reason", "Building has been successfully upgraded !");
@@ -258,8 +242,8 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
         if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){
 				if(player->getMoney() >= concernedField->getBuilding()->getDestructionCost()){
-					player->setMoney(player->getMoney() - concernedField->getBuilding()->getDestructionCost());
-					player->destroyBuilding();
+                    player->loseMoney(concernedField->getBuilding()->getDestructionCost());
+                    player->decBuildingCounter();
 					concernedField->destroyBuilding();
 					updater->refreshBuildingsList();
                     update.setTopic("destroy");
@@ -295,7 +279,7 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
 }*/
 
 
-
+/*
 SocketMessage CityManager::sellOnMarket(Player* player, Location location, int price){
 	SocketMessage message = SocketMessage();
 	Field* concernedField;
@@ -388,21 +372,6 @@ SocketMessage CityManager::makeTrade(Player* offeringPlayer, Player* purchasingP
 		message.set("reason", "This is not a Field!");
 	}
 	return message;
-}
-
-/*
-std::string showCatalog(){
-	//Envoie le statut du catalogue de la ville
-	std::string message = ""
-	for(int i = 0; i<_catalog.getBuyable().size(); i++){
-		message = message + (_catalog.getBuyable()[i])->display() + "\n" + "-----------" + "\n";
-	}
-	return message;
-}
-
-std::string showCity(){
-	//Envoie la carte de la ville gérée par ce manager
-	return cityMap.display();
 }
 
 */

@@ -6,9 +6,12 @@
 #include "../common/socket/ConnectionSocket.hpp"
 #include "../common/socket/SocketMessage.hpp"
 
+
 class ClientUpdater;
 
 class ClientManager{
+public:
+    static const std::string CURRENCY;
 public:
     ClientManager() = default;
     ClientManager(char*, int);
@@ -31,6 +34,9 @@ public:
     std::string getReason();
     void quit();
     virtual void repaint();
+    virtual void updateMoney(int);
+    static std::string strCurrency(int);
+    static std::string strCurrency(std::string);
 protected:
     Map<ClientField>* map;
     ConnectionSocket socket;

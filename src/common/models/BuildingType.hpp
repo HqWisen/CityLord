@@ -16,18 +16,18 @@ class BuildingType{
         static const BuildingType MUSEUM;
         static const BuildingType HOTEL;
 
-        std::string buildingName;
-		int constructionCost;
-		int destructionCost;
-		int maxCapacity;
-		int dailyCost;
-		int attractiveness;
-		int stayTime;
-		int openTime;
-		int closeTime;
-		int income;
-		int price;
-        int upgradeCost;
+        const std::string NAME;
+        const int CONSTRUCTIONCOST;
+        const int DESTRUCTIONCOST;
+        const int CAPACITY;
+        const int DAILYCOST;
+        const int ATTRACTIVENESS;
+        const int STAYTIME;
+        const int OPENTIME;
+        const int CLOSETIME;
+        const int INCOME;
+        const int PRICE;
+        const int UPGRADECOST;
 
         BuildingType() = default;
 		BuildingType(const BuildingType&) = default;
@@ -36,6 +36,7 @@ class BuildingType{
 					int, int, int, int,
 					int, int, int\
 					);
+        int getTotalPurchasePrice();
 		static BuildingType getTypeByIndex(int);
 		static int getIndexByType(BuildingType);
 };

@@ -22,15 +22,15 @@ public:
     InGame(QWidget*, ClientManagerGUI*);
     ~InGame();
     void refresh() override;
-    void moveEvent(QMoveEvent*) override;
 private:
-    void updateMoney(int);
     void updateTime(int);
     void openMessageBox(std::string);
+    void activeButton(std::string);
 public slots:
     void repaintView();
     void buildViewMap();
-    void activeButton(std::string, Location);
+    void selectField(SocketMessage, Location);
+    void updateMoney(int);
 private slots:
     void on_buyButton_clicked();
     void on_buildButton_clicked();

@@ -4,17 +4,23 @@
 
 using namespace std;
 
+#include <iostream>
+#include <algorithm>
+#include "Building.hpp"
+
+using namespace std;
+
 Building::Building(BuildingType buildingtype, int lvl) : type(buildingtype){
     level = lvl;
-	visitorCounter = 0;
-    maxCapacity = type.maxCapacity;
-    price = type.price;
-    openTime = type.openTime;
-    closeTime = type.closeTime;
-    income = type.income;
-    attractiveness = type.attractiveness;
-    dailyCost = type.dailyCost;
-    destructionCost = type.destructionCost;
+    attractiveness = type.ATTRACTIVENESS;
+    capacity = type.CAPACITY;
+    income = type.INCOME;
+    price = type.PRICE;
+    destructionCost = type.DESTRUCTIONCOST;
+    dailyCost = type.DAILYCOST;
+    openTime = type.OPENTIME;
+    closeTime = type.CLOSETIME;
+    visitorCounter = 0;
     if (level > 1){
         for (int i=1; i<level; i++){
             this->upgrade();
@@ -22,49 +28,77 @@ Building::Building(BuildingType buildingtype, int lvl) : type(buildingtype){
     }
 }
 
-Building::Building(){}
-
 int Building::getLevel(){
-	return level;
+    return level;
 }
 
-BuildingType Building::getType(){
-	return type;
+int Building::getAttractiveness(){
+    return attractiveness;
+}
+
+int Building::getCapacity(){
+    return capacity;
 }
 
 int Building::getIncome(){
     return income;
 }
 
-/*void Building::upgrade(){
-    maxCapacity += (maxCapacity/2);
-    income += (income/2);
-    attractiveness += (attractiveness/2);
-    dailyCost += (dailyCost/1.75);
-    level += 1;
-    destructionCost += (destructionCost/2);
-}*/
+int Building::getPrice(){
+    return price;
+}
+
+int Building::getDestructionCost(){
+    return destructionCost;
+}
+
+int Building::getDailyCost(){
+    return dailyCost;
+}
+
+int Building::getOpenTime(){
+    return openTime;
+}
+
+int Building::getCloseTime(){
+    return closeTime;
+}
+
+int Building::getVisitorCounter(){
+    return visitorCounter;
+}
+
+BuildingType Building::getType(){
+    return type;
+}
+
+int Building::getTotalPurchasePrice(){
+    return type.CONSTRUCTIONCOST + getPrice();
+}
 
 void Building::upgrade(){
-	maxCapacity += type.maxCapacity;
-	income += type.income;
-	attractiveness += ((type.attractiveness)/2);
-	dailyCost += ((type.dailyCost)/1.75);
-	level += 1;
-	destructionCost += ((type.destructionCost)/2);
+    capacity += (type.CAPACITY/3);
+    income += (type.INCOME/3);
+    attractiveness += (type.ATTRACTIVENESS/3);
+    dailyCost += (type.DAILYCOST/3);
+    destructionCost += (type.DESTRUCTIONCOST/2);
+    level += 1;
 }
 
 bool Building::addVisitor(){
-	if (visitorCounter < maxCapacity){
-		visitorCounter += 1;
-		return true;
-	}
-	return false;
-	
+    if (visitorCounter < capacity){
+        visitorCounter += 1;
+        return true;
+    }
+    return false;
+
 }
 
 void Building::removeVisitor(){
-	if(visitorCounter > 0){
-		visitorCounter -= 1;
-	}
+    if(visitorCounter > 0){
+        visitorCounter -= 1;
+    }
+}
+bool Building::isFull(){
+    return visitorCounter == capacity;
 }

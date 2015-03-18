@@ -3,7 +3,7 @@
 
 const int CityLordView::WIDTH = 1152;
 const int CityLordView::HEIGHT = 804;
-
+const int CityLordView::DEFAULTZOOMLEVEL = 10;
 
 CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
     QGraphicsView(parent), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(cm), numberOfRows(0),  \
@@ -14,9 +14,19 @@ CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
     setSceneRect(-((WIDTH/2)-(BASE.width()/2)), 0, WIDTH-2, HEIGHT-2);
     this->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ZOOMLEVEL=10;
+    ZOOMLEVEL=DEFAULTZOOMLEVEL;
     COORDX=0;
     COORDY=0;
+
+    /*****/
+    int WIDTHOUT = 30;
+    QPixmap pixmap;
+    for(int row=-WIDTHOUT;row<100+WIDTHOUT;row++){
+        for(int col=-WIDTHOUT;col<100+WIDTHOUT;col++){
+            pixmap = QPixmap(getImagePath("out"));
+            scene->addPixmap(pixmap)->setOffset(carToIso(Location(row, col), pixmap));
+        }
+    }
 }
 
 CityLordView::~CityLordView(){
@@ -66,11 +76,41 @@ void CityLordView::selectField(Location location){
     clientManager->addInfo("row", std::to_string(location.getRow()));
     clientManager->addInfo("col", std::to_string(location.getCol()));
     clientManager->sendRequestAndRecv();
-    clientManager->getSignaler()->signalActiving(clientManager->getTopicMessage(), location);
+    clientManager->getSignaler()->signalActiving(clientManager->getMessage(), location);
+}
+
+void CityLordView::showCurrentPlayerFieldColor(){
+    showFieldColor(false, true);
+    showFieldColor(true, false);
+    repaintView();
+}
+
+void CityLordView::showAllFieldColor(){
+    showFieldColor(false, true);
+    showFieldColor(true, true);
+    repaintView();
+}
+
+void CityLordView::unshowAllFieldColor(){
+    showFieldColor(false, true);
+    repaintView();
+}
+
+void CityLordView::showFieldColor(bool show, bool allPlayers = true){
+     ClientField* field;
+    for(int row=0;row<numberOfRows;row++){
+        for(int col=0;col<numberOfCols;col++){
+            if((field = dynamic_cast<ClientField*>(clientManager->getMap()->getCase(Location(row, col))))){
+                if(allPlayers || clientManager->getCurrentPlayerID() == field->getOwnerID()){
+                    field->setShowOwnerColor(show);
+                }
+            }
+        }
+    }
 }
 
 void CityLordView::mousePressEvent(QMouseEvent * e){
-
+    showFieldColor(false, true);
     startMouse = mapToScene(e->pos());
     Location location = isoToLoc(startMouse);
     if(goodLocation(location)){
@@ -131,14 +171,15 @@ void CityLordView::mouseMoveEvent(QMouseEvent * e){
 }
 
 void CityLordView::wheelEvent(QWheelEvent* e){
-    if(e->delta() > 0 and ZOOMLEVEL<20){
+    if(e->delta() > 0 and ZOOMLEVEL<DEFAULTZOOMLEVEL+10){
         ZOOMLEVEL+=1;
         scale(1.1, 1.1);
     }
-    else if(e->delta() < 0 and ZOOMLEVEL>0){
+    else if(e->delta() < 0 and ZOOMLEVEL>DEFAULTZOOMLEVEL-10){
         ZOOMLEVEL-=1;
         scale(0.9, 0.9);
     }
+    std::cout<<scene->height()<<std::endl;
 }
 
 void CityLordView::keyPressEvent(QKeyEvent *event)
@@ -179,14 +220,7 @@ void CityLordView::repaintView(){
 }
 
 void CityLordView::buildViewMap(){
-    /*int WIDTHOUT = 30;
-    QPixmap pixmap;
-    for(int row=-WIDTHOUT;row<20+WIDTHOUT;row++){
-        for(int col=-WIDTHOUT;col<20+WIDTHOUT;col++){
-            pixmap = QPixmap(getImagePath("base"));
-            scene->addPixmap(pixmap)->setOffset(carToIso(Location(row, col), pixmap));
-        }
-    }*/
+
     /**********************/
     //scale(0.35, 0.35);
     if(clientManager == nullptr){

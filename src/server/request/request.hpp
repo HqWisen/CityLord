@@ -30,6 +30,7 @@ public:
     static SocketMessage destroy(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage mapfullupdate(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage leavecity(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage playerinfo(CityLordServer*, UserManager*, SocketMessage);
 };
 
 #endif // REQUEST_HPP_

@@ -27,12 +27,16 @@ public:
     QVBoxLayout* getLayout();
     void buildMap(std::string) override;
     void repaint() override;
+    void updateMoney(int) override;
     Signaler* getSignaler();
+    int getCurrentPlayerID();
+    void setCurrentPlayerID(int);
 private:
     QStackedWidget* stackedWidget;
     QVBoxLayout* layout;
     std::map<key_type, DefaultWidget*> pages;
     Signaler* signaler;
+    int currentPlayerID;
 
 };
 

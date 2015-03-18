@@ -2,28 +2,32 @@
 #include "BuildingType.hpp"
 
 BuildingType::BuildingType(string name,\
-				int construction, int destruction, int capacity, int daily, \
-				int attract, int stay, int open, int close, \
-				int gain, int buy, int upgrade):
-	buildingName(name),\
-	constructionCost(construction),\
-	destructionCost(destruction),\
-	maxCapacity(capacity),\
-	dailyCost(daily),\
-	attractiveness(attract),\
-	stayTime(stay),\
-	openTime(open),\
-	closeTime(close),\
-	income(gain),\
-	price(buy),\
-	upgradeCost(upgrade) {}
+                int constructionCost, int destructionCost, int capacity, int dailyCost, \
+                int attractiveness, int stayTime, int openTime, int closeTime, \
+                int income, int price, int upgradeCost):
+    NAME(name),\
+    CONSTRUCTIONCOST(constructionCost),\
+    DESTRUCTIONCOST(destructionCost),\
+    CAPACITY(capacity),\
+    DAILYCOST(dailyCost),\
+    ATTRACTIVENESS(attractiveness),\
+    STAYTIME(stayTime),\
+    OPENTIME(openTime),\
+    CLOSETIME(closeTime),\
+    INCOME(income),\
+    PRICE(price),\
+    UPGRADECOST(upgradeCost) {}
+
+int BuildingType::getTotalPurchasePrice(){
+    return CONSTRUCTIONCOST + PRICE;
+}
 
 BuildingType BuildingType::getTypeByIndex(int index){
 	return types[index];
 }
 int BuildingType::getIndexByType(BuildingType type){
 	for (int i=0; i<typesLength; i++){
-		if (types[i].buildingName == type.buildingName){
+        if (types[i].NAME == type.NAME){
 			return i;
 		}
 	}

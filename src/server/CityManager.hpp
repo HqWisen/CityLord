@@ -52,9 +52,9 @@ class CityManager{
 		SocketMessage buildBuilding(Player*, Location, BuildingType);
 		SocketMessage upgradeBuilding(Player*, Location);
 		SocketMessage destroyBuilding(Player*, Location);
-		SocketMessage sellOnMarket(Player*, Location, int);
+        /*SocketMessage sellOnMarket(Player*, Location, int);
 		SocketMessage cancelOffer(Player*, Location);
-		SocketMessage makeTrade(Player*, Player*, Location);
+        SocketMessage makeTrade(Player*, Player*, Location);*/
         void sendUpdateToPlayers(SocketMessage);
         SocketMessage visitorMove(Player*, Location, Location);
         //SocketMessage getRealTimeRem(Player*);

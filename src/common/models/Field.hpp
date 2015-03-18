@@ -8,10 +8,8 @@
 #include "Building.hpp"
 #include <string>
 
+#include "../socket/SocketMessage.hpp"
 #include "../../server/Player.hpp"
-
-
-class Player;
 
 class BasicField : public Case{
     protected:
@@ -33,6 +31,7 @@ class BasicField : public Case{
         virtual int getOwnerID() = 0;
         virtual bool hasOwner() = 0;
         string getOwnerColor();
+        int getTotalPurchasePrice();
         bool isField() override;
         void setShowOwnerColor(bool);
         std::string getImageName() override;
@@ -48,6 +47,7 @@ class Field : public BasicField{
         string toString();
         int getOwnerID() override;
         bool hasOwner() override;
+        SocketMessage infoHasSocketMessage();
 };
 
 class ClientField : public BasicField{

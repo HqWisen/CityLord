@@ -16,7 +16,7 @@
 
 class CityLordView : public QGraphicsView{
 
-static const int WIDTH, HEIGHT;
+static const int WIDTH, HEIGHT, DEFAULTZOOMLEVEL;
 int ZOOMLEVEL,COORDX,COORDY;
 const QPixmap BASE;
 QGraphicsScene* scene;
@@ -37,11 +37,14 @@ public:
     void buildViewMap();
     Location isoToLoc(QPointF);
     const char* getImagePath(std::string);
-    void selectField(Location);
-
+    void selectField(Location);    
+    void showCurrentPlayerFieldColor();
+    void showAllFieldColor();
+    void unshowAllFieldColor();
 
 private:
     QPointF carToIso(Location, const QPixmap&);
+    void showFieldColor(bool, bool);
 private:
     int px, py;
     QPointF lastPos;

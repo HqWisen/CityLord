@@ -14,6 +14,7 @@ public:
     static void changeowner(ClientManager*, SocketMessage);
     static void build(ClientManager*, SocketMessage);
     static void destroy(ClientManager*, SocketMessage);
+    static void updatemoney(ClientManager*, SocketMessage);
     static void createvisitor(ClientManager*, SocketMessage);
     static void movevisitor(ClientManager*, SocketMessage);
     static void removevisitor(ClientManager*, SocketMessage);

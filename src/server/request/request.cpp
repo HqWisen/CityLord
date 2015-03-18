@@ -59,6 +59,7 @@ SocketMessage RequestSystem::createcity(CityLordServer* server, UserManager* use
     CityManager* cityManager = server->createCity(numberOfMap, userManager->getUser());
     server->LOG("User "+ userManager->getUserName() + " created a city with map " + cityManager->getMapName() + ", city number is " + std::to_string(cityManager->getID()));
     // TODO send failure if creation failed*/
+    answer.set("cityname", cityManager->getName());
     pthread_mutex_unlock(&requestmutex);
     return answer;
 }
@@ -119,6 +120,7 @@ SocketMessage RequestSystem::selectfield(CityLordServer* server, UserManager* us
     int col = std::stoi(message.get("col"));
     Field* field;
     if((field = dynamic_cast<Field*>(map->getCase(Location(row, col))))){
+        answer = field->infoHasSocketMessage();
         if(field->getOwner() == userManager->getActivePlayer()){
             answer.setTopic("owner");
         }else if(field->getOwner() == nullptr){
@@ -126,7 +128,7 @@ SocketMessage RequestSystem::selectfield(CityLordServer* server, UserManager* us
         }else{
             answer.setTopic("other");
         }
-        answer.set("info", field->toString());
+        answer.set("info", field->toString()); // for terminal
     }else{
         answer.setTopic("notfield");
     }
@@ -244,5 +246,18 @@ SocketMessage RequestSystem::leavecity(CityLordServer* server, UserManager* user
     pthread_mutex_unlock(&requestmutex);
     return answer;
 }
+
+SocketMessage RequestSystem::playerinfo(CityLordServer* server, UserManager* userManager, SocketMessage message){
+    pthread_mutex_lock(&requestmutex);
+    SocketMessage answer;
+    Player* player = userManager->getActivePlayer();
+    answer.set("nickname", player->getNickName());
+    answer.set("playerid", std::to_string(player->getPlayerID()));
+    answer.set("money", std::to_string(player->getMoney()));
+    answer.set("color", Player::COLORNAME[player->getPlayerID()]);
+    pthread_mutex_unlock(&requestmutex);
+    return answer;
+}
+
 
 

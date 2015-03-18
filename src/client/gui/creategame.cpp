@@ -61,8 +61,11 @@ void CreateGame::on_createButton_clicked(){
     clientManager->sendRequestAndRecv();
     if(clientManager->requestFailed()){
         // TODO handle failure
-    }else{
+    }else{        
+        std::string message = "The city '"+clientManager->getInfo("cityname")+"' has been successfully created !";
         clientManager->setCurrentWidget(ClientManagerGUI::JOINGAME);
+        QMessageBox::information(this, "Create game", message.c_str());
+
     }
 }
 

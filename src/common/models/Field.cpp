@@ -9,37 +9,6 @@ using namespace std;
 BasicField::BasicField(Location location) : Case(location), price(15000), building(nullptr), showOwnerColor(false){
 }
 
-/*
-Field::Field(int newColor, Location coords){
-    typeName = "Field";
-    coord = coords;
-    string colorNumber;
-    ostringstream convert;
-    convert << newColor;
-    colorNumber = convert.str();
-    color = color="\033[1;"+colorNumber+"m";
-}
-
-Field::Field(Location location, Building* newBuilding) : Case(location), building(newBuilding) {
-}
-
-Field::Field(int newColor, Location location) : Case(location) {
-	string colorNumber;
-	ostringstream convert;
-	convert << newColor;
-	colorNumber = convert.str();
-	color = color="\033[1;"+colorNumber+"m";
-}
-
-Field::Field(int newColor, Location location, Building* newBuilding) : Case(location), building(newBuilding) {
-	string colorNumber;
-	ostringstream convert;
-	convert << newColor;
-	colorNumber = convert.str();
-	color = color="\033[1;"+colorNumber+"m";
-}
-*/
-
 string BasicField::print(){
     string ownerStr = " ";
     if (hasOwner()){
@@ -66,7 +35,7 @@ string BasicField::print(){
 string BasicField::getImageName(){
     std::string imagename, buildingName;
     if(hasBuilding()){
-       buildingName = building->getType().buildingName;
+       buildingName = building->getType().NAME;
        std::transform(buildingName.begin(), buildingName.end(), buildingName.begin(), ::tolower);
         imagename = buildingName;
     }else{
@@ -131,6 +100,15 @@ string BasicField::getOwnerColor(){
     return Player::COLOR[getOwnerID()];
 }
 
+int BasicField::getTotalPurchasePrice(){
+    int total = 0;
+    total += getPrice();
+    if(hasBuilding()){
+        total += building->getTotalPurchasePrice();
+    }
+    return total;
+}
+
 
 /* FIELD */
 
@@ -158,7 +136,7 @@ string Field::toString(){
         result += "no owner";
     }
     if(hasBuilding()){
-        result += " # "+building->getType().buildingName;
+        result += " # "+building->getType().NAME;
     }
     return result;
 }
@@ -169,6 +147,34 @@ int Field::getOwnerID(){
 
 bool Field::hasOwner(){
     return owner != nullptr;
+}
+
+SocketMessage Field::infoHasSocketMessage(){
+    SocketMessage message;
+    if(hasOwner()){
+        message.set("ownername", getOwner()->getNickName());
+        message.set("ownerid", std::to_string(getOwnerID()));
+        message.set("ownercolor", Player::COLORNAME[getOwnerID()]);
+    }else{
+        message.set("ownername", "No owner");
+        message.set("ownerid", "-");
+        message.set("ownercolor", "-");
+    }
+    if(hasBuilding()){
+        message.set("level", std::to_string(building->getLevel()));
+        message.set("attractiveness", std::to_string(building->getAttractiveness()));
+        message.set("capacity", std::to_string(building->getCapacity()));
+        message.set("income", std::to_string(building->getIncome()));
+        message.set("price", std::to_string(building->getPrice()));
+        message.set("destructioncost", std::to_string(building->getDestructionCost()));
+        message.set("dailycost", std::to_string(building->getDailyCost()));
+        message.set("opentime", std::to_string(building->getOpenTime()));
+        message.set("closetime", std::to_string(building->getCloseTime()));
+        message.set("visitorcounter", std::to_string(building->getVisitorCounter()));
+        message.set("typeindex", std::to_string(BuildingType::getIndexByType(building->getType())));
+    }
+    message.set("fieldprice", std::to_string(price));
+    return message;
 }
 
 /* CLIENTFIELD */

@@ -24,7 +24,7 @@ private slots:
 private:
    Ui::build* ui;
    ClientManagerGUI* clientManager;
-   QTableWidgetItem** tableItemArray;
+   QTableWidgetItem*** tableItemArray;
    QStringList headerLabels;
    int choice;
 };
