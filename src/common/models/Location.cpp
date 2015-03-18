@@ -38,10 +38,9 @@ Location Location::parse(std::string source){
     return Location(row, col);
 }
 
-bool Location::isEqual(Location &other){
-    bool res = false;
-    if(this->row==other.getRow() and this->col==other.getCol()){
-        res = true;
+bool Location::isEqual(Location other){
+    if(this->row == other.getRow() and this->col == other.getCol()){
+        return true;
     }
-    return res;
+    return false;
 }

@@ -385,7 +385,7 @@ void CityUpdater::generateVisitors(){
 bool CityUpdater::isRoadFree(Road* road){
     if (blockedRoads.size() > 0){
         for (unsigned int i=0; i<blockedRoads.size(); i++){
-            if (blockedRoads[i] == road){
+            if (blockedRoads[i]->getLocation().isEqual(road->getLocation())){
                 return false;
             }
         }

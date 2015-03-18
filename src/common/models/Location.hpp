@@ -19,7 +19,7 @@ class Location{
         void setCol(int);
 		std::string toString();
         static Location parse(std::string);
-        bool isEqual(Location&);
+        bool isEqual(Location);
 
 };
 
