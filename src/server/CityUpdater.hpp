@@ -9,6 +9,7 @@
 #include "../common/models/Map.hpp"
 #include "../common/models/Visitor.hpp"
 #include <cmath>
+#include <deque>
 
 // ========================================= Dijkstra ===================================
 #include <vector>
@@ -44,6 +45,7 @@ class CityUpdater : public Thread{
     vector<Road*> checkPointsList;
     vector<Road*> buildingsList;
     vector<Road*> roadMap;
+    deque<Road*> blockedRoads;
     adjacency_list_t adjacencyList;
     Timer t;
     unsigned moveTimer = 1;
@@ -59,7 +61,10 @@ class CityUpdater : public Thread{
         void makeVisitorsAdvance();
         void makeOwnersPay();
         void updateCity();
+        void generateFullPath(Location start, Location end, std::vector<Location> &path);
         void createPath(Location start, Location end, std::vector<Location> &path);
+        void blockRoad(Road*);
+		void freeRoad();
         SocketMessage visitorCreate(int, Location);
         SocketMessage visitorMove(int, Location, Location);
         SocketMessage visitorRemove(int);

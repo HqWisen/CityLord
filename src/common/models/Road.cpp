@@ -22,6 +22,10 @@ std::string Road::getImageName(){
 
 void Road::open(direction_type dir){
     directions[dir]=true;
+    this->generateImage();
+}
+
+void Road::generateImage(){
     if (directions[WEST]){
         if (directions[NORTH]){
             if (directions[EAST]){
@@ -81,4 +85,17 @@ std::string Road::toString(){
     result +=  directions[EAST] ? "E" :"" ;
     result +=  directions[WEST] ? "W" :"" ;
     return result;
+}
+
+void Road::setUpBarricade(bool bin){
+	if (bin){
+		image = " X ";
+	}else {
+		this->generateImage();
+	}
+	blocked = bin;
+}
+
+bool Road::isBlocked(){
+	return blocked;
 }

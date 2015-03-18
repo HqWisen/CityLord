@@ -59,6 +59,8 @@ std::vector<vertex_t> CityUpdater::DijkstraGetShortestPathTo(
 }
 
 void CityUpdater::getRoadMap() {
+    roadMap.clear();
+    checkPointsList.clear();
     Location location(0,0);
     Road* road;
     for (int row=0; row<(cityMap->getNumberOfRows()); row++) {
@@ -76,6 +78,7 @@ void CityUpdater::getRoadMap() {
 }
 
 void CityUpdater::getAdjacencyList() {
+    adjacencyList.clear();
     Location location(0,0);
     Road* road;
     for (unsigned int i=0; i<roadMap.size(); i++) {
@@ -85,8 +88,10 @@ void CityUpdater::getAdjacencyList() {
             location.setRow(roadMap[i]->getLocation().getRow()-1);
             location.setCol(roadMap[i]->getLocation().getCol());
             road = dynamic_cast<Road*>(cityMap->getCase(location));
-            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-            tmpVector.push_back(neighbor(index, 1));
+            if (!(road->isBlocked())){
+                int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+                tmpVector.push_back(neighbor(index, 1));
+            }
             //
         }
         if (roadMap[i]->isOpen(Road::WEST) && ((roadMap[i]->getLocation().getCol())-1 >= 0)) {
@@ -94,8 +99,10 @@ void CityUpdater::getAdjacencyList() {
             location.setRow(roadMap[i]->getLocation().getRow());
             location.setCol(roadMap[i]->getLocation().getCol()-1);
             road = dynamic_cast<Road*>(cityMap->getCase(location));
-            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-            tmpVector.push_back(neighbor(index, 1));
+            if (!(road->isBlocked())){
+                int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+                tmpVector.push_back(neighbor(index, 1));
+            }
             //
         }
         if (roadMap[i]->isOpen(Road::SOUTH) && ((roadMap[i]->getLocation().getRow())+1 < cityMap->getNumberOfRows())) {
@@ -103,8 +110,10 @@ void CityUpdater::getAdjacencyList() {
             location.setRow(roadMap[i]->getLocation().getRow()+1);
             location.setCol(roadMap[i]->getLocation().getCol());
             road = dynamic_cast<Road*>(cityMap->getCase(location));
-            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-            tmpVector.push_back(neighbor(index, 1));
+            if (!(road->isBlocked())){
+                int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+                tmpVector.push_back(neighbor(index, 1));
+            }
             //
         }
         if (roadMap[i]->isOpen(Road::EAST) && ((roadMap[i]->getLocation().getCol())+1 < cityMap->getNumberOfCols())) {
@@ -112,8 +121,10 @@ void CityUpdater::getAdjacencyList() {
             location.setRow(roadMap[i]->getLocation().getRow());
             location.setCol(roadMap[i]->getLocation().getCol()+1);
             road = dynamic_cast<Road*>(cityMap->getCase(location));
-            int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
-            tmpVector.push_back(neighbor(index, 1));
+            if (!(road->isBlocked())){
+                int index = std::find(roadMap.begin(), roadMap.end(), road) - roadMap.begin();
+                tmpVector.push_back(neighbor(index, 1));
+            }
             //
         }
         adjacencyList.push_back(tmpVector);
@@ -284,6 +295,40 @@ void CityUpdater::refreshBuildingsList() {
     }
 }
 
+void CityUpdater::generateFullPath(Location start, Location end, std::vector<Location> &path){
+    Location lastLocation = start;
+    int size_buildings = buildingsList.size();
+    int size_checkPoints = checkPointsList.size();
+
+    int badLuck = 1;
+    int chances = 0;
+    Location nextLocation;
+    int luck = rand() % (badLuck);
+    while (luck >= badLuck-1) {
+        if ((size_buildings-(badLuck-1)) > 0 && luck >= chances) {
+            luck = rand() % (size_buildings);
+            nextLocation = buildingsList[luck]->getLocation();
+            createPath(lastLocation,nextLocation,path);
+            std::cout<<"Building stop "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
+            lastLocation = nextLocation;
+        }
+        luck = rand() % (badLuck);
+        if ((size_checkPoints-(badLuck-1)) > 0 && luck <= chances) {
+            luck = rand() % (size_checkPoints);
+            nextLocation = checkPointsList[luck]->getLocation();
+            createPath(lastLocation,nextLocation,path);
+            std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
+            lastLocation = nextLocation;
+        }
+        badLuck += 1;
+        chances = (ceil((badLuck)/2))-1;
+        luck = rand() % (badLuck);
+    }
+
+    createPath(lastLocation,end,path);
+    std::cout<<"Got Path"<<std::endl;
+}
+
 void CityUpdater::createPath(Location start, Location end, std::vector<Location> &path){
     // VOIR DIJKSTRA EN HAUT !!!!
     int startIndex = std::find(roadMap.begin(), roadMap.end(), cityMap->getCase(start)) - roadMap.begin();
@@ -313,42 +358,10 @@ void CityUpdater::generateVisitors(){
             endSpawn = spawn[luck];
         }
         Location endLocation = endSpawn->getSpawnPoint();
+        std::cout<<"End "<<endLocation.getRow()<<","<<endLocation.getCol()<<std::endl;
 
         std::vector<Location> path;
-        //path.push_back(startLocation);
-
-        Location lastLocation = startLocation;
-        int size_buildings = buildingsList.size();
-        int size_checkPoints = checkPointsList.size();
-
-        int badLuck = 1;
-        int chances = 0;
-        Location nextLocation;
-        luck = rand() % (badLuck);
-        while (luck >= badLuck-1) {
-            if ((size_buildings-(badLuck-1)) > 0 && luck >= chances) {
-                luck = rand() % (size_buildings);
-                nextLocation = buildingsList[luck]->getLocation();
-                createPath(lastLocation,nextLocation,path);
-                std::cout<<"Building stop "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
-                lastLocation = nextLocation;
-            }
-            luck = rand() % (badLuck);
-            if ((size_checkPoints-(badLuck-1)) > 0 && luck <= chances) {
-                luck = rand() % (size_checkPoints);
-                nextLocation = checkPointsList[luck]->getLocation();
-                createPath(lastLocation,nextLocation,path);
-                std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
-                lastLocation = nextLocation;
-            }
-            badLuck += 1;
-            chances = (ceil((badLuck)/2))-1;
-            luck = rand() % (badLuck);
-        }
-
-        std::cout<<"End "<<endLocation.getRow()<<","<<endLocation.getCol()<<std::endl;
-        createPath(lastLocation,endLocation,path);
-        std::cout<<"Got Path"<<std::endl;
+        generateFullPath(startLocation, endLocation, path);
 
         Visitor* newVisitor = new Visitor(startLocation);
         std::cout<<"Taille du chemin donné :"<< path.size() <<std::endl;
@@ -356,6 +369,40 @@ void CityUpdater::generateVisitors(){
         int id = cityMap->addVisitor(newVisitor);  
         SocketMessage update = visitorCreate(id, startLocation);
         sendUpdateToPlayers(update);
+    }
+}
+
+void CityUpdater::blockRoad(Road* toBlock){
+    std::cout<<"Blocking "<<toBlock->getLocation().getRow()<<" . "<<toBlock->getLocation().getCol()<<std::endl;
+    toBlock->setUpBarricade(true);
+    blockedRoads.push_back(toBlock);
+    getAdjacencyList();
+    Visitor* visitorPtr;
+    std::vector<Location> path;
+    for (int i=0; i<cityMap->getMaxVisitors(); i++){
+        if ((visitorPtr = cityMap->getVisitor(i)) && visitorPtr->passesThrough(toBlock->getLocation())){
+            path.clear();
+            generateFullPath(visitorPtr->getLoc(), visitorPtr->getEndLoc(), path);
+            visitorPtr->setPath(path);
+        }
+    }
+}
+
+void CityUpdater::freeRoad(){
+    Road* toFree;
+    toFree = blockedRoads.front();
+    std::cout<<"Freeing "<<toFree->getLocation().getRow()<<" . "<<toFree->getLocation().getCol()<<std::endl;
+    blockedRoads.pop_front();
+    toFree->setUpBarricade(false);
+    getAdjacencyList();
+    Visitor* visitorPtr;
+    std::vector<Location> path;
+    for (int i=0; i<cityMap->getMaxVisitors(); i++){
+        if ((visitorPtr = cityMap->getVisitor(i))){
+            path.clear();
+            generateFullPath(visitorPtr->getLoc(), visitorPtr->getEndLoc(), path);
+            visitorPtr->setPath(path);
+        }
     }
 }
 
