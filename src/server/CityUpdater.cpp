@@ -203,10 +203,10 @@ std::string CityUpdater::getTime(){
     str_time << setfill('0') << setw(2) << min;
 
     std::string concat = "Day : " + day;
-    std::string concat2 = concat + " |Time : ";
-    std::string concat5= concat2 + str_time.str();
+    std::string concat1 = concat + " |Time : ";
+    std::string concat2= concat1 + str_time.str();
 
-    return  concat5;
+    return  concat2;
 }
 
 /*
