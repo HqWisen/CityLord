@@ -127,6 +127,7 @@ La partie s'achève lorsqu'il ne reste qu'un seul joueur en jeu, n'ayant pas fai
  \item \textbf{Debug:} Action de chercher, trouver et retirer un bug d’un programme informatique.
  \item \textbf{Host:} Action d'héberger une partie.
  \item \textbf{Join:} Action de rejoindre une partie.
+ \item \textbf{Build:} Bâtiment qui permettra de faire tourner le jeu.
 \end{itemize}
 
 \section{Historique du document}
@@ -134,6 +135,8 @@ La partie s'achève lorsqu'il ne reste qu'un seul joueur en jeu, n'ayant pas fai
 \begin{tabular}{|c|c|c|c|}
 \hline
 Date de modification & Version & Modification apportée & Auteur \\
+\hline
+19/03/2015 & 2.9 & \parbox{7cm}{- \\ Correction de fautes d'orthographes. Ajout de mots dans le glossaire. \\ } & Cédric \\
 \hline
 15/03/2015 & 2.8 & \parbox{7cm}{- \\ Modification de la description textuelle du UseCase [Construire-Améliorer-Détruire]. \\} & David \\
 \hline
@@ -224,7 +227,7 @@ pseudo et mot de passe associés ceux entrés dans les zones appropriées, et co
  perceptible, et indique à l'utilisateur que le pseudo demandé est déjà utilisé. La fenêtre de création reste ouverte
  et demande à l'utilisateur de réentrer un nouveau pseudo.
  \item \textit{Aucun pseudo et/ou mot de passe entré:} Dans les deux cas - de connexion ou de création - si l'utilisateur
- manque d'entrer une information, après du bonton associé à la fenêtre en premier plan, sur la même vue,
+ manque d'entrer une information, après du bouton associé à la fenêtre en premier plan, sur la même vue,
  une remarque apparait, en une couleur fortement perceptible, et indique à l'utilisateur l'information manquante. La
  fenêtre reste ouvert et demande à l'utilisateur d'entrer cette information pour continuer la connexion ou la création.
 \end{itemize}
@@ -242,7 +245,7 @@ pseudo et mot de passe associés ceux entrés dans les zones appropriées, et co
 \paragraph{Cas général}
 Un joueur peut se déconnecté à n'importe quel moment. Si il est en partie, il la quitte automatiquement. L'utilisateur
 est ensuite déconnecté et la fenêtre du jeu se ferme.
-\paragraph{Excéptions} Néant.
+\paragraph{Exceptions} Néant.
 \subsubsection{Join game}
 \paragraph{Préconditions}
 \begin{itemize}
@@ -267,8 +270,8 @@ Dans le cas où la partie est déjà commencé le joueur reçoit de l'argent.
 \paragraph{Exceptions}
 \begin{itemize}
  \item \textit{La partie est complète:} Une fenêtre s'ouvre indiquant a l'utilisateur que la partie est complète
- et donc injoingnable. Une fois cette fenêtre fermée l'utilisateur est ramené au menu de selection.
- \item \textit{Hôte ferme la partie:} L'utilisateur client est ramené au menu de selection [pour plus d'informations, voir
+ et donc injoignable. Une fois cette fenêtre fermée l'utilisateur est ramené au menu de sélection.
+ \item \textit{Hôte ferme la partie:} L'utilisateur client est ramené au menu de sélection [pour plus d'informations, voir
  Host Game]. 
 \end{itemize}
 
@@ -288,7 +291,7 @@ Dans le cas où la partie est déjà commencé le joueur reçoit de l'argent.
 \end{itemize}
 \paragraph{Cas général}
 L'utilisateur est capable de créer une partie en appuyant sur le bouton \og \textit{Create game} \fg dans le menu principal.
-Il choisit d'abords une Map et optionellement d'autres options; la partie est alors crée, mais n'est pas lancée tant qu'il n'y a pas au moins 2 joueurs qui participent.
+Il choisit d'abords une Map et optionnellement d'autres options; la partie est alors créée, mais n'est pas lancée tant qu'il n'y a pas au moins 2 joueurs qui participent.
 Quand il y a assez de joueur - minimum 2 et maximum 8 - le bouton \og \textit{Start game} \fg s'active. Quand il est cliqué, la partie démarre.
 \paragraph{Exceptions} Néant.
 
@@ -379,7 +382,7 @@ Lorsque le \textit{catalog} reçoit une offre sur un bâtiment, il accepte autom
  \item Le bâtiment est en vente libre.
 \end{itemize}
 \paragraph{Cas général}
-Dès qu'un bâtiment n'as pas de prioritaire, le \textit{catalog} le met en vente libre. Les bâtiments créés en début de partie seront mit dans le \textit{catalog}, ainsi que les batiments d'un joueur qui vient de perdre qui sont mit en vente libre.
+Dès qu'un bâtiment n'as pas de prioritaire, le \textit{catalog} le met en vente libre. Les bâtiments créés en début de partie seront mit dans le \textit{catalog}, ainsi que les bâtiments d'un joueur qui vient de perdre qui sont mit en vente libre.
 \paragraph{Exceptions} Néant.
 
 \newpage
@@ -398,15 +401,15 @@ Dès qu'un bâtiment n'as pas de prioritaire, le \textit{catalog} le met en vent
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
-	\item Une propriété est séléctionnée.
+	\item Une propriété est sélectionnée.
 	\item Les informations sur cette propriété sont affichées.
-	\item Les boutons <Buy>,<Build>,<Upgrade>,<Sell>,<Demolish> s'activent ou se désactivent selon la propriété séléctionnée.
+	\item Les boutons <Buy>,<Build>,<Upgrade>,<Sell>,<Demolish> s'activent ou se désactivent selon la propriété sélectionnée.
 \end{itemize}
 \paragraph{Cas général}
 Le joueur doit simplement cliquer, sur la carte, sur le terrain exigé.[Exception : Sélection invalide]
 \paragraph{Exceptions}
 \begin{itemize}
-	\item \textit{Sélection invalide:} Si l'emplacement séléctionné n'est pas un terrain/bâtiment (et donc une route ou un obstacle), la sélection n'est pas faite.
+	\item \textit{Sélection invalide:} Si l'emplacement sélectionné n'est pas un terrain/bâtiment (et donc une route ou un obstacle), la sélection n'est pas faite.
 \end{itemize}
 
 \subsubsection{Construire}
@@ -417,7 +420,7 @@ Le joueur doit simplement cliquer, sur la carte, sur le terrain exigé.[Exceptio
 \paragraph{Préconditions}
 \begin{itemize}
  \item La partie est en cours.
- \item Le joeur à séléctionné une parcelle qui lui appartient et est vide. (Le boutton <Build> est activé).
+ \item Le joueur a sélectionné une parcelle qui lui appartient et est vide. (Le bouton <Build> est activé).
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
@@ -426,7 +429,7 @@ Le joueur doit simplement cliquer, sur la carte, sur le terrain exigé.[Exceptio
  \item Le joueur a payé le prix de construction.
 \end{itemize}
 \paragraph{Cas général}
-Lorsque un joueur veut construire un nouveau bâtiment, il lui faudra simplement sélectionner une parcelle qui lui appartient et est vide. Le boutton \og \textit{<Build>} \fg s'activera. Le joueur devra cliquer dessus, il entre alors en mode Construction; Un tableau s'affichera, permettant au joueur de séléction un type de bâtiment et affichant les informations sur ce type. Il peut à tout moment quitter ce mode et annuler la construction, en cliquant sur \og \textit{Annuler} \fg. Pour valider l'opération, le joueur cliquera sur \og \textit{<Ok>} \fg.[Exception : Le joueur n'as pas assez d'argent] Il devra payer ensuite le prix indiqué.
+Lorsque un joueur veut construire un nouveau bâtiment, il lui faudra simplement sélectionner une parcelle qui lui appartient et est vide. Le bouton \og \textit{<Build>} \fg s'activera. Le joueur devra cliquer dessus, il entre alors en mode Construction; Un tableau s'affichera, permettant au joueur de sélection un type de bâtiment et affichant les informations sur ce type. Il peut à tout moment quitter ce mode et annuler la construction, en cliquant sur \og \textit{Annuler} \fg. Pour valider l'opération, le joueur cliquera sur \og \textit{<Ok>} \fg.[Exception : Le joueur n'as pas assez d'argent] Il devra payer ensuite le prix indiqué.
 \paragraph{Exceptions}
 \begin{itemize}
  \item \textit{Le joueur n'as pas assez d'argent:}  Une fenêtre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
@@ -436,30 +439,30 @@ Lorsque un joueur veut construire un nouveau bâtiment, il lui faudra simplement
 \begin{itemize}
  \item La partie est en cours.
  \item Le joueur possède au moins un bâtiment.
- \item Le joeur à séléctionné une parcelle qui lui appartient et qui a un bâtiment améliorable. (Le boutton <Upgrade> est activé).
+ \item Le joueur a sélectionné une parcelle qui lui appartient et qui a un bâtiment améliorable. (Le bouton <Upgrade> est activé).
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
- \item Un bâtiment séléctionné est amélioré d'un niveau.
+ \item Un bâtiment sélectionné est amélioré d'un niveau.
  \item Le joueur a dépensé de l'argent pour l'amélioration.
 \end{itemize}
 \paragraph{Cas général}
-Lorsque un joueur veut améliorer un bâtiment, il lui faudra simplement sélectionner une parcelle qui lui appartient et qui possède un bâtiment améliorable. Le boutton \og \textit{<Upgrade>} \fg s'activera. Le joueur devra cliquer dessus. Un tableau s'affichera, permettant au joueur de voir les informations sur le niveau supérieur de ce bâtiment.[Exception : Bâtiment amélioré au max] Pour valider l'opération, le joueur cliquera sur \og \textit{<Ok>} \fg.[Exception : Le joueur n'as pas assez d'argent] Il devra payer ensuite le prix indiqué.
+Lorsque un joueur veut améliorer un bâtiment, il lui faudra simplement sélectionner une parcelle qui lui appartient et qui possède un bâtiment améliorable. Le bouton \og \textit{<Upgrade>} \fg s'activera. Le joueur devra cliquer dessus. Un tableau s'affichera, permettant au joueur de voir les informations sur le niveau supérieur de ce bâtiment.[Exception : Bâtiment amélioré au max] Pour valider l'opération, le joueur cliquera sur \og \textit{<Ok>} \fg.[Exception : Le joueur n'as pas assez d'argent] Il devra payer ensuite le prix indiqué.
 \paragraph{Exceptions}
 \begin{itemize}
- \item \textit{Le joueur n'as pas assez d'argent:}  Une fenètre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
- \item \textit{Bâtiment amélioré au max:}  Les bâtiments ont un niveau maximum d'amélioration Une fenètre s'ouvre indiquant au joueur qu'il ne peut plus améliorer ce bâtiment.
+ \item \textit{Le joueur n'as pas assez d'argent:}  Une e s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
+ \item \textit{Bâtiment amélioré au max:}  Les bâtiments ont un niveau maximum d'amélioration Une fenêtre s'ouvre indiquant au joueur qu'il ne peut plus améliorer ce bâtiment.
 \end{itemize}
 \subsubsection{Destroy}
 \paragraph{Préconditions}
 \begin{itemize}
  \item La partie est en cours.
  \item Le joueur possède au moins un bâtiment.
- \item Le joeur à séléctionné une parcelle qui lui appartient et qui a un bâtiment. (Le boutton <Destroy> est activé).
+ \item Le joueur a sélectionné une parcelle qui lui appartient et qui a un bâtiment. (Le bouton <Destroy> est activé).
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
- \item Un bâtiment est détruit et n'éxiste plus.
+ \item Un bâtiment est détruit et n’existe plus.
  \item Le propriétaire gagne une somme d'argent équivalente à la moitié de la valeur du bâtiment détruit.
 \end{itemize}
 \paragraph{Cas général}
@@ -507,7 +510,7 @@ Un \textit{catalog} de types prédéfinis de bâtiment(bar,magasin,night-club,..
 A tout moment de la partie, un joueur peut tenter d'acheter le bâtiment d'un autre. Il lui doit simplement de faire une offre auprès de ce joueur, pour ce bâtiment.[Exception : Le joueur a fait trop d'offre] Il suffit à l'acheteur de sélectionner le bâtiment voulu et de cliquer sur \og \textit{Faire une offre} \fg, une fenêtre s'ouvre pour que le joueur puisse donner le prix qu'il est prêt a payer et confirme son offre.[Exception : Le joueur n'a pas assez d'argent] 
 \paragraph{Exceptions}
 \begin{itemize}
- \item \textit{Le joueur n'a pas assez d'argent:} Une fenètre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
+ \item \textit{Le joueur n'a pas assez d'argent:} Une fenêtre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
  \item \textit{Le joueur a fait trop d'offre:} Afin d'éviter tout spam, une limite d'offre sur un temps donné est instauré.
 \end{itemize}
 \subsubsection{Annuler une offre}
@@ -559,7 +562,7 @@ Le \textit{system} sera crée de telle sorte qu'il disposera d’une apparence g
 
 La map sera aura comme particularité que chaque joueur aura sa couleur qui sera affichée sur ses propriétés.
 
-L'utilisation sera facilitée par l'interface graphique, grâce à des icones, boutons et aides affichées tout au long du jeu.
+L'utilisation sera facilitée par l'interface graphique, grâce à des icônes, boutons et aides affichées tout au long du jeu.
 
 \paragraph{}Aptitude à la maintenance:  \newline
 Le concept de programmation orientée objet étant suivit avec rigueur pour l’implémentation du jeu, celui-ci permettra la mise à jour ou le débuggage du jeu.
@@ -591,12 +594,12 @@ Sans cela, la communication avec le \textit{server} et entre les joueurs serait 
 \begin{itemize}
  \item Le jeu est multijoueurs, et doit donc permettre aux différents utilisateurs de communiquer entre eux.
  \item Une partie doit être composé d'au minimum 2 joueurs et au maximum 8 joueurs.
- \item Les 8 premiers joueurs qui rejoingnent la partie seront les seules 8 joueurs capable de la rejoindre.
+ \item Les 8 premiers joueurs qui rejoignent la partie seront les seules 8 joueurs capable de la rejoindre.
  \item Pour qu'un joueur puisse continuer à jouer, il doit posséder soit des terrains, des batiments ou encore avoir
  un capital. 
- \item Le capitale de chaque joueur varie tout au long de la partie en fonction des frais et des gains de chaque batiment.
- \item Les gains qu'apporte chaque batiment seront représentés par des visiteurs, qui, en suivant un chemin, pourront 
- rentrer dans un batiment qui augmentera le capital de son propiétaire.
+ \item Le capitale de chaque joueur varie tout au long de la partie en fonction des frais et des gains de chaque bâtiment.
+ \item Les gains qu'apporte chaque bâtiment seront représentés par des visiteurs, qui, en suivant un chemin, pourront 
+ rentrer dans un bâtiment qui augmentera le capital de son propriétaire.
  \item Si le joueur est en faillite, la partie se terminera pour ce joueur et il ne sera plus possible pour lui de
  continuer de jouer dans cette partie, mais il pourra toute fois la regarder.
  \item La partie se finie uniquement si il ne reste plus qu'un joueur propriétaire.
