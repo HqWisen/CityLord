@@ -35,6 +35,7 @@ public:
     void quit();
     virtual void repaint();
     virtual void updateMoney(int);
+    /////////virtual void updateTime(int);
     static std::string strCurrency(int);
     static std::string strCurrency(std::string);
 protected:

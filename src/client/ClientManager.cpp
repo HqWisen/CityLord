@@ -120,3 +120,10 @@ void ClientManager::repaint(){
 void ClientManager::updateMoney(int newMoney){
 
 }
+
+
+/*
+void ClientManager::updateTime(int newTime){
+
+}
+*/

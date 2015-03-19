@@ -18,3 +18,9 @@ void Signaler::signalActiving(SocketMessage message, Location location){
 void Signaler::signalUpdatingMoney(int newMoney){
     emit updateMoney(newMoney);
 }
+
+/*
+void Signaler::signalUpdatingTime(int newTime){
+    emit updateTime(newTime);
+}
+*/

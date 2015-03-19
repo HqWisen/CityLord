@@ -19,6 +19,7 @@ InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
     QObject::connect(clientManager->getSignaler(), SIGNAL(buildViewMap()), this, SLOT(buildViewMap()));
     QObject::connect(clientManager->getSignaler(), SIGNAL(selectField(SocketMessage,Location)), this, SLOT(selectField(SocketMessage, Location)));
     QObject::connect(clientManager->getSignaler(), SIGNAL(updateMoney(int)), this, SLOT(updateMoney(int)));
+    /////////QObject::connect(clientManager->getSignaler(), SIGNAL(updateTime(int)), this, SLOT(updateTime(int)));
 }
 
 void InGame::repaintView(){
@@ -33,6 +34,7 @@ void InGame::buildViewMap(){
     ui->colorLabel->setText(clientManager->getInfo("color").c_str());
     clientManager->setCurrentPlayerID(std::stoi(clientManager->getInfo("playerid")));
     updateMoney(std::stoi(clientManager->getInfo("money")));
+    ////////////updateTime(std::stoi(clientManager->getInfo("time")));
     view->buildViewMap();
 }
 

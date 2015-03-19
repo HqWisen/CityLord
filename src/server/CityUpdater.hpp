@@ -72,8 +72,8 @@ class CityUpdater : public Thread{
         SocketMessage visitorRemove(int);
         void sendUpdateToPlayers(SocketMessage);
         std::string getTime();
-        //std::string getRealTimeRemaining();
-        //SocketMessage sendTime();
+        std::string getRealTimeRemaining();
+        SocketMessage sendTime();
         bool getNight();
         void refreshBuildingsList();
     private:

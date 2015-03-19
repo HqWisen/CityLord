@@ -13,11 +13,13 @@ public:
     void signalBuildViewMap();
     void signalActiving(SocketMessage, Location);
     void signalUpdatingMoney(int);
+    ////////////////void signalUpdatingTime(int);
 signals:
     void repaintView();
     void buildViewMap();
     void selectField(SocketMessage, Location);
     void updateMoney(int);
+    ////////////////void updateTime(int);
 public slots:
 
 };

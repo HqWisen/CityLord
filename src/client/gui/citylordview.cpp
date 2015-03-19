@@ -171,7 +171,6 @@ void CityLordView::wheelEvent(QWheelEvent* e){
         ZOOMLEVEL-=1;
         scale(0.909090909, 0.909090909);
     }
-    //std::cout<<scale<<std::endl;
     //std::cout<<ZOOMLEVEL<<std::endl;
     //std::cout<<scene->height()<<std::endl;
 }

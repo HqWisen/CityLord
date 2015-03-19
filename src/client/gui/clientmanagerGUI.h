@@ -31,6 +31,7 @@ public:
     Signaler* getSignaler();
     int getCurrentPlayerID();
     void setCurrentPlayerID(int);
+    //////////////void updateTime(int) override;
 private:
     QStackedWidget* stackedWidget;
     QVBoxLayout* layout;
