@@ -40,6 +40,7 @@ typedef std::vector<std::vector<neighbor> > adjacency_list_t;
 // ======================================================================================
 
 class CityUpdater : public Thread{
+    static const unsigned MAXDAY;
     Map<Field>* cityMap;
     std::vector<Spawn*> spawn;
     std::vector<Player*>* playerVectorPtr;
@@ -50,7 +51,7 @@ class CityUpdater : public Thread{
     adjacency_list_t adjacencyList;
     Timer t;
     unsigned moveTimer = 1;
-    unsigned dayRemaining = 15;
+    unsigned dayRemaining;
     unsigned spawnTimer = 1;
     unsigned dayTimer = 144;
     bool night = false;

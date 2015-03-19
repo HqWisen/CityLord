@@ -19,7 +19,7 @@ InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
     QObject::connect(clientManager->getSignaler(), SIGNAL(buildViewMap()), this, SLOT(buildViewMap()));
     QObject::connect(clientManager->getSignaler(), SIGNAL(selectField(SocketMessage,Location)), this, SLOT(selectField(SocketMessage, Location)));
     QObject::connect(clientManager->getSignaler(), SIGNAL(updateMoney(int)), this, SLOT(updateMoney(int)));
-    /////////QObject::connect(clientManager->getSignaler(), SIGNAL(updateTime(int)), this, SLOT(updateTime(int)));
+    QObject::connect(clientManager->getSignaler(), SIGNAL(updateTime(QString)), this, SLOT(updateTime(QString)));
 }
 
 void InGame::repaintView(){
@@ -151,15 +151,9 @@ void InGame::updateMoney(int amount){
     ui->moneyLabel->setText(QString::fromStdString(moneyStr.str()));
 }
 
-void InGame::updateTime(int time){
-    int hours,minutes;
-    hours=time/60;
-    minutes=time%60;
-
-    std::ostringstream timeStr;
-    timeStr << hours <<" : "<< minutes;
-    //std::string timeStr = std::to_string(hours) + " : " + std::to_string(minutes);
-    ui->timeLabel->setText(QString::fromStdString(timeStr.str()));
+void InGame::updateTime(QString time){
+    std::cout<<"UPDATING"<<std::endl;
+    ui->timeLabel->setText(time);
 }
 
 void InGame::openMessageBox(std::string title){

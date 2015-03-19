@@ -31,6 +31,7 @@ public slots:
     void buildViewMap();
     void selectField(SocketMessage, Location);
     void updateMoney(int);
+    void updateTime(QString);
 private slots:
     void on_buyButton_clicked();
     void on_buildButton_clicked();

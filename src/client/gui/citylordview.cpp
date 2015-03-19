@@ -163,11 +163,11 @@ void CityLordView::mouseMoveEvent(QMouseEvent * e){
 }
 
 void CityLordView::wheelEvent(QWheelEvent* e){
-    if(e->delta() > 0 /*and ZOOMLEVEL<DEFAULTZOOMLEVEL+10*/){
+    if(e->delta() > 0 and ZOOMLEVEL<DEFAULTZOOMLEVEL+10){
         ZOOMLEVEL+=1;
         scale(1.1, 1.1);
     }
-    else if(e->delta() < 0 /*and ZOOMLEVEL>DEFAULTZOOMLEVEL-10*/){
+    else if(e->delta() < 0 and ZOOMLEVEL>DEFAULTZOOMLEVEL-10){
         ZOOMLEVEL-=1;
         scale(0.909090909, 0.909090909);
     }

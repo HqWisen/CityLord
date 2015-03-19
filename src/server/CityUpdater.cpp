@@ -1,6 +1,10 @@
 #include "CityUpdater.hpp"
 #include "UserManager.hpp"
 
+
+const unsigned CityUpdater::MAXDAY = 15;
+
+
 // ======================================================================================
 // ========================================= Dijkstra ===================================
 // ======================================================================================
@@ -142,6 +146,7 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr){
     srand(time(NULL));
     getRoadMap();
     getAdjacencyList();
+    dayRemaining = MAXDAY;
     this->start();
 }
 
@@ -152,12 +157,14 @@ void CityUpdater::run(){
     unsigned timer = spawnTimer;
     unsigned timer2 = moveTimer;
     t.start();
+    SocketMessage update("updatetime");
     while(dayRemaining!=0){
         if(t.elapsedTime() < timer2){
 
         }
         else{
-            std::cout<<getTime()<<std::endl;
+            update.set("time", getTime());
+            sendUpdateToPlayers(update);
             timer2 += moveTimer;
             makeVisitorsAdvance();
         }
@@ -183,7 +190,7 @@ void CityUpdater::run(){
 }
 
 std::string CityUpdater::getTime(){
-    int x = 3-dayRemaining+1;
+    int x = MAXDAY-dayRemaining+1;
     std::string day = to_string(x);
     int y = t.elapsedTime();
     int res = dayTimer - y;

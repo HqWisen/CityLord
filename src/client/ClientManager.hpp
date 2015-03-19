@@ -1,6 +1,8 @@
 #ifndef CLIENTMANAGER_HPP
 #define CLIENTMANAGER_HPP
 
+#include <string>
+
 #include "ClientUpdater.hpp"
 #include "../common/models/Map.hpp"
 #include "../common/socket/ConnectionSocket.hpp"
@@ -35,7 +37,7 @@ public:
     void quit();
     virtual void repaint();
     virtual void updateMoney(int);
-    /////////virtual void updateTime(int);
+    virtual void updateTime(std::string);
     static std::string strCurrency(int);
     static std::string strCurrency(std::string);
 protected:

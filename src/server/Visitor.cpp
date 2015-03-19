@@ -36,7 +36,7 @@ void Visitor::move(){
 		currentLocation.setRow(path[0].getRow());
 		currentLocation.setCol(path[0].getCol());
 		path.erase(path.begin(),path.begin()+1);
-		std::cout<<"Visitor moved to "<<currentLocation.getRow()<<" . "<<currentLocation.getCol()<<std::endl;
+        //std::cout<<"Visitor moved to "<<currentLocation.getRow()<<" . "<<currentLocation.getCol()<<std::endl;
 	}
 }
 

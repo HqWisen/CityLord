@@ -77,12 +77,9 @@ void ClientManagerGUI::updateMoney(int newMoney){
 }
 
 
-/*
-void ClientManagerGUI::updateTime(int newTime){
-   signaler->signalUpdatingTime(newTime);
+void ClientManagerGUI::updateTime(std::string time){
+   signaler->signalUpdatingTime(time);
 }
-*/
-
 
 Signaler* ClientManagerGUI::getSignaler(){
     return signaler;

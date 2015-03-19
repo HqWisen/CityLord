@@ -121,6 +121,10 @@ void ClientManager::updateMoney(int newMoney){
 
 }
 
+void ClientManager::updateTime(std::string time){
+
+}
+
 
 /*
 void ClientManager::updateTime(int newTime){

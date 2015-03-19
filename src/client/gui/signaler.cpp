@@ -19,8 +19,7 @@ void Signaler::signalUpdatingMoney(int newMoney){
     emit updateMoney(newMoney);
 }
 
-/*
-void Signaler::signalUpdatingTime(int newTime){
-    emit updateTime(newTime);
+void Signaler::signalUpdatingTime(std::string time){
+    emit updateTime(time.c_str());
 }
-*/
+

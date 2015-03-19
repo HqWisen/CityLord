@@ -28,6 +28,7 @@ public:
     void buildMap(std::string) override;
     void repaint() override;
     void updateMoney(int) override;
+    void updateTime(std::string) override;
     Signaler* getSignaler();
     int getCurrentPlayerID();
     void setCurrentPlayerID(int);

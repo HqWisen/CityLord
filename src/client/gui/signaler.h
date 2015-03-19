@@ -13,13 +13,13 @@ public:
     void signalBuildViewMap();
     void signalActiving(SocketMessage, Location);
     void signalUpdatingMoney(int);
-    ////////////////void signalUpdatingTime(int);
+    void signalUpdatingTime(std::string);
 signals:
     void repaintView();
     void buildViewMap();
     void selectField(SocketMessage, Location);
     void updateMoney(int);
-    ////////////////void updateTime(int);
+    void updateTime(QString);
 public slots:
 
 };
