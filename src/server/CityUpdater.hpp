@@ -7,7 +7,7 @@
 #include "Timer.hpp"
 #include <iostream>
 #include "../common/models/Map.hpp"
-#include "../common/models/Visitor.hpp"
+#include "Visitor.hpp"
 #include <cmath>
 #include <deque>
 

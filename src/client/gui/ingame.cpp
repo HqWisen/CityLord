@@ -140,9 +140,9 @@ void InGame::refresh(){
 
 void InGame::updateMoney(int amount){
     if(amount>0){
-        ui->moneyLabel->setStyleSheet("QLabel {background:transparent; color:rgb(0, 220, 0);}");
+        ui->moneyLabel->setStyleSheet("QLabel {background:transparent; color:rgb(0, 220, 0); font:bold 26pt;}");
     }else{
-        ui->moneyLabel->setStyleSheet("QLabel {background:transparent; color:red");
+        ui->moneyLabel->setStyleSheet("QLabel {background:transparent; color:red; font:bold 26pt;");
     }
     std::ostringstream moneyStr;
     moneyStr << amount << ClientManager::CURRENCY;
@@ -184,8 +184,8 @@ void InGame::on_buildButton_clicked(){;
     clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
     clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
     buildDialog->exec();
-    openMessageBox("Build");
     if(clientManager->getInfo("showmessagebox") == "true"){
+        openMessageBox("Build");
         view->selectField(lastLocation);
     }
 }

@@ -41,9 +41,10 @@ int Player::getMoney(){
 
 void Player::setMoney(int newMoney){
     money = newMoney;
-    /*SocketMessage update("updatemoney");
+    SocketMessage update("updatemoney");
     update.set("money", std::to_string(money));
-    userManager->sendUpdate(update);*/
+    userManager->sendUpdate(update);
+
 }
 
 void Player::gainMoney(int amount){

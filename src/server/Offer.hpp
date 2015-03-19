@@ -1,8 +1,9 @@
 #ifndef OFFER_HPP_
 #define OFFER_HPP_
 
-#include "Field.hpp"
-#include "../../server/Player.hpp"
+
+#include "Player.hpp"
+#include "../common/models/Field.hpp"
 
 class Offer{
 	Player* owner;

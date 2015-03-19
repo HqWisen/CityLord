@@ -4,8 +4,8 @@
 #include <vector>
 #include <random>
 #include <typeinfo>
-#include "Building.hpp"
-#include "Location.hpp"
+#include "../common/models/Building.hpp"
+#include "../common/models/Location.hpp"
 //#include "BuildingType.hpp"
 
 #include <iostream>

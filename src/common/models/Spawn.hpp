@@ -2,7 +2,7 @@
 #define SPAWN_HPP_
 
 #include "Road.hpp"
-#include "Visitor.hpp"
+#include "../../server/Visitor.hpp"
 
 class Spawn{
 	protected:

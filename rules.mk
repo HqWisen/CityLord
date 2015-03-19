@@ -16,7 +16,7 @@ $(BIN_DIR)/$(NAME)/%.o: %.cpp $(HEADERS) $(BIN_DIR)/$(NAME)/
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(BIN_DIR)/$(NAME).a: $(OBJECTS)
-	$(AR) rcu $@ $(OBJECTS)
+	$(AR) rcu $@ $(HEADERS) $(OBJECTS)
 
 	
 $(BIN_DIR)/$(NAME)/:

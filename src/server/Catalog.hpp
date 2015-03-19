@@ -2,7 +2,7 @@
 #define CATALOG_HPP_
 
 #include <vector>
-#include "../common/models/Offer.hpp"
+#include "Offer.hpp"
 #include "../common/socket/SocketMessage.hpp"
 
 

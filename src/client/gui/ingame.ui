@@ -111,18 +111,18 @@ QLabel{font:12pt;}</string>
      </property>
      <property name="font">
       <font>
-       <pointsize>12</pointsize>
-       <weight>50</weight>
+       <pointsize>26</pointsize>
+       <weight>75</weight>
        <italic>false</italic>
-       <bold>false</bold>
+       <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
       <string notr="true">
-QLabel{background:transparent;color:rgb(0, 220, 0)}</string>
+QLabel{background:transparent;color:rgb(0, 220, 0); font:bold 26pt;}</string>
      </property>
      <property name="text">
-      <string>58673 $</string>
+      <string>10000000 €</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -735,10 +735,6 @@ Selected</string>
     </layout>
    </widget>
   </widget>
-  <zorder>frame_2</zorder>
-  <zorder>frame_3</zorder>
-  <zorder>frame_6</zorder>
-  <zorder>noFieldLabel</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

@@ -9,7 +9,7 @@
 #include "Obstacle.hpp"
 #include "Building.hpp"
 #include "Player.hpp"
-#include "Visitor.hpp"
+#include "../../server/Visitor.hpp"
 */
 
 #include <iostream>
@@ -23,7 +23,7 @@
 #include "Field.hpp"
 #include "Obstacle.hpp"
 
-#include "Visitor.hpp"
+#include "../../server/Visitor.hpp"
 
 #include "Spawn.hpp"
 #include "BorderSpawn.hpp"
