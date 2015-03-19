@@ -196,13 +196,15 @@ std::string CityUpdater::getTime(){
     int res = dayTimer - y;
     int hour = (res*5)/60;
     int min = (res*5)%60;
-    std::string hourStr = to_string(hour);
-    std::string minStr = to_string(min);
+
+    std::stringstream str_time;
+    str_time << setfill('0') << setw(2) << hour;
+    str_time << ":";
+    str_time << setfill('0') << setw(2) << min;
+
     std::string concat = "Day : " + day;
-    std::string concat2 = concat + "|Time : ";
-    std::string concat3 = concat2 + hourStr;
-    std::string concat4 = concat3 + ":";
-    std::string concat5 = concat4 + minStr;
+    std::string concat2 = concat + " |Time : ";
+    std::string concat5= concat2 + str_time.str();
 
     return  concat5;
 }

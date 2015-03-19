@@ -22,6 +22,9 @@
 #include <algorithm>
 #include <iterator>
 
+#include <sstream>
+#include <iostream>
+#include <iomanip>
  
 typedef int vertex_t;
 typedef double weight_t;
