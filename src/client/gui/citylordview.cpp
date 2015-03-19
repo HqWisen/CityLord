@@ -169,9 +169,11 @@ void CityLordView::wheelEvent(QWheelEvent* e){
     }
     else if(e->delta() < 0 and ZOOMLEVEL>DEFAULTZOOMLEVEL-10){
         ZOOMLEVEL-=1;
-        scale(0.9, 0.9);
+        scale(0.909090909, 0.909090909);
     }
-    std::cout<<scene->height()<<std::endl;
+    //std::cout<<scale<<std::endl;
+    //std::cout<<ZOOMLEVEL<<std::endl;
+    //std::cout<<scene->height()<<std::endl;
 }
 
 void CityLordView::keyPressEvent(QKeyEvent *event)
