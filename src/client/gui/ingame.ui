@@ -111,18 +111,18 @@ QLabel{font:12pt;}</string>
      </property>
      <property name="font">
       <font>
-       <pointsize>26</pointsize>
-       <weight>75</weight>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
        <italic>false</italic>
-       <bold>true</bold>
+       <bold>false</bold>
       </font>
      </property>
      <property name="styleSheet">
       <string notr="true">
-QLabel{background:transparent;color:rgb(0, 220, 0); font:bold 26pt;}</string>
+QLabel{background:transparent;color:rgb(0, 220, 0)}</string>
      </property>
      <property name="text">
-      <string>10000000 €</string>
+      <string>58673 $</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -734,7 +734,42 @@ Selected</string>
      </item>
     </layout>
    </widget>
+   <zorder>fieldTitle</zorder>
+   <zorder>buildingTitle</zorder>
+   <zorder>nicknameLabel</zorder>
+   <zorder>nicknameTitle</zorder>
+   <zorder>idTitle</zorder>
+   <zorder>idLabel</zorder>
+   <zorder>noFieldLabel</zorder>
+   <zorder>colorTitle</zorder>
+   <zorder>colorLabel</zorder>
+   <zorder>typeLabel</zorder>
+   <zorder>levelTitle</zorder>
+   <zorder>levelLabel</zorder>
+   <zorder>timeTitle</zorder>
+   <zorder>openLabel</zorder>
+   <zorder>closeLabel</zorder>
+   <zorder>visitorTitle</zorder>
+   <zorder>visitorLabel</zorder>
+   <zorder>attractivenessTitle</zorder>
+   <zorder>attractivenessLabel</zorder>
+   <zorder>incomeLabel</zorder>
+   <zorder>incomeTitle</zorder>
+   <zorder>dailyCostTitle</zorder>
+   <zorder>dailyCostLabel</zorder>
+   <zorder>buildingPriceTitle</zorder>
+   <zorder>buildingPriceLabel</zorder>
+   <zorder>destructionCostTitle</zorder>
+   <zorder>destructionCostLabel</zorder>
+   <zorder>noBuidlingLabel</zorder>
+   <zorder>verticalLayoutWidget_3</zorder>
+   <zorder>moneyLabel</zorder>
+   <zorder>moneyLabel</zorder>
   </widget>
+  <zorder>frame_2</zorder>
+  <zorder>frame_3</zorder>
+  <zorder>frame_6</zorder>
+  <zorder>moneyLabel</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

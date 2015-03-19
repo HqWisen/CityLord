@@ -19,10 +19,10 @@ CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
     COORDY=0;
 
     /*****/
-    int WIDTHOUT = 30;
+    int WIDTHOUT = 60;
     QPixmap pixmap;
-    for(int row=-WIDTHOUT;row<100+WIDTHOUT;row++){
-        for(int col=-WIDTHOUT;col<100+WIDTHOUT;col++){
+    for(int row=-2*WIDTHOUT;row<2*WIDTHOUT;row++){
+        for(int col=-2*WIDTHOUT;col<2*WIDTHOUT;col++){
             pixmap = QPixmap(getImagePath("out"));
             scene->addPixmap(pixmap)->setOffset(carToIso(Location(row, col), pixmap));
         }
@@ -163,11 +163,11 @@ void CityLordView::mouseMoveEvent(QMouseEvent * e){
 }
 
 void CityLordView::wheelEvent(QWheelEvent* e){
-    if(e->delta() > 0 and ZOOMLEVEL<DEFAULTZOOMLEVEL+10){
+    if(e->delta() > 0 /*and ZOOMLEVEL<DEFAULTZOOMLEVEL+10*/){
         ZOOMLEVEL+=1;
         scale(1.1, 1.1);
     }
-    else if(e->delta() < 0 and ZOOMLEVEL>DEFAULTZOOMLEVEL-10){
+    else if(e->delta() < 0 /*and ZOOMLEVEL>DEFAULTZOOMLEVEL-10*/){
         ZOOMLEVEL-=1;
         scale(0.909090909, 0.909090909);
     }

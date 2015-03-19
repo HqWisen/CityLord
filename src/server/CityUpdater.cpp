@@ -157,6 +157,7 @@ void CityUpdater::run(){
 
         }
         else{
+            std::cout<<getTime()<<std::endl;
             timer2 += moveTimer;
             makeVisitorsAdvance();
         }
@@ -174,11 +175,11 @@ void CityUpdater::run(){
                 timer = spawnTimer;
                 timer2 = moveTimer;
                 dayRemaining -= 1;
-                std::cout<<"Day : "<<dayRemaining<<std::endl;
+                //std::cout<<"Day : "<<dayRemaining<<std::endl;
             }
         }
     }
-    std::cout<<"fin du game"<<std::endl;
+    //std::cout<<"fin du game"<<std::endl;
 }
 
 std::string CityUpdater::getTime(){
@@ -259,7 +260,7 @@ void CityUpdater::sendUpdateToPlayers(SocketMessage update){
 
 
 void CityUpdater::makeOwnersPay(){
-    std::cout<<"test nouveau jour"<<std::endl;
+    //std::cout<<"test nouveau jour"<<std::endl;
     Location currentLocation = Location(0, 0);
     Field* concernedField;
     for(int row=0; row<cityMap->getNumberOfRows(); row++){
@@ -273,7 +274,7 @@ void CityUpdater::makeOwnersPay(){
             }
         }
     }
-    std::cout<<"cout deduit"<<std::endl;
+    //std::cout<<"cout deduit"<<std::endl;
 }
 
 void CityUpdater::refreshBuildingsList() {
@@ -311,7 +312,7 @@ void CityUpdater::generateFullPath(Location start, Location end, std::vector<Loc
                 if (isRoadFree(buildingsList[luck])){
                     nextLocation = buildingsList[luck]->getLocation();
                     createPath(lastLocation,nextLocation,path);
-                    std::cout<<"Building stop "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
+                    //std::cout<<"Building stop "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
                     lastLocation = nextLocation;
                     break;
                 }
@@ -325,7 +326,7 @@ void CityUpdater::generateFullPath(Location start, Location end, std::vector<Loc
                 if (isRoadFree(checkPointsList[luck])){
                     nextLocation = checkPointsList[luck]->getLocation();
                     createPath(lastLocation,nextLocation,path);
-                    std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
+                    //std::cout<<"Checkpoint "<<nextLocation.getRow()<<","<<nextLocation.getCol()<<std::endl;
                     lastLocation = nextLocation;
                     break;
                 }
@@ -336,7 +337,7 @@ void CityUpdater::generateFullPath(Location start, Location end, std::vector<Loc
         luck = rand() % (badLuck);
     }
     createPath(lastLocation,end,path);
-    std::cout<<"Got Path"<<std::endl;
+    //std::cout<<"Got Path"<<std::endl;
 }
 
 void CityUpdater::createPath(Location start, Location end, std::vector<Location> &path){
@@ -348,7 +349,7 @@ void CityUpdater::createPath(Location start, Location end, std::vector<Location>
     DijkstraComputePaths(startIndex, adjacencyList, min_distance, previous);
     std::vector<vertex_t> tmpPath = DijkstraGetShortestPathTo(endIndex, previous);
     for (unsigned int i=1; i<tmpPath.size(); i++){
-    std::cout<<roadMap[tmpPath[i]]->getLocation().getRow()<<","<<roadMap[tmpPath[i]]->getLocation().getCol()<<std::endl;
+    //std::cout<<roadMap[tmpPath[i]]->getLocation().getRow()<<","<<roadMap[tmpPath[i]]->getLocation().getCol()<<std::endl;
         path.push_back(roadMap[tmpPath[i]]->getLocation());
     }
 }
@@ -359,7 +360,7 @@ void CityUpdater::generateVisitors(){
         int luck = rand() %  (size);
         Spawn* startSpawn = spawn[luck];
         Location startLocation = startSpawn->getSpawnPoint();
-        std::cout<<"Start "<<startLocation.getRow()<<","<<startLocation.getCol()<<std::endl;
+        //std::cout<<"Start "<<startLocation.getRow()<<","<<startLocation.getCol()<<std::endl;
 
         luck = rand() %  (size);
         Spawn* endSpawn = spawn[luck];
@@ -368,13 +369,13 @@ void CityUpdater::generateVisitors(){
             endSpawn = spawn[luck];
         }
         Location endLocation = endSpawn->getSpawnPoint();
-        std::cout<<"End "<<endLocation.getRow()<<","<<endLocation.getCol()<<std::endl;
+        //std::cout<<"End "<<endLocation.getRow()<<","<<endLocation.getCol()<<std::endl;
 
         std::vector<Location> path;
         generateFullPath(startLocation, endLocation, path);
 
         Visitor* newVisitor = new Visitor(startLocation);
-        std::cout<<"Taille du chemin donné :"<< path.size() <<std::endl;
+        //std::cout<<"Taille du chemin donné :"<< path.size() <<std::endl;
         newVisitor->setPath(path);
         int id = cityMap->addVisitor(newVisitor);  
         SocketMessage update = visitorCreate(id, startLocation);
@@ -394,7 +395,7 @@ bool CityUpdater::isRoadFree(Road* road){
 }
 
 void CityUpdater::blockRoad(Road* toBlock){
-    std::cout<<"Blocking "<<toBlock->getLocation().getRow()<<" . "<<toBlock->getLocation().getCol()<<std::endl;
+    //std::cout<<"Blocking "<<toBlock->getLocation().getRow()<<" . "<<toBlock->getLocation().getCol()<<std::endl;
     toBlock->setUpBarricade(true);
     blockedRoads.push_back(toBlock);
     getAdjacencyList();
@@ -412,7 +413,7 @@ void CityUpdater::blockRoad(Road* toBlock){
 void CityUpdater::freeRoad(){
     Road* toFree;
     toFree = blockedRoads.front();
-    std::cout<<"Freeing "<<toFree->getLocation().getRow()<<" . "<<toFree->getLocation().getCol()<<std::endl;
+    //std::cout<<"Freeing "<<toFree->getLocation().getRow()<<" . "<<toFree->getLocation().getCol()<<std::endl;
     blockedRoads.pop_front();
     toFree->setUpBarricade(false);
     getAdjacencyList();
@@ -428,7 +429,7 @@ void CityUpdater::freeRoad(){
 }
 
 void CityUpdater::updateBuildings(){
-    std::cout<<"Update"<<endl;
+    //std::cout<<"Update"<<endl;
     Location currentLocation;
     Field* concernedField;
     for(int col = 0; col < cityMap->getNumberOfCols(); col++){
@@ -446,7 +447,7 @@ void CityUpdater::updateBuildings(){
 //gainMoney()
 
 void CityUpdater::makeVisitorsAdvance(){
-    std::cout<<"Advance"<<endl;
+    //std::cout<<"Advance"<<endl;
     for(int i = 0; i < cityMap->getMaxVisitors(); i++){
         if(cityMap->getVisitor(i) != nullptr){
             if (cityMap->getVisitor(i)->hasReachedEnd()) {
@@ -476,7 +477,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                     locTest = Location(row-1,col);
                                 }
                                 else{
-                                    std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
+                                    //std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
                                     dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                     SocketMessage update = visitorRemove(i);
                                     sendUpdateToPlayers(update);
@@ -500,7 +501,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                     if(!enter){
                                         locTest = Location(row,col+1);
                                     } else {
-                                        std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
+                                        //std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
                                         dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                         SocketMessage update = visitorRemove(i);
                                         sendUpdateToPlayers(update);
@@ -525,7 +526,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                     if(!enter){
                                         locTest = Location(row,col-1);
                                     } else {
-                                        std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
+                                        //std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
                                         dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                         SocketMessage update = visitorRemove(i);
                                         sendUpdateToPlayers(update);
@@ -546,7 +547,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                 if(enter){
                                     enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
                                     if(enter){
-                                        std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
+                                        //std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
                                         dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                         SocketMessage update = visitorRemove(i);
                                         sendUpdateToPlayers(update);
@@ -565,7 +566,7 @@ void CityUpdater::makeVisitorsAdvance(){
 void CityUpdater::updateCity(){
     generateVisitors();
     updateBuildings();
-    std::cout<<"Fin updateCity"<<std::endl;
+    //std::cout<<"Fin updateCity"<<std::endl;
 }
 
 
