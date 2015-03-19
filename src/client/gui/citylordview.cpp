@@ -15,7 +15,7 @@ CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
     this->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ZOOMLEVEL=DEFAULTZOOMLEVEL;
-    COORDX=0;
+    COORDX=1520;
     COORDY=0;
 
     /*****/
@@ -140,30 +140,22 @@ void CityLordView::mouseReleaseEvent(QMouseEvent * e){
 
 void CityLordView::mouseMoveEvent(QMouseEvent * e){
     QPointF currentPos = mapToScene(e->pos());
-    if(startMouse.x() < currentPos.x() and COORDX>-75*10){
+    if(startMouse.x() < currentPos.x() and currentPos.x()>-1520){   // -rows*baselength
         int move = currentPos.x()-startMouse.x();
         px-= move;
-        COORDX-=move;
-        std::cout<<"X-: "<<COORDX<<std::endl;
         lastPos.setX(lastPos.x()-move);
-    }else if(COORDX<75*10){
+    }else if(startMouse.x() > currentPos.x() and currentPos.x()<1520){  // rows*baselength
         int move = startMouse.x()-currentPos.x();
         px+= move;
-        COORDX+=move;
-        std::cout<<"X+: "<<COORDX<<std::endl;
         lastPos.setX(lastPos.x()+move);
     }
-    if(startMouse.y() < currentPos.y() and COORDY>0){
+    if(startMouse.y() < currentPos.y() and currentPos.y()>0){   // 0
         int move = currentPos.y()-startMouse.y();
         py-=move;
-        COORDY-=move;
-        std::cout<<"Y-: "<<COORDY<<std::endl;
         lastPos.setY(lastPos.y()-move);
-    }else if(COORDY<152*10){
+    }else if(startMouse.y() > currentPos.y() and currentPos.y()<1500){// columns*baseheight
         int move = startMouse.y()-currentPos.y();
         py+=move;
-        COORDY+=move;
-        std::cout<<"Y+: "<<COORDY<<std::endl;
         lastPos.setY(lastPos.y()+move);
     }
     lastPos = currentPos;
