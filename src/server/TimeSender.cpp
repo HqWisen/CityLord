@@ -55,7 +55,7 @@ void TimeSender::run(){
 }
 
 std::string TimeSender::getTime(){
-    int x = MAXDAY-dayRemaining+1;
+    /*int x = MAXDAY-dayRemaining+1;
     std::string day = to_string(x);
     int y = t.elapsedTime();
     int res = dayTimer + y;
@@ -66,7 +66,25 @@ std::string TimeSender::getTime(){
     str_time << ":";
     str_time << setfill('0') << setw(2) << min;
     std::string result = "Day " + day + " - " + str_time.str();
-    return  result;
+    return  result;*/
+
+    int x = MAXDAY-dayRemaining+1;
+    std::string day = to_string(x);
+    int y = t.elapsedTime();
+    //int res = dayTimer - y;
+    int hour = (y*5)/60;
+    int min = (y*5)%60;
+
+    std::stringstream str_time;
+    str_time << setfill('0') << setw(2) << hour;
+    str_time << ":";
+    str_time << setfill('0') << setw(2) << min;
+
+    std::string concat = "Day : " + day;
+    std::string concat1 = concat + " |Time : ";
+    std::string concat2= concat1 + str_time.str();
+
+    return  concat2;
 }
 
 bool TimeSender::isOver(){
