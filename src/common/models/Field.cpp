@@ -73,10 +73,21 @@ void BasicField::buildBuilding(string buildingType){
 }
 */
 
+bool BasicField::destroying(){
+    if(countDestroy > 0){
+        return true;
+    }
+    return false;
+}
+
 void BasicField::destroyBuilding(){
-    if (building != nullptr){
-        delete building;
-        building = nullptr;
+    countDestroy += 1;
+    if(countDestroy == destroyTime){
+        if (building != nullptr){
+            delete building;
+            building = nullptr;
+            countDestroy = 0;
+        }
     }
 }
 
