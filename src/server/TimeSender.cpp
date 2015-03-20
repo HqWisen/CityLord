@@ -21,7 +21,7 @@ void TimeSender::run(){
         else{
             update.set("time", getTime());
             std::cout<<"sendUpdatTime = "<<update.get("time")<<std::endl;
-            //updater->sendUpdateToPlayers(update);
+            updater->sendUpdateToPlayers(update);
             timer2 += moveTimer;
             advanceVisitor = true;
            //makeVisitorsAdvance();
@@ -80,8 +80,8 @@ std::string TimeSender::getTime(){
     str_time << ":";
     str_time << setfill('0') << setw(2) << min;
 
-    std::string concat = "Day : " + day;
-    std::string concat1 = concat + " |Time : ";
+    std::string concat = "Day " + day;
+    std::string concat1 = concat + " - ";
     std::string concat2= concat1 + str_time.str();
 
     return  concat2;

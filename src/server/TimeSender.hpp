@@ -12,7 +12,7 @@ class TimeSender : public Thread{
     CityUpdater* updater;
     Timer t;
     unsigned dayRemaining;
-    unsigned dayTimer = 144;
+    unsigned dayTimer = 288;
     unsigned moveTimer = 1;
     unsigned spawnTimer = 1;
     bool advanceVisitor, updateCity, pay, over;

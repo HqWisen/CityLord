@@ -151,7 +151,7 @@ void CityUpdater::run(){
     1 seconde = 5 min dans le jeu
     */
     /* ! SOLUTION TEMPORAIRE */
-    /*timeSender.start();
+    timeSender.start();
     while(!timeSender.isOver()){
         if(timeSender.makeAdvanceVisitor()){
             makeVisitorsAdvance();
@@ -165,7 +165,7 @@ void CityUpdater::run(){
             makeOwnersPay();
             timeSender.setPay(false);
         }
-     }*/
+     }
     //std::cout<<"fin du game"<<std::endl;
 }
 
