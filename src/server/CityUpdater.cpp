@@ -150,7 +150,8 @@ void CityUpdater::run(){
     /*
     1 seconde = 5 min dans le jeu
     */
-    timeSender.start();
+    /* ! SOLUTION TEMPORAIRE */
+    /*timeSender.start();
     while(!timeSender.isOver()){
         if(timeSender.makeAdvanceVisitor()){
             makeVisitorsAdvance();
@@ -164,7 +165,7 @@ void CityUpdater::run(){
             makeOwnersPay();
             timeSender.setPay(false);
         }
-     }
+     }*/
     //std::cout<<"fin du game"<<std::endl;
 }
 
@@ -347,7 +348,7 @@ void CityUpdater::generateVisitors(){
         newVisitor->setPath(path);
         int id = cityMap->addVisitor(newVisitor);  
         SocketMessage update = visitorCreate(id, startLocation);
-        sendUpdateToPlayers(update);
+        //sendUpdateToPlayers(update);
     }
 }
 
@@ -423,14 +424,14 @@ void CityUpdater::makeVisitorsAdvance(){
         if(cityMap->getVisitor(i) != nullptr){
             if (cityMap->getVisitor(i)->hasReachedEnd()) {
                 SocketMessage update = visitorRemove(i);
-                sendUpdateToPlayers(update);
+                //sendUpdateToPlayers(update);
                 cityMap->deleteVisitor(i);
             }else {
                 Location firstLocation = cityMap->getVisitor(i)->getLoc();
                 cityMap->getVisitor(i)->move();
                 Location lastLocation = cityMap->getVisitor(i)->getLoc();
                 SocketMessage update = visitorMove(i, firstLocation, lastLocation);
-                sendUpdateToPlayers(update);
+                //sendUpdateToPlayers(update);
                 bool enter = false;
                 Location loc = cityMap->getVisitor(i)->getLoc();
                 int col = loc.getCol();
@@ -475,7 +476,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                         //std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
                                         dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                         SocketMessage update = visitorRemove(i);
-                                        sendUpdateToPlayers(update);
+                                        //sendUpdateToPlayers(update);
                                         cityMap->deleteVisitor(i);
                                     }
                                 }
@@ -500,7 +501,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                         //std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
                                         dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                         SocketMessage update = visitorRemove(i);
-                                        sendUpdateToPlayers(update);
+                                        //sendUpdateToPlayers(update);
                                         cityMap->deleteVisitor(i);
                                     }
                                 }
@@ -521,7 +522,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                         //std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
                                         dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
                                         SocketMessage update = visitorRemove(i);
-                                        sendUpdateToPlayers(update);
+                                        //sendUpdateToPlayers(update);
                                         cityMap->deleteVisitor(i);
                                     }
                                 }
