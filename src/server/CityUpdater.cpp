@@ -193,9 +193,9 @@ std::string CityUpdater::getTime(){
     int x = MAXDAY-dayRemaining+1;
     std::string day = to_string(x);
     int y = t.elapsedTime();
-    int res = dayTimer - y;
-    int hour = (res*5)/60;
-    int min = (res*5)%60;
+    //int res = dayTimer - y;
+    int hour = (y*5)/60;
+    int min = (y*5)%60;
 
     std::stringstream str_time;
     str_time << setfill('0') << setw(2) << hour;
