@@ -104,8 +104,8 @@ void UserManager::sendAnswer(SocketMessage answer){
 }
 
 void UserManager::sendUpdate(SocketMessage update){
-    pthread_mutex_lock(&updatemutex);
     if(cityManager != nullptr){ // The user is playing
+        pthread_mutex_lock(&updatemutex);
         updateSocket->write(update.toString());
         updateSocket->read(); // wait for finish signal
         pthread_mutex_unlock(&updatemutex);

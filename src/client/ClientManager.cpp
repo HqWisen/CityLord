@@ -1,7 +1,7 @@
 #include "ClientManager.hpp"
 #include <iostream>
 
-const std::string ClientManager::CURRENCY = "€";
+const std::string ClientManager::CURRENCY = "$";
 
 std::string ClientManager::strCurrency(int i){
     std::string result = std::to_string(i);

@@ -2,9 +2,6 @@
 #include "UserManager.hpp"
 
 
-const unsigned CityUpdater::MAXDAY = 15;
-
-
 // ======================================================================================
 // ========================================= Dijkstra ===================================
 // ======================================================================================
@@ -139,14 +136,13 @@ void CityUpdater::getAdjacencyList() {
 // ======================================================================================
 // ======================================================================================
 
-CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr){
+CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr) : timeSender(this){
     cityMap = map;
     spawn = map->getSpawnList();
     playerVectorPtr = pvPtr;
     srand(time(NULL));
     getRoadMap();
     getAdjacencyList();
-    dayRemaining = MAXDAY;
     this->start();
 }
 
@@ -154,59 +150,22 @@ void CityUpdater::run(){
     /*
     1 seconde = 5 min dans le jeu
     */
-    unsigned timer = spawnTimer;
-    unsigned timer2 = moveTimer;
-    t.start();
-    SocketMessage update("updatetime");
-    while(dayRemaining!=0){
-        if(t.elapsedTime() < timer2){
-
-        }
-        else{
-            update.set("time", getTime());
-            sendUpdateToPlayers(update);
-            timer2 += moveTimer;
+    timeSender.start();
+    while(!timeSender.isOver()){
+        if(timeSender.makeAdvanceVisitor()){
             makeVisitorsAdvance();
+            timeSender.setAdvanceVisitor(false);
         }
-        if(t.elapsedTime() < timer) {
-        }
-        else{
-            timer += spawnTimer;
+        if(timeSender.makeUpdateCity()){
             updateCity();
-            if(t.elapsedTime() < dayTimer){  
-                 
-            }
-            else{   //nouveau jour
-                makeOwnersPay();
-                t.start();
-                timer = spawnTimer;
-                timer2 = moveTimer;
-                dayRemaining -= 1;
-                //std::cout<<"Day : "<<dayRemaining<<std::endl;
-            }
+            timeSender.setUpdateCity(false);
         }
-    }
+        if(timeSender.makePay()){
+            makeOwnersPay();
+            timeSender.setPay(false);
+        }
+     }
     //std::cout<<"fin du game"<<std::endl;
-}
-
-std::string CityUpdater::getTime(){
-    int x = MAXDAY-dayRemaining+1;
-    std::string day = to_string(x);
-    int y = t.elapsedTime();
-    int res = dayTimer - y;
-    int hour = (res*5)/60;
-    int min = (res*5)%60;
-
-    std::stringstream str_time;
-    str_time << setfill('0') << setw(2) << hour;
-    str_time << ":";
-    str_time << setfill('0') << setw(2) << min;
-
-    std::string concat = "Day : " + day;
-    std::string concat1 = concat + " |Time : ";
-    std::string concat2= concat1 + str_time.str();
-
-    return  concat2;
 }
 
 /*

@@ -14,6 +14,7 @@ InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
     ui->upgradeButton->setEnabled(false);
     ui->destroyButton->setEnabled(false);
     ui->sellButton->setEnabled(false);
+    selectField(SocketMessage("notfield"), lastLocation);
     /* Signaler connect */
     QObject::connect(clientManager->getSignaler(), SIGNAL(repaintView()), this, SLOT(repaintView()));
     QObject::connect(clientManager->getSignaler(), SIGNAL(buildViewMap()), this, SLOT(buildViewMap()));
@@ -111,7 +112,7 @@ void InGame::selectField(SocketMessage selectmessage, Location location){
         ui->typeLabel->setText(BuildingType::getTypeByIndex(std::stoi(selectmessage.get("typeindex"))).NAME.c_str());
         ui->levelTitle->setText("Level");
         ui->levelLabel->setText(selectmessage.get("level").c_str());
-        ui->attractivenessTitle->setText("Attractiveness");
+        ui->attractivenessTitle->setText("Attract.");
         ui->attractivenessLabel->setText(selectmessage.get("attractiveness").c_str());
         ui->timeTitle->setText("Open from       to");
         ui->openLabel->setText(selectmessage.get("opentime").c_str());
@@ -152,7 +153,6 @@ void InGame::updateMoney(int amount){
 }
 
 void InGame::updateTime(QString time){
-    std::cout<<"UPDATING"<<std::endl;
     ui->timeLabel->setText(time);
 }
 

@@ -15,7 +15,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#InGame{background-color:black;}
-QLabel{font:12pt;}</string>
+QLabel{font:10pt;}</string>
   </property>
   <widget class="QFrame" name="frame_2">
    <property name="geometry">
@@ -111,7 +111,7 @@ QLabel{font:12pt;}</string>
      </property>
      <property name="font">
       <font>
-       <pointsize>12</pointsize>
+       <pointsize>10</pointsize>
        <weight>50</weight>
        <italic>false</italic>
        <bold>false</bold>
@@ -223,17 +223,17 @@ QLabel{background:transparent;color:rgb(0, 220, 0)}</string>
      </property>
      <property name="font">
       <font>
-       <pointsize>12</pointsize>
-       <weight>50</weight>
+       <pointsize>24</pointsize>
+       <weight>75</weight>
        <italic>false</italic>
-       <bold>false</bold>
+       <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">QLabel{color:white;background:transparent;}</string>
+      <string notr="true">QLabel{color:white;background:transparent; font:bold 24pt;}</string>
      </property>
      <property name="text">
-      <string>00 : 00</string>
+      <string>16:57 Day 15</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -265,12 +265,12 @@ QLabel{color:white;}</string>
      <rect>
       <x>10</x>
       <y>70</y>
-      <width>141</width>
+      <width>211</width>
       <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QLabel{font:bold 22pt;}</string>
+     <string notr="true">QLabel{font:bold 20pt;}</string>
     </property>
     <property name="text">
      <string>Field infos</string>
@@ -281,12 +281,12 @@ QLabel{color:white;}</string>
      <rect>
       <x>10</x>
       <y>210</y>
-      <width>181</width>
+      <width>211</width>
       <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QLabel{font:bold 22pt;}</string>
+     <string notr="true">QLabel{font:bold 20pt;}</string>
     </property>
     <property name="text">
      <string>Building infos</string>
@@ -295,14 +295,14 @@ QLabel{color:white;}</string>
    <widget class="QLabel" name="nicknameLabel">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>90</x>
       <y>10</y>
-      <width>111</width>
+      <width>121</width>
       <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QLabel{font:bold;color:black;}</string>
+     <string notr="true">QLabel{font:bold;color:grey;}</string>
     </property>
     <property name="text">
      <string>Hakim</string>
@@ -344,7 +344,7 @@ QLabel{color:white;}</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QLabel{font:bold;color:black;}</string>
+     <string notr="true">QLabel{font:bold;color:grey;}</string>
     </property>
     <property name="text">
      <string>2</string>
@@ -355,7 +355,7 @@ QLabel{color:white;}</string>
      <rect>
       <x>10</x>
       <y>100</y>
-      <width>181</width>
+      <width>211</width>
       <height>81</height>
      </rect>
     </property>
@@ -406,7 +406,7 @@ Selected</string>
      <string notr="true">QLabel{font:bold 20pt ;color:grey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>HOTEL</string>
     </property>
    </widget>
    <widget class="QLabel" name="levelTitle">
@@ -422,15 +422,15 @@ Selected</string>
      <string notr="true">QLabel{font:bold 17pt;color:darkgrey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>Level</string>
     </property>
    </widget>
    <widget class="QLabel" name="levelLabel">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>120</x>
       <y>280</y>
-      <width>91</width>
+      <width>51</width>
       <height>31</height>
      </rect>
     </property>
@@ -438,7 +438,7 @@ Selected</string>
      <string notr="true">QLabel{font:bold 20pt; color:grey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>2</string>
     </property>
    </widget>
    <widget class="QLabel" name="timeTitle">
@@ -451,7 +451,7 @@ Selected</string>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>Open from       to</string>
     </property>
    </widget>
    <widget class="QLabel" name="openLabel">
@@ -467,7 +467,7 @@ Selected</string>
      <string notr="true">QLabel{color:grey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>2</string>
     </property>
    </widget>
    <widget class="QLabel" name="closeLabel">
@@ -483,7 +483,7 @@ Selected</string>
      <string notr="true">QLabel{color:grey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>15</string>
     </property>
    </widget>
    <widget class="QLabel" name="visitorTitle">
@@ -496,7 +496,7 @@ Selected</string>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>Visitors:</string>
     </property>
    </widget>
    <widget class="QLabel" name="visitorLabel">
@@ -512,7 +512,7 @@ Selected</string>
      <string notr="true">QLabel{color:grey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>50/50</string>
     </property>
    </widget>
    <widget class="QLabel" name="attractivenessTitle">
@@ -520,7 +520,7 @@ Selected</string>
      <rect>
       <x>10</x>
       <y>310</y>
-      <width>161</width>
+      <width>111</width>
       <height>31</height>
      </rect>
     </property>
@@ -528,13 +528,13 @@ Selected</string>
      <string notr="true">QLabel{font:bold 17pt;color:darkgrey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>Attract.</string>
     </property>
    </widget>
    <widget class="QLabel" name="attractivenessLabel">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>120</x>
       <y>310</y>
       <width>41</width>
       <height>31</height>
@@ -544,7 +544,7 @@ Selected</string>
      <string notr="true">QLabel{font:bold 20pt; color:grey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>1</string>
     </property>
    </widget>
    <widget class="QLabel" name="incomeLabel">
@@ -560,7 +560,7 @@ Selected</string>
      <string notr="true">QLabel{color:grey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>450$</string>
     </property>
    </widget>
    <widget class="QLabel" name="incomeTitle">
@@ -573,7 +573,7 @@ Selected</string>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>+                   per visitor</string>
     </property>
    </widget>
    <widget class="QLabel" name="dailyCostTitle">
@@ -586,7 +586,7 @@ Selected</string>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>-                    day charges</string>
     </property>
    </widget>
    <widget class="QLabel" name="dailyCostLabel">
@@ -602,7 +602,7 @@ Selected</string>
      <string notr="true">QLabel{color:grey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>450$</string>
     </property>
    </widget>
    <widget class="QLabel" name="buildingPriceTitle">
@@ -618,7 +618,7 @@ Selected</string>
      <string notr="true">QLabel{font:25px;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>Price:</string>
     </property>
    </widget>
    <widget class="QLabel" name="buildingPriceLabel">
@@ -634,7 +634,7 @@ Selected</string>
      <string notr="true">QLabel{font:bold 25pt; color:grey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;100000$&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="destructionCostTitle">
@@ -650,7 +650,7 @@ Selected</string>
      <string notr="true">QLabel{font:25px;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destruction cost:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="destructionCostLabel">
@@ -666,7 +666,7 @@ Selected</string>
      <string notr="true">QLabel{font:bold 25pt; color:grey;}</string>
     </property>
     <property name="text">
-     <string/>
+     <string>10000$</string>
     </property>
    </widget>
    <widget class="QLabel" name="noBuidlingLabel">
@@ -674,7 +674,7 @@ Selected</string>
      <rect>
       <x>10</x>
       <y>250</y>
-      <width>181</width>
+      <width>221</width>
       <height>41</height>
      </rect>
     </property>
@@ -734,42 +734,7 @@ Selected</string>
      </item>
     </layout>
    </widget>
-   <zorder>fieldTitle</zorder>
-   <zorder>buildingTitle</zorder>
-   <zorder>nicknameLabel</zorder>
-   <zorder>nicknameTitle</zorder>
-   <zorder>idTitle</zorder>
-   <zorder>idLabel</zorder>
-   <zorder>noFieldLabel</zorder>
-   <zorder>colorTitle</zorder>
-   <zorder>colorLabel</zorder>
-   <zorder>typeLabel</zorder>
-   <zorder>levelTitle</zorder>
-   <zorder>levelLabel</zorder>
-   <zorder>timeTitle</zorder>
-   <zorder>openLabel</zorder>
-   <zorder>closeLabel</zorder>
-   <zorder>visitorTitle</zorder>
-   <zorder>visitorLabel</zorder>
-   <zorder>attractivenessTitle</zorder>
-   <zorder>attractivenessLabel</zorder>
-   <zorder>incomeLabel</zorder>
-   <zorder>incomeTitle</zorder>
-   <zorder>dailyCostTitle</zorder>
-   <zorder>dailyCostLabel</zorder>
-   <zorder>buildingPriceTitle</zorder>
-   <zorder>buildingPriceLabel</zorder>
-   <zorder>destructionCostTitle</zorder>
-   <zorder>destructionCostLabel</zorder>
-   <zorder>noBuidlingLabel</zorder>
-   <zorder>verticalLayoutWidget_3</zorder>
-   <zorder>moneyLabel</zorder>
-   <zorder>moneyLabel</zorder>
   </widget>
-  <zorder>frame_2</zorder>
-  <zorder>frame_3</zorder>
-  <zorder>frame_6</zorder>
-  <zorder>moneyLabel</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

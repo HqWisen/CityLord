@@ -4,10 +4,10 @@
 
 #include "../common/thread/Thread.hpp"
 #include "Catalog.hpp"
-#include "Timer.hpp"
 #include <iostream>
 #include "../common/models/Map.hpp"
 #include "Visitor.hpp"
+#include "TimeSender.hpp"
 #include <cmath>
 #include <deque>
 
@@ -43,7 +43,6 @@ typedef std::vector<std::vector<neighbor> > adjacency_list_t;
 // ======================================================================================
 
 class CityUpdater : public Thread{
-    static const unsigned MAXDAY;
     Map<Field>* cityMap;
     std::vector<Spawn*> spawn;
     std::vector<Player*>* playerVectorPtr;
@@ -52,11 +51,7 @@ class CityUpdater : public Thread{
     vector<Road*> roadMap;
     deque<Road*> blockedRoads;
     adjacency_list_t adjacencyList;
-    Timer t;
-    unsigned moveTimer = 1;
-    unsigned dayRemaining;
-    unsigned spawnTimer = 1;
-    unsigned dayTimer = 144;
+    TimeSender timeSender;
     bool night = false;
     public:
         CityUpdater(Map<Field>*,std::vector<Player*>*);
@@ -75,7 +70,6 @@ class CityUpdater : public Thread{
         SocketMessage visitorMove(int, Location, Location);
         SocketMessage visitorRemove(int);
         void sendUpdateToPlayers(SocketMessage);
-        std::string getTime();
         std::string getRealTimeRemaining();
         SocketMessage sendTime();
         bool getNight();
