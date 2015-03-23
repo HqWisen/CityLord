@@ -6,7 +6,7 @@ build::build(QWidget* parent, ClientManagerGUI* cm) :
     ui->setupUi(this);
     for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
     {
-        ui->tableWidget->horizontalHeader()->setResizeMode(
+        ui->tableWidget->horizontalHeader()->setSectionResizeMode(
             c, QHeaderView::Stretch);
     }
     headerLabels << "Type" << "Price" << "Constr. cost" << "Up. cost" << "Destr. cost"\

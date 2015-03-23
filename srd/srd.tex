@@ -136,6 +136,8 @@ La partie s'achève lorsqu'il ne reste qu'un seul joueur en jeu, n'ayant pas fai
 \hline
 Date de modification & Version & Modification apportée & Auteur \\
 \hline
+23/03/2015 & 3.0 & \parbox{7cm}{- \\ Insertion du UseCase Sabotage. \\} & David \\
+\hline
 20/03/2015 & 2.10 & \parbox{7cm}{- \\ Modification des figures des UseCases [Interface de connexion] \& [Construire-Améliorer-Détruire]. \\} & David \\
 \hline
 19/03/2015 & 2.9 & \parbox{7cm}{- \\ Correction de fautes d'orthographes. Ajout de mots dans le glossaire. \\ } & Cédric \\
@@ -555,6 +557,59 @@ Lorsque un joueur reçoit une offre sur un bâtiment, une fenêtre s'affiche ave
 \paragraph{Cas général}
 Lorsque un joueur reçoit une offre sur un bâtiment, une fenêtre s'affiche avec les informations sur cette offre, il peut refuser celle-ci en cliquant sur \og \textit{Refuser} \fg.
 \paragraph{Exceptions} Néant
+
+
+
+
+
+
+\newpage
+\subsection{Sabotage}
+\begin{figure}[ht]
+	\makebox[\linewidth]{
+		\includegraphics[width=550pt]{uml/useCaseDiagrams/sabotage.png}
+	}
+	\caption{Use Case Buid/Upgrade/Destroy}
+\end{figure}
+
+\subsubsection{Select Location}
+\paragraph{Préconditions}
+\begin{itemize}
+	\item Le joueur est dans une partie, sur l'écran de jeu.
+\end{itemize}
+\paragraph{Postconditions}
+\begin{itemize}
+	\item Une propriété est sélectionnée.
+	\item Les informations sur cette propriété sont affichées.
+	\item Les boutons <Buy>,<Build>,<Upgrade>,<Sell>,<Demolish> s'activent ou se désactivent selon la propriété sélectionnée.
+\end{itemize}
+\paragraph{Cas général}
+Le joueur doit simplement cliquer, sur la carte, sur le terrain exigé.[Exception : Sélection invalide]
+\paragraph{Exceptions}
+\begin{itemize}
+	\item \textit{Sélection invalide:} Si l'emplacement sélectionné n'est pas un terrain/bâtiment (et donc une route ou un obstacle), la sélection n'est pas faite.
+\end{itemize}
+
+\subsubsection{Place RoadBlock}
+\paragraph{Préconditions}
+\begin{itemize}
+	\item La partie est en cours.
+	\item Le joueur a sélectionné une route qui est vide.
+\end{itemize}
+\paragraph{Postconditions}
+\begin{itemize}
+	\item Un barrage est construit et affiché sur la carte à l'emplacement séléctionné.
+	\item Le joueur a payé le prix de construction du barrage.
+\end{itemize}
+\paragraph{Cas général}
+Lorsque un joueur veut construire un nouveau barrage, il lui faudra simplement sélectionner une route est vide. Le bouton \og \textit{<Build RoadBlock>} \fg s'activera. Le joueur devra cliquer dessus, il entre alors en mode Construction; Un tableau s'affichera affichant les informations sur le barrage. Il peut à tout moment quitter ce mode et annuler la construction, en cliquant sur \og \textit{Annuler} \fg. Pour valider l'opération, le joueur cliquera sur \og \textit{<Ok>} \fg.[Exception : Le joueur n'as pas assez d'argent] Il devra payer ensuite le prix indiqué.
+\paragraph{Exceptions}
+\begin{itemize}
+	\item \textit{Le joueur n'as pas assez d'argent:}  Une fenêtre s'ouvre indiquant au joueur qu'il ne possède pas assez d'argent.
+\end{itemize}
+
+
+
 
 \newpage
 \section{Exigences non fonctionnelles}
