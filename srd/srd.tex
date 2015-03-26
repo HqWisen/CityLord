@@ -12,11 +12,11 @@
 \usepackage{hyperref}
 \usepackage{array}
 \usepackage{varwidth}
-\usepackage{makeidx}
+\usepackage{imakeidx}
 \setcounter{secnumdepth}{3}
 
+
 \makeatletter
-\makeindex
 \def\clap#1{\hbox to 0pt{\hss #1\hss}}%
 \def\ligne#1{%
 \hbox to \hsize{%
@@ -84,6 +84,8 @@ Joël GOOSSENS, Christian HERNALSTEEN\\
 Cours : INFO-F-209 – Projet d'année 2
 }%
 
+\makeindex
+
 \begin{document}
 %\fancypagestyle{empty}{
 %  \fancyhf{}
@@ -96,7 +98,7 @@ Cours : INFO-F-209 – Projet d'année 2
 \chapter{Introduction}
 \section{But du projet}
 \paragraph{}
-Nous allons implémenter CityLord, un jeu de gestion de ville multi-joueur.
+Nous allons implémenter CityLord\index{Citylord}, un jeu de gestion de ville multi-joueur.
 Celui-ci se jouera entre 2 à 8 joueurs différents qui pourront acheter, vendre, ou améliorer des bâtiments, dans une même villes.
 Le but du jeu est le même pour chaque joueur, être le dernier propriétaire dans la ville, ou bien être celui avec le plus grand capital (argent+valeur des bâtiments) à la fin du temps imparti.
 
@@ -228,11 +230,11 @@ pseudo et mot de passe associés ceux entrés dans les zones appropriées, et co
  ,sur la même vue, une remarque apparait, en une couleur fortement
  perceptible, et indique à l'utilisateur que les informations entrées sont incorrectes. La fenêtre de connexion reste ouverte et
  demande à l'utilisateur de réentrer son pseudo et son mot de passe.
- \item \textit{Pseudo déja utilisé:} Après la pression du bouton \og \textit{Create} \fg,
+ \item \textit{Pseudo\index{pseudo} déja utilisé:} Après la pression du bouton \og \textit{Create} \fg,
  sur la même vue, une remarque apparait, en une couleur fortement
  perceptible, et indique à l'utilisateur que le pseudo demandé est déjà utilisé. La fenêtre de création reste ouverte
  et demande à l'utilisateur de réentrer un nouveau pseudo.
- \item \textit{Aucun pseudo et/ou mot de passe entré:} Dans les deux cas - de connexion ou de création - si l'utilisateur
+ \item \textit{Aucun pseudo\index{pseudo} et/ou mot de passe entré:} Dans les deux cas - de connexion ou de création - si l'utilisateur
  manque d'entrer une information, après du bouton associé à la fenêtre en premier plan, sur la même vue,
  une remarque apparait, en une couleur fortement perceptible, et indique à l'utilisateur l'information manquante. La
  fenêtre reste ouvert et demande à l'utilisateur d'entrer cette information pour continuer la connexion ou la création.
@@ -693,5 +695,9 @@ Sans cela, la communication avec le \textit{server} et entre les joueurs serait 
  \item \textbf{Host}
  \item \textbf{Join}
 \end{itemize}
+\newpage
+\newpage
+\printindex
+
 
 \end{document}
