@@ -10,7 +10,7 @@ const std::string CreateGame::UNCLICKCOLOR = "black";
 
 CreateGame::CreateGame(QWidget* parent, ClientManagerGUI* cm) :
     DefaultWidget(parent, cm), ui(new Ui::CreateGame){
-
+    gameMode = "Normal";
     displayDefaultBackground();
     ui->setupUi(this);
     refresh();
@@ -80,4 +80,21 @@ QString CreateGame::getStyleSheet(std::string picture, std::string color){
     result += "font: bold 50px; color:"+color+";";
     result += "border : 4px solid "+color+";";
     return result.c_str();
+}
+
+void CreateGame::on_gameModeSelect_currentIndexChanged(int index)
+{
+    changedGameMode();
+}
+
+void CreateGame::changedGameMode(){
+    std::string selected=ui->gameModeSelect->currentText().toStdString();
+    if(selected=="Normal"){
+        gameMode = "Normal";
+        ui->gameModeLabel->setText("Normal building price, etc");
+    }
+    else if(selected=="Hardcore"){
+        gameMode = "Hardcore";
+        ui->gameModeLabel->setText("Higher difficulty, prices, etc");
+    }
 }

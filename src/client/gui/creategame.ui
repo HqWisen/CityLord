@@ -26,7 +26,7 @@
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>590</y>
+     <y>630</y>
      <width>571</width>
      <height>51</height>
     </rect>
@@ -113,6 +113,42 @@
    <property name="text">
     <string>Map3</string>
    </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>540</y>
+     <width>451</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QComboBox" name="gameModeSelect">
+      <item>
+       <property name="text">
+        <string>Normal</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Hardcore</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="gameModeLabel">
+      <property name="styleSheet">
+       <string notr="true">color:rgb(255, 0, 0)</string>
+      </property>
+      <property name="text">
+       <string>Normal building price, etc</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
