@@ -3,9 +3,10 @@
 
 void Timer::start(){
 	startTime = clock();
+
 }
 
-unsigned long Timer::elapsedTime(){
+unsigned long Timer::elapsedSecond(){
      return ((unsigned long) clock() - startTime) / CLOCKS_PER_SEC;
 }
 
