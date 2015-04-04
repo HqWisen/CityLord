@@ -104,7 +104,7 @@ Le but du jeu\index{jeu} est le même pour chaque joueur\index{joueur}, être le
 
 Au départ, chaque joueur\index{joueur} commence avec une parcelle prise au hasard, et une somme modeste lui permettant d'acheter un nombre limité de propriété (1 voir 2 parcelles ou bâtiments).
 
-Pour gagner de l'argent, des visiteurs (non-controlé par les joueurs\index{joueur}) doivent entrer dans un de leur établissement, y rester une durée déterminée, leur donner l'argent adapté à l'établissement où il se trouve, et disparaitra ensuite de la partie.
+Pour gagner de l'argent, des visiteurs (non-controlé par les joueurs\index{joueur}) doivent entrer dans un de leur établissement, y rester une durée déterminée, leur donner l'argent adapté à l'établissement où il se trouve, et disparaitra ensuite de la partie\index{partie}.
 Un visiteur ne peut apparaitre qu'à des endroits prédéfini sur la carte (ex: station de métro), il suivra alors un chemin également prédéfini (ex: vers la sortie de la ville\index{ville}), et entrera dans un établissement qu'il croise, si celui-ci l’intéresse.
 Ce sera donc aux joueurs\index{joueur} de bien positionner leurs bâtiments là où ils ont le plus de chances d'attirer un grand nombre de visiteur.
 
@@ -114,13 +114,13 @@ Un joueur\index{joueur} peut, s'il le souhaite et pour un certain coût, amélio
 Si un joueur\index{joueur} est en faillite, à cause d'un coût d'entretien trop élevé face aux recettes, il sera alors obligé de vendre des propriétés. Il mettra alors sa propriété (parcelle+bâtiment) dans le catalogue\index{catalogue} de vente, ouvert à tous les joueurs\index{joueur}.
 Il peut également s'il le souhaite, supprimer son bâtiment, ce qui réduira grandement les coût d'entretien, mais rendra les recettes nulles. (Une parcelle vide à un coût d'entretien, mais pas de revenu, ceci est pour éviter qu'un joueur\index{joueur} achète tous les emplacements simplement pour empêcher les autres de construire).
 
-La partie s'achève lorsqu'il ne reste qu'un seul joueur\index{joueur} en jeu\index{jeu}, n'ayant pas fait faillite, ou que le temps est écoulé. Lorsque l'horloge arrive à 0, le jeu\index{jeu} est arrêté et le joueur\index{joueur} remportant la partie est celui dont le capital cumulé (argent sur le compte + prix réel des bâtiments possédés) est le plus élevé. En cas d'égalité, le vainqueur est choisi en comptant la notoriété des bâtiments, puis le nombre de bâtiments (celui qui en a le plus gagne), et enfin le nombre de visiteurs total lors de la partie.
+La partie\index{partie} s'achève lorsqu'il ne reste qu'un seul joueur\index{joueur} en jeu\index{jeu}, n'ayant pas fait faillite, ou que le temps est écoulé. Lorsque l'horloge arrive à 0, le jeu\index{jeu} est arrêté et le joueur\index{joueur} remportant la partie\index{partie} est celui dont le capital cumulé (argent sur le compte + prix réel des bâtiments possédés) est le plus élevé. En cas d'égalité, le vainqueur est choisi en comptant la notoriété des bâtiments, puis le nombre de bâtiments (celui qui en a le plus gagne), et enfin le nombre de visiteurs total lors de la partie\index{partie}.
 
 \newpage
 \section{Glossaire}
 \begin{itemize}
  \item \textbf{Système:}\index{système} Ensemble d'éléments interagissant entre eux selon certains principes ou règles. Dans ce cas, il s’agit du programme.
- \item \textbf{Serveur:}\index{serveur} Ordinateur dédié à l'administration d'un réseau informatique\index{réseau informatique}. Il gère l'accès aux ressources et aux périphériques et les connexions des différents utilisateurs.
+ \item \textbf{Serveur:}\index{serveur} Ordinateur dédié à l'administration d'un réseau informatique\index{réseau informatique}. Il gère l'accès aux ressources et aux périphériques et les connexions des différents utilisateurs\index{utilisateur}.
  \item \textbf{Résau Informatique:}\index{réseau informatique} Ensemble des moyens matériels et logiciels mis en œuvre pour assurer les communications entre ordinateurs.
  \item \textbf{Pseudo:}\index{pseudo} Nom d'emprunt qu'une personne porte pour exercer une activité sous un autre nom que celui de son identité officielle.
  \item \textbf{Carte:}\index{carte} Carte prédéfinie, représentant une ville\index{ville}.
@@ -129,7 +129,7 @@ La partie s'achève lorsqu'il ne reste qu'un seul joueur\index{joueur} en jeu\in
  \item \textbf{Débug:}\index{débug} Action de chercher, trouver et retirer un bug d’un programme informatique.
  \item \textbf{Log In:} se connecter.
  \item \textbf{Log Out:} se déconnecter.
- \item \textbf{Join:} Action de rejoindre une partie.
+ \item \textbf{Join:} Action de rejoindre une partie\index{partie}.
  \item \textbf{Build:} Bâtiment qui permettra de faire tourner le jeu\index{jeu}.
 \end{itemize}
 
@@ -138,6 +138,8 @@ La partie s'achève lorsqu'il ne reste qu'un seul joueur\index{joueur} en jeu\in
 \begin{tabular}{|c|c|c|c|}
 \hline
 Date de modification & Version & Modification apportée & Auteur \\
+\hline
+04/04/2015 & 3.2 & \parbox{7cm}{- \\ UseCase de connection et Construction en Fr, ajout de mots dans l'index \\} & David \\
 \hline
 26/03/2015 & 3.1 & \parbox{7cm}{- \\ Index Latex et non plus "manuel", changement de mots anglais en français \\} & David \\
 \hline
@@ -195,7 +197,7 @@ Date de modification & Version & Modification apportée & Auteur \\
 
 
 \newpage
-\chapter{Besoins de l'utilisateur}
+\chapter{Besoins de l'utilisateur}\index{utilisateur}
 \section{Exigences fonctionnelles}
 \subsection{Interface de connexion}
 \begin{figure}[ht]
@@ -209,78 +211,78 @@ Date de modification & Version & Modification apportée & Auteur \\
 \paragraph{Préconditions}
 \begin{itemize}
  \item Le jeu\index{jeu} doit être ouvert.
- \item L'utilisateur ne doit pas être connecté.
+ \item L'utilisateur\index{utilisateur} ne doit pas être connecté.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
- \item L'utilisateur est connecté.
+ \item L'utilisateur\index{utilisateur} est connecté.
 \end{itemize}
 \paragraph{Cas général}
-Une fois le jeu\index{jeu} démarrer, l'utilisateur peut se connecté insérant un nom d'utilisateur existant et le mot de passe associé
+Une fois le jeu\index{jeu} démarrer, l'utilisateur\index{utilisateur} peut se connecté insérant un nom d'utilisateur existant et le mot de passe associé
 [Exception : mauvais mot de passe ou pseudo\index{pseudo} non-existant].
-Une fois toutes les informations entré, l'utilisateur appuie sur le bouton \og \textit{Connect} \fg, et l'utilisateur est
-connecté. Un utilisateur non-enregistré peut également créer un nouveau pseudo\index{pseudo} unique
+Une fois toutes les informations entré, l'utilisateur\index{utilisateur} appuie sur le bouton \og \textit{Connect} \fg, et l'utilisateur\index{utilisateur} est
+connecté. Un utilisateur\index{utilisateur} non-enregistré peut également créer un nouveau pseudo\index{pseudo} unique
 et lui associé mot de passe en appuyant sur le bouton \og \textit{Create} \fg
 [Exception: pseudo\index{pseudo} déjà utilisé].
 Une fenêtre va ensuite s'ouvrir et lui demandé d'entrer les informations nécessaires 
-[Exception: aucun pseudo\index{pseudo} et/ou mot de passe entré]. Ceci ajoutera sur le \textit{server} un nouvel utilisateur avec comme
-pseudo\index{pseudo} et mot de passe associés ceux entrés dans les zones appropriées, et connectera l'utilisateur automatiquement.
+[Exception: aucun pseudo\index{pseudo} et/ou mot de passe entré]. Ceci ajoutera sur le \textit{server} un nouvel utilisateur\index{utilisateur} avec comme
+pseudo\index{pseudo} et mot de passe associés ceux entrés dans les zones appropriées, et connectera l'utilisateur\index{utilisateur} automatiquement.
 \paragraph{Exceptions}
 \begin{itemize}
  \item \textit{Mauvais mot de passe ou pseudo\index{pseudo} non-existant:} Après la pression du bouton \og \textit{Connect} \fg
  ,sur la même vue, une remarque apparait, en une couleur fortement
- perceptible, et indique à l'utilisateur que les informations entrées sont incorrectes. La fenêtre de connexion reste ouverte et
- demande à l'utilisateur de réentrer son pseudo\index{pseudo} et son mot de passe.
+ perceptible, et indique à l'utilisateur\index{utilisateur} que les informations entrées sont incorrectes. La fenêtre de connexion reste ouverte et
+ demande à l'utilisateur\index{utilisateur} de réentrer son pseudo\index{pseudo} et son mot de passe.
  \item \textit{Pseudo\index{pseudo} déja utilisé:} Après la pression du bouton \og \textit{Create} \fg,
  sur la même vue, une remarque apparait, en une couleur fortement
- perceptible, et indique à l'utilisateur que le pseudo\index{pseudo} demandé est déjà utilisé. La fenêtre de création reste ouverte
- et demande à l'utilisateur de réentrer un nouveau pseudo\index{pseudo}.
- \item \textit{Aucun pseudo\index{pseudo} et/ou mot de passe entré:} Dans les deux cas - de connexion ou de création - si l'utilisateur
+ perceptible, et indique à l'utilisateur\index{utilisateur} que le pseudo\index{pseudo} demandé est déjà utilisé. La fenêtre de création reste ouverte
+ et demande à l'utilisateur\index{utilisateur} de réentrer un nouveau pseudo\index{pseudo}.
+ \item \textit{Aucun pseudo\index{pseudo} et/ou mot de passe entré:} Dans les deux cas - de connexion ou de création - si l'utilisateur\index{utilisateur}
  manque d'entrer une information, après du bouton associé à la fenêtre en premier plan, sur la même vue,
- une remarque apparait, en une couleur fortement perceptible, et indique à l'utilisateur l'information manquante. La
- fenêtre reste ouvert et demande à l'utilisateur d'entrer cette information pour continuer la connexion ou la création.
+ une remarque apparait, en une couleur fortement perceptible, et indique à l'utilisateur\index{utilisateur} l'information manquante. La
+ fenêtre reste ouvert et demande à l'utilisateur\index{utilisateur} d'entrer cette information pour continuer la connexion ou la création.
 \end{itemize}
 
 \subsubsection{Déconnection}
 \paragraph{Préconditions}
 \begin{itemize}
- \item L'utilisateur doit être connecté.
+ \item L'utilisateur\index{utilisateur} doit être connecté.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
- \item L'utilisateur est déconnecté.
+ \item L'utilisateur\index{utilisateur} est déconnecté.
  \item La fenêtre du jeu\index{jeu} est fermé.
 \end{itemize}
 \paragraph{Cas général}
-Un joueur\index{joueur} peut se déconnecté à n'importe quel moment. Si il est en partie, il la quitte automatiquement. L'utilisateur
+Un joueur\index{joueur} peut se déconnecté à n'importe quel moment. Si il est en partie\index{partie}, il la quitte automatiquement. L'utilisateur\index{utilisateur}
 est ensuite déconnecté et la fenêtre du jeu\index{jeu} se ferme.
 \paragraph{Exceptions} Néant.
-\subsubsection{Join game}
+\subsubsection{Rejoindre Partie}
 \paragraph{Préconditions}
 \begin{itemize}
- \item L'utilisateur est connecté.
+ \item L'utilisateur\index{utilisateur} est connecté.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
- \item L'utilisateur est dans une partie.
+ \item L'utilisateur\index{utilisateur} est dans une partie\index{partie}.
 \end{itemize}
 \paragraph{Cas général}
-Un utilisateur client peut rejoindre une partie en appuyant sur le bouton \og \textit{Join Game} \fg 
+Un utilisateur\index{utilisateur} client peut rejoindre une partie\index{partie} en appuyant sur le bouton \og \textit{Join Game} \fg 
 du menu principal.
-Il est ensuite envoyé dans l'écran de sélection du jeu\index{jeu}, ou il lui est possible de voir toutes les parties lancées sur le
+Il est ensuite envoyé dans l'écran de sélection du jeu\index{jeu}, ou il lui est possible de voir toutes les parties\index{partie} lancées sur le
 même \textit{serveur}\index{serveur} et visualiser les différentes informations sur chacune d'elles, comme le temps passé depuis le lancement
-de la partie ou le status de celle-ci.
-[Exception: la partie est complète]
-Après avoir rejoins une partie, si celle-ci n'est pas commencé le joueur\index{joueur} est placé dans l’accueil où il peut
-voir tous les joueurs\index{joueur} en attente - du début de la partie -, et la carte choisie. Il lui
+de la partie\index{partie} ou le status de celle-ci.
+[Exception: la partie\index{partie} est complète]
+Après avoir rejoins une partie\index{partie}, si celle-ci n'est pas commencé le joueur\index{joueur} est placé dans l’accueil où il peut
+voir tous les joueurs\index{joueur} en attente - du début de la partie\index{partie} -, et la carte choisie. Il lui
 est également possible de chatter avec les autres joueurs\index{joueur}. 
-[Exception: Hôte ferme la partie]
-Dans le cas où la partie est déjà commencé le joueur\index{joueur} reçoit de l'argent.
+[Exception: Hôte ferme la partie\index{partie}]
+Dans le cas où la partie\index{partie} est déjà commencé le joueur\index{joueur} reçoit de l'argent.
 \paragraph{Exceptions}
 \begin{itemize}
- \item \textit{La partie est complète:} Une fenêtre s'ouvre indiquant a l'utilisateur que la partie est complète
- et donc injoignable. Une fois cette fenêtre fermée l'utilisateur est ramené au menu de sélection.
- \item \textit{Hôte ferme la partie:} L'utilisateur client est ramené au menu de sélection [pour plus d'informations, voir
+ \item \textit{La partie\index{partie} est complète:} Une fenêtre s'ouvre indiquant a l'utilisateur\index{utilisateur} que la partie\index{partie} est complète
+ et donc injoignable. Une fois cette fenêtre fermée l'utilisateur\index{utilisateur} est ramené au menu de sélection.
+ \item \textit{Hôte ferme la partie\index{partie}:} L'utilisateur\index{utilisateur} client est ramené au menu de sélection [pour plus d'informations, voir
  Host Game]. 
 \end{itemize}
 
@@ -291,17 +293,17 @@ Dans le cas où la partie est déjà commencé le joueur\index{joueur} reçoit d
 \end{itemize}
 \paragraph{Préconditions}
 \begin{itemize}
- \item L'utilisateur doit être connecté.
+ \item L'utilisateur\index{utilisateur} doit être connecté.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
- \item Une partie est ajoutée sur le \textit{serveur\index{serveur}}.
+ \item Une partie\index{partie} est ajoutée sur le \textit{serveur\index{serveur}}.
  \item Au moins 2 joueurs\index{joueur} participent.
 \end{itemize}
 \paragraph{Cas général}
-L'utilisateur est capable de créer une partie en appuyant sur le bouton \og \textit{Create game} \fg dans le menu principal.
-Il choisit d'abords une carte\index{carte} et optionnellement d'autres options; la partie est alors créée, mais n'est pas lancée tant qu'il n'y a pas au moins 2 joueurs\index{joueur} qui participent.
-Quand il y a assez de joueur\index{joueur} - minimum 2 et maximum 8 - le bouton \og \textit{Start game} \fg s'active. Quand il est cliqué, la partie démarre.
+L'utilisateur\index{utilisateur} est capable de créer une partie\index{partie} en appuyant sur le bouton \og \textit{Create game} \fg dans le menu principal.
+Il choisit d'abords une carte\index{carte} et optionnellement d'autres options; la partie\index{partie} est alors créée, mais n'est pas lancée tant qu'il n'y a pas au moins 2 joueurs\index{joueur} qui participent.
+Quand il y a assez de joueur\index{joueur} - minimum 2 et maximum 8 - le bouton \og \textit{Start game} \fg s'active. Quand il est cliqué, la partie\index{partie} démarre.
 \paragraph{Exceptions} Néant.
 
 \newpage
@@ -312,14 +314,14 @@ Quand il y a assez de joueur\index{joueur} - minimum 2 et maximum 8 - le bouton 
 \end{itemize}
 \paragraph{Préconditions}
 \begin{itemize}
- \item L'utilisateur doit être dans le menu de création de partie.
+ \item L'utilisateur\index{utilisateur} doit être dans le menu de création de partie\index{partie}.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
  \item La carte choisie est chargée.
 \end{itemize}
 \paragraph{Cas général}
-L'utilisateur peut choisir une carte dans une liste prédéfinie de carte. Quand tous les éléments pour démarrer la partie
+L'utilisateur\index{utilisateur} peut choisir une carte dans une liste prédéfinie de carte. Quand tous les éléments pour démarrer la partie\index{partie}
 sont réunis [pour plus d'informations, voir Host Game], la carte est chargée.
 \paragraph{Exceptions} Néant.
 
@@ -334,7 +336,7 @@ sont réunis [pour plus d'informations, voir Host Game], la carte est chargée.
 \subsubsection{Faire une offre}
 \paragraph{Préconditions}
 \begin{itemize}
- \item La partie est en cours.
+ \item La partie\index{partie} est en cours.
  \item La propriété voulue n'appartient à personne.
 \end{itemize}
 \paragraph{Postconditions}
@@ -342,7 +344,7 @@ sont réunis [pour plus d'informations, voir Host Game], la carte est chargée.
  \item Une offre pour une propriété est envoyée.
 \end{itemize}
 \paragraph{Cas général}
-A tout moment de la partie, n'importe quel joueur\index{joueur} peut sélectionner une propriété dans le \textit{catalogue}\index{catalogue} qui n'a pas de propriétaire, et faire une offre sur celle-ci. Après avoir sélectionner la propriété, ses informations sont affichées, et le joueur\index{joueur} peut cliquer sur acheter.[Exception : Le joueur\index{joueur} n'a pas assez d'argent]
+A tout moment de la partie\index{partie}, n'importe quel joueur\index{joueur} peut sélectionner une propriété dans le \textit{catalogue}\index{catalogue} qui n'a pas de propriétaire, et faire une offre sur celle-ci. Après avoir sélectionner la propriété, ses informations sont affichées, et le joueur\index{joueur} peut cliquer sur acheter.[Exception : Le joueur\index{joueur} n'a pas assez d'argent]
 \paragraph{Exceptions}
 \begin{itemize}
  \item \textit{Le joueur\index{joueur} n'a pas assez d'argent:} Une fenêtre s'ouvre indiquant au joueur\index{joueur} qu'il ne possède pas assez d'argent.
@@ -351,7 +353,7 @@ A tout moment de la partie, n'importe quel joueur\index{joueur} peut sélectionn
 \subsubsection{Annuler une offre}
 \paragraph{Préconditions}
 \begin{itemize}
- \item La partie est en cours.
+ \item La partie\index{partie} est en cours.
  \item Le joueur\index{joueur} à fait une offre qui n'as pas encore été validée.
 \end{itemize}
 \paragraph{Postconditions}
@@ -365,7 +367,7 @@ Dès que le joueur\index{joueur} a mit une offre et tant que celle-ci n'a pas é
 \subsubsection{Accepter une offre}
 \paragraph{Préconditions}
 \begin{itemize}
- \item La partie est en cours.
+ \item La partie\index{partie} est en cours.
  \item Un joueur\index{joueur} a fait une offre.
 \end{itemize}
 \paragraph{Postconditions}
@@ -383,7 +385,7 @@ Lorsque le \textit{catalogue}\index{catalogue} reçoit une offre sur un bâtimen
 \subsubsection{Mettre en vente}
 \paragraph{Préconditions}
 \begin{itemize}
- \item La partie est en cours.
+ \item La partie\index{partie} est en cours.
  \item Il existe un bâtiment sans propriétaire.
 \end{itemize}
 \paragraph{Postconditions}
@@ -391,7 +393,7 @@ Lorsque le \textit{catalogue}\index{catalogue} reçoit une offre sur un bâtimen
  \item Le bâtiment est en vente libre.
 \end{itemize}
 \paragraph{Cas général}
-Dès qu'un bâtiment n'as pas de prioritaire, le \textit{catalogue}\index{catalogue} le met en vente libre. Les bâtiments créés en début de partie seront mit dans le \textit{catalogue}\index{catalogue}, ainsi que les bâtiments d'un joueur\index{joueur} qui vient de perdre qui sont mit en vente libre.
+Dès qu'un bâtiment n'as pas de prioritaire, le \textit{catalogue}\index{catalogue} le met en vente libre. Les bâtiments créés en début de partie\index{partie} seront mit dans le \textit{catalogue}\index{catalogue}, ainsi que les bâtiments d'un joueur\index{joueur} qui vient de perdre qui sont mit en vente libre.
 \paragraph{Exceptions} Néant.
 
 \newpage
@@ -406,7 +408,7 @@ Dès qu'un bâtiment n'as pas de prioritaire, le \textit{catalogue}\index{catalo
 \subsubsection{Choisir lieu}
 \paragraph{Préconditions}
 \begin{itemize}
-	\item Le joueur\index{joueur} est dans une partie, sur l'écran de jeu\index{jeu}.
+	\item Le joueur\index{joueur} est dans une partie\index{partie}, sur l'écran de jeu\index{jeu}.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
@@ -428,7 +430,7 @@ Le joueur\index{joueur} doit simplement cliquer, sur la carte, sur le terrain ex
 \end{itemize}
 \paragraph{Préconditions}
 \begin{itemize}
- \item La partie est en cours.
+ \item La partie\index{partie} est en cours.
  \item Le joueur\index{joueur} a sélectionné une parcelle qui lui appartient et est vide. (Le bouton <Build> est activé).
 \end{itemize}
 \paragraph{Postconditions}
@@ -446,7 +448,7 @@ Lorsque un joueur\index{joueur} veut construire un nouveau bâtiment, il lui fau
 \subsubsection{Améliorer}\index{améliorer}
 \paragraph{Préconditions}
 \begin{itemize}
- \item La partie est en cours.
+ \item La partie\index{partie} est en cours.
  \item Le joueur\index{joueur} possède au moins un bâtiment.
  \item Le joueur\index{joueur} a sélectionné une parcelle qui lui appartient et qui a un bâtiment améliorable. (Le bouton <Upgrade> est activé).
 \end{itemize}
@@ -465,7 +467,7 @@ Lorsque un joueur\index{joueur} veut améliorer\index{améliorer} un bâtiment, 
 \subsubsection{Détruire}
 \paragraph{Préconditions}
 \begin{itemize}
- \item La partie est en cours.
+ \item La partie\index{partie} est en cours.
  \item Le joueur\index{joueur} possède au moins un bâtiment.
  \item Le joueur\index{joueur} a sélectionné une parcelle qui lui appartient et qui a un bâtiment. (Le bouton <Destroy> est activé).
 \end{itemize}
@@ -508,7 +510,7 @@ Un \textit{catalogue}\index{catalogue} de types prédéfinis de bâtiment(bar,ma
 \subsubsection{Faire une offre}
 \paragraph{Préconditions}
 \begin{itemize}
- \item La partie est en cours.
+ \item La partie\index{partie} est en cours.
  \item La propriété voulue appartient à un joueur\index{joueur}.
 \end{itemize}
 \paragraph{Postconditions}
@@ -516,7 +518,7 @@ Un \textit{catalogue}\index{catalogue} de types prédéfinis de bâtiment(bar,ma
  \item Une offre pour une propriété est envoyé à un autre joueur\index{joueur}.
 \end{itemize}
 \paragraph{Cas général}
-A tout moment de la partie, un joueur\index{joueur} peut tenter d'acheter le bâtiment d'un autre. Il lui doit simplement de faire une offre auprès de ce joueur\index{joueur}, pour ce bâtiment.[Exception : Le joueur\index{joueur} a fait trop d'offre] Il suffit à l'acheteur de sélectionner le bâtiment voulu et de cliquer sur \og \textit{Faire une offre} \fg, une fenêtre s'ouvre pour que le joueur\index{joueur} puisse donner le prix qu'il est prêt a payer et confirme son offre.[Exception : Le joueur\index{joueur} n'a pas assez d'argent] 
+A tout moment de la partie\index{partie}, un joueur\index{joueur} peut tenter d'acheter le bâtiment d'un autre. Il lui doit simplement de faire une offre auprès de ce joueur\index{joueur}, pour ce bâtiment.[Exception : Le joueur\index{joueur} a fait trop d'offre] Il suffit à l'acheteur de sélectionner le bâtiment voulu et de cliquer sur \og \textit{Faire une offre} \fg, une fenêtre s'ouvre pour que le joueur\index{joueur} puisse donner le prix qu'il est prêt a payer et confirme son offre.[Exception : Le joueur\index{joueur} n'a pas assez d'argent] 
 \paragraph{Exceptions}
 \begin{itemize}
  \item \textit{Le joueur\index{joueur} n'a pas assez d'argent:} Une fenêtre s'ouvre indiquant au joueur\index{joueur} qu'il ne possède pas assez d'argent.
@@ -525,7 +527,7 @@ A tout moment de la partie, un joueur\index{joueur} peut tenter d'acheter le bâ
 \subsubsection{Annuler une offre}
 \paragraph{Préconditions}
 \begin{itemize}
- \item La partie est en cours.
+ \item La partie\index{partie} est en cours.
  \item Le joueur\index{joueur} à fait une offre qui n'a pas encore été validée.
 \end{itemize}
 \paragraph{Postconditions}
@@ -538,7 +540,7 @@ Dès que le joueur\index{joueur} a mit une offre et tant que celle-ci n'a pas é
 \subsubsection{Accepter une offre}
 \paragraph{Préconditions}
 \begin{itemize}
- \item La partie est en cours.
+ \item La partie\index{partie} est en cours.
  \item Un joueur\index{joueur} a reçu une offre.
 \end{itemize}
 \paragraph{Postconditions}
@@ -552,7 +554,7 @@ Lorsque un joueur\index{joueur} reçoit une offre sur un bâtiment, une fenêtre
 \subsubsection{Refuser une offre}
 \paragraph{Préconditions}
 \begin{itemize}
- \item La partie est en cours.
+ \item La partie\index{partie} est en cours.
  \item Un joueur\index{joueur} a reçu une offre.
 \end{itemize}
 \paragraph{Postconditions}
@@ -576,7 +578,7 @@ Lorsque un joueur\index{joueur} reçoit une offre sur un bâtiment, une fenêtre
 \subsubsection{Choisir Lieu}
 \paragraph{Préconditions}
 \begin{itemize}
-	\item Le joueur\index{joueur} est dans une partie, sur l'écran de jeu\index{jeu}.
+	\item Le joueur\index{joueur} est dans une partie\index{partie}, sur l'écran de jeu\index{jeu}.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
@@ -594,7 +596,7 @@ Le joueur\index{joueur} doit simplement cliquer, sur la carte, sur le terrain ex
 \subsubsection{Construire Barrage}
 \paragraph{Préconditions}
 \begin{itemize}
-	\item La partie est en cours.
+	\item La partie\index{partie} est en cours.
 	\item Le joueur\index{joueur} a sélectionné une route qui est vide.
 \end{itemize}
 \paragraph{Postconditions}
@@ -629,11 +631,11 @@ Le concept de programmation orientée objet étant suivit avec rigueur pour l’
 Le jeu\index{jeu} est implémenté sur et pour un \textit{système}\index{système} d'exploitation Linux seulement.
 
 \paragraph{}Rétablissement:  \newline
-Dans le cas d'un crash ou d'arrêt de \textit{serveur}\index{serveur}, il faut faire en sorte que les joueurs\index{joueur} puissent reprendre leur partie. Le \textit{serveur}\index{serveur} fera donc une sauvegarde automatique à chaque debut de journée(de la partie en cours, 7h du matin). 
+Dans le cas d'un crash ou d'arrêt de \textit{serveur}\index{serveur}, il faut faire en sorte que les joueurs\index{joueur} puissent reprendre leur partie\index{partie}. Le \textit{serveur}\index{serveur} fera donc une sauvegarde automatique à chaque debut de journée(de la partie\index{partie} en cours, 7h du matin). 
 Vu qu'une seule sauvegarde est nécessaire, la nouvelle remplacera la précédente.
-Si la partie se termine, la sauvegarde lié à celle-ci sera supprimée.
+Si la partie\index{partie} se termine, la sauvegarde lié à celle-ci sera supprimée.
 
-Quand le \textit{serveur}\index{serveur} re-démarre, il vérifie si une partie en cours a été interrompue; si oui, il relance la partie grâce à sa sauvegarde.
+Quand le \textit{serveur}\index{serveur} re-démarre, il vérifie si une partie\index{partie} en cours a été interrompue; si oui, il relance la partie\index{partie} grâce à sa sauvegarde.
 
 \paragraph{}Disponibilité:  \newline
 Le jeu\index{jeu} sera disponible 24h/24 7j/7, tant que le serveur\index{serveur} tourne. Celui ne sera arrêté que brièvement lors de possible maintenance de débuggage\index{débug} et mise à jour.
@@ -650,17 +652,17 @@ Sans cela, la communication avec le \textit{serveur}\index{serveur} et entre les
 
 \section{Exigences de domaine}
 \begin{itemize}
- \item Le jeu\index{jeu} est multi-joueur\index{multi-joueur}, et doit donc permettre aux différents utilisateurs de communiquer entre eux.
- \item Une partie doit être composé d'au minimum 2 joueurs\index{joueur} et au maximum 8 joueurs\index{joueur}.
- \item Les 8 premiers joueurs\index{joueur} qui rejoignent la partie seront les seules 8 joueurs\index{joueur} capable de la rejoindre.
+ \item Le jeu\index{jeu} est multi-joueur\index{multi-joueur}, et doit donc permettre aux différents utilisateurs\index{utilisateur} de communiquer entre eux.
+ \item Une partie\index{partie} doit être composé d'au minimum 2 joueurs\index{joueur} et au maximum 8 joueurs\index{joueur}.
+ \item Les 8 premiers joueurs\index{joueur} qui rejoignent la partie\index{partie} seront les seules 8 joueurs\index{joueur} capable de la rejoindre.
  \item Pour qu'un joueur\index{joueur} puisse continuer à jouer, il doit posséder soit des terrains, des batiments ou encore avoir
  un capital. 
- \item Le capitale de chaque joueur\index{joueur} varie tout au long de la partie en fonction des frais et des gains de chaque bâtiment.
+ \item Le capitale de chaque joueur\index{joueur} varie tout au long de la partie\index{partie} en fonction des frais et des gains de chaque bâtiment.
  \item Les gains qu'apporte chaque bâtiment seront représentés par des visiteurs, qui, en suivant un chemin, pourront 
  rentrer dans un bâtiment qui augmentera le capital de son propriétaire.
- \item Si le joueur\index{joueur} est en faillite, la partie se terminera pour ce joueur\index{joueur} et il ne sera plus possible pour lui de
- continuer de jouer dans cette partie, mais il pourra toute fois la regarder.
- \item La partie se finie uniquement si il ne reste plus qu'un joueur\index{joueur} propriétaire.
+ \item Si le joueur\index{joueur} est en faillite, la partie\index{partie} se terminera pour ce joueur\index{joueur} et il ne sera plus possible pour lui de
+ continuer de jouer dans cette partie\index{partie}, mais il pourra toute fois la regarder.
+ \item La partie\index{partie} se finie uniquement si il ne reste plus qu'un joueur\index{joueur} propriétaire.
 
  \end{itemize}
 
