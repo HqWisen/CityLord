@@ -99,6 +99,14 @@ int BasicField::getPrice(){
     return price;
 }
 
+int BasicField::getOfferedPrice(){
+	return offeredPrice;
+}
+
+void BasicField::setOfferedPrice(int newPrice){
+	offeredPrice = newPrice;
+}
+
 Building* BasicField::getBuilding(){
     return building;
 }
@@ -143,6 +151,10 @@ string Field::toString(){
     result += "Owner : ";
     if(hasOwner()){
         result += owner->getNickName();
+        if(offeredPrice != 0){
+			result += " - ";
+			result += "Offered for : " + std::to_string(offeredPrice);
+		}
     }else{
         result += "no owner";
     }
@@ -166,6 +178,7 @@ SocketMessage Field::infoHasSocketMessage(){
         message.set("ownername", getOwner()->getNickName());
         message.set("ownerid", std::to_string(getOwnerID()));
         message.set("ownercolor", Player::COLORNAME[getOwnerID()]);
+        message.set("offeredprice", std::to_string(offeredPrice));
     }else{
         message.set("ownername", "No owner");
         message.set("ownerid", "-");

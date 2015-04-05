@@ -185,7 +185,8 @@ void CityLordClient::selectField(){
 		std::cout<<"2 - Show information"<<std::endl;
 		std::cout<<"3 - Upgrade"<<std::endl;
 		std::cout<<"4 - Destroy"<<std::endl;
-		std::cout<<"5 - Quit"<<std::endl;
+		std::cout<<"5 - Offer"<<std::endl;
+		std::cout<<"6 - Quit"<<std::endl;
 
 		int choice = makeChoice(1, 6);
 		if(choice == 1){
@@ -217,8 +218,36 @@ void CityLordClient::selectField(){
             clientManager->addInfo("col", std::to_string(ccol-1));
             clientManager->sendRequestAndRecv();
             LOG(clientManager->getAnswerInfos());
-          }
+        }
+        else if(choice == 5){
+			clientManager->setRequest("offer");
+			clientManager->addInfo("row", std::to_string(crow-1));
+			clientManager->addInfo("col", std::to_string(ccol-1));
+			std::cout<<"Price (from 1 to 1000000000): "<<endl;
+			int offeredPrice = makeChoice(1, 1000000000);
+			clientManager->addInfo("offerprice", std::to_string(offeredPrice));
+			clientManager->sendRequestAndRecv();
+			LOG(clientManager->getAnswerInfos());
+		}
 	}
+	else if(clientManager->topicEquals("owner-offered")){
+		LOG("You own this field, but you have offered it");
+		std::cout<<"1 - Cancel offer"<<std::endl;
+		std::cout<<"2 - Show information"<<std::endl;
+		std::cout<<"3 - Quit"<<std::endl;
+		
+		int choice = makeChoice(1,3);
+		if(choice == 1){
+			clientManager->setRequest("offercancel");
+			clientManager->addInfo("row", std::to_string(crow-1));
+			clientManager->addInfo("col", std::to_string(ccol-1));
+			clientManager->sendRequestAndRecv();
+			LOG(clientManager->getAnswerInfos());
+		}
+		else if(choice == 2){
+            std::cout<<clientManager->getInfo("info")<<std::endl;
+		}
+	}	
     else if(clientManager->topicEquals("other")){
         LOG("It's another player's field");
 		std::cout<<"1 - Show information"<<std::endl;
@@ -227,6 +256,24 @@ void CityLordClient::selectField(){
 		if(choice == 1){
             std::cout<<clientManager->getInfo("info")<<std::endl;
         }
+	}
+	else if(clientManager->topicEquals("other-offered")){
+		LOG("It's another player's field, but he has offered it");
+		std::cout<<"1 - Accept offer"<<std::endl;
+		std::cout<<"2 - Show information"<<std::endl;
+		std::cout<<"3 - Quit"<<std::endl;
+		
+		int choice = makeChoice(1,3);
+		if(choice == 1){
+			clientManager->setRequest("offeraccept");
+			clientManager->addInfo("row", std::to_string(crow-1));
+			clientManager->addInfo("col", std::to_string(ccol-1));
+			clientManager->sendRequestAndRecv();
+			LOG(clientManager->getAnswerInfos());
+		}
+		else if(choice == 2){
+            std::cout<<clientManager->getInfo("info")<<std::endl;
+		}
 	}
     else if(clientManager->topicEquals("purchasable")){
         LOG("This field is free for sale");

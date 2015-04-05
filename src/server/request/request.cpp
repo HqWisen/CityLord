@@ -122,11 +122,19 @@ SocketMessage RequestSystem::selectfield(CityLordServer* server, UserManager* us
     if((field = dynamic_cast<Field*>(map->getCase(Location(row, col))))){
         answer = field->infoHasSocketMessage();
         if(field->getOwner() == userManager->getActivePlayer()){
-            answer.setTopic("owner");
+			if(field->getOfferedPrice() == 0){
+				answer.setTopic("owner");
+			}else{
+				answer.setTopic("owner-offered");
+			}
         }else if(field->getOwner() == nullptr){
             answer.setTopic("purchasable");
         }else{
-            answer.setTopic("other");
+			if(field->getOfferedPrice() == 0){
+				answer.setTopic("other");
+			}else{
+				answer.setTopic("other-offered");
+			}
         }
         answer.set("info", field->toString()); // for terminal
     }else{
@@ -259,5 +267,39 @@ SocketMessage RequestSystem::playerinfo(CityLordServer* server, UserManager* use
     return answer;
 }
 
+SocketMessage RequestSystem::offer(CityLordServer* server, UserManager* userManager, SocketMessage message){
+	pthread_mutex_lock(&requestmutex);
+	SocketMessage answer;
+	int row = std::stoi(message.get("row"));
+	int col = std::stoi(message.get("col"));
+	CityManager* cityManager = userManager->getActiveCity();
+	Player* player = userManager->getActivePlayer();
+	int price = std::stoi(message.get("offerprice"));
+    answer = cityManager->offer(player, Location(row, col), price);
+    pthread_mutex_unlock(&requestmutex);
+    return answer;
+}
 
+SocketMessage RequestSystem::cancelOffer(CityLordServer* server, UserManager* userManager, SocketMessage message){
+	pthread_mutex_lock(&requestmutex);
+	SocketMessage answer;
+	int row = std::stoi(message.get("row"));
+	int col = std::stoi(message.get("col"));
+	CityManager* cityManager = userManager->getActiveCity();
+	Player* player = userManager->getActivePlayer();
+	answer = cityManager->cancelOffer(player, Location(row, col));
+	pthread_mutex_unlock(&requestmutex);
+	return answer;
+}
 
+SocketMessage RequestSystem::acceptOffer(CityLordServer* server, UserManager* userManager, SocketMessage message){
+	pthread_mutex_lock(&requestmutex);
+	SocketMessage answer;
+	int row = std::stoi(message.get("row"));
+	int col = std::stoi(message.get("col"));
+	CityManager* cityManager = userManager->getActiveCity();
+	Player* player = userManager->getActivePlayer();
+	answer = cityManager->acceptOffer(player, Location(row, col));
+	pthread_mutex_unlock(&requestmutex);
+	return answer;
+}

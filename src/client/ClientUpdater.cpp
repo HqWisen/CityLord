@@ -8,8 +8,10 @@ const std::map<std::string, update_ptr> ClientUpdater::updatemap = {
     {"updatetime", UpdateSystem::updatetime},
     {"visitorcreate", UpdateSystem::createvisitor},
     {"visitormove", UpdateSystem::movevisitor},
-    {"visitorremove", UpdateSystem::removevisitor}
-
+    {"visitorremove", UpdateSystem::removevisitor},
+	{"offer", UpdateSystem::offer},
+	{"offercancel", UpdateSystem::offercancel},
+	{"offeraccept", UpdateSystem::offeraccept}
 };
 
 

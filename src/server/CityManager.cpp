@@ -280,16 +280,19 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
 }*/
 
 
-/*
-SocketMessage CityManager::sellOnMarket(Player* player, Location location, int price){
-	SocketMessage message = SocketMessage();
+
+SocketMessage CityManager::offer(Player* player, Location location, int price){
+	SocketMessage message, update;
 	Field* concernedField;
 	if((dynamic_cast<Field*>(cityMap->getCase(location)))){
 		concernedField = dynamic_cast<Field*>(cityMap->getCase(location));
 		if(concernedField->getOwner() == player){
-			if(catalog.isOfferOnMarket(concernedField) == -1){
-				Offer* offer = new Offer(player, concernedField, price);
-				catalog.putOfferOnMarket(offer);
+			if(concernedField->getOfferedPrice() == 0){
+				concernedField->setOfferedPrice(price);
+				update.setTopic("offer");
+				update.set("location", location.toString());
+				update.set("offerprice", std::to_string(price));
+				updater->sendUpdateToPlayers(update);
 				message.setTopic("success");
                 message.set("reason", "Offer has been successfully registered !");
 			}else{
@@ -309,15 +312,16 @@ SocketMessage CityManager::sellOnMarket(Player* player, Location location, int p
 
 
 SocketMessage CityManager::cancelOffer(Player* player, Location location){
-	SocketMessage message = SocketMessage();
+	SocketMessage message, update;
 	Field* concernedField;
-	int offerIndex;
 	if((dynamic_cast<Field*>(cityMap->getCase(location)))){;
 		concernedField = dynamic_cast<Field*>(cityMap->getCase(location));
 		if(concernedField->getOwner() == player){
-			offerIndex = catalog.isOfferOnMarket(concernedField);
-			if(offerIndex != -1){
-				catalog.removeOffer(offerIndex);
+			if(concernedField->getOfferedPrice() != 0){
+				concernedField->setOfferedPrice(0);
+				update.setTopic("offercancel");
+				update.set("location", location.toString());
+				updater->sendUpdateToPlayers(update);
 				message.setTopic("success");
 				message.set("reason", "Offer has been successfully removed!");
 			}else{
@@ -336,24 +340,26 @@ SocketMessage CityManager::cancelOffer(Player* player, Location location){
 }
 			
 
-SocketMessage CityManager::makeTrade(Player* offeringPlayer, Player* purchasingPlayer, Location location){
+SocketMessage CityManager::acceptOffer(Player* purchasingPlayer, Location location){
 	//Regarde si le joueur 1 a assez d'argent
 	//	Si oui, l'échange est effectué et des messages sont envoyés
 	//	Si non, un message est envoyé au joueur 1
-	SocketMessage message = SocketMessage();
+	SocketMessage message, update;
 	Field* concernedField;
-	int offerIndex;
 	if((dynamic_cast<Field*>(cityMap->getCase(location)))){;
 		concernedField = dynamic_cast<Field*>(cityMap->getCase(location));
-		if(concernedField->getOwner() == offeringPlayer){
-			offerIndex = catalog.isOfferOnMarket(concernedField);
-			if(offerIndex != -1){
-				int price = (catalog.getOffers())[offerIndex]->getPrice();
-				if(purchasingPlayer->getMoney() >= price){
-					offeringPlayer->setMoney(offeringPlayer->getMoney() + price);
-					purchasingPlayer->setMoney(purchasingPlayer->getMoney() - price);
+		if(concernedField->getOwner() != purchasingPlayer){
+			if(concernedField->getOfferedPrice() != 0){
+				if(purchasingPlayer->getMoney() >= concernedField->getOfferedPrice()){
+					Player* offeringPlayer = concernedField->getOwner();
+					offeringPlayer->setMoney(offeringPlayer->getMoney() + concernedField->getOfferedPrice());
+					purchasingPlayer->setMoney(purchasingPlayer->getMoney() - concernedField->getOfferedPrice());
 					concernedField->setOwner(purchasingPlayer);
-					catalog.removeOffer(offerIndex);
+					concernedField->setOfferedPrice(0);
+					update.setTopic("offeraccept");
+					update.set("ownerid", std::to_string(purchasingPlayer->getPlayerID()));
+					update.set("location", location.toString());
+					updater->sendUpdateToPlayers(update);
 					message.setTopic("success");
 					message.set("reason", "Trade has been successful!");
 				}else{
@@ -366,7 +372,7 @@ SocketMessage CityManager::makeTrade(Player* offeringPlayer, Player* purchasingP
 			}
 		}else{
 			message.setTopic("failure");
-			message.set("reason", "The offering player does not have this Field!");
+			message.set("reason", "This is your Field!");
 		}
 	}else{
 		message.setTopic("failure");
@@ -375,4 +381,3 @@ SocketMessage CityManager::makeTrade(Player* offeringPlayer, Player* purchasingP
 	return message;
 }
 
-*/
