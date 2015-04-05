@@ -136,7 +136,7 @@ void CityUpdater::getAdjacencyList() {
 // ======================================================================================
 // ======================================================================================
 
-CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr){ // : timeSender(this){
+CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr) : currentTimer(nullptr){ // : timeSender(this){
     cityMap = map;
     spawn = map->getSpawnList();
     playerVectorPtr = pvPtr;
@@ -145,6 +145,7 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr){ // : time
 }
 
 void CityUpdater::run(){
+    currentTimer.start();
     Timer<CityUpdater> generateTimer(this, 2), advanceTimer(this, 1), buildingTimer(this, 10), payTimer(this, 86400), cityTimer(this);
     generateTimer.setFunc(CityUpdater::runGenerateVisitors);
     advanceTimer.setFunc(CityUpdater::runMakeVisitorsAdvance);
@@ -156,33 +157,37 @@ void CityUpdater::run(){
 }
 
 void CityUpdater::runGenerateVisitors(void* object){
-    std::cout<<"generatevisitor"<<std::endl;
+    //std::cout<<"generatevisitor"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::generateVisitors;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
 }
 
 void CityUpdater::runMakeVisitorsAdvance(void* object){
-    std::cout<<"advancevisitors"<<std::endl;
+    //std::cout<<"advancevisitors"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::makeVisitorsAdvance;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
 }
 
 void CityUpdater::runUpdateBuidlings(void* object){
-    std::cout<<"updatebuilding"<<std::endl;
+    //std::cout<<"updatebuilding"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::updateBuildings;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
 }
 
 void CityUpdater::runMakeOwnersPay(void* object){
-    std::cout<<"payowner"<<std::endl;
+    //std::cout<<"payowner"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::makeOwnersPay;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
 }
 
 void CityUpdater::runUpdateCity(void* object){
-    std::cout<<"updatecity"<<std::endl;
+    //std::cout<<"updatecity"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::updateCity;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
+}
+
+std::string CityUpdater::getStringTimer(){
+    return currentTimer.toString();
 }
 
 SocketMessage CityUpdater::visitorCreate(int visitorID, Location spawnLocation){

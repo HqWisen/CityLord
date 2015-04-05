@@ -30,6 +30,10 @@ std::string CityManager::getMapName(){
     return mapname;
 }
 
+std::string CityManager::getStringTimer(){
+    return updater->getStringTimer();
+}
+
 int CityManager::getID(){
 	return id;
 }

@@ -10,6 +10,7 @@ class Thread{
 		void start();
 		virtual ~Thread() = default;
         void* join();
+        void cancel();
 		virtual void run() = 0;
 		
 };

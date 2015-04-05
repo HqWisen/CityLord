@@ -16,7 +16,7 @@ std::string ClientManager::strCurrency(std::string str){
 
 
 ClientManager::ClientManager(char* hostname, int port) :
-    map(nullptr), socket(hostname, port),  updateSocket(hostname, port+1), message(), updater(nullptr){
+    map(nullptr), socket(hostname, port),  updateSocket(hostname, port+1), message(), updater(nullptr), timer(nullptr){
 
     SocketMessage updateMessage;
     socket.connectHost();
@@ -28,6 +28,7 @@ ClientManager::ClientManager(char* hostname, int port) :
     }
     updater = new ClientUpdater(this, updateSocket);
 }
+
 
 ClientManager::~ClientManager(){
     if(map != nullptr){
@@ -44,8 +45,34 @@ void ClientManager::buildMap(std::string filename){
     setRequest("mapfullupdate");
     /*** Bloqué tant que la map n'est pas totalement construite ***/
     sendRequestAndRecv();
-
+    Timer<ClientManager> t = Timer<ClientManager>::parseTimer(getInfo("timer"));
+    timer = new Timer<ClientManager>(t);
+    timer->setObject(this);
+    timer->setFunc(ClientManager::runUpdateTime);
+    timer->start();
 }
+
+void ClientManager::runUpdateTime(void* object){
+    void (ClientManager::*func_ptr) (void) = &ClientManager::updateTime;
+    ((static_cast<ClientManager*>(object))->*func_ptr)();
+}
+
+void ClientManager::updateTime(){
+    //std::cout<<"updating = "<<getStrTime()<<std::endl;
+}
+
+std::string ClientManager::getStrTime(){
+    return timer->strtime();
+}
+
+void ClientManager::destroyTimer(){
+    if(timer != nullptr){
+        timer->cancel();
+        delete timer;
+        timer = nullptr;
+    }
+}
+
 
 void ClientManager::displayMap(){
     map->display();
@@ -120,14 +147,3 @@ void ClientManager::repaint(){
 void ClientManager::updateMoney(int newMoney){
 
 }
-
-void ClientManager::updateTime(std::string time){
-
-}
-
-
-/*
-void ClientManager::updateTime(int newTime){
-
-}
-*/

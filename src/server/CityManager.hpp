@@ -35,6 +35,7 @@ class CityManager{
         ~CityManager();
         std::string getMapName();
         std::string getMapFileName();
+        std::string getStringTimer();
         int getID();
 		int getNPlayer();
         int getMaxPlayer();

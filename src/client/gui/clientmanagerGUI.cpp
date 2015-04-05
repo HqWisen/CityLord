@@ -68,17 +68,17 @@ void ClientManagerGUI::buildMap(std::string filename){
     signaler->signalBuildViewMap();
 }
 
+void ClientManagerGUI::updateTime(){
+    ClientManager::updateTime();
+    signaler->signalUpdatingTime(getStrTime());
+}
+
 void ClientManagerGUI::repaint(){
    signaler->signalRepainting();
 }
 
 void ClientManagerGUI::updateMoney(int newMoney){
    signaler->signalUpdatingMoney(newMoney);
-}
-
-
-void ClientManagerGUI::updateTime(std::string time){
-   signaler->signalUpdatingTime(time);
 }
 
 Signaler* ClientManagerGUI::getSignaler(){

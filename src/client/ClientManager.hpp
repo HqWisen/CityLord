@@ -7,6 +7,7 @@
 #include "../common/models/Map.hpp"
 #include "../common/socket/ConnectionSocket.hpp"
 #include "../common/socket/SocketMessage.hpp"
+#include "../common/models/Timer.hpp"
 
 
 class ClientUpdater;
@@ -19,6 +20,10 @@ public:
     ClientManager(char*, int);
     virtual ~ClientManager();
     virtual void buildMap(std::string);
+    static void runUpdateTime(void*);
+    virtual void updateTime();
+    std::string getStrTime();
+    void destroyTimer();
     void displayMap();
     Map<ClientField>* getMap();
     void setRequest(std::string);
@@ -37,7 +42,6 @@ public:
     void quit();
     virtual void repaint();
     virtual void updateMoney(int);
-    virtual void updateTime(std::string);
     static std::string strCurrency(int);
     static std::string strCurrency(std::string);
 protected:
@@ -46,6 +50,7 @@ protected:
     ConnectionSocket updateSocket;
     SocketMessage message;
     ClientUpdater* updater;
+    Timer<ClientManager>* timer;
 
 };
 

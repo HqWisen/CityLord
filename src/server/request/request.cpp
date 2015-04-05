@@ -222,7 +222,8 @@ SocketMessage RequestSystem::destroy(CityLordServer* server, UserManager* userMa
 SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer, update;
-    Map<Field>* map = userManager->getActiveCity()->getMap();
+    CityManager* cityManager = userManager->getActiveCity();
+    Map<Field>* map = cityManager->getMap();
     Field* field;
     for(int row=0;row<map->getNumberOfRows();row++){
         for(int col=0;col<map->getNumberOfCols();col++){
@@ -243,6 +244,7 @@ SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* 
             }
         }
     }
+    answer.set("timer", cityManager->getStringTimer());
     pthread_mutex_unlock(&requestmutex);
     return answer;
 }
@@ -293,13 +295,20 @@ SocketMessage RequestSystem::cancelOffer(CityLordServer* server, UserManager* us
 }
 
 SocketMessage RequestSystem::acceptOffer(CityLordServer* server, UserManager* userManager, SocketMessage message){
-	pthread_mutex_lock(&requestmutex);
-	SocketMessage answer;
-	int row = std::stoi(message.get("row"));
-	int col = std::stoi(message.get("col"));
-	CityManager* cityManager = userManager->getActiveCity();
-	Player* player = userManager->getActivePlayer();
-	answer = cityManager->acceptOffer(player, Location(row, col));
-	pthread_mutex_unlock(&requestmutex);
-	return answer;
+    pthread_mutex_lock(&requestmutex);
+    SocketMessage answer;
+    int row = std::stoi(message.get("row"));
+    int col = std::stoi(message.get("col"));
+    CityManager* cityManager = userManager->getActiveCity();
+    Player* player = userManager->getActivePlayer();
+    answer = cityManager->acceptOffer(player, Location(row, col));
+    pthread_mutex_unlock(&requestmutex);
+    return answer;
+}
+
+SocketMessage RequestSystem::inittimer(CityLordServer* server, UserManager* userManager, SocketMessage message){
+    pthread_mutex_lock(&requestmutex);
+    SocketMessage answer;
+    answer.set("timer", "hakim");
+    return answer;
 }

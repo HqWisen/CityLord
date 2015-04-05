@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <iostream>
-#include "../common/thread/Thread.hpp"
+#include "../thread/Thread.hpp"
 
 typedef void (*func_ptr)(void*);
 
@@ -85,7 +85,10 @@ void Timer<T>::secsleep(int second){
 
 template <typename T>
 std::string Timer<T>::strtime(){
-    return ctime(&current);
+    char buff[40];
+    strftime(buff, 40, "%d-%m-%Y %H:%M:%S", localtime(&current));
+    return buff;
+    //return ctime(&current);
 }
 
 template <typename T>

@@ -24,7 +24,6 @@ public:
     ~InGame();
     void refresh() override;
 private:
-    void updateTime(int);
     void openMessageBox(std::string);
     void activeButton(std::string);
 public slots:

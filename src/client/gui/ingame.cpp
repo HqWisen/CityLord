@@ -36,7 +36,6 @@ void InGame::buildViewMap(){
     ui->colorLabel->setText(clientManager->getInfo("color").c_str());
     clientManager->setCurrentPlayerID(std::stoi(clientManager->getInfo("playerid")));
     updateMoney(std::stoi(clientManager->getInfo("money")));
-    ////////////updateTime(std::stoi(clientManager->getInfo("time")));
     view->buildViewMap();
 }
 
@@ -249,6 +248,7 @@ void InGame::on_exitButton_clicked(){
     clientManager->sendRequestAndRecv();
     clientManager->setCurrentWidget(ClientManagerGUI::MAINMENU);
     clientManager->setCurrentPlayerID(-1);
+    clientManager->destroyTimer();
 }
 
 void InGame::disableAllButtons(){

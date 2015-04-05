@@ -16,3 +16,6 @@ void* Thread::join(){
 	return result;
 }
 
+void Thread::cancel(){
+    pthread_cancel(thread);
+}

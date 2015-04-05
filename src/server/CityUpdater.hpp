@@ -7,7 +7,7 @@
 #include <iostream>
 #include "../common/models/Map.hpp"
 #include "Visitor.hpp"
-#include "Timer.hpp"
+#include "../common/models/Timer.hpp"
 #include <cmath>
 #include <deque>
 
@@ -51,6 +51,7 @@ class CityUpdater : public Thread{
     vector<Road*> roadMap;
     deque<Road*> blockedRoads;
     adjacency_list_t adjacencyList;
+    Timer<CityUpdater> currentTimer;
     public:
         CityUpdater(Map<Field>*,std::vector<Player*>*);
         void run() override;
@@ -59,6 +60,7 @@ class CityUpdater : public Thread{
         static void runUpdateBuidlings(void*);
         static void runMakeOwnersPay(void*);
         static void runUpdateCity(void*);
+        std::string getStringTimer();
         void generateVisitors();
         void updateBuildings();
         void makeVisitorsAdvance();

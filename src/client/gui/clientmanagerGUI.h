@@ -26,9 +26,9 @@ public:
     void setCurrentWidget(key_type);
     QVBoxLayout* getLayout();
     void buildMap(std::string) override;
+    void updateTime() override;
     void repaint() override;
     void updateMoney(int) override;
-    void updateTime(std::string) override;
     Signaler* getSignaler();
     int getCurrentPlayerID();
     void setCurrentPlayerID(int);
