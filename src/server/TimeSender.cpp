@@ -20,9 +20,6 @@ void TimeSender::run(){
         if(t.elapsedTime() < timer2){
         }
         else{
-            update.set("time", getTime());
-            std::cout<<"sendUpdatTime = "<<update.get("time")<<std::endl;
-            updater->sendUpdateToPlayers(update);
             timer2 += moveTimer;
             advanceVisitor = true;
            //makeVisitorsAdvance();
