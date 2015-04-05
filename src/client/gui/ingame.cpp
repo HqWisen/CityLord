@@ -21,6 +21,7 @@ InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
     QObject::connect(clientManager->getSignaler(), SIGNAL(selectField(SocketMessage,Location)), this, SLOT(selectField(SocketMessage, Location)));
     QObject::connect(clientManager->getSignaler(), SIGNAL(updateMoney(int)), this, SLOT(updateMoney(int)));
     QObject::connect(clientManager->getSignaler(), SIGNAL(updateTime(QString)), this, SLOT(updateTime(QString)));
+
 }
 
 void InGame::repaintView(){
@@ -219,6 +220,10 @@ void InGame::on_allFieldButton_clicked(){
 
 void InGame::on_defaultFieldButton_clicked(){
     view->unshowAllFieldColor();
+}
+
+void InGame::on_centerButton_clicked(){
+    view->centerMap();
 }
 
 void InGame::on_exitButton_clicked(){

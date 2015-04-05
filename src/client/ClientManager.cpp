@@ -110,7 +110,7 @@ std::string ClientManager::getReason(){
 
 void ClientManager::quit(){
     setRequest("quit");
-    sendRequest();
+    sendRequestAndRecv();
 }
 
 void ClientManager::repaint(){

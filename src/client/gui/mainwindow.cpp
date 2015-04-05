@@ -21,8 +21,7 @@ MainWindow::MainWindow(char* hostname, int port) :
 
 MainWindow::~MainWindow()
 {
-    //clientManager->setRequest("leavecity");
-    //clientManager->sendRequestAndRecv();
+    clientManager->quit();
     delete ui;
     delete centralWidget;
     delete clientManager;

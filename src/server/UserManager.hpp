@@ -42,7 +42,8 @@ class UserManager : public Thread{
 		std::string getUserName();
         void disconnectUser();
 		void recvRequest(SocketMessage&);
-		void sendAnswer(SocketMessage);
+        void sendAnswer(SocketMessage);
+        void sendQuitUpdate();
         void sendUpdate(SocketMessage);
 };
 

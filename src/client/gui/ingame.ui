@@ -190,6 +190,13 @@ QLabel{background:transparent;color:rgb(0, 220, 0)}</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
+       <widget class="QPushButton" name="centerButton">
+        <property name="text">
+         <string>Center the map</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="ownerFieldButton">
         <property name="text">
          <string>My fields</string>

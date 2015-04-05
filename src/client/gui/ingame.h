@@ -40,6 +40,7 @@ private slots:
     void on_ownerFieldButton_clicked();
     void on_allFieldButton_clicked();
     void on_defaultFieldButton_clicked();
+    void on_centerButton_clicked();
     void disableAllButtons();
     void updateButtons(bool,bool,bool,bool,bool);
     void on_exitButton_clicked();

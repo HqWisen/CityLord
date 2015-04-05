@@ -12,8 +12,7 @@ void CityLordClient::runClient(){
 	chooseCity();
 	bool disconnected = false;
 	while(! disconnected){
-		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-		LOG("Choose an action");
+        LOG("Choose an action");
 		std::cout<<"1 - Show map"<<std::endl;
 		std::cout<<"2 - Select field"<<std::endl;
 		std::cout<<"3 - Show catalog"<<std::endl;
@@ -44,12 +43,12 @@ void CityLordClient::runClient(){
 }
 
 CityLordClient::~CityLordClient(){
+    clientManager->quit();
     delete clientManager;
 }
 
 void CityLordClient::beginConnection(){
-	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-	LOG("Connect you to the server");
+    LOG("Connect you to the server");
 	std::cout<<"1 - Create an account"<<std::endl;
 	std::cout<<"2 - Login"<<std::endl;
 	int choice = makeChoice(1, 2);
@@ -64,8 +63,7 @@ void CityLordClient::beginConnection(){
 void CityLordClient::login(){
 	bool fail = true;
     std::string username, password;
-    std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-	LOG("Enter your account nickname to log in.");
+    LOG("Enter your account nickname to log in.");
 	while(fail){
         clientManager->setRequest("login");
         std::cout<<"Username : ";
@@ -87,8 +85,7 @@ void CityLordClient::createAccount(){
 	bool fail = true;
     std::string username, password;
     clientManager->setRequest("createaccount");
-    std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-	LOG("To create an account enter your username.");
+    LOG("To create an account enter your username.");
 	while(fail){
         clientManager->setRequest("createaccount");
         std::cout<<"Username : ";
@@ -106,8 +103,7 @@ void CityLordClient::createAccount(){
 	LOG("Please save it to keep your account !");
 }
 void CityLordClient::chooseCity(){
-	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-	LOG("Choose your city");
+    LOG("Choose your city");
 	std::cout<<"1 - Create a city"<<std::endl;
 	std::cout<<"2 - Join a city"<<std::endl;
 	int choice = makeChoice(1, 2);
@@ -123,8 +119,7 @@ void CityLordClient::createCity(){
     clientManager->sendRequestAndRecv();
     std::map<std::string, std::string> map = clientManager->getMessage().getMap();
 	int i = 0;
-	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-	LOG("Choose a map for the city");
+    LOG("Choose a map for the city");
 	for(std::map<std::string, std::string>::iterator iterator = map.begin(); iterator != map.end(); iterator++) {
 		i++;
 		std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
@@ -142,7 +137,6 @@ void CityLordClient::createCity(){
 }
 
 void CityLordClient::joinCity(){
-    std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
     LOG("Choose a city to play");
     bool fail = true;
     while(fail){
@@ -185,7 +179,6 @@ void CityLordClient::selectField(){
     clientManager->addInfo("col", std::to_string(ccol-1));
     clientManager->sendRequestAndRecv();
     if(clientManager->topicEquals("owner")){
-        std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
         LOG("You own this field.");
         std::cout<<"1 - Build"<<std::endl;
 		//std::cout<<"2 - Sell"<<std::endl;
@@ -227,7 +220,6 @@ void CityLordClient::selectField(){
           }
 	}
     else if(clientManager->topicEquals("other")){
-        std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
         LOG("It's another player's field");
 		std::cout<<"1 - Show information"<<std::endl;
 		std::cout<<"2 - Quit"<<std::endl;
@@ -237,7 +229,6 @@ void CityLordClient::selectField(){
         }
 	}
     else if(clientManager->topicEquals("purchasable")){
-		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
         LOG("This field is free for sale");
 		std::cout<<"1 - Show information"<<std::endl;
 		std::cout<<"2 - Buy"<<std::endl;
@@ -254,8 +245,7 @@ void CityLordClient::selectField(){
 		}
 	}
 	else{
-		std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-        std::cout<<"The field selected is not selectable ! (Tree, road, obstacle, ..)"<<std::endl;
+        LOG("This case is not selectable !")
     }
 }
 
@@ -268,8 +258,7 @@ void CityLordClient::showInfo(){
     std::string nEmptyField = clientManager->getInfo("nemptyfield");
 	//std::string color = answer.get("color");
 
-	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-	std::cout<<"Your nickname : "<< nickname <<std::endl;
+    std::cout<<"Your nickname : "<< nickname <<std::endl;
 	std::cout<<"Your money : "<< money <<std::endl;
 	std::cout<<"Number of building : "<< nBuilding <<std::endl;
 	std::cout<<"Number of empty field : "<< nEmptyField <<std::endl;
@@ -280,8 +269,7 @@ void CityLordClient::showCatalog(){
     clientManager->setRequest("showcatalog");
     clientManager->sendRequestAndRecv();
     std::map<std::string, std::string> map = clientManager->getMessage().getMap();
-	std::cout<<"--------------------------------------------------------------------------------"<<std::endl;
-	for(std::map<std::string, std::string>::iterator iterator = map.begin(); iterator != map.end(); iterator++) {
+    for(std::map<std::string, std::string>::iterator iterator = map.begin(); iterator != map.end(); iterator++) {
 		std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
 	}
 }
@@ -299,12 +287,13 @@ int CityLordClient::makeChoice(int min, int max){
 } 
 
 void CityLordClient::LOG(std::string info){
-	time_t now = time(0);
+    std::cout<<"------------------------------"<<std::endl;
+    time_t now = time(0);
 	struct tm tstruct;
 	char timestr[80];
 	tstruct = *localtime(&now);
-  //strftime(timestr, sizeof(timestr), "%d-%m-%Y, %X", &tstruct); // with date
-  strftime(timestr, sizeof(timestr), "%X", &tstruct);
+    //strftime(timestr, sizeof(timestr), "%d-%m-%Y, %X", &tstruct); // with date
+    strftime(timestr, sizeof(timestr), "%X", &tstruct);
 	std::cout<<"["<<CLIENTNAME<<"]";
 	std::cout<<"["<<timestr<<"]";
 	std::cout<<" ";

@@ -30,25 +30,27 @@ UserManager::UserManager(CityLordServer* cserver, ClientSocket socket, ServerSoc
 }
 
 void UserManager::run(){
-	SocketMessage request, answer;
+    SocketMessage request, answer;
     recvRequest(request);
 	while(request.getTopic() != "quit" and !request.getTopic().empty()){
         answer = UserManager::requestmap.at(request.getTopic())(server, this, request);
 		sendAnswer(answer);
 		recvRequest(request);
-	}
+    }
     disconnectUser();
 }
 
-void UserManager::disconnectUser(){
+void UserManager::disconnectUser(){    
+    sendQuitUpdate();
     pthread_mutex_lock(&updatemutex);
-    server->LOG("User '"+getUserName()+"' with IP "+clientSocket.getClientIP()+" is now disconnected.");
     if(user != nullptr && cityManager != nullptr &&  user->getPlayer(cityManager) != nullptr){
         user->getPlayer(cityManager)->setUserManager(nullptr);
-        leaveCity();
     }
+    leaveCity();
+    sendAnswer(SocketMessage("close"));
     updateSocket->closeSocket();
     clientSocket.closeSocket();
+    server->LOG("User '"+getUserName()+"' with IP "+clientSocket.getClientIP()+" is now disconnected.");
     pthread_mutex_unlock(&updatemutex);
 }
 
@@ -65,8 +67,10 @@ void UserManager::setActiveCity(CityManager* cm){
 }
 
 void UserManager::leaveCity(){
-    user->getPlayer(cityManager)->setConnected(false);
-    setActiveCity(nullptr);
+    if(cityManager != nullptr){
+      user->getPlayer(cityManager)->setConnected(false);
+      setActiveCity(nullptr);
+    }
 }
 
 void UserManager::initActivePlayer(int playerid){
@@ -101,6 +105,12 @@ void UserManager::recvRequest(SocketMessage& request){
 
 void UserManager::sendAnswer(SocketMessage answer){
     clientSocket.write(answer.toString());
+}
+
+void UserManager::sendQuitUpdate(){
+    pthread_mutex_lock(&updatemutex);
+    updateSocket->write(SocketMessage("quit").toString());
+    pthread_mutex_unlock(&updatemutex);
 }
 
 void UserManager::sendUpdate(SocketMessage update){

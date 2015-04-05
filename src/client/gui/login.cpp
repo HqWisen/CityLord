@@ -44,7 +44,6 @@ void Login::on_createAccountButton_clicked(){
 }
 
 void Login::on_quitButton_clicked(){
-    clientManager->quit();
     QApplication::quit();
 }
 

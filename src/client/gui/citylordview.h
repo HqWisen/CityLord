@@ -33,6 +33,7 @@ public:
     void wheelEvent(QWheelEvent*) override;
     void keyPressEvent(QKeyEvent *event);
     bool goodLocation(Location);
+    void centerMap();
     void repaintView();
     void buildViewMap();
     Location isoToLoc(QPointF);

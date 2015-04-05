@@ -143,7 +143,6 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr) : timeSend
     srand(time(NULL));
     getRoadMap();
     getAdjacencyList();
-    this->start();
 }
 
 void CityUpdater::run(){

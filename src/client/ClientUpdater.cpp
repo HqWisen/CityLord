@@ -21,7 +21,7 @@ void ClientUpdater::run(){
 
     SocketMessage update, answer("success");
     recvUpdate(update);
-    while(update.getTopic() != "quit" && !update.getTopic().empty()){       
+    while(update.getTopic() != "quit" && !update.getTopic().empty()){
         ClientUpdater::updatemap.at(update.getTopic())(clientManager, update);
         sendAnswer(answer); // finish signal
         recvUpdate(update);

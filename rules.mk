@@ -15,7 +15,7 @@ build: $(BIN_DIR)/$(NAME).a $(OBJECTS)
 $(BIN_DIR)/$(NAME)/%.o: %.cpp $(HEADERS) $(BIN_DIR)/$(NAME)/
 	$(CC) $(FLAGS) -c $< -o $@
 
-$(BIN_DIR)/$(NAME).a: $(OBJECTS)
+$(BIN_DIR)/$(NAME).a: $(OBJECTS) $(HEADER)
 	$(AR) rcu $@ $(HEADERS) $(OBJECTS)
 
 	

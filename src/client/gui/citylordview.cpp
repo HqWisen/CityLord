@@ -6,7 +6,7 @@ const int CityLordView::HEIGHT = 804;
 const int CityLordView::DEFAULTZOOMLEVEL = 10;
 
 CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
-    QGraphicsView(parent), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(cm), numberOfRows(0),  \
+    QGraphicsView(parent), px(0), py(0), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(cm), numberOfRows(0),  \
     numberOfCols(0), itemArray(nullptr){
     setGeometry(0, 60, WIDTH, HEIGHT);
     resize(WIDTH, HEIGHT);
@@ -17,16 +17,6 @@ CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
     ZOOMLEVEL=DEFAULTZOOMLEVEL;
     COORDX=1520;
     COORDY=0;
-
-    /*****/
-    int WIDTHOUT = 60;
-    QPixmap pixmap;
-    for(int row=-2*WIDTHOUT;row<2*WIDTHOUT;row++){
-        for(int col=-2*WIDTHOUT;col<2*WIDTHOUT;col++){
-            pixmap = QPixmap(getImagePath("out"));
-            scene->addPixmap(pixmap)->setOffset(carToIso(Location(row, col), pixmap));
-        }
-    }
 }
 
 CityLordView::~CityLordView(){
@@ -139,22 +129,23 @@ void CityLordView::mouseReleaseEvent(QMouseEvent * e){
 }
 
 void CityLordView::mouseMoveEvent(QMouseEvent * e){
+    int move;
     QPointF currentPos = mapToScene(e->pos());
     if(startMouse.x() < currentPos.x() and currentPos.x()>-1520){   // -rows*baselength
-        int move = currentPos.x()-startMouse.x();
+        move = currentPos.x()-startMouse.x();
         px-= move;
         lastPos.setX(lastPos.x()-move);
     }else if(startMouse.x() > currentPos.x() and currentPos.x()<1520){  // rows*baselength
-        int move = startMouse.x()-currentPos.x();
+        move = startMouse.x()-currentPos.x();
         px+= move;
         lastPos.setX(lastPos.x()+move);
     }
     if(startMouse.y() < currentPos.y() and currentPos.y()>0){   // 0
-        int move = currentPos.y()-startMouse.y();
+        move = currentPos.y()-startMouse.y();
         py-=move;
         lastPos.setY(lastPos.y()-move);
     }else if(startMouse.y() > currentPos.y() and currentPos.y()<1500){// columns*baseheight
-        int move = startMouse.y()-currentPos.y();
+        move = startMouse.y()-currentPos.y();
         py+=move;
         lastPos.setY(lastPos.y()+move);
     }
@@ -199,6 +190,12 @@ void CityLordView::keyPressEvent(QKeyEvent *event)
             setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
             break;
     }*/
+}
+
+void CityLordView::centerMap(){
+    px = 0;
+    py = 0;
+    setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
 }
 
 void CityLordView::repaintView(){
