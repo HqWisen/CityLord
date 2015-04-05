@@ -150,9 +150,9 @@ void CityUpdater::run(){
     1 seconde = 5 min dans le jeu
     */
     /* ! SOLUTION TEMPORAIRE */
-
-    int* ptr = generateVisitors();
-    Timer(5,ptr);
+    int (*pointeurSurFonction)(void);
+    pointeurSurFonction = generateVisitors;
+    Timer(5,pointeurSurFonction);
     /*
     timeSender.start();
     while(!timeSender.isOver()){
