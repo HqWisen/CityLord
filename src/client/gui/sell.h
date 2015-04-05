@@ -17,6 +17,7 @@ public:
     explicit sell(QWidget *, ClientManagerGUI*);
     ~sell();
     QPushButton* getCancelButton();
+    int getPrice();
 private slots:
     void on_putOnDialogButton_clicked();
 

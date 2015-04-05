@@ -205,14 +205,14 @@ void InGame::on_upgradeButton_clicked(){
 
 void InGame::on_sellButton_clicked()
 {
-    //clientManager->setRequest("sell");
-    //clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
-    //clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
+    clientManager->setRequest("offer");
+    clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
+    clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
     sellDialog->exec();
-    //if(clientManager->getInfo("showmessagebox") == "true"){
-    //    openMessageBox("Sell");
-    //    view->selectField(lastLocation);
-    //}
+    if(clientManager->getInfo("showmessagebox") == "true"){
+        openMessageBox("Build");
+        view->selectField(lastLocation);
+    }
 }
 
 
