@@ -245,7 +245,7 @@ void CityLordClient::selectField(){
 		}
 	}
 	else{
-        LOG("This case is not selectable !")
+        LOG("This case is not selectable !");
     }
 }
 
