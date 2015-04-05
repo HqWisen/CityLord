@@ -20,7 +20,6 @@ const std::map<std::string, request_ptr> UserManager::requestmap = {
     {"playerinfo", RequestSystem::playerinfo},
     {"offer", RequestSystem::offer},
     {"offercancel", RequestSystem::cancelOffer},
-    {"offeraccept", RequestSystem::acceptOffer},
     {"inittimer", RequestSystem::inittimer},
     {"offercancel", RequestSystem::cancelOffer}
 };

@@ -290,7 +290,7 @@ SocketMessage RequestSystem::cancelOffer(CityLordServer* server, UserManager* us
 	return answer;
 }
 
-
+/*
 SocketMessage RequestSystem::acceptOffer(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;
@@ -301,7 +301,7 @@ SocketMessage RequestSystem::acceptOffer(CityLordServer* server, UserManager* us
     answer = cityManager->acceptOffer(player, Location(row, col));
     pthread_mutex_unlock(&requestmutex);
     return answer;
-}
+}*/
 
 SocketMessage RequestSystem::inittimer(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
