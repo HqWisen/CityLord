@@ -145,7 +145,44 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr){ // : time
 }
 
 void CityUpdater::run(){
+    Timer<CityUpdater> generateTimer(this, 2), advanceTimer(this, 1), buildingTimer(this, 10), payTimer(this, 86400), cityTimer(this);
+    generateTimer.setFunc(CityUpdater::runGenerateVisitors);
+    advanceTimer.setFunc(CityUpdater::runMakeVisitorsAdvance);
+    buildingTimer.setFunc(CityUpdater::runUpdateBuidlings);
+    payTimer.setFunc(CityUpdater::runMakeOwnersPay);
+    cityTimer.setFunc(CityUpdater::runUpdateCity);
+    generateTimer.start();advanceTimer.start();buildingTimer.start();payTimer.start();/*cityTimer.start();*/
+    generateTimer.join();advanceTimer.join();buildingTimer.join();payTimer.join();/*cityTimer.join();*/
+}
 
+void CityUpdater::runGenerateVisitors(void* object){
+    std::cout<<"generatevisitor"<<std::endl;
+    void (CityUpdater::*func_ptr) (void) = &CityUpdater::generateVisitors;
+    ((static_cast<CityUpdater*>(object))->*func_ptr)();
+}
+
+void CityUpdater::runMakeVisitorsAdvance(void* object){
+    std::cout<<"advancevisitors"<<std::endl;
+    void (CityUpdater::*func_ptr) (void) = &CityUpdater::makeVisitorsAdvance;
+    ((static_cast<CityUpdater*>(object))->*func_ptr)();
+}
+
+void CityUpdater::runUpdateBuidlings(void* object){
+    std::cout<<"updatebuilding"<<std::endl;
+    void (CityUpdater::*func_ptr) (void) = &CityUpdater::updateBuildings;
+    ((static_cast<CityUpdater*>(object))->*func_ptr)();
+}
+
+void CityUpdater::runMakeOwnersPay(void* object){
+    std::cout<<"payowner"<<std::endl;
+    void (CityUpdater::*func_ptr) (void) = &CityUpdater::makeOwnersPay;
+    ((static_cast<CityUpdater*>(object))->*func_ptr)();
+}
+
+void CityUpdater::runUpdateCity(void* object){
+    std::cout<<"updatecity"<<std::endl;
+    void (CityUpdater::*func_ptr) (void) = &CityUpdater::updateCity;
+    ((static_cast<CityUpdater*>(object))->*func_ptr)();
 }
 
 SocketMessage CityUpdater::visitorCreate(int visitorID, Location spawnLocation){
@@ -279,7 +316,7 @@ void CityUpdater::createPath(Location start, Location end, std::vector<Location>
     }
 }
 
-int CityUpdater::generateVisitors(){
+void CityUpdater::generateVisitors(){
     if (!cityMap->isFull()){
         int size = spawn.size();
         int luck = rand() %  (size);
@@ -305,7 +342,6 @@ int CityUpdater::generateVisitors(){
         int id = cityMap->addVisitor(newVisitor);  
         SocketMessage update = visitorCreate(id, startLocation);
         //sendUpdateToPlayers(update);
-    return 0;
     }
 }
 
