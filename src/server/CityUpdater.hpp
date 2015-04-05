@@ -7,7 +7,7 @@
 #include <iostream>
 #include "../common/models/Map.hpp"
 #include "Visitor.hpp"
-#include "Time.hpp"
+#include "Timer.hpp"
 #include <cmath>
 #include <deque>
 
@@ -54,7 +54,12 @@ class CityUpdater : public Thread{
     public:
         CityUpdater(Map<Field>*,std::vector<Player*>*);
         void run() override;
-        int generateVisitors();
+        static void runGenerateVisitors(void*);
+        static void runMakeVisitorsAdvance(void*);
+        static void runUpdateBuidlings(void*);
+        static void runMakeOwnersPay(void*);
+        static void runUpdateCity(void*);
+        void generateVisitors();
         void updateBuildings();
         void makeVisitorsAdvance();
         void makeOwnersPay();

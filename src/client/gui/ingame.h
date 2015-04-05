@@ -51,7 +51,7 @@ private:
     Ui::InGame* ui;
     CityLordView* view;
     build* buildDialog;
-    Sell* sellDialog;
+    sell* sellDialog;
     Location lastLocation;
 
 };

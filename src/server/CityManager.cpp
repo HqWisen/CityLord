@@ -14,7 +14,7 @@ CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), ci
 		}
     }
     updater = new CityUpdater(getMap(), &playerVector);
-    //updater->start();
+    updater->start();
 }
 
 CityManager::~CityManager(){

@@ -39,6 +39,7 @@ string BasicField::getImageName(){
        std::transform(buildingName.begin(), buildingName.end(), buildingName.begin(), ::tolower);
        imagename = buildingName;
        buildingStatus = building->getStatus();
+       cout<<buildingStatus<<endl;
        if(buildingStatus == "hypotheque"){
             imagename += "_";
             imagename += "hypotheque";
@@ -55,9 +56,9 @@ string BasicField::getImageName(){
     else{
         imagename = "base";
     }
-    if(showOwnerColor and buildingStatus == "normal"){
-        if(hasOwner()){
-                imagename += "_" + Player::COLORNAME[getOwnerID()];            
+    if(showOwnerColor){
+        if( (hasBuilding() and buildingStatus == "normal") or (hasOwner()) ){
+            imagename += "_" + Player::COLORNAME[getOwnerID()];            
         }
         else{
             imagename = "grass";

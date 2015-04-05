@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Sell</class>
- <widget class="QWidget" name="Sell">
+ <class>sell</class>
+ <widget class="QDialog" name="sell">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>420</width>
-    <height>205</height>
+    <width>438</width>
+    <height>190</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Dialog</string>
   </property>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>30</y>
+     <y>20</y>
      <width>341</width>
      <height>29</height>
     </rect>
@@ -38,8 +38,8 @@
   <widget class="QWidget" name="layoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>110</y>
+     <x>10</x>
+     <y>80</y>
      <width>411</width>
      <height>81</height>
     </rect>
