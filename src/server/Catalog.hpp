@@ -16,6 +16,7 @@ class Catalog{
 		void putOnMarket(Field*);
 		void putOfferOnMarket(Offer*);
 		bool isOnMarket(Field*);
+		void removeFromMarket(Field*);
 		int isOfferOnMarket(Field*);
 		void give(Field*, Player*);
 		void removeOffer(int);

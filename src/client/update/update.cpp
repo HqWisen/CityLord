@@ -83,13 +83,3 @@ void UpdateSystem::offercancel(ClientManager* client, SocketMessage update){
 	pthread_mutex_unlock(&updatemutex);
 }
 
-void UpdateSystem::offeraccept(ClientManager* client, SocketMessage update){
-	pthread_mutex_lock(&updatemutex);
-	Location location = Location::parse(update.get("location"));
-	int ownerid = std::stoi(update.get("ownerid"));
-	ClientField* field = dynamic_cast<ClientField*>(client->getMap()->getCase(location));
-	field->setOwnerID(ownerid);
-	field->setOfferedPrice(0);
-	client->repaint();
-	pthread_mutex_unlock(&updatemutex);
-}

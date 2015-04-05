@@ -31,6 +31,7 @@ public:
     void gainMoney(int);
     void loseMoney(int);
     void addField(Field*);
+    void removeField(Field*);
     void incBuildingCounter();
     void decBuildingCounter();
     bool isConnected();

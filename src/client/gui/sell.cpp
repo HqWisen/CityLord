@@ -19,7 +19,11 @@ sell::~sell()
 
 void sell::on_putOnDialogButton_clicked()
 {
-    cout<<ui->priceSpinBox->value()<<endl;
+    /* Request and location are set in ingame buildButton method */
+    int offeredPrice = getPrice();
+    clientManager->addInfo("offerprice", std::to_string(offeredPrice));
+    clientManager->sendRequestAndRecv();
+    clientManager->addInfo("showmessagebox", "true");
     close();
 }
 
@@ -35,4 +39,8 @@ void sell::on_cancelButton_clicked()
 
 QPushButton* sell::getCancelButton(){
     return ui->cancelButton;
+}
+
+int sell::getPrice(){
+    return ui->priceSpinBox->value();
 }

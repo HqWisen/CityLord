@@ -127,14 +127,10 @@ SocketMessage RequestSystem::selectfield(CityLordServer* server, UserManager* us
 			}else{
 				answer.setTopic("owner-offered");
 			}
-        }else if(field->getOwner() == nullptr){
+        }else if((field->getOwner() == nullptr) or (field->getOfferedPrice() != 0)){
             answer.setTopic("purchasable");
         }else{
-			if(field->getOfferedPrice() == 0){
-				answer.setTopic("other");
-			}else{
-				answer.setTopic("other-offered");
-			}
+			answer.setTopic("other");
         }
         answer.set("info", field->toString()); // for terminal
     }else{
@@ -293,6 +289,7 @@ SocketMessage RequestSystem::cancelOffer(CityLordServer* server, UserManager* us
 	pthread_mutex_unlock(&requestmutex);
 	return answer;
 }
+
 
 SocketMessage RequestSystem::acceptOffer(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);

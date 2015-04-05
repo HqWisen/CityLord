@@ -21,7 +21,8 @@ const std::map<std::string, request_ptr> UserManager::requestmap = {
     {"offer", RequestSystem::offer},
     {"offercancel", RequestSystem::cancelOffer},
     {"offeraccept", RequestSystem::acceptOffer},
-    {"inittimer", RequestSystem::inittimer}
+    {"inittimer", RequestSystem::inittimer},
+    {"offercancel", RequestSystem::cancelOffer}
 };
 
 UserManager::UserManager(CityLordServer* cserver, ClientSocket socket, ServerSocket updateClientSocket) : server(cserver), clientSocket(socket), \

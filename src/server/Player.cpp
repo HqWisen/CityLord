@@ -59,6 +59,21 @@ void Player::addField(Field* field){
     fieldVector.push_back(field);
 }
 
+void Player::removeField(Field* field){
+	bool found = false;
+	std::vector<Field*>::iterator tmp;
+	for (std::vector<Field*>::iterator it = fieldVector.begin(); it != fieldVector.end(); it++){
+		if(*(it) == field){
+			found = true;
+			tmp = it;
+			break;
+		}
+	}
+	if(found){
+		fieldVector.erase(tmp);
+	}
+}
+
 void Player::incBuildingCounter(){
     buildingCounter++;
 }

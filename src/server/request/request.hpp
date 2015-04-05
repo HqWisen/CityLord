@@ -32,7 +32,6 @@ public:
     static SocketMessage leavecity(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage playerinfo(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage offer(CityLordServer*, UserManager*, SocketMessage);
-    static SocketMessage acceptOffer(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage cancelOffer(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage inittimer(CityLordServer*, UserManager*, SocketMessage);
 };

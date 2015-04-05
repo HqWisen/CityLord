@@ -145,11 +145,29 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
 	// Si non, un message est envoyé
     SocketMessage message, update;
     Field* concernedField;
+    int price;
     if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(catalog.isOnMarket(concernedField)){
-            if(player->getMoney() >= concernedField->getTotalPurchasePrice()){
-                player->loseMoney(concernedField->getTotalPurchasePrice());
+			if(concernedField->getOwner() == nullptr){
+				price = concernedField->getTotalPurchasePrice();
+			}else{
+				price = concernedField->getOfferedPrice();
+			}
+            if(player->getMoney() >= price){
+				if(concernedField->getOwner() != nullptr){
+					Player* offeringPlayer = concernedField->getOwner();
+					offeringPlayer->gainMoney(price);
+					offeringPlayer->removeField(concernedField);
+					if(concernedField->hasBuilding()){
+						offeringPlayer->decBuildingCounter();
+					}
+					concernedField->setOfferedPrice(0);
+				}	
+                player->loseMoney(price);
                 catalog.give(concernedField, player);
+                if(concernedField->hasBuilding()){
+					player->incBuildingCounter();
+				}
                 update.setTopic("changeowner");
                 update.set("ownerid", std::to_string(player->getPlayerID()));
                 update.set("location", location.toString());
@@ -293,6 +311,7 @@ SocketMessage CityManager::offer(Player* player, Location location, int price){
 		if(concernedField->getOwner() == player){
 			if(concernedField->getOfferedPrice() == 0){
 				concernedField->setOfferedPrice(price);
+				catalog.putOnMarket(concernedField);
 				update.setTopic("offer");
 				update.set("location", location.toString());
 				update.set("offerprice", std::to_string(price));
@@ -323,6 +342,7 @@ SocketMessage CityManager::cancelOffer(Player* player, Location location){
 		if(concernedField->getOwner() == player){
 			if(concernedField->getOfferedPrice() != 0){
 				concernedField->setOfferedPrice(0);
+				catalog.removeFromMarket(concernedField);
 				update.setTopic("offercancel");
 				update.set("location", location.toString());
 				updater->sendUpdateToPlayers(update);
@@ -343,45 +363,4 @@ SocketMessage CityManager::cancelOffer(Player* player, Location location){
 	return message;
 }
 			
-
-SocketMessage CityManager::acceptOffer(Player* purchasingPlayer, Location location){
-	//Regarde si le joueur 1 a assez d'argent
-	//	Si oui, l'échange est effectué et des messages sont envoyés
-	//	Si non, un message est envoyé au joueur 1
-	SocketMessage message, update;
-	Field* concernedField;
-	if((dynamic_cast<Field*>(cityMap->getCase(location)))){;
-		concernedField = dynamic_cast<Field*>(cityMap->getCase(location));
-		if(concernedField->getOwner() != purchasingPlayer){
-			if(concernedField->getOfferedPrice() != 0){
-				if(purchasingPlayer->getMoney() >= concernedField->getOfferedPrice()){
-					Player* offeringPlayer = concernedField->getOwner();
-					offeringPlayer->setMoney(offeringPlayer->getMoney() + concernedField->getOfferedPrice());
-					purchasingPlayer->setMoney(purchasingPlayer->getMoney() - concernedField->getOfferedPrice());
-					concernedField->setOwner(purchasingPlayer);
-					concernedField->setOfferedPrice(0);
-					update.setTopic("offeraccept");
-					update.set("ownerid", std::to_string(purchasingPlayer->getPlayerID()));
-					update.set("location", location.toString());
-					updater->sendUpdateToPlayers(update);
-					message.setTopic("success");
-					message.set("reason", "Trade has been successful!");
-				}else{
-					message.setTopic("failure");
-					message.set("reason", "The purchasing player does not have enough money!");
-				}
-			}else{
-				message.setTopic("failure");
-				message.set("reason", "This Field has not been offered!");
-			}
-		}else{
-			message.setTopic("failure");
-			message.set("reason", "This is your Field!");
-		}
-	}else{
-		message.setTopic("failure");
-		message.set("reason", "This is not a Field!");
-	}
-	return message;
-}
 

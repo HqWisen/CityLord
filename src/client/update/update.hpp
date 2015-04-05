@@ -20,7 +20,6 @@ public:
     static void removevisitor(ClientManager*, SocketMessage);
     static void offer(ClientManager*, SocketMessage);
     static void offercancel(ClientManager*, SocketMessage);
-    static void offeraccept(ClientManager*, SocketMessage);
 };
 
 #endif // UPDATE_HPP_
