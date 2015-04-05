@@ -3,6 +3,7 @@
 
 void Timer::start(){
 	startTime = clock();
+
 }
 
 unsigned long Timer::elapsedTime(){
