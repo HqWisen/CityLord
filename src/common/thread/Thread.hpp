@@ -9,7 +9,7 @@ class Thread{
 		Thread() = default;
 		void start();
 		virtual ~Thread() = default;
-		//void* join();
+        void* join();
 		virtual void run() = 0;
 		
 };

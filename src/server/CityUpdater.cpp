@@ -140,61 +140,13 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr){ // : time
     cityMap = map;
     spawn = map->getSpawnList();
     playerVectorPtr = pvPtr;
-    srand(time(NULL));
     getRoadMap();
     getAdjacencyList();
 }
 
 void CityUpdater::run(){
-    /*
-    1 seconde = 5 min dans le jeu
-    */
-    /* ! SOLUTION TEMPORAIRE */
-    int (*pointeurSurFonction)(void);
-    pointeurSurFonction = generateVisitors;
-    Timer(5,pointeurSurFonction);
-    /*
-    timeSender.start();
-    while(!timeSender.isOver()){
-        if(timeSender.makeAdvanceVisitor()){
-            makeVisitorsAdvance();
-            timeSender.setAdvanceVisitor(false);
-        }
-        if(timeSender.makeUpdateCity()){
-            updateCity();
-            timeSender.setUpdateCity(false);
-        }
-        if(timeSender.makePay()){
-            makeOwnersPay();
-            timeSender.setPay(false);
-        }
-     }
-    //std::cout<<"fin du game"<<std::endl;
-    */
-}
 
-/*
-std::string CityUpdater::getRealTimeRemaining(){
-    int y = t.elapsedTime();
-    if(dayRemaining == 0){
-        return dayTimer - y;
-    }
-    else{
-        int x = dayTimer*dayRemaining;
-        x += y;
-        return x;
-    }
 }
-*/
-
-/*
-SocketMessage CityUpdater::sendTime(){
-    SocketMessage update;
-    update.setTopic("currentTime");
-    update.set("time", getImeRemaining().toString());
-    return update;
-}
-*/
 
 SocketMessage CityUpdater::visitorCreate(int visitorID, Location spawnLocation){
     SocketMessage update;
