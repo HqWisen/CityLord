@@ -208,7 +208,9 @@ void InGame::on_sellButton_clicked()
     //clientManager->setRequest("sell");
     //clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
     //clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
+    cout<<"hiiiiiiiire"<<endl;
     sellDialog->exec();
+    cout<<"haaaaaaaare"<<endl;
     //if(clientManager->getInfo("showmessagebox") == "true"){
     //    openMessageBox("Sell");
     //    view->selectField(lastLocation);
