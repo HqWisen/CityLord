@@ -33,17 +33,31 @@ string BasicField::print(){
 }
 
 string BasicField::getImageName(){
-    std::string imagename, buildingName;
+    std::string imagename, buildingName, buildingStatus;
     if(hasBuilding()){
        buildingName = building->getType().NAME;
        std::transform(buildingName.begin(), buildingName.end(), buildingName.begin(), ::tolower);
-        imagename = buildingName;
-    }else{
+       imagename = buildingName;
+       buildingStatus = building->getStatus();
+       if(buildingStatus == "hypotheque"){
+            imagename += "_";
+            imagename += "hypotheque";
+        }
+        else if(buildingStatus == "construction"){
+            imagename += "_";
+            imagename += "construction";
+        }
+        else if(buildingStatus == "destruction"){
+            imagename += "_";
+            imagename += "destruction";
+        }
+    }
+    else{
         imagename = "base";
     }
-    if(showOwnerColor){
+    if(showOwnerColor and buildingStatus == "normal"){
         if(hasOwner()){
-            imagename += "_" + Player::COLORNAME[getOwnerID()];
+                imagename += "_" + Player::COLORNAME[getOwnerID()];            
         }
         else{
             imagename = "grass";

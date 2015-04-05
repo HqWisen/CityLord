@@ -21,6 +21,7 @@ Building::Building(BuildingType buildingtype, int lvl) : type(buildingtype){
     openTime = type.OPENTIME;
     closeTime = type.CLOSETIME;
     visitorCounter = 0;
+    status = "normal";
     if (level > 1){
         for (int i=1; i<level; i++){
             this->upgrade();
@@ -101,4 +102,8 @@ void Building::removeVisitor(){
 }
 bool Building::isFull(){
     return visitorCounter == capacity;
+}
+
+std::string Building::getStatus(){
+    return status;
 }
