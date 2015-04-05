@@ -30,6 +30,9 @@ void Sell::on_cancelButton_clicked()
     close();
 }
 
+void Sell::refresh(){
+
+}
 
 QPushButton* Sell::getCancelButton(){
     return ui->cancelButton;
