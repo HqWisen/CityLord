@@ -405,9 +405,12 @@ void CityUpdater::updateBuildings(){
             if((concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation)))){
                 if(concernedField->hasBuilding()){
                     concernedField->getBuilding()->removeVisitor();
-                    if(concernedField->destroying()){
-                        concernedField->destroyBuilding();
-                    }                    
+                    if(concernedField->getBuilding()->getStatus() == "construction"){
+                        
+                    }
+                    else if(concernedField->getBuilding()->getStatus() == "destruction"){
+
+                    }               
                 }
             }
         }
