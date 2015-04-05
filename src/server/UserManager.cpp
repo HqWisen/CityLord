@@ -17,7 +17,10 @@ const std::map<std::string, request_ptr> UserManager::requestmap = {
     {"destroy", RequestSystem::destroy},
     {"mapfullupdate", RequestSystem::mapfullupdate},
     {"leavecity", RequestSystem::leavecity},
-    {"playerinfo", RequestSystem::playerinfo}
+    {"playerinfo", RequestSystem::playerinfo},
+    {"offer", RequestSystem::offer},
+    {"offercancel", RequestSystem::cancelOffer},
+    {"offeraccept", RequestSystem::acceptOffer},
 };
 
 UserManager::UserManager(CityLordServer* cserver, ClientSocket socket, ServerSocket updateClientSocket) : server(cserver), clientSocket(socket), \
