@@ -356,6 +356,12 @@ SocketMessage CityManager::acceptOffer(Player* purchasingPlayer, Location locati
 					purchasingPlayer->setMoney(purchasingPlayer->getMoney() - concernedField->getOfferedPrice());
 					concernedField->setOwner(purchasingPlayer);
 					concernedField->setOfferedPrice(0);
+					purchasingPlayer->addField(concernedField);
+					offeringPlayer->removeField(concernedField);
+					if(concernedField->hasBuilding()){
+						purchasingPlayer->incBuildingCounter();
+						offeringPlayer->decBuildingCounter();
+					}
 					update.setTopic("offeraccept");
 					update.set("ownerid", std::to_string(purchasingPlayer->getPlayerID()));
 					update.set("location", location.toString());
