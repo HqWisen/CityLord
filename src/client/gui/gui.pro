@@ -14,7 +14,8 @@ SOURCES += main.cpp\
     ingame.cpp \
     clientmanagerGUI.cpp \
     signaler.cpp \
-    build.cpp
+    build.cpp \
+    sell.cpp
 
 HEADERS  += \
     login.h \
@@ -28,7 +29,8 @@ HEADERS  += \
     ingame.h \
     clientmanagerGUI.h \
     signaler.h \
-    build.h
+    build.h \
+    sell.h
 
 
 FORMS    += \
@@ -39,7 +41,8 @@ FORMS    += \
     creategame.ui \
     joingame.ui \
     ingame.ui \
-    build.ui
+    build.ui \
+    sell.ui
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic -Wno-write-strings

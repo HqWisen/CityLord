@@ -10,6 +10,7 @@
 #include "citylordview.h"
 #include "defaultwidget.h"
 #include "build.h"
+#include "sell.h"
 
 namespace Ui {
 class InGame;
@@ -44,10 +45,13 @@ private slots:
     void disableAllButtons();
     void updateButtons(bool,bool,bool,bool,bool);
     void on_exitButton_clicked();
+    void on_sellButton_clicked();
+
 private:
     Ui::InGame* ui;
     CityLordView* view;
     build* buildDialog;
+    Sell* sellDialog;
     Location lastLocation;
 
 };
