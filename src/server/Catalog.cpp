@@ -17,6 +17,17 @@ bool Catalog::isOnMarket(Field* field){
     return false;
 }
 
+void Catalog::removeFromMarket(Field* field){
+	std::vector<Field*>::iterator tmp;
+	for (std::vector<Field*>::iterator it = fieldVector.begin(); it != fieldVector.end(); it++){
+		if(*(it) == field){
+			tmp = it;
+			break;
+		}
+	}
+	fieldVector.erase(tmp);	
+}
+
 void Catalog::give(Field* field, Player* player){
 	field->setOwner(player);
 	player->addField(field);
