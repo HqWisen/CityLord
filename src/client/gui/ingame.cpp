@@ -46,21 +46,25 @@ void InGame::activeButton(std::string fieldstatus){
         ui->buyButton->setEnabled(false);
         ui->upgradeButton->setEnabled(true);
         ui->destroyButton->setEnabled(true);
+        ui->sellButton->setEnabled(true);
     }else if(fieldstatus == "purchasable"){
         ui->buildButton->setEnabled(false);
         ui->buyButton->setEnabled(true);
         ui->upgradeButton->setEnabled(false);
         ui->destroyButton->setEnabled(false);
+        ui->sellButton->setEnabled(false);
     }else if(fieldstatus == "other"){
         ui->buildButton->setEnabled(false);
         ui->buyButton->setEnabled(false);
         ui->upgradeButton->setEnabled(false);
         ui->destroyButton->setEnabled(false);
+        ui->sellButton->setEnabled(false);
     }else if(fieldstatus == "notfield"){
         ui->buildButton->setEnabled(false);
         ui->buyButton->setEnabled(false);
         ui->upgradeButton->setEnabled(false);
         ui->destroyButton->setEnabled(false);
+        ui->sellButton->setEnabled(false);
     }
 }
 

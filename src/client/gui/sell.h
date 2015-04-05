@@ -18,7 +18,6 @@ class Sell : public QDialog
 public:
     explicit Sell(QWidget*, ClientManagerGUI*);
     ~Sell();
-    void refresh();
     QPushButton* getCancelButton();
 private slots:
     void on_putOnDialogButton_clicked();
