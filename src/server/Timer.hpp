@@ -3,6 +3,20 @@
 #define TIMER_HPP_
 
 #include <ctime>
+#include <pthread.h>
+
+/*
+class Timer : public Thread{
+
+	int (*functionPtr)(int,int);
+	int waitingTime;
+
+	public:
+		Timer(int, int*);
+		void run();
+};
+*/
+
 
 class Timer {
     private:
@@ -12,5 +26,6 @@ class Timer {
         unsigned long elapsedTime();
         bool isTimeout(unsigned long seconds);
 };
+
 
 #endif
