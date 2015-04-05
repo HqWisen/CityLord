@@ -1,7 +1,7 @@
 #include "Timer.hpp"
 
 
-Timer::Timer(int timeWanted, int * (*pointerFunction)(int a, int b)){
+Timer::Timer(int timeWanted, int * (*pointerFunction)()){
 		waitingTime = timeWanted;
 		functionPtr = pointerFunction;
 }
@@ -15,7 +15,7 @@ void Timer::run(){
 }
 
 
-
+/*
 
 void Timer::start(){
 	startTime = clock();
@@ -30,4 +30,5 @@ bool Timer::isTimeout(unsigned long seconds){
 	return seconds >= elapsedTime();
 }
 
+*/
 

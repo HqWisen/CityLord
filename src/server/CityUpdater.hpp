@@ -7,7 +7,7 @@
 #include <iostream>
 #include "../common/models/Map.hpp"
 #include "Visitor.hpp"
-#include "TimeSender.hpp"
+#include "Timer.hpp"
 #include <cmath>
 #include <deque>
 
@@ -51,12 +51,12 @@ class CityUpdater : public Thread{
     vector<Road*> roadMap;
     deque<Road*> blockedRoads;
     adjacency_list_t adjacencyList;
-    TimeSender timeSender;
+    //TimeSender timeSender;
     bool night = false;
     public:
         CityUpdater(Map<Field>*,std::vector<Player*>*);
         void run() override;
-        void generateVisitors();
+        int generateVisitors();
         void updateBuildings();
         void makeVisitorsAdvance();
         void makeOwnersPay();

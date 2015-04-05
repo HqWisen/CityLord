@@ -136,7 +136,7 @@ void CityUpdater::getAdjacencyList() {
 // ======================================================================================
 // ======================================================================================
 
-CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr) : timeSender(this){
+CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr){ // : timeSender(this){
     cityMap = map;
     spawn = map->getSpawnList();
     playerVectorPtr = pvPtr;
@@ -150,6 +150,10 @@ void CityUpdater::run(){
     1 seconde = 5 min dans le jeu
     */
     /* ! SOLUTION TEMPORAIRE */
+
+    int* ptr = generateVisitors();
+    Timer(5,ptr);
+    /*
     timeSender.start();
     while(!timeSender.isOver()){
         if(timeSender.makeAdvanceVisitor()){
@@ -166,6 +170,7 @@ void CityUpdater::run(){
         }
      }
     //std::cout<<"fin du game"<<std::endl;
+    */
 }
 
 /*
@@ -322,7 +327,7 @@ void CityUpdater::createPath(Location start, Location end, std::vector<Location>
     }
 }
 
-void CityUpdater::generateVisitors(){
+int CityUpdater::generateVisitors(){
     if (!cityMap->isFull()){
         int size = spawn.size();
         int luck = rand() %  (size);
@@ -348,6 +353,7 @@ void CityUpdater::generateVisitors(){
         int id = cityMap->addVisitor(newVisitor);  
         SocketMessage update = visitorCreate(id, startLocation);
         //sendUpdateToPlayers(update);
+    return 0;
     }
 }
 

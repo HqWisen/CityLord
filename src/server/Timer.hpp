@@ -9,17 +9,19 @@
 
 class Timer : public Thread{
 
-	int * (*functionPtr)(int,int);
+	int * (*functionPtr)();
 	int waitingTime;
 	unsigned long startTime;
 
 	public:
 		Timer();
-		Timer(int, int * (*)(int, int));
+		Timer(int, int * (*)());
 		void run();
+        /*
 		void start();
 		unsigned long elapsedTime();
         bool isTimeout(unsigned long seconds);
+        */
 };
 
 /*

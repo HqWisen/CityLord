@@ -1,11 +1,14 @@
+/*
 #include "TimeSender.hpp"
 #include "CityUpdater.hpp"
 
 #include <thread>
 #include <chrono>
 #include <iostream>
+*/
 
 
+/*
 const unsigned TimeSender::MAXDAY = 15;
 
 TimeSender::TimeSender(CityUpdater* up) : updater(up), dayRemaining(MAXDAY), \
@@ -44,12 +47,15 @@ void TimeSender::run(){
         }
     }
     over = true;
+*/
     /*while(true){
         update.set("time", updater->getTime());
         std::cout<<"sendUpdatTime = "<<update.get("time")<<std::endl;
         updater->sendUpdateToPlayers(update);
         std::this_thread::sleep_for (std::chrono::seconds(1));
     }*/
+
+    /*
 }
 
 std::string TimeSender::getTime(){
@@ -65,7 +71,7 @@ std::string TimeSender::getTime(){
     str_time << setfill('0') << setw(2) << min;
     std::string result = "Day " + day + " - " + str_time.str();
     return  result;*/
-
+/*
     int x = MAXDAY-dayRemaining+1;
     std::string day = to_string(x);
     int y = t.elapsedTime();
@@ -113,4 +119,5 @@ void TimeSender::setPay(bool value){
     pay = value;
 }
 
+*/
 

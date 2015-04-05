@@ -1,5 +1,8 @@
+/*
 #ifndef TIMESENDER_HPP_
 #define TIMESENDER_HPP_
+
+
 
 #include "../common/thread/Thread.hpp"
 #include "Timer.hpp"
@@ -30,3 +33,5 @@ class TimeSender : public Thread{
         };
 
 #endif
+*/
+
