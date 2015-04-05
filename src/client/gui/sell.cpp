@@ -7,7 +7,6 @@ Sell::Sell(QWidget *parent, ClientManagerGUI *cm):
     ui->setupUi(this);
     ui->priceSpinBox->setRange(10000,1000000); //min 10 000 -> max 1 000 000
     setWindowTitle("Sell");
-    refresh();
 }
 
 Sell::~Sell()
