@@ -39,6 +39,7 @@ string BasicField::getImageName(){
        std::transform(buildingName.begin(), buildingName.end(), buildingName.begin(), ::tolower);
        imagename = buildingName;
        buildingStatus = building->getStatus();
+       cout<<buildingStatus<<endl;
        if(buildingStatus == "hypotheque"){
             imagename += "_";
             imagename += "hypotheque";
