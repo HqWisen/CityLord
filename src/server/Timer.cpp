@@ -1,10 +1,9 @@
 #include "Timer.hpp"
 
-/*
 
 Timer::Timer(int timeWanted, int (*pointerFunction)(int a, int b)){
 		waitingTime = timeWanted;
-		functionPtr = &pointerFunction;
+		functionPtr = pointerFunction;
 }
 
 void Timer::run(){
@@ -14,7 +13,7 @@ void Timer::run(){
 		sleep(waitingTime);
 	}
 }
-*/
+
 
 
 
