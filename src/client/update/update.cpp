@@ -70,5 +70,30 @@ void UpdateSystem::removevisitor(ClientManager* client, SocketMessage update){
     pthread_mutex_unlock(&updatemutex);
 }
 
+void UpdateSystem::offer(ClientManager* client, SocketMessage update){
+	pthread_mutex_lock(&updatemutex);
+	Location location = Location::parse(update.get("location"));
+	int price = std::stoi(update.get("offerprice"));
+	ClientField* field = dynamic_cast<ClientField*>(client->getMap()->getCase(location));
+	field->setOfferedPrice(price);
+	pthread_mutex_unlock(&updatemutex);
+}
 
+void UpdateSystem::offercancel(ClientManager* client, SocketMessage update){
+	pthread_mutex_lock(&updatemutex);
+	Location location = Location::parse(update.get("location"));
+	ClientField* field = dynamic_cast<ClientField*>(client->getMap()->getCase(location));
+	field->setOfferedPrice(0);
+	pthread_mutex_unlock(&updatemutex);
+}
 
+void UpdateSystem::offeraccept(ClientManager* client, SocketMessage update){
+	pthread_mutex_lock(&updatemutex);
+	Location location = Location::parse(update.get("location"));
+	int ownerid = std::stoi(update.get("ownerid"));
+	ClientField* field = dynamic_cast<ClientField*>(client->getMap()->getCase(location));
+	field->setOwnerID(ownerid);
+	field->setOfferedPrice(0);
+	client->repaint();
+	pthread_mutex_unlock(&updatemutex);
+}

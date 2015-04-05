@@ -18,6 +18,7 @@ class BasicField : public Case{
         bool showOwnerColor;
         int destroyTime = 24;
         int countDestroy = 0;
+        int offeredPrice = 0;
     public:
         BasicField(Location);
         virtual ~BasicField() = default;
@@ -28,6 +29,8 @@ class BasicField : public Case{
         void destroyBuilding();
         int getPrice();
         void setPrice(int);
+        int getOfferedPrice();
+        void setOfferedPrice(int);
         Building* getBuilding();
         bool hasBuilding();
         virtual int getOwnerID() = 0;

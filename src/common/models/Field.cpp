@@ -33,17 +33,32 @@ string BasicField::print(){
 }
 
 string BasicField::getImageName(){
-    std::string imagename, buildingName;
+    std::string imagename, buildingName, buildingStatus;
     if(hasBuilding()){
        buildingName = building->getType().NAME;
        std::transform(buildingName.begin(), buildingName.end(), buildingName.begin(), ::tolower);
-        imagename = buildingName;
-    }else{
+       imagename = buildingName;
+       buildingStatus = building->getStatus();
+       cout<<buildingStatus<<endl;
+       if(buildingStatus == "hypotheque"){
+            imagename += "_";
+            imagename += "hypotheque";
+        }
+        else if(buildingStatus == "construction"){
+            imagename += "_";
+            imagename += "construction";
+        }
+        else if(buildingStatus == "destruction"){
+            imagename += "_";
+            imagename += "destruction";
+        }
+    }
+    else{
         imagename = "base";
     }
     if(showOwnerColor){
-        if(hasOwner()){
-            imagename += "_" + Player::COLORNAME[getOwnerID()];
+        if((hasBuilding() and buildingStatus == "normal") or (hasOwner()){
+            imagename += "_" + Player::COLORNAME[getOwnerID()];            
         }
         else{
             imagename = "grass";
@@ -99,6 +114,14 @@ int BasicField::getPrice(){
     return price;
 }
 
+int BasicField::getOfferedPrice(){
+	return offeredPrice;
+}
+
+void BasicField::setOfferedPrice(int newPrice){
+	offeredPrice = newPrice;
+}
+
 Building* BasicField::getBuilding(){
     return building;
 }
@@ -143,6 +166,10 @@ string Field::toString(){
     result += "Owner : ";
     if(hasOwner()){
         result += owner->getNickName();
+        if(offeredPrice != 0){
+			result += " - ";
+			result += "Offered for : " + std::to_string(offeredPrice);
+		}
     }else{
         result += "no owner";
     }
@@ -166,6 +193,7 @@ SocketMessage Field::infoHasSocketMessage(){
         message.set("ownername", getOwner()->getNickName());
         message.set("ownerid", std::to_string(getOwnerID()));
         message.set("ownercolor", Player::COLORNAME[getOwnerID()]);
+        message.set("offeredprice", std::to_string(offeredPrice));
     }else{
         message.set("ownername", "No owner");
         message.set("ownerid", "-");

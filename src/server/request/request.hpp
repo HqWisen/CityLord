@@ -31,6 +31,9 @@ public:
     static SocketMessage mapfullupdate(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage leavecity(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage playerinfo(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage offer(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage acceptOffer(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage cancelOffer(CityLordServer*, UserManager*, SocketMessage);
 };
 
 #endif // REQUEST_HPP_

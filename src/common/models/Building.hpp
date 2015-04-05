@@ -17,6 +17,7 @@ class Building {
     int openTime;
     int closeTime;
     int visitorCounter;
+    std::string status;
     BuildingType type;
     public:
 
@@ -39,5 +40,6 @@ class Building {
 		bool addVisitor();
 		void removeVisitor();
         bool isFull();
+        std::string getStatus();
 };
 #endif // BUILDING_HPP_
