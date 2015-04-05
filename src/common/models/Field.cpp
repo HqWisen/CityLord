@@ -56,9 +56,9 @@ string BasicField::getImageName(){
     else{
         imagename = "base";
     }
-    if(showOwnerColor and buildingStatus == "normal"){
-        if(hasOwner()){
-                imagename += "_" + Player::COLORNAME[getOwnerID()];            
+    if(showOwnerColor){
+        if((hasBuilding() and buildingStatus == "normal") or (hasOwner()){
+            imagename += "_" + Player::COLORNAME[getOwnerID()];            
         }
         else{
             imagename = "grass";
