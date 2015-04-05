@@ -5,15 +5,17 @@
 #include <ctime>
 #include <pthread.h>
 #include <unistd.h>
+#include "../common/thread/Thread.hpp"
 
 class Timer : public Thread{
 
-	int (*functionPtr)(int,int);
+	int * (*functionPtr)(int,int);
 	int waitingTime;
 	unsigned long startTime;
 
 	public:
-		Timer(int, int (*)(int, int));
+		Timer();
+		Timer(int, int * (*)(int, int));
 		void run();
 		void start();
 		unsigned long elapsedTime();

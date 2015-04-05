@@ -1,7 +1,7 @@
 #include "Timer.hpp"
 
 
-Timer::Timer(int timeWanted, int (*pointerFunction)(int a, int b)){
+Timer::Timer(int timeWanted, int * (*pointerFunction)(int a, int b)){
 		waitingTime = timeWanted;
 		functionPtr = pointerFunction;
 }
