@@ -199,6 +199,20 @@ void InGame::on_upgradeButton_clicked(){
 
 }
 
+void InGame::on_sellButton_clicked()
+{
+    clientManager->setRequest("sell");
+    clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
+    clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
+    sellDialog->exec();
+    if(clientManager->getInfo("showmessagebox") == "true"){
+        openMessageBox("Sell");
+        view->selectField(lastLocation);
+    }
+}
+
+
+
 void InGame::on_destroyButton_clicked()
 {
     clientManager->setRequest("destroy");
@@ -248,3 +262,4 @@ void InGame::updateButtons(bool buyable, bool buildable, bool upgradable, bool d
     ui->destroyButton->setEnabled(destroyable);
     ui->sellButton->setEnabled(sell);
 }
+
