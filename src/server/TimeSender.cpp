@@ -5,6 +5,7 @@
 #include <chrono>
 #include <iostream>
 
+
 const unsigned TimeSender::MAXDAY = 15;
 
 TimeSender::TimeSender(CityUpdater* up) : updater(up), dayRemaining(MAXDAY), \
@@ -111,4 +112,5 @@ void TimeSender::setUpdateCity(bool value){
 void TimeSender::setPay(bool value){
     pay = value;
 }
+
 
