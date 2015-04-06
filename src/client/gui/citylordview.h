@@ -25,8 +25,7 @@ public:
     CityLordView(QWidget*, ClientManagerGUI*);
     virtual ~CityLordView();
     void cleanItemArray();
-    void addBaseOn(int, int);
-    void addBar();
+    void createVisitor(Location);
     void mousePressEvent(QMouseEvent*) override;
     void mouseReleaseEvent(QMouseEvent*) override;
     void mouseMoveEvent(QMouseEvent*) override;

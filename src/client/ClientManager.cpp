@@ -61,6 +61,10 @@ void ClientManager::updateTime(){
     //std::cout<<"updating = "<<getStrTime()<<std::endl;
 }
 
+void ClientManager::createVisitor(int id, Location location){
+    std::cout<<"creating visitor id "<<id<<" location "<<location.toString()<<std::endl;
+}
+
 std::string ClientManager::getStrTime(){
     return timer->strtime();
 }

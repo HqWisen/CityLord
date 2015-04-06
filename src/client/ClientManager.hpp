@@ -22,6 +22,7 @@ public:
     virtual void buildMap(std::string);
     static void runUpdateTime(void*);
     virtual void updateTime();
+    virtual void createVisitor(int, Location);
     std::string getStrTime();
     void destroyTimer();
     void displayMap();

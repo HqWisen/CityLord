@@ -23,3 +23,6 @@ void Signaler::signalUpdatingTime(std::string time){
     emit updateTime(time.c_str());
 }
 
+void Signaler::signalCreatingVisitor(int id, Location location){
+    emit createVisitor(id, location.toString().c_str());
+}

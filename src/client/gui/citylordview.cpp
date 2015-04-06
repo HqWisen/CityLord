@@ -35,6 +35,13 @@ void CityLordView::cleanItemArray(){
     }
 }
 
+void CityLordView::createVisitor(Location location){
+    QGraphicsPixmapItem* item = new QGraphicsPixmapItem;
+    scene->addItem(item);
+    QPixmap pixmap(getImagePath("grass"));
+    item->setPixmap(pixmap);
+    item->setOffset(carToIso(location, pixmap));
+}
 
 const char* CityLordView::getImagePath(std::string imagename){
     std::string path = QCoreApplication::applicationDirPath().toStdString()+"/src/resources/img/"+imagename+".png";

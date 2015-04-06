@@ -81,6 +81,12 @@ void ClientManagerGUI::updateMoney(int newMoney){
    signaler->signalUpdatingMoney(newMoney);
 }
 
+void ClientManagerGUI::createVisitor(int id, Location location){
+    ClientManager::createVisitor(id, location);
+    signaler->signalCreatingVisitor(id, location);
+}
+
+
 Signaler* ClientManagerGUI::getSignaler(){
     return signaler;
 }

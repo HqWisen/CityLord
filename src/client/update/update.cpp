@@ -42,8 +42,8 @@ void UpdateSystem::createvisitor(ClientManager* client, SocketMessage update){
 	int id = atoi(update.get("visitorid").c_str());
     Location spawnLocation = Location::parse(update.get("spawnlocation"));
     //client->getMap()->addVisitor(id, spawnLocation);
-    //std::cout<<"Visitor "<<id<<" added"<<std::endl;
-	pthread_mutex_unlock(&updatemutex);
+    client->createVisitor(id, spawnLocation);
+    pthread_mutex_unlock(&updatemutex);
 }
 
 void UpdateSystem::movevisitor(ClientManager* client, SocketMessage update){
@@ -61,8 +61,8 @@ void UpdateSystem::movevisitor(ClientManager* client, SocketMessage update){
 void UpdateSystem::removevisitor(ClientManager* client, SocketMessage update){
     pthread_mutex_lock(&updatemutex);
 	int id = atoi(update.get("visitorid").c_str());
-    client->getMap()->deleteVisitor(id);
-    // std::cout<<"Visitor "<<id<<" removed"<<std::endl;
+    //client->getMap()->deleteVisitor(id);
+    std::cout<<"Visitor "<<id<<" removed"<<std::endl;
     pthread_mutex_unlock(&updatemutex);
 }
 

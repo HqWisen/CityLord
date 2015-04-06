@@ -29,6 +29,7 @@ public:
     void updateTime() override;
     void repaint() override;
     void updateMoney(int) override;
+    void createVisitor(int, Location) override;
     Signaler* getSignaler();
     int getCurrentPlayerID();
     void setCurrentPlayerID(int);

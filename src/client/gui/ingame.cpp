@@ -21,11 +21,36 @@ InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
     QObject::connect(clientManager->getSignaler(), SIGNAL(selectField(SocketMessage,Location)), this, SLOT(selectField(SocketMessage, Location)));
     QObject::connect(clientManager->getSignaler(), SIGNAL(updateMoney(int)), this, SLOT(updateMoney(int)));
     QObject::connect(clientManager->getSignaler(), SIGNAL(updateTime(QString)), this, SLOT(updateTime(QString)));
+    QObject::connect(clientManager->getSignaler(), SIGNAL(createVisitor(int, QString)), this, SLOT(createVisitor(int, QString)));
 
 }
 
 void InGame::repaintView(){
     view->repaintView();
+}
+
+void InGame::refresh(){
+}
+
+void InGame::updateMoney(int amount){
+    if(amount>0){
+        ui->moneyLabel->setStyleSheet("QLabel {background:transparent; color:rgb(0, 220, 0); font:bold 26pt;}");
+    }else{
+        ui->moneyLabel->setStyleSheet("QLabel {background:transparent; color:red; font:bold 26pt;");
+    }
+    std::ostringstream moneyStr;
+    moneyStr << amount << ClientManager::CURRENCY;
+    ui->moneyLabel->setText(QString::fromStdString(moneyStr.str()));
+}
+
+void InGame::updateTime(QString time){
+    ui->timeLabel->setText(time);
+}
+
+void InGame::createVisitor(int id, QString locstr){
+    std::cout<<"INGAME VISITOR "<<id<< " in "<<locstr.toStdString()<<std::endl;
+    view->createVisitor(Location::parse(locstr.toStdString()));
+
 }
 
 void InGame::buildViewMap(){
@@ -140,24 +165,6 @@ InGame::~InGame(){
     delete ui;
     delete view;
     delete buildDialog;
-}
-
-void InGame::refresh(){
-}
-
-void InGame::updateMoney(int amount){
-    if(amount>0){
-        ui->moneyLabel->setStyleSheet("QLabel {background:transparent; color:rgb(0, 220, 0); font:bold 26pt;}");
-    }else{
-        ui->moneyLabel->setStyleSheet("QLabel {background:transparent; color:red; font:bold 26pt;");
-    }
-    std::ostringstream moneyStr;
-    moneyStr << amount << ClientManager::CURRENCY;
-    ui->moneyLabel->setText(QString::fromStdString(moneyStr.str()));
-}
-
-void InGame::updateTime(QString time){
-    ui->timeLabel->setText(time);
 }
 
 void InGame::openMessageBox(std::string title){

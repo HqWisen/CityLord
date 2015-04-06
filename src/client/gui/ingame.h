@@ -32,6 +32,7 @@ public slots:
     void selectField(SocketMessage, Location);
     void updateMoney(int);
     void updateTime(QString);
+    void createVisitor(int, QString);
 private slots:
     void on_buyButton_clicked();
     void on_buildButton_clicked();
