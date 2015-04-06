@@ -21,7 +21,8 @@ Building::Building(BuildingType buildingtype, int lvl) : type(buildingtype){
     openTime = type.OPENTIME;
     closeTime = type.CLOSETIME;
     visitorCounter = 0;
-    status = "normal";
+    status = "construction"; // or normal ; destruction ; hypotheque
+    
     if (level > 1){
         for (int i=1; i<level; i++){
             this->upgrade();

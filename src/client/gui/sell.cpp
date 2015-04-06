@@ -1,10 +1,11 @@
 #include "sell.h"
 #include "ui_sell.h"
 
-sell::sell(QWidget *parent, ClientManagerGUI *cm) :
+sell::sell(QWidget *parent, ClientManagerGUI *cm, Location* location) :
     QDialog(parent),
     ui(new Ui::sell),
-    clientManager(cm)
+    clientManager(cm),
+    lastLocation(location)
 {
     ui->setupUi(this);
     ui->priceSpinBox->setValue(10000);
@@ -29,7 +30,14 @@ void sell::on_putOnDialogButton_clicked()
 
 void sell::on_takeOffDialogButton_clicked()
 {
-
+    cout<<"row--"<< std::to_string(lastLocation->getRow())<<endl;
+    cout<<"col--"<< std::to_string(lastLocation->getCol())<<endl;
+    clientManager->setRequest("canceloffer");
+    clientManager->addInfo("row", std::to_string(lastLocation->getRow()));
+    clientManager->addInfo("col", std::to_string(lastLocation->getCol()));
+    clientManager->sendRequestAndRecv();
+    clientManager->addInfo("showmessagebox", "true");
+    close();
 }
 
 void sell::on_cancelButton_clicked()
