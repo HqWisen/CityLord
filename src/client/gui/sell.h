@@ -14,7 +14,7 @@ class sell : public QDialog
     Q_OBJECT
 
 public:
-    explicit sell(QWidget *, ClientManagerGUI*);
+    explicit sell(QWidget *, ClientManagerGUI*,Location*);
     ~sell();
     QPushButton* getCancelButton();
     int getPrice();
@@ -28,6 +28,7 @@ private slots:
 private:
     Ui::sell *ui;
     ClientManagerGUI* clientManager;
+    Location* lastLocation;
 };
 
 #endif // SELL1_H

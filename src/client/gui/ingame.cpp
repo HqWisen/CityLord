@@ -3,7 +3,7 @@
 
 
 InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
-    DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this, cm)), buildDialog(new build(this, cm)), sellDialog(new sell(this, cm)), lastLocation(){
+    DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this, cm)), buildDialog(new build(this, cm)), sellDialog(new sell(this, cm, &lastLocation)), lastLocation(){
     ui->setupUi(this);
 
     ui->exitButton->setStyleSheet("background-image: url(src/resources/img/exit40_40.png)");
@@ -204,6 +204,8 @@ void InGame::on_upgradeButton_clicked(){
 
 void InGame::on_sellButton_clicked()
 {
+    cout<<"row"<< std::to_string(lastLocation.getRow())<<endl;
+    cout<<"col"<< std::to_string(lastLocation.getCol())<<endl;
     clientManager->setRequest("offer");
     clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
     clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
