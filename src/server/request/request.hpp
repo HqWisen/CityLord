@@ -22,6 +22,7 @@ public:
     static SocketMessage numberofcity(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage joincity(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage selectfield(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage selectroad(CityLordServer*, UserManager*, SocketMessage);
 	static SocketMessage showinfo(CityLordServer*, UserManager*, SocketMessage);
 	static SocketMessage showcatalog(CityLordServer*, UserManager*, SocketMessage);
 	static SocketMessage buy(CityLordServer*, UserManager*, SocketMessage);
@@ -36,6 +37,7 @@ public:
     static SocketMessage inittimer(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage hypotheque(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage buyback(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage roadblock(CityLordServer*, UserManager*, SocketMessage);
 };
 
 #endif // REQUEST_HPP_

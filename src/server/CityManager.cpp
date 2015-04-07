@@ -406,7 +406,7 @@ SocketMessage CityManager::hypotheque(Player* player, Location location){
                     update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
                     updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
-                    message.set("reason", "Building has been successfullyhypothec !");
+                    message.set("reason", "Building has been successfully hypothecated !");
 				}
 				else{
                     message.setTopic("failure");
@@ -449,7 +449,7 @@ SocketMessage CityManager::buyBack(Player* player, Location location){
                     update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
                     updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
-                    message.set("reason", "Building has been successfully buy back !");
+                    message.set("reason", "Building has been successfully bought back !");
 				}
 				else{
 					message.setTopic("failure");
@@ -471,4 +471,36 @@ SocketMessage CityManager::buyBack(Player* player, Location location){
         message.set("reason", "This is not a Field !");
 	}
 	return message;
+}
+
+
+SocketMessage CityManager::roadBlock(Player* player, Location location){
+    SocketMessage message, update;
+    Road* concernedRoad;
+    if((concernedRoad = dynamic_cast<Road*>(cityMap->getCase(location)))){;
+        if(!concernedRoad->isBlocked()){
+            if (updater->scheduleRoadBlock(concernedRoad)){
+                int lose = ROADBLOCKPRICE;
+                player->loseMoney(lose);
+                update.setTopic("roadblock");
+                update.set("location", location.toString());
+                updater->sendUpdateToPlayers(update);
+                message.setTopic("success");
+                message.set("reason", "Roadblock has been successfully set-up !");
+            }
+            else {
+                message.setTopic("failure");
+                message.set("reason", "Road has already been queued to be blocked !");
+            }
+        }
+        else{
+            message.setTopic("failure");
+            message.set("reason", "Road has already been blocked !");
+        }
+    }
+    else{
+        message.setTopic("failure");
+        message.set("reason", "This is not a Road !");
+    }
+    return message;
 }

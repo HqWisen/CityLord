@@ -87,3 +87,11 @@ void UpdateSystem::offercancel(ClientManager* client, SocketMessage update){
 	pthread_mutex_unlock(&updatemutex);
 }
 
+void UpdateSystem::roadblock(ClientManager* client, SocketMessage update){
+    pthread_mutex_lock(&updatemutex);
+    Location location = Location::parse(update.get("location"));
+    Road* road = dynamic_cast<Road*>(client->getMap()->getCase(location));
+    road->setUpBarricade(true);
+    client->repaint();
+    pthread_mutex_unlock(&updatemutex);
+}

@@ -15,10 +15,11 @@ void CityLordClient::runClient(){
         LOG("Choose an action");
 		std::cout<<"1 - Show map"<<std::endl;
 		std::cout<<"2 - Select field"<<std::endl;
-		std::cout<<"3 - Show catalog"<<std::endl;
-		std::cout<<"4 - Show information"<<std::endl;
+        std::cout<<"3 - Set-up roadblock"<<std::endl;
+		std::cout<<"4 - Show catalog"<<std::endl;
+		std::cout<<"5 - Show information"<<std::endl;
 		//std::cout<<"5 - Show others players's information"<<std::endl;
-		std::cout<<"5 - Disconnection"<<std::endl;
+		std::cout<<"6 - Disconnection"<<std::endl;
 
 		int choice = makeChoice(1, 6);
 		if(choice == 1){
@@ -26,16 +27,19 @@ void CityLordClient::runClient(){
 		}else if(choice == 2){
 			selectField();
 		}
-		else if(choice == 3){
+        else if(choice == 3){
+            setupRoadblock();
+        }
+		else if(choice == 4){
 			showCatalog();
 		}
-		else if(choice == 4){
+		else if(choice == 5){
 			showInfo();
 		}
 		//else if(choice == 5){
 			//showInfoOthersPlayers();
 		//}
-		else if(choice == 5){
+		else if(choice == 6){
 			disconnected= true;
 		}
 	}
@@ -190,7 +194,7 @@ void CityLordClient::selectField(){
 		std::cout<<"7 - Buy back"<<std::endl;
 		std::cout<<"8 - Quit"<<std::endl;
 
-		int choice = makeChoice(1, 6);
+		int choice = makeChoice(1, 8);
 		if(choice == 1){
             clientManager->setRequest("build");
             clientManager->addInfo("row", std::to_string(crow-1));
@@ -290,7 +294,38 @@ void CityLordClient::selectField(){
 		}
 	}
 	else{
-        LOG("This case is not selectable !");
+        LOG("This case is not a field or building !");
+    }
+}
+
+void CityLordClient::setupRoadblock(){
+    LOG("Choose the row :");
+    int crow = makeChoice(1, clientManager->getMap()->getNumberOfRows());
+    LOG("Choose the column :");
+    int ccol = makeChoice(1, clientManager->getMap()->getNumberOfCols());
+    clientManager->setRequest("selectroad");
+    clientManager->addInfo("row", std::to_string(crow-1));
+    clientManager->addInfo("col", std::to_string(ccol-1));
+    clientManager->sendRequestAndRecv();
+    if(clientManager->topicEquals("road")){
+        LOG("This road is not currently being blocked off");
+        std::cout<<"Are you sure you want to set-up a roadblock here? Price : "<<clientManager->getInfo("price")<<std::endl;
+        std::cout<<"1 - Yes"<<std::endl;
+        std::cout<<"2 - No"<<std::endl;
+        int choice = makeChoice(1, 2);
+        if(choice == 1){
+            clientManager->setRequest("roadblock");
+            clientManager->addInfo("row", std::to_string(crow-1));
+            clientManager->addInfo("col", std::to_string(ccol-1));
+            clientManager->sendRequestAndRecv();
+            LOG(clientManager->getAnswerInfos());
+        }
+    }
+    else if(clientManager->topicEquals("roadblocked")){
+        LOG("This road is already being blocked off");
+    }
+    else{
+        LOG("This case is not a road !");
     }
 }
 

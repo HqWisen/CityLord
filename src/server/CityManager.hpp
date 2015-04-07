@@ -31,6 +31,9 @@ class CityManager{
     const int MAXPLAYER;
     //std::vector<Spawnable> listSpawnable;
 	public:
+
+        static const int ROADBLOCKPRICE = 200000;
+
         CityManager(std::string, int, User*);
         ~CityManager();
         std::string getMapName();
@@ -61,6 +64,7 @@ class CityManager{
         SocketMessage visitorMove(Player*, Location, Location);
         SocketMessage hypotheque(Player*, Location);
         SocketMessage buyBack(Player*, Location);
+        SocketMessage roadBlock(Player*, Location);
         //SocketMessage getRealTimeRem(Player*);
         //SocketMessage getTimeRem(Player*);
 		std::vector<Location> giveWay();

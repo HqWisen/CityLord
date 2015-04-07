@@ -378,10 +378,14 @@ bool CityUpdater::isRoadFree(Road* road){
     return true;
 }
 
-void CityUpdater::scheduleRoadBlock(Road* toBlock){
-    pthread_mutex_lock(&roadblockmutex);
-    roadsToBlock.push_back(toBlock);
-    pthread_mutex_unlock(&roadblockmutex);
+bool CityUpdater::scheduleRoadBlock(Road* toBlock){
+    std::cout<<"derp 1 "<<std::endl;
+    bool res = false;
+    if (isRoadFree(toBlock)){
+        roadsToBlock.push_back(toBlock);
+        res = true;
+    }
+    return res;
 }
 
 void CityUpdater::freeRoad(){
@@ -413,7 +417,7 @@ void CityUpdater::updateRoadBlocks(){
         }
     }
     if (roadsToBlock.size() > 0){
-        pthread_mutex_lock(&roadblockmutex);
+        std::cout<<"derp 2 "<<std::endl;
         while (roadsToBlock.size() > 0){
             Road* toBlock = roadsToBlock.front();
             roadsToBlock.pop_front();
@@ -431,7 +435,6 @@ void CityUpdater::updateRoadBlocks(){
                 }
             }
         }
-        pthread_mutex_unlock(&roadblockmutex);
     }
 }
 

@@ -56,7 +56,7 @@ class CityUpdater : public Thread{
     Timer<CityUpdater> currentTimer;
     public:
         static pthread_mutex_t visitormutex;
-        pthread_mutex_t roadblockmutex;
+        //pthread_mutex_t roadblockmutex;
     public:
         CityUpdater(Map<Field>*,std::vector<Player*>*);
         void run() override;
@@ -75,7 +75,7 @@ class CityUpdater : public Thread{
         void generateFullPath(Location start, Location end, std::vector<Location> &path);
         void createPath(Location start, Location end, std::vector<Location> &path);
 		bool isRoadFree(Road*);
-        void scheduleRoadBlock(Road*);
+        bool scheduleRoadBlock(Road*);
 		void freeRoad();
         void updateRoadBlocks();
         SocketMessage visitorCreate(int, Location);

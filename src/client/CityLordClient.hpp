@@ -29,6 +29,7 @@ class CityLordClient{
 		void joinCity();
 		void showMap();
 		void selectField();
+		void setupRoadblock();
 		void showCatalog();
 		void showInfo();
 		int makeChoice(int min = 1, int max = 1);

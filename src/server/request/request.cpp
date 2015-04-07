@@ -141,6 +141,27 @@ SocketMessage RequestSystem::selectfield(CityLordServer* server, UserManager* us
     return answer;
 }
 
+SocketMessage RequestSystem::selectroad(CityLordServer* server, UserManager* userManager, SocketMessage message){
+    pthread_mutex_lock(&requestmutex);
+    SocketMessage answer;
+    Map<Field>* map = userManager->getActiveCity()->getMap();
+    int row = std::stoi(message.get("row"));
+    int col = std::stoi(message.get("col"));
+    Road* road;
+    if((road = dynamic_cast<Road*>(map->getCase(Location(row, col))))){
+        if(road->isBlocked()) {
+            answer.setTopic("roadblocked");
+        }else {
+            answer.setTopic("road");
+            answer.set("price", std::to_string(CityManager::ROADBLOCKPRICE));
+        }
+    }else{
+        answer.setTopic("notroad");
+    }
+    pthread_mutex_unlock(&requestmutex);
+    return answer;
+}
+
 SocketMessage RequestSystem::showinfo(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;
@@ -337,6 +358,16 @@ SocketMessage RequestSystem::buyback(CityLordServer* server, UserManager* userMa
     return answer;
 }
 
-    
+SocketMessage RequestSystem::roadblock(CityLordServer* server, UserManager* userManager, SocketMessage message){
+    pthread_mutex_lock(&requestmutex);
+    SocketMessage answer;
+    int row = std::stoi(message.get("row"));
+    int col = std::stoi(message.get("col"));
+    CityManager* cityManager = userManager->getActiveCity();
+    Player* player = userManager->getActivePlayer();
+    answer = cityManager->roadBlock(player, Location(row, col));
+    pthread_mutex_unlock(&requestmutex);
+    return answer;
+}  
     
     
