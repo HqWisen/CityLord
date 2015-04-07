@@ -150,14 +150,15 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr) : currentT
 
 void CityUpdater::run(){
     currentTimer.start();
-    Timer<CityUpdater> generateTimer(this, 2), advanceTimer(this, 1), buildingTimer(this, 10), payTimer(this, 86400), cityTimer(this);
+    Timer<CityUpdater> generateTimer(this, 2), advanceTimer(this, 1), buildingTimer(this, 10), roadBlockTimer(this, 25), payTimer(this, 86400), cityTimer(this);
     generateTimer.setFunc(CityUpdater::runGenerateVisitors);
     advanceTimer.setFunc(CityUpdater::runMakeVisitorsAdvance);
     buildingTimer.setFunc(CityUpdater::runUpdateBuidlings);
     payTimer.setFunc(CityUpdater::runMakeOwnersPay);
     cityTimer.setFunc(CityUpdater::runUpdateCity);
-    generateTimer.start();advanceTimer.start();buildingTimer.start();payTimer.start();/*cityTimer.start();*/
-    generateTimer.join();advanceTimer.join();buildingTimer.join();payTimer.join();/*cityTimer.join();*/
+    roadBlockTimer.setFunc(CityUpdater::runUpdateRoadBlocks);
+    generateTimer.start();advanceTimer.start();buildingTimer.start();roadBlockTimer.start();payTimer.start();/*cityTimer.start();*/
+    generateTimer.join();advanceTimer.join();buildingTimer.join();roadBlockTimer.join();payTimer.join();/*cityTimer.join();*/
 }
 
 void CityUpdater::runGenerateVisitors(void* object){
@@ -172,6 +173,14 @@ void CityUpdater::runMakeVisitorsAdvance(void* object){
     pthread_mutex_lock(&visitormutex);
     //std::cout<<"advancevisitors"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::makeVisitorsAdvance;
+    ((static_cast<CityUpdater*>(object))->*func_ptr)();
+    pthread_mutex_unlock(&visitormutex);
+}
+
+void CityUpdater::runUpdateRoadBlocks(void* object){
+    pthread_mutex_lock(&visitormutex);
+    //std::cout<<"updateRoadBlocks"<<std::endl;
+    void (CityUpdater::*func_ptr) (void) = &CityUpdater::updateRoadBlocks;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
     pthread_mutex_unlock(&visitormutex);
 }
@@ -369,25 +378,14 @@ bool CityUpdater::isRoadFree(Road* road){
     return true;
 }
 
-void CityUpdater::blockRoad(Road* toBlock){
-    //std::cout<<"Blocking "<<toBlock->getLocation().getRow()<<" . "<<toBlock->getLocation().getCol()<<std::endl;
-    toBlock->setUpBarricade(true);
-    blockedRoads.push_back(toBlock);
-    getAdjacencyList();
-    Visitor* visitorPtr;
-    std::vector<Location> path;
-    for (int i=0; i<cityMap->getMaxVisitors(); i++){
-        if ((visitorPtr = cityMap->getVisitor(i)) && visitorPtr->passesThrough(toBlock->getLocation())){
-            path.clear();
-            generateFullPath(visitorPtr->getLoc(), visitorPtr->getEndLoc(), path);
-            visitorPtr->setPath(path);
-        }
-    }
+void CityUpdater::scheduleRoadBlock(Road* toBlock){
+    pthread_mutex_lock(&roadblockmutex);
+    roadsToBlock.push_back(toBlock);
+    pthread_mutex_unlock(&roadblockmutex);
 }
 
 void CityUpdater::freeRoad(){
-    Road* toFree;
-    toFree = blockedRoads.front();
+    Road* toFree = blockedRoads.front();
     //std::cout<<"Freeing "<<toFree->getLocation().getRow()<<" . "<<toFree->getLocation().getCol()<<std::endl;
     blockedRoads.pop_front();
     toFree->setUpBarricade(false);
@@ -400,6 +398,40 @@ void CityUpdater::freeRoad(){
             generateFullPath(visitorPtr->getLoc(), visitorPtr->getEndLoc(), path);
             visitorPtr->setPath(path);
         }
+    }
+}
+
+void CityUpdater::updateRoadBlocks(){
+    if (blockedRoads.size() > 0){
+        if (blockedRoads[0]->getTurnsLeft() == 0){
+            freeRoad();
+        }
+        if (blockedRoads.size() > 0){
+            for (unsigned int i=0; i<blockedRoads.size(); i++){
+                blockedRoads[i]->decreaseTurnsLeft();
+            }
+        }
+    }
+    if (roadsToBlock.size() > 0){
+        pthread_mutex_lock(&roadblockmutex);
+        while (roadsToBlock.size() > 0){
+            Road* toBlock = roadsToBlock.front();
+            roadsToBlock.pop_front();
+            toBlock->setUpBarricade(true, MAXROADBLOCKTURNS);
+            //std::cout<<"Blocking "<<toBlock->getLocation().getRow()<<" . "<<toBlock->getLocation().getCol()<<std::endl;
+            blockedRoads.push_back(toBlock);
+            getAdjacencyList();
+            Visitor* visitorPtr;
+            std::vector<Location> path;
+            for (int i=0; i<cityMap->getMaxVisitors(); i++){
+                if ((visitorPtr = cityMap->getVisitor(i)) && visitorPtr->passesThrough(toBlock->getLocation())){
+                    path.clear();
+                    generateFullPath(visitorPtr->getLoc(), visitorPtr->getEndLoc(), path);
+                    visitorPtr->setPath(path);
+                }
+            }
+        }
+        pthread_mutex_unlock(&roadblockmutex);
     }
 }
 

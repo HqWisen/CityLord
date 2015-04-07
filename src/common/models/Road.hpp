@@ -11,6 +11,7 @@ class Road : public Case{
         bool directions[4] = {false, false, false, false};
         std::string image;
         bool blocked = false;
+        int turnsLeft = 0;
     public:
         static direction_type NORTH, SOUTH, EAST, WEST;
 	public:
@@ -22,7 +23,9 @@ class Road : public Case{
         void generateImage();
         bool isOpen(direction_type);
         std::string toString();
-        void setUpBarricade(bool);
+        void setUpBarricade(bool, int turns = 0);
+        int getTurnsLeft();
+        void decreaseTurnsLeft();
         bool isBlocked();
 };
 

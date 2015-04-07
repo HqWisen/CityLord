@@ -62,6 +62,10 @@ string BasicField::getImageName(){
                 if(buildingStatus == "normal"){
                     imagename += "_" + Player::COLORNAME[getOwnerID()];
                 }
+                else{
+                    imagename = buildingName;
+                    imagename += "_" + Player::COLORNAME[getOwnerID()];
+                }
             }
             else{
                 imagename += "_" + Player::COLORNAME[getOwnerID()];
