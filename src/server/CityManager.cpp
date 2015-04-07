@@ -511,7 +511,7 @@ SocketMessage CityManager::roadBlock(Player* player, Location location){
     Road* concernedRoad;
     if((concernedRoad = dynamic_cast<Road*>(cityMap->getCase(location)))){;
         if(!concernedRoad->isBlocked()){
-            if (updater->scheduleRoadBlock(concernedRoad)){
+            if (updater->addRoadBlock(concernedRoad)){
                 player->loseMoney(getRoadBlockPrice());
                 update.setTopic("roadblock");
                 update.set("location", location.toString());

@@ -53,20 +53,17 @@ class CityUpdater : public Thread{
     vector<Road*> checkPointsList;
     vector<Road*> buildingsList;
     vector<Road*> roadMap;
-    deque<Road*> roadsToBlock;
     deque<Road*> blockedRoads;
     adjacency_list_t adjacencyList;
     Timer<CityUpdater> currentTimer;
     public:
         static pthread_mutex_t visitormutex;
-        //pthread_mutex_t roadblockmutex;
     public:
         CityUpdater(Map<Field>*,std::vector<Player*>*, Gamemode);
         void run() override;
         static void runGenerateVisitors(void*);
         static void runMakeVisitorsAdvance(void*);
         static void runUpdateBuidlings(void*);
-        static void runAddRoadBlocks(void*);
         static void runUpdateRoadBlocks(void*);
         static void runMakeOwnersPay(void*);
         static void runUpdateCity(void*);
@@ -79,9 +76,8 @@ class CityUpdater : public Thread{
         void generateFullPath(Location start, Location end, std::vector<Location> &path);
         void createPath(Location start, Location end, std::vector<Location> &path);
 		bool isRoadFree(Road*);
-        bool scheduleRoadBlock(Road*);
+        bool addRoadBlock(Road*);
 		void freeRoad();
-        void addRoadBlocks();
         void updateRoadBlocks();
         SocketMessage visitorCreate(int, Location);
         SocketMessage visitorMove(int, Location, Location);
