@@ -390,15 +390,17 @@ SocketMessage CityManager::cancelOffer(Player* player, Location location){
 	return message;
 }
 	
-SocketMessage CityManager::hypotheque(Player* player, Location location, BuildingType buildingType){
+SocketMessage CityManager::hypotheque(Player* player, Location location){
 	SocketMessage message, update;
     Field* concernedField;
     if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){
 				if(concernedField->getBuilding()->getStatus() == "normal"){
+					BuildingType buildingType = concernedField->getBuilding()->getType();
 					concernedField->getBuilding()->setStatus("hypotheque");
-					player->gainMoney( (buildingType.getTotalPurchasePrice()) /2 );
+					int gain = buildingType.getTotalPurchasePrice() /2;
+					player->gainMoney(gain);
 					update.setTopic("hypotheque");
                     update.set("location", location.toString());
                     update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
@@ -431,15 +433,17 @@ SocketMessage CityManager::hypotheque(Player* player, Location location, Buildin
 }
 
 
-SocketMessage CityManager::buyBack(Player* player, Location location, BuildingType buildingType){
+SocketMessage CityManager::buyBack(Player* player, Location location){
 	SocketMessage message, update;
     Field* concernedField;
     if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){
 				if(concernedField->getBuilding()->getStatus() == "hypotheque"){
+					BuildingType buildingType = concernedField->getBuilding()->getType();
 					concernedField->getBuilding()->setStatus("normal");
-					player->loseMoney( (buildingType.getTotalPurchasePrice()) /2 );        
+					int lose = buildingType.getTotalPurchasePrice() /2;
+					player->loseMoney(lose);        
                     update.setTopic("buyback");
                     update.set("location", location.toString());
                     update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));

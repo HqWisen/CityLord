@@ -59,8 +59,8 @@ class CityManager{
         SocketMessage cancelOffer(Player*, Location);
         void sendUpdateToPlayers(SocketMessage);
         SocketMessage visitorMove(Player*, Location, Location);
-        SocketMessage hypotheque(Player*, Location, BuildingType);
-        SocketMessage buyBack(Player*, Location, BuildingType);
+        SocketMessage hypotheque(Player*, Location);
+        SocketMessage buyBack(Player*, Location);
         //SocketMessage getRealTimeRem(Player*);
         //SocketMessage getTimeRem(Player*);
 		std::vector<Location> giveWay();

@@ -319,7 +319,7 @@ SocketMessage RequestSystem::hypotheque(CityLordServer* server, UserManager* use
     BuildingType buildingType = BuildingType::getTypeByIndex(std::stoi(message.get("typeindex")));
     CityManager* cityManager = userManager->getActiveCity();
     Player* player = userManager->getActivePlayer();
-    answer = cityManager->hypotheque(player, Location(row, col), buildingType);
+    answer = cityManager->hypotheque(player, Location(row, col));
     pthread_mutex_unlock(&requestmutex);
     return answer;
 }
@@ -332,7 +332,7 @@ SocketMessage RequestSystem::buyback(CityLordServer* server, UserManager* userMa
     BuildingType buildingType = BuildingType::getTypeByIndex(std::stoi(message.get("typeindex")));
     CityManager* cityManager = userManager->getActiveCity();
     Player* player = userManager->getActivePlayer();
-    answer = cityManager->buyBack(player, Location(row, col), buildingType);
+    answer = cityManager->buyBack(player, Location(row, col));
     pthread_mutex_unlock(&requestmutex);
     return answer;
 }
