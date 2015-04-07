@@ -56,8 +56,10 @@ void CreateGame::on_map3Button_clicked(){
 }
 
 void CreateGame::on_createButton_clicked(){
+    int choiceMode=ui->gameModeSelect->currentIndex()+1;
     clientManager->setRequest("createcity");
-    clientManager->addInfo("number", std::to_string(choice));
+    clientManager->addInfo("mapnumber", std::to_string(choice));
+    clientManager->addInfo("modenumber", std::to_string(choiceMode));
     clientManager->sendRequestAndRecv();
     if(clientManager->requestFailed()){
         // TODO handle failure
@@ -92,6 +94,10 @@ void CreateGame::changedGameMode(){
     if(selected=="Normal"){
         gameMode = "Normal";
         ui->gameModeLabel->setText("Normal building price, etc");
+    }
+    else if(selected=="Easy"){
+        gameMode = "Easy";
+        ui->gameModeLabel->setText("Lower difficulty, prices, etc");
     }
     else if(selected=="Hardcore"){
         gameMode = "Hardcore";

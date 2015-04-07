@@ -114,7 +114,7 @@
     <string>Map3</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -129,6 +129,11 @@
       <item>
        <property name="text">
         <string>Normal</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Easy</string>
        </property>
       </item>
       <item>
