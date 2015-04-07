@@ -19,7 +19,7 @@ void CityLordClient::runClient(){
 		std::cout<<"4 - Show catalog"<<std::endl;
 		std::cout<<"5 - Show information"<<std::endl;
 		//std::cout<<"5 - Show others players's information"<<std::endl;
-		std::cout<<"6 - Disconnection"<<std::endl;
+		std::cout<<"6 - Disconnect"<<std::endl;
 
 		int choice = makeChoice(1, 6);
 		if(choice == 1){

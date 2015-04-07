@@ -20,6 +20,7 @@ class CityManager{
 
     static const int DEFAULTMAXPLAYER;
 
+    Gamemode mode;
     std::string mapname;
     Map<Field>* cityMap;
     CityUpdater* updater;
@@ -34,7 +35,7 @@ class CityManager{
 
         static const int ROADBLOCKPRICE = 200000;
 
-        CityManager(std::string, int, User*);
+        CityManager(std::string, int, User*, Gamemode gm = Gamemode::NORMAL);
         ~CityManager();
         std::string getMapName();
         std::string getMapFileName();
@@ -53,6 +54,8 @@ class CityManager{
         //void sendVisitorsFor(UserManager*);
 		std::vector<Field*> getPurchasableFields();
 		std::vector<Offer*> getOffers();
+        int getRoadBlockPrice();
+        float getDifficultyMultiplier();
 		SocketMessage makePurchase(Player*, Location);
 		SocketMessage buildBuilding(Player*, Location, BuildingType);
 		SocketMessage upgradeBuilding(Player*, Location);

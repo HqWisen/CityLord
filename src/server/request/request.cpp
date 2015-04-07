@@ -117,6 +117,7 @@ SocketMessage RequestSystem::selectfield(CityLordServer* server, UserManager* us
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;
     Map<Field>* map = userManager->getActiveCity()->getMap();
+    float mult = userManager->getActiveCity()->getDifficultyMultiplier();
     int row = std::stoi(message.get("row"));
     int col = std::stoi(message.get("col"));
     Field* field;
@@ -133,7 +134,7 @@ SocketMessage RequestSystem::selectfield(CityLordServer* server, UserManager* us
         }else{
 			answer.setTopic("other");
         }
-        answer.set("info", field->toString()); // for terminal
+        answer.set("info", field->toString(mult)); // for terminal
     }else{
         answer.setTopic("notfield");
     }
@@ -144,7 +145,8 @@ SocketMessage RequestSystem::selectfield(CityLordServer* server, UserManager* us
 SocketMessage RequestSystem::selectroad(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;
-    Map<Field>* map = userManager->getActiveCity()->getMap();
+    CityManager* cityManager = userManager->getActiveCity();
+    Map<Field>* map = cityManager->getMap();
     int row = std::stoi(message.get("row"));
     int col = std::stoi(message.get("col"));
     Road* road;
@@ -153,7 +155,7 @@ SocketMessage RequestSystem::selectroad(CityLordServer* server, UserManager* use
             answer.setTopic("roadblocked");
         }else {
             answer.setTopic("road");
-            answer.set("price", std::to_string(CityManager::ROADBLOCKPRICE));
+            answer.set("price", std::to_string(cityManager->getRoadBlockPrice()));
         }
     }else{
         answer.setTopic("notroad");
@@ -178,10 +180,11 @@ SocketMessage RequestSystem::showinfo(CityLordServer* server, UserManager* userM
 SocketMessage RequestSystem::showcatalog(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;
+    float mult = userManager->getActiveCity()->getDifficultyMultiplier();
     std::vector<Field*> fieldVector = userManager->getActiveCity()->getPurchasableFields();
     int i = 0;
     for (std::vector<Field*>::iterator it = fieldVector.begin(); it != fieldVector.end(); it++){
-        answer.set((*it)->getLocation().toString(), (*it)->toString());
+        answer.set((*it)->getLocation().toString(), (*it)->toString(mult));
         i++;
     }
     pthread_mutex_unlock(&requestmutex);
@@ -243,6 +246,7 @@ SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* 
     CityManager* cityManager = userManager->getActiveCity();
     Map<Field>* map = cityManager->getMap();
     Field* field;
+    Road* road;
     for(int row=0;row<map->getNumberOfRows();row++){
         for(int col=0;col<map->getNumberOfCols();col++){
             if((field = dynamic_cast<Field*>(map->getCase(Location(row, col))))){
@@ -257,6 +261,14 @@ SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* 
                     update.set("location", field->getLocation().toString());
                     update.set("typeindex", std::to_string(BuildingType::getIndexByType(field->getBuilding()->getType())));
                     update.set("level", std::to_string(field->getBuilding()->getLevel()));
+                    userManager->sendUpdate(update);
+                }
+            }
+            if((road = dynamic_cast<Road*>(map->getCase(Location(row, col))))){
+                if(road->isBlocked()){
+                    update.setTopic("roadblock");
+                    update.set("location", road->getLocation().toString());
+                    update.set("state", "1");
                     userManager->sendUpdate(update);
                 }
             }

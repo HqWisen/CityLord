@@ -91,7 +91,12 @@ void UpdateSystem::roadblock(ClientManager* client, SocketMessage update){
     pthread_mutex_lock(&updatemutex);
     Location location = Location::parse(update.get("location"));
     Road* road = dynamic_cast<Road*>(client->getMap()->getCase(location));
-    road->setUpBarricade(true);
+    if (update.get("state") == "1"){
+        road->setUpBarricade(true);
+    }
+    else {
+        road->setUpBarricade(false);
+    }
     client->repaint();
     pthread_mutex_unlock(&updatemutex);
 }

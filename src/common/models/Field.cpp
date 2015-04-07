@@ -160,9 +160,10 @@ void Field::setOwner(Player* newOwner){
 }
 
 
-string Field::toString(){
+string Field::toString(float mult){
     string result;
-    result += "Price : " + std::to_string(price);
+    int res = static_cast<int>(price*mult);
+    result += "Price : " + std::to_string(res);
     result += " - ";
     result += "Owner : ";
     if(hasOwner()){
