@@ -25,6 +25,10 @@ private slots:
 
     void on_cancelButton_clicked();
 
+    void on_hypothecateButton_clicked();
+
+    void on_buyBackButton_clicked();
+
 private:
     Ui::sell *ui;
     ClientManagerGUI* clientManager;

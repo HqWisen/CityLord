@@ -41,7 +41,7 @@
      <x>10</x>
      <y>80</y>
      <width>411</width>
-     <height>81</height>
+     <height>101</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -58,6 +58,24 @@
        <widget class="QPushButton" name="takeOffDialogButton">
         <property name="text">
          <string>TAKE OUT OF MARKET</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="hypothecateButton">
+        <property name="text">
+         <string>HYPOTHECATE</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="buyBackButton">
+        <property name="text">
+         <string>BUY BACK</string>
         </property>
        </widget>
       </item>

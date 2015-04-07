@@ -20,7 +20,9 @@ sell::~sell()
 
 void sell::on_putOnDialogButton_clicked()
 {
-    /* Request and location are set in ingame buildButton method */
+    clientManager->setRequest("offer");
+    clientManager->addInfo("row", std::to_string(lastLocation->getRow()));
+    clientManager->addInfo("col", std::to_string(lastLocation->getCol()));
     int offeredPrice = getPrice();
     clientManager->addInfo("offerprice", std::to_string(offeredPrice));
     clientManager->sendRequestAndRecv();
@@ -39,6 +41,28 @@ void sell::on_takeOffDialogButton_clicked()
     clientManager->addInfo("showmessagebox", "true");
     close();
 }
+
+
+void sell::on_hypothecateButton_clicked()
+{
+    clientManager->setRequest("hypotheque");
+    clientManager->addInfo("row", std::to_string(lastLocation->getRow()));
+    clientManager->addInfo("col", std::to_string(lastLocation->getCol()));
+    clientManager->sendRequestAndRecv();
+    clientManager->addInfo("showmessagebox", "true");
+    close();
+}
+
+void sell::on_buyBackButton_clicked()
+{
+    clientManager->setRequest("buyback");
+    clientManager->addInfo("row", std::to_string(lastLocation->getRow()));
+    clientManager->addInfo("col", std::to_string(lastLocation->getCol()));
+    clientManager->sendRequestAndRecv();
+    clientManager->addInfo("showmessagebox", "true");
+    close();
+}
+
 
 void sell::on_cancelButton_clicked()
 {
