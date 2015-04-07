@@ -10,7 +10,7 @@ const std::string CreateGame::UNCLICKCOLOR = "black";
 
 CreateGame::CreateGame(QWidget* parent, ClientManagerGUI* cm) :
     DefaultWidget(parent, cm), ui(new Ui::CreateGame){
-    gameMode = "Normal";
+    gameMode = 1;
     displayDefaultBackground();
     ui->setupUi(this);
     refresh();
@@ -59,7 +59,11 @@ void CreateGame::on_createButton_clicked(){
     int choiceMode=ui->gameModeSelect->currentIndex()+1;
     clientManager->setRequest("createcity");
     clientManager->addInfo("mapnumber", std::to_string(choice));
+<<<<<<< HEAD
     clientManager->addInfo("modenumber", std::to_string(choiceMode));
+=======
+    clientManager->addInfo("modenumber", std::to_string(gameMode));
+>>>>>>> 06931163d432261527ce76111dd4948302f3b9dc
     clientManager->sendRequestAndRecv();
     if(clientManager->requestFailed()){
         // TODO handle failure
@@ -92,15 +96,19 @@ void CreateGame::on_gameModeSelect_currentIndexChanged(int index)
 void CreateGame::changedGameMode(){
     std::string selected=ui->gameModeSelect->currentText().toStdString();
     if(selected=="Normal"){
-        gameMode = "Normal";
-        ui->gameModeLabel->setText("Normal building price, etc");
+        gameMode = 1;
+        ui->gameModeLabel->setText("Normal prices, normal income etc");
+    }
+    else if(selected=="Easy"){
+        gameMode = 2;
+        ui->gameModeLabel->setText("Lower prices, higher income, etc");
     }
     else if(selected=="Easy"){
         gameMode = "Easy";
         ui->gameModeLabel->setText("Lower difficulty, prices, etc");
     }
     else if(selected=="Hardcore"){
-        gameMode = "Hardcore";
-        ui->gameModeLabel->setText("Higher difficulty, prices, etc");
+        gameMode = 3;
+        ui->gameModeLabel->setText("Higher prices, lower income, etc");
     }
 }
