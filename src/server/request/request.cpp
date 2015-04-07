@@ -51,13 +51,25 @@ SocketMessage RequestSystem::choicemap(CityLordServer* server, UserManager* user
     return answer;
 }
 
+SocketMessage RequestSystem::choicemode(CityLordServer* server, UserManager* userManager, SocketMessage message){
+    pthread_mutex_lock(&requestmutex);
+    SocketMessage answer;
+    for (int i = 0; i<Gamemode::typesLength; i++){
+        answer.set(std::to_string(i+1), Gamemode::types[i].NAME);
+    }
+    pthread_mutex_unlock(&requestmutex);
+    return answer;
+}
+
 SocketMessage RequestSystem::createcity(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;
     answer.setTopic("success");
-    int numberOfMap = std::stoi(message.get("number")) - 1;
-    CityManager* cityManager = server->createCity(numberOfMap, userManager->getUser());
-    server->LOG("User "+ userManager->getUserName() + " created a city with map " + cityManager->getMapName() + ", city number is " + std::to_string(cityManager->getID()));
+    int numberOfMap = std::stoi(message.get("mapnumber")) - 1;
+    int numberOfMode = std::stoi(message.get("modenumber")) - 1;
+    Gamemode gm = Gamemode::getTypeByIndex(numberOfMode);
+    CityManager* cityManager = server->createCity(numberOfMap, userManager->getUser(), gm);
+    server->LOG("User "+ userManager->getUserName() + " created a city with map " + cityManager->getMapName() + " in " + gm.NAME + " mode, city number is " + std::to_string(cityManager->getID()));
     // TODO send failure if creation failed*/
     answer.set("cityname", cityManager->getName());
     pthread_mutex_unlock(&requestmutex);

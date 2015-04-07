@@ -5,6 +5,7 @@
 #include "../CityLordServer.hpp"
 #include "../../common/socket/SocketMessage.hpp"
 #include "../../common/models/BuildingType.hpp"
+#include "../Gamemode.hpp"
 #include <pthread.h>
 #include <iostream>
 
@@ -17,6 +18,7 @@ public:
 	static SocketMessage login(CityLordServer*, UserManager*, SocketMessage);
 	static SocketMessage createaccount(CityLordServer*, UserManager*, SocketMessage);
 	static SocketMessage choicemap(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage choicemode(CityLordServer*, UserManager*, SocketMessage);
 	static SocketMessage createcity(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage cityinfo(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage numberofcity(CityLordServer*, UserManager*, SocketMessage);

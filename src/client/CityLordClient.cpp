@@ -128,12 +128,23 @@ void CityLordClient::createCity(){
 		i++;
 		std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
 	}
-	int choice = makeChoice(1, i);
+	int choiceCity = makeChoice(1, i);
+    clientManager->setRequest("choicemode");
+    clientManager->sendRequestAndRecv();
+    std::map<std::string, std::string> mode = clientManager->getMessage().getMap();
+    i = 0;
+    LOG("Choose a difficulty mode");
+    for(std::map<std::string, std::string>::iterator iterator = mode.begin(); iterator != mode.end(); iterator++) {
+        i++;
+        std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
+    }
+    int choiceMode = makeChoice(1, i);
     clientManager->setRequest("createcity");
-    clientManager->addInfo("number", std::to_string(choice));
+    clientManager->addInfo("mapnumber", std::to_string(choiceCity));
+    clientManager->addInfo("modenumber", std::to_string(choiceMode));
     clientManager->sendRequestAndRecv();
     if(!clientManager->requestFailed()){
-		LOG("The server created a new city with the map "+map[std::to_string(choice)]);
+		LOG("The server created a new city with the map "+map[std::to_string(choiceCity)]+" in "+mode[std::to_string(choiceMode)]);
 	}else{
 		// TODO handle creation failure
 	}

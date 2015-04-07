@@ -35,7 +35,7 @@ class CityManager{
 
         static const int ROADBLOCKPRICE = 200000;
 
-        CityManager(std::string, int, User*, Gamemode gm = Gamemode::NORMAL);
+        CityManager(std::string, int, User*, Gamemode);
         ~CityManager();
         std::string getMapName();
         std::string getMapFileName();

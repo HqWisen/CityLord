@@ -38,10 +38,10 @@ User* CityLordServer::createAccount(std::string username, std::string password){
 	return &(userMap[username]);
 }
 
-CityManager* CityLordServer::createCity(int numberOfMap, User* creator){
+CityManager* CityLordServer::createCity(int numberOfMap, User* creator, Gamemode mode){
 	// TODO Accès concurentielle
     // TODO server destructor
-    cityManagerVector.push_back(new CityManager(mapNameVector[numberOfMap], cityManagerVector.size(), creator));
+    cityManagerVector.push_back(new CityManager(mapNameVector[numberOfMap], cityManagerVector.size(), creator, mode));
 	return cityManagerVector.back();
 }
 
