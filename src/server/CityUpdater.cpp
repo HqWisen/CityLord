@@ -1,12 +1,16 @@
 #include "CityUpdater.hpp"
 #include "UserManager.hpp"
 
+pthread_mutex_t CityUpdater::visitormutex(PTHREAD_MUTEX_INITIALIZER);
+
+
 
 // ======================================================================================
 // ========================================= Dijkstra ===================================
 // ======================================================================================
 //      Solution temporaire (ou permanente) afin d'avoir un createPath qui marche
 // ======================================================================================
+
 void CityUpdater::DijkstraComputePaths(vertex_t source,
                           const adjacency_list_t &adjacency_list,
                           std::vector<weight_t> &min_distance,
@@ -157,15 +161,19 @@ void CityUpdater::run(){
 }
 
 void CityUpdater::runGenerateVisitors(void* object){
+    pthread_mutex_lock(&visitormutex);
     //std::cout<<"generatevisitor"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::generateVisitors;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
+    pthread_mutex_unlock(&visitormutex);
 }
 
 void CityUpdater::runMakeVisitorsAdvance(void* object){
+    pthread_mutex_lock(&visitormutex);
     //std::cout<<"advancevisitors"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::makeVisitorsAdvance;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
+    pthread_mutex_unlock(&visitormutex);
 }
 
 void CityUpdater::runUpdateBuidlings(void* object){
@@ -218,10 +226,10 @@ void CityUpdater::sendUpdateToPlayers(SocketMessage update){
     Player* player;
     for (std::vector<Player*>::iterator it = playerVectorPtr->begin(); it != playerVectorPtr->end(); it++){
         player = *it;
-        if(player->isConnected()){
+        if(player->isConnected() && player->getUserManager() != nullptr){
+            //std::cout<<"PLAYER "<<player->getPlayerID()<<" is YES"<<std::endl;
             player->getUserManager()->sendUpdate(update);
         }
-
     }
 }
 
@@ -424,6 +432,7 @@ void CityUpdater::makeVisitorsAdvance(){
     for(int i = 0; i < cityMap->getMaxVisitors(); i++){
         if(cityMap->getVisitor(i) != nullptr){
             if (cityMap->getVisitor(i)->hasReachedEnd()) {
+                std::cout<<"reached end "<<i<<std::endl;
                 SocketMessage update = visitorRemove(i);
                 sendUpdateToPlayers(update);
                 cityMap->deleteVisitor(i);
@@ -431,8 +440,9 @@ void CityUpdater::makeVisitorsAdvance(){
                 Location firstLocation = cityMap->getVisitor(i)->getLoc();
                 cityMap->getVisitor(i)->move();
                 Location lastLocation = cityMap->getVisitor(i)->getLoc();
+                std::cout<<"moving "<<i<<" from to "<<lastLocation.toString()<<std::endl;
                 SocketMessage update = visitorMove(i, firstLocation, lastLocation);
-                //sendUpdateToPlayers(update);
+                sendUpdateToPlayers(update);
                 bool enter = false;
                 Location loc = cityMap->getVisitor(i)->getLoc();
                 int col = loc.getCol();

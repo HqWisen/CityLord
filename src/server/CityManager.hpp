@@ -47,6 +47,7 @@ class CityManager{
         std::string getName();
         bool canJoin(Player*);
         bool alreadyInCity(Player*);
+        //void sendVisitorsFor(UserManager*);
 		std::vector<Field*> getPurchasableFields();
 		std::vector<Offer*> getOffers();
 		SocketMessage makePurchase(Player*, Location);

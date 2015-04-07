@@ -70,6 +70,12 @@ bool CityManager::alreadyInCity(Player* player){
 
 }
 
+/*void CityManager::sendVisitorsFor(UserManager* userManager){
+    pthread_mutex_lock(&updater->visitormutex);
+    std::cout<<"building visitor for "<<userManager->getUserName()<<std::endl;
+    pthread_mutex_unlock(&updater->visitormutex);
+}*/
+
 Map<Field>* CityManager::getMap(){
     return cityMap;
 }

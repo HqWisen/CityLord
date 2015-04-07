@@ -41,7 +41,7 @@ class Timer : public Thread{
 /*** DEFINITION ***/
 
 template <typename T>
-const int Timer<T>::MINPERSLEEP = 5;
+const int Timer<T>::MINPERSLEEP = 33;
 template <typename T>
 const int Timer<T>::MAXDAY = 15;
 

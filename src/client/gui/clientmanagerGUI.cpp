@@ -86,6 +86,16 @@ void ClientManagerGUI::createVisitor(int id, Location location){
     signaler->signalCreatingVisitor(id, location);
 }
 
+void ClientManagerGUI::moveVisitor(int id, Location location){
+    ClientManager::moveVisitor(id, location);
+    signaler->signalMovingVisitor(id, location);
+}
+
+void ClientManagerGUI::removeVisitor(int id){
+    ClientManager::removeVisitor(id);
+    signaler->signalRemovingVisitor(id);
+}
+
 
 Signaler* ClientManagerGUI::getSignaler(){
     return signaler;

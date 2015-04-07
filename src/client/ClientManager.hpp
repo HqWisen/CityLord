@@ -23,6 +23,8 @@ public:
     static void runUpdateTime(void*);
     virtual void updateTime();
     virtual void createVisitor(int, Location);
+    virtual void moveVisitor(int, Location);
+    virtual void removeVisitor(int);
     std::string getStrTime();
     void destroyTimer();
     void displayMap();

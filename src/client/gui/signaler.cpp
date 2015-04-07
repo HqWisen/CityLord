@@ -26,3 +26,11 @@ void Signaler::signalUpdatingTime(std::string time){
 void Signaler::signalCreatingVisitor(int id, Location location){
     emit createVisitor(id, location.toString().c_str());
 }
+
+void Signaler::signalMovingVisitor(int id, Location location){
+    emit moveVisitor(id, location.toString().c_str());
+}
+
+void Signaler::signalRemovingVisitor(int id){
+    emit removeVisitor(id);
+}

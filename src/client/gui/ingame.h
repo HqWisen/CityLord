@@ -33,6 +33,8 @@ public slots:
     void updateMoney(int);
     void updateTime(QString);
     void createVisitor(int, QString);
+    void moveVisitor(int, QString);
+    void removeVisitor(int);
 private slots:
     void on_buyButton_clicked();
     void on_buildButton_clicked();

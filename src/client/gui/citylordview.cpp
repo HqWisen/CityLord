@@ -7,7 +7,7 @@ const int CityLordView::DEFAULTZOOMLEVEL = 10;
 
 CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
     QGraphicsView(parent), px(0), py(0), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(cm), numberOfRows(0),  \
-    numberOfCols(0), itemArray(nullptr){
+    numberOfCols(0), itemArray(nullptr), visitorItemMap(){
     setGeometry(0, 60, WIDTH, HEIGHT);
     resize(WIDTH, HEIGHT);
     setScene(scene);
@@ -35,12 +35,28 @@ void CityLordView::cleanItemArray(){
     }
 }
 
-void CityLordView::createVisitor(Location location){
-    QGraphicsPixmapItem* item = new QGraphicsPixmapItem;
-    scene->addItem(item);
-    QPixmap pixmap(getImagePath("grass"));
-    item->setPixmap(pixmap);
-    item->setOffset(carToIso(location, pixmap));
+void CityLordView::createVisitor(int id, Location location){
+    std::cout<<"=> view creating"<<std::endl;
+    visitorItemMap[id] = new VisitorGUI(this, scene);
+    visitorItemMap[id]->show(location);
+}
+
+void CityLordView::moveVisitor(int id, Location location){
+    std::cout<<"=> view moving"<<std::endl;
+    if(visitorItemMap.find(id) == visitorItemMap.end()){
+        createVisitor(id, location);
+    }else{
+        visitorItemMap[id]->move(location);
+    }
+}
+
+void CityLordView::removeVisitor(int id){
+    std::cout<<"=> view deleting"<<std::endl;
+    if(visitorItemMap.find(id) != visitorItemMap.end()){
+        visitorItemMap[id]->remove();
+        delete visitorItemMap[id];
+        visitorItemMap.erase(id);
+    }
 }
 
 const char* CityLordView::getImagePath(std::string imagename){

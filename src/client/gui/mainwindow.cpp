@@ -21,6 +21,7 @@ MainWindow::MainWindow(char* hostname, int port) :
 
 MainWindow::~MainWindow()
 {
+    std::cout<<"destroying"<<std::endl;
     clientManager->quit();
     delete ui;
     delete centralWidget;

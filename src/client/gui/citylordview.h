@@ -8,10 +8,12 @@
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <map>
 #include "signaler.h"
 #include "../../common/models/Case.hpp"
 #include "../../common/models/Map.hpp"
 #include "clientmanagerGUI.h"
+#include "visitorgui.h"
 
 
 class CityLordView : public QGraphicsView{
@@ -25,7 +27,9 @@ public:
     CityLordView(QWidget*, ClientManagerGUI*);
     virtual ~CityLordView();
     void cleanItemArray();
-    void createVisitor(Location);
+    void createVisitor(int, Location);
+    void moveVisitor(int, Location);
+    void removeVisitor(int);
     void mousePressEvent(QMouseEvent*) override;
     void mouseReleaseEvent(QMouseEvent*) override;
     void mouseMoveEvent(QMouseEvent*) override;
@@ -53,6 +57,8 @@ private:
     ClientManagerGUI* clientManager;
     int numberOfRows, numberOfCols;
     QGraphicsPixmapItem*** itemArray;
+    std::map<int, VisitorGUI*> visitorItemMap;
+
 
 };
 

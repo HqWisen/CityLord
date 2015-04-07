@@ -41,12 +41,17 @@ void UserManager::run(){
 		sendAnswer(answer);
 		recvRequest(request);
     }
+    //std::cout<<getUserName()<<" QUITING "<<std::endl;
     disconnectUser();
 }
 
 void UserManager::disconnectUser(){    
-    sendQuitUpdate();
+    //std::cout<<"GOON quitupdate "<<getUserName()<<std::endl;
+    //sendQuitUpdate();
+    //std::cout<<"DONE sendQuitUpdate "<<getUserName()<<std::endl;
     pthread_mutex_lock(&updatemutex);
+    //std::cout<<"DISCONNECTING "<<getUserName()<<std::endl;
+    updateSocket->write(SocketMessage("quit").toString());
     if(user != nullptr && cityManager != nullptr &&  user->getPlayer(cityManager) != nullptr){
         user->getPlayer(cityManager)->setUserManager(nullptr);
     }
@@ -118,12 +123,15 @@ void UserManager::sendQuitUpdate(){
 }
 
 void UserManager::sendUpdate(SocketMessage update){
+    pthread_mutex_lock(&updatemutex);
     if(cityManager != nullptr){ // The user is playing
-        pthread_mutex_lock(&updatemutex);
+        //std::cout<<"UPDATE = "<<getUserName()<<std::endl;
         updateSocket->write(update.toString());
         updateSocket->read(); // wait for finish signal
-        pthread_mutex_unlock(&updatemutex);
+        //std::cout<<"UPDATE FINISH "<<getUserName()<<std::endl;
     }
+    pthread_mutex_unlock(&updatemutex);
+
 }
 
 

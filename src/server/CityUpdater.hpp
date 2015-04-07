@@ -53,6 +53,8 @@ class CityUpdater : public Thread{
     adjacency_list_t adjacencyList;
     Timer<CityUpdater> currentTimer;
     public:
+        static pthread_mutex_t visitormutex;
+    public:
         CityUpdater(Map<Field>*,std::vector<Player*>*);
         void run() override;
         static void runGenerateVisitors(void*);

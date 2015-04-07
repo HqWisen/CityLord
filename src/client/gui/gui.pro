@@ -15,7 +15,8 @@ SOURCES += main.cpp\
     clientmanagerGUI.cpp \
     signaler.cpp \
     build.cpp \
-    sell.cpp
+    sell.cpp \
+    visitorgui.cpp
 
 HEADERS  += \
     login.h \
@@ -30,7 +31,8 @@ HEADERS  += \
     clientmanagerGUI.h \
     signaler.h \
     build.h \
-    sell.h
+    sell.h \
+    visitorgui.h
 
 
 FORMS    += \

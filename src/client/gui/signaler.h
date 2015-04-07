@@ -15,6 +15,8 @@ public:
     void signalUpdatingMoney(int);
     void signalUpdatingTime(std::string);
     void signalCreatingVisitor(int, Location);
+    void signalMovingVisitor(int, Location);
+    void signalRemovingVisitor(int);
 signals:
     void repaintView();
     void buildViewMap();
@@ -22,6 +24,8 @@ signals:
     void updateMoney(int);
     void updateTime(QString);
     void createVisitor(int, QString);
+    void moveVisitor(int, QString);
+    void removeVisitor(int);
 public slots:
 
 };

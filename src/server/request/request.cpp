@@ -99,6 +99,7 @@ SocketMessage RequestSystem::joincity(CityLordServer* server, UserManager* userM
     CityManager* cityManager = server->getCity(cityid);
     userManager->setActiveCity(cityManager);
     if(cityManager->canJoin(userManager->getActivePlayer())){
+        //cityManager->sendVisitorsFor(userManager);
         userManager->initActivePlayer(cityManager->getNextID());
         cityManager->addPlayer(userManager->getActivePlayer());
         server->LOG("User " + userManager->getUserName() + " joined the city "+cityManager->getName());

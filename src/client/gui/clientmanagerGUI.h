@@ -30,6 +30,8 @@ public:
     void repaint() override;
     void updateMoney(int) override;
     void createVisitor(int, Location) override;
+    void moveVisitor(int, Location) override;
+    void removeVisitor(int) override;
     Signaler* getSignaler();
     int getCurrentPlayerID();
     void setCurrentPlayerID(int);

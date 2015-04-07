@@ -33,7 +33,7 @@ using namespace std;
 
 template <typename FieldType>
 class Map{
-    int visitorMax = 50;
+    int visitorMax = 1;
     Visitor** visitorList;
     vector<Spawn*> spawnList;
     int numberOfRows;
