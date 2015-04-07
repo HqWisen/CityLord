@@ -310,3 +310,33 @@ SocketMessage RequestSystem::inittimer(CityLordServer* server, UserManager* user
     answer.set("timer", "hakim");
     return answer;
 }
+
+SocketMessage RequestSystem::hypotheque(CityLordServer* server, UserManager* userManager, SocketMessage message){
+    pthread_mutex_lock(&requestmutex);
+    SocketMessage answer;
+    int row = std::stoi(message.get("row"));
+    int col = std::stoi(message.get("col"));
+    BuildingType buildingType = BuildingType::getTypeByIndex(std::stoi(message.get("typeindex")));
+    CityManager* cityManager = userManager->getActiveCity();
+    Player* player = userManager->getActivePlayer();
+    answer = cityManager->hypotheque(player, Location(row, col), buildingType);
+    pthread_mutex_unlock(&requestmutex);
+    return answer;
+}
+
+SocketMessage RequestSystem::buyback(CityLordServer* server, UserManager* userManager, SocketMessage message){
+    pthread_mutex_lock(&requestmutex);
+    SocketMessage answer;
+    int row = std::stoi(message.get("row"));
+    int col = std::stoi(message.get("col"));
+    BuildingType buildingType = BuildingType::getTypeByIndex(std::stoi(message.get("typeindex")));
+    CityManager* cityManager = userManager->getActiveCity();
+    Player* player = userManager->getActivePlayer();
+    answer = cityManager->buyBack(player, Location(row, col), buildingType);
+    pthread_mutex_unlock(&requestmutex);
+    return answer;
+}
+
+    
+    
+    

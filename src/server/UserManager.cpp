@@ -14,6 +14,8 @@ const std::map<std::string, request_ptr> UserManager::requestmap = {
 	{"buy", RequestSystem::buy},
 	{"build", RequestSystem::build},
 	{"upgrade", RequestSystem::upgrade},
+    {"hypotheque", RequestSystem::hypotheque},
+    {"buyback", RequestSystem::buyback},
     {"destroy", RequestSystem::destroy},
     {"mapfullupdate", RequestSystem::mapfullupdate},
     {"leavecity", RequestSystem::leavecity},
