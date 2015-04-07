@@ -70,30 +70,26 @@ void Visitor::moveGUI(){
 
 
 bool Visitor::enter(Building* build){
-	//if(build->addVisitor());
-		//return true;
-	//return false
-	return true;
-	/*
-	if(build->addVisitor());
+	if(build->getStatus() == "normal"){
 		return true;
-	return false;
-	*/
-
+	}
 }
 
 bool Visitor::choose(Building* build){  //Building build en parametre
 	if(true){   //preference = build.getType
 		int luck = rand() %  10 + 1;
 		if(luck <= 6){  
-			
-			return true;   // 60% de chance de rentrer dans le batiment
+			if( enter(build)){			
+				return true;   // 60% de chance de rentrer dans le batiment
+			}
 		}
 	}
 	else{
 		int luck = rand() %  10 + 1;
 		if(luck <= 2){
-			return true;   // 20% de chance de rentrer dans le batiment
+			if( enter(build)){			
+				return true;   // 20% de chance de rentrer dans le batiment
+			}
 		}		
 	}
 	return false;  // ne rentre pas dans le batiment

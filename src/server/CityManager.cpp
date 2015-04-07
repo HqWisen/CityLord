@@ -389,5 +389,82 @@ SocketMessage CityManager::cancelOffer(Player* player, Location location){
 	}
 	return message;
 }
-			
+	
+SocketMessage CityManager::hypotheque(Player* player, Location location, BuildingType buildingType){
+	SocketMessage message, update;
+    Field* concernedField;
+    if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
+        if(concernedField->getOwner() == player){
+			if(concernedField->hasBuilding()){
+				if(concernedField->getBuilding()->getStatus() == "normal"){
+					concernedField->getBuilding()->setStatus("hypotheque");
+					player->gainMoney( (buildingType.getTotalPurchasePrice()) /2 );
+					update.setTopic("hypotheque");
+                    update.set("location", location.toString());
+                    update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
+                    updater->sendUpdateToPlayers(update);
+                    message.setTopic("success");
+                    message.set("reason", "Building has been successfullyhypothec !");
+				}
+				else{
+                    message.setTopic("failure");
+					std::string mess = "This building is in ";
+					mess += concernedField->getBuilding()->getStatus();
+                	message.set("reason", mess);
+				}
+			}
+			else{
+				message.setTopic("failure");
+                message.set("reason", "This Field already has a building !");
+			}
+		}
+		else{
+			message.setTopic("failure");
+            message.set("reason", "You do not own this Field !");
+		}
+	}
+	else{
+		message.setTopic("failure");
+        message.set("reason", "This is not a Field !");
+	}
+	return message;
+}
 
+
+SocketMessage CityManager::buyBack(Player* player, Location location, BuildingType buildingType){
+	SocketMessage message, update;
+    Field* concernedField;
+    if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
+        if(concernedField->getOwner() == player){
+			if(concernedField->hasBuilding()){
+				if(concernedField->getBuilding()->getStatus() == "hypotheque"){
+					concernedField->getBuilding()->setStatus("normal");
+					player->loseMoney( (buildingType.getTotalPurchasePrice()) /2 );        
+                    update.setTopic("buyback");
+                    update.set("location", location.toString());
+                    update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
+                    updater->sendUpdateToPlayers(update);
+                    message.setTopic("success");
+                    message.set("reason", "Building has been successfully buy back !");
+				}
+				else{
+					message.setTopic("failure");
+                	message.set("reason", "This building is not in hypothec");					
+				}
+			}
+			else{
+				message.setTopic("failure");
+                message.set("reason", "This Field already has a building !");
+			}
+		}
+		else{
+			message.setTopic("failure");
+            message.set("reason", "You do not own this Field !");
+		}
+	}
+	else{
+		message.setTopic("failure");
+        message.set("reason", "This is not a Field !");
+	}
+	return message;
+}

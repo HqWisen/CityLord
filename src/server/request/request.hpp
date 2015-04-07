@@ -34,6 +34,8 @@ public:
     static SocketMessage offer(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage cancelOffer(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage inittimer(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage hypotheque(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage buyback(CityLordServer*, UserManager*, SocketMessage);
 };
 
 #endif // REQUEST_HPP_

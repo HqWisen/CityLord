@@ -186,7 +186,9 @@ void CityLordClient::selectField(){
 		std::cout<<"3 - Upgrade"<<std::endl;
 		std::cout<<"4 - Destroy"<<std::endl;
 		std::cout<<"5 - Offer"<<std::endl;
-		std::cout<<"6 - Quit"<<std::endl;
+		std::cout<<"6 - Hypotheque"<<std::endl;
+		std::cout<<"7 - Buy back"<<std::endl;
+		std::cout<<"8 - Quit"<<std::endl;
 
 		int choice = makeChoice(1, 6);
 		if(choice == 1){
@@ -228,6 +230,20 @@ void CityLordClient::selectField(){
 			clientManager->addInfo("offerprice", std::to_string(offeredPrice));
 			clientManager->sendRequestAndRecv();
 			LOG(clientManager->getAnswerInfos());
+		}
+		else if(choice == 6){
+			clientManager->setRequest("hypotheque");
+            clientManager->addInfo("row", std::to_string(crow-1));
+            clientManager->addInfo("col", std::to_string(ccol-1));
+            clientManager->sendRequestAndRecv();
+            LOG(clientManager->getAnswerInfos());
+		}
+		else if(choice == 7){
+ 			clientManager->setRequest("buyback");
+            clientManager->addInfo("row", std::to_string(crow-1));
+            clientManager->addInfo("col", std::to_string(ccol-1));
+            clientManager->sendRequestAndRecv();
+            LOG(clientManager->getAnswerInfos());
 		}
 	}
 	else if(clientManager->topicEquals("owner-offered")){
