@@ -87,13 +87,22 @@ std::string Road::toString(){
     return result;
 }
 
-void Road::setUpBarricade(bool bin){
+void Road::setUpBarricade(bool bin, int turns){
 	if (bin){
 		image = " X ";
+        turnsLeft = turns;
 	}else {
 		this->generateImage();
 	}
 	blocked = bin;
+}
+
+int Road::getTurnsLeft(){
+    return turnsLeft;
+}
+
+void Road::decreaseTurnsLeft(){
+    turnsLeft -= 1;
 }
 
 bool Road::isBlocked(){

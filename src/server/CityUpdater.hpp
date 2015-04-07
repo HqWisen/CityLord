@@ -31,6 +31,7 @@ typedef double weight_t;
  
 const weight_t max_weight = std::numeric_limits<double>::infinity();
 const int MAXFINDATTEMPTS = 3;
+const int MAXROADBLOCKTURNS = 9;
  
 struct neighbor {
     vertex_t target;
@@ -49,17 +50,20 @@ class CityUpdater : public Thread{
     vector<Road*> checkPointsList;
     vector<Road*> buildingsList;
     vector<Road*> roadMap;
+    deque<Road*> roadsToBlock;
     deque<Road*> blockedRoads;
     adjacency_list_t adjacencyList;
     Timer<CityUpdater> currentTimer;
     public:
         static pthread_mutex_t visitormutex;
+        pthread_mutex_t roadblockmutex;
     public:
         CityUpdater(Map<Field>*,std::vector<Player*>*);
         void run() override;
         static void runGenerateVisitors(void*);
         static void runMakeVisitorsAdvance(void*);
         static void runUpdateBuidlings(void*);
+        static void runUpdateRoadBlocks(void*);
         static void runMakeOwnersPay(void*);
         static void runUpdateCity(void*);
         std::string getStringTimer();
@@ -71,8 +75,9 @@ class CityUpdater : public Thread{
         void generateFullPath(Location start, Location end, std::vector<Location> &path);
         void createPath(Location start, Location end, std::vector<Location> &path);
 		bool isRoadFree(Road*);
-        void blockRoad(Road*);
+        void scheduleRoadBlock(Road*);
 		void freeRoad();
+        void updateRoadBlocks();
         SocketMessage visitorCreate(int, Location);
         SocketMessage visitorMove(int, Location, Location);
         SocketMessage visitorRemove(int);
