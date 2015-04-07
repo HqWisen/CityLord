@@ -3,6 +3,7 @@
 const std::map<std::string, update_ptr> ClientUpdater::updatemap = {
     {"changeowner", UpdateSystem::changeowner},
     {"build", UpdateSystem::build},
+    {"refresh", UpdateSystem::refresh},
     {"destroy", UpdateSystem::destroy},
     {"updatemoney", UpdateSystem::updatemoney},
     {"visitorcreate", UpdateSystem::createvisitor},

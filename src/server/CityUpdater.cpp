@@ -404,8 +404,8 @@ void CityUpdater::freeRoad(){
 }
 
 void CityUpdater::updateBuildings(){
-    //std::cout<<"Update"<<endl;
     Location currentLocation;
+    SocketMessage update;
     Field* concernedField;
     for(int col = 0; col < cityMap->getNumberOfCols(); col++){
         for(int row = 0; row < cityMap->getNumberOfRows(); row++){
@@ -414,10 +414,33 @@ void CityUpdater::updateBuildings(){
                 if(concernedField->hasBuilding()){
                     concernedField->getBuilding()->removeVisitor();
                     if(concernedField->getBuilding()->getStatus() == "construction"){
-                        
+                        int res = concernedField->getBuilding()->getTurnToFinish();
+                        if(res == 0){
+                            concernedField->getBuilding()->setStatus("normal");
+                            concernedField->getBuilding()->renitTurnToFinish();
+                            refreshBuildingsList();
+                            update.setTopic("refresh");
+                            Location location(row,col);
+                            update.set("location", location.toString());
+                            sendUpdateToPlayers(update); 
+                        }
+                        else{
+                            concernedField->getBuilding()->decreaseTurnToFinish();
+                        }                       
                     }
                     else if(concernedField->getBuilding()->getStatus() == "destruction"){
-
+                        int res = concernedField->getBuilding()->getTurnToFinish();
+                        if(res == 0){                            
+                            concernedField->destroyBuilding();  
+                            refreshBuildingsList();
+                            update.setTopic("destroy");
+                            Location location(row,col);
+                            update.set("location", location.toString());
+                            sendUpdateToPlayers(update);                     
+                        }
+                        else{
+                            concernedField->getBuilding()->decreaseTurnToFinish();
+                        }              
                     }               
                 }
             }

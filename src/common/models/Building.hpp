@@ -19,6 +19,7 @@ class Building {
     int visitorCounter;
     std::string status;
     BuildingType type;
+    int turnToFinish;
     public:
 
         Building() = delete;
@@ -41,5 +42,9 @@ class Building {
 		void removeVisitor();
         bool isFull();
         std::string getStatus();
+        void setStatus(std::string); 
+        int getTurnToFinish();
+        void decreaseTurnToFinish();
+        void renitTurnToFinish();
 };
 #endif // BUILDING_HPP_

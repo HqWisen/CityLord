@@ -21,7 +21,8 @@ Building::Building(BuildingType buildingtype, int lvl) : type(buildingtype){
     openTime = type.OPENTIME;
     closeTime = type.CLOSETIME;
     visitorCounter = 0;
-    status = "construction"; // or normal ; destruction ; hypotheque
+    status = "construction"; // or normal ; destruction ; hypotheque ; destructable
+    turnToFinish = 3;
     
     if (level > 1){
         for (int i=1; i<level; i++){
@@ -107,4 +108,20 @@ bool Building::isFull(){
 
 std::string Building::getStatus(){
     return status;
+}
+
+void Building::setStatus(std::string newStatus){
+    status = newStatus;
+}
+        
+int Building::getTurnToFinish(){
+    return turnToFinish;
+}
+        
+void Building::decreaseTurnToFinish(){
+    turnToFinish -= 1;
+}
+        
+void Building::renitTurnToFinish(){
+    turnToFinish = 3;
 }

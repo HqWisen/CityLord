@@ -57,9 +57,16 @@ string BasicField::getImageName(){
         imagename = "base";
     }
     if(showOwnerColor){
-        if( (hasBuilding() and buildingStatus == "normal") or (hasOwner()) ){
-            imagename += "_" + Player::COLORNAME[getOwnerID()];            
-        }
+        if(hasOwner()){
+            if(hasBuilding()){
+                if(buildingStatus == "normal"){
+                    imagename += "_" + Player::COLORNAME[getOwnerID()];
+                }
+            }
+            else{
+                imagename += "_" + Player::COLORNAME[getOwnerID()];
+            }
+        }          
         else{
             imagename = "grass";
         }
@@ -88,21 +95,11 @@ void BasicField::buildBuilding(string buildingType){
 }
 */
 
-bool BasicField::destroying(){
-    if(countDestroy > 0){
-        return true;
-    }
-    return false;
-}
 
 void BasicField::destroyBuilding(){
-    countDestroy += 1;
-    if(countDestroy == destroyTime){
-        if (building != nullptr){
-            delete building;
-            building = nullptr;
-            countDestroy = 0;
-        }
+    if (building != nullptr){
+        delete building;
+        building = nullptr;
     }
 }
 

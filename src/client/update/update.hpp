@@ -13,6 +13,7 @@ static pthread_mutex_t updatemutex;
 public:
     static void changeowner(ClientManager*, SocketMessage);
     static void build(ClientManager*, SocketMessage);
+    static void refresh(ClientManager*, SocketMessage);
     static void destroy(ClientManager*, SocketMessage);
     static void updatemoney(ClientManager*, SocketMessage);
     static void createvisitor(ClientManager*, SocketMessage);

@@ -240,24 +240,36 @@ SocketMessage CityManager::upgradeBuilding(Player* player, Location location){
     if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){
-                if(player->getMoney() >= concernedField->getBuilding()->getType().UPGRADECOST){
-                    player->loseMoney(concernedField->getBuilding()->getType().UPGRADECOST);
-					concernedField->getBuilding()->upgrade();
-					message.setTopic("success");
-                    message.set("reason", "Building has been successfully upgraded !");
-				}else{
-					message.setTopic("failure");
-                    message.set("reason", "You do not have enough money !");
+				if(concernedField->getBuilding()->getStatus() == "normal"){
+                	if(player->getMoney() >= concernedField->getBuilding()->getType().UPGRADECOST){
+                    	player->loseMoney(concernedField->getBuilding()->getType().UPGRADECOST);
+						concernedField->getBuilding()->upgrade();
+						message.setTopic("success");
+                    	message.set("reason", "Building has been successfully upgraded !");
+					}
+					else{
+						message.setTopic("failure");
+                    	message.set("reason", "You do not have enough money !");
+					}
 				}
-			}else{
+				else{
+					message.setTopic("failure");
+					std::string mess = "This building is in ";
+					mess += concernedField->getBuilding()->getStatus();
+                	message.set("reason", mess);
+				}
+			}
+			else{
 				message.setTopic("failure");
                 message.set("reason", "This Field has no building !");
 			}
-		}else{
+		}
+		else{
 			message.setTopic("failure");
             message.set("reason", "You do not own this Field !");
 		}
-	}else{
+	}
+	else{
 		message.setTopic("failure");
         message.set("reason", "This is not a Field !");
 	}
@@ -271,15 +283,24 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
         if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){
 				if(player->getMoney() >= concernedField->getBuilding()->getDestructionCost()){
-                    player->loseMoney(concernedField->getBuilding()->getDestructionCost());
-                    player->decBuildingCounter();
-					concernedField->destroyBuilding();
-					updater->refreshBuildingsList();
-                    update.setTopic("destroy");
-                    update.set("location", location.toString());
-                    updater->sendUpdateToPlayers(update);
-					message.setTopic("success");
-                    message.set("reason", "Building has been successfully destroyed !");
+					if(concernedField->getBuilding()->getStatus() == "normal"){
+						concernedField->getBuilding()->setStatus("destruction");						
+	                    player->loseMoney(concernedField->getBuilding()->getDestructionCost());
+	                    player->decBuildingCounter();
+						//concernedField->destroyBuilding();
+						updater->refreshBuildingsList();
+	                    update.setTopic("refresh");
+	                    update.set("location", location.toString());
+	                    updater->sendUpdateToPlayers(update);
+						message.setTopic("success");
+	                    message.set("reason", "Building is in destrcution");
+	                }
+	                else{
+	                	message.setTopic("failure");
+						std::string mess = "This building is in ";
+						mess += concernedField->getBuilding()->getStatus();
+                		message.set("reason", mess);
+	                }
 				}else{
 					message.setTopic("failure");
                     message.set("reason", "You do not have enough money !");

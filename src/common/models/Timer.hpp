@@ -27,6 +27,7 @@ class Timer : public Thread{
     void addMinute(int);
     void secsleep(int);
     int getYDayNumber();
+    int getCurrentTime();
     func_ptr getFunc();
     void setFunc(func_ptr);
     T* getObject();
@@ -99,6 +100,11 @@ std::string Timer<T>::toString(){
 template <typename T>
 int Timer<T>::getYDayNumber(){
     return localtime(&current)->tm_yday;
+}
+
+template <typename T>
+int Timer<T>::getCurrentTime(){
+    return current;
 }
 
 template <typename T>
