@@ -1,0 +1,29 @@
+Bienvenue sur CITYLORD !
+
+Ce magnifique jeu de gestion d'un ville. Construisez vous meme vos batiments, améliorez-les, devenez le plus riche de la partie!
+Des visiteurs se baladeront dans la ville, et entreront dans un batiment de leur choix. Une fois dans un batiment, ils y profiteront un moment avant de payer et de disparaitre.
+C'est donc grace à eux que vous vous ferez de l'argent!
+
+===ACHETER===
+Avant de constuire un batiment, il vous faut etre propriétaire de ce terrain!
+Il suffit alors de sélectionner celui-ci en cliquant dessus et ensuite de cliquer sur <BUY>.
+Vous voilà propriétaire d'un terrain!
+
+===CONSTRUIRE===
+Ahhh, voilà le plus chouette. Après avoir sélectionné votre terrain, en cliquant dessus, appuyez sur le bouton <BUILD>. Un menu de sélection apparait, là dedans c'est à vous de choisir le type du Batiment. Le choix est votre! (Bar, Musée, Hotel, Magasin,..)
+
+===AMELIORER===
+Et oui, un batiment de plus haut, peut vous rapporter plus gros! Lorsque vous avez séléctionner votre batiment, cliquez sur <UPGRADE>. Votre batiment vous rapportera plus d'argent par visiteur, pourra en contenir un plus grand nombre, et ceux-ci partiront plus vite!
+Par contre faites attention, car le cout de maintenance de ce batiment augmentera aussi..
+
+===VENDRE===
+Un terrain ne vous convient plus? Mettez le en vente, cela permettra aux autres joueurs de vous l'acheter. Séléctionnez votre terrain et cliquez sur <SELL>. Vous entrez dans le menu de vente.
+Pour le vendre, inscrivez le prix désiré dans la case au dessus et cliquer sur <PUT ON MARKET>.
+Vous pourrez evidemment annuler la mise en vente en retournant dans ce menu et cliquer sur <CANCEL OFFER>.
+
+Vous pourrez également Hypothéquer votre propriété! Faire ceci vous raportera la moitié de sa valeur et fermera l'établissement tant qu'il n'est pas racheter. Evidemment, seul vous aurez la possibilité de le racheter.
+Pour hypothéquer votre propiété, allez dans le menu de vente et cliquez sur <HYPOTHECATE>. Pour racheter votre propriété, cliquez sur <BUY BACK>.
+
+===DETRUIRE==
+Si un batiment construit ne convient pas là où il se trouve et qu'il ne rapporte pas assez, vous pouvez toujours le détruire, et en construire un autre à sa place.
+Séléctionnez le batiment, et cliquer sur <DESTROY>.

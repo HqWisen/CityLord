@@ -3,6 +3,8 @@
 
 #include "defaultwidget.h"
 #include <QMessageBox>
+#include <QTextBrowser>
+#include <QFile>
 
 namespace Ui {
 class MainMenu;
@@ -19,6 +21,7 @@ private slots:
     void on_createButton_clicked();
     void on_disconnectButton_clicked();
     void on_quitButton_clicked();
+    void on_helpButton_clicked();
 
 private:
     Ui::MainMenu *ui;
