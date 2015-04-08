@@ -265,7 +265,7 @@ SocketMessage CityManager::upgradeBuilding(Player* player, Location location){
                     std::string mess;
                     std::string reason = concernedField->getBuilding()->getStatus();
                     if (reason == "hypotheque"){
-                        mess = "This building has already been hypothecated !";
+                        mess = "This building has been hypothecated !";
                     }
                     else{
                         mess = "This building is in " + reason + " state !";
@@ -314,7 +314,7 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
                         std::string mess;
                         std::string reason = concernedField->getBuilding()->getStatus();
                         if (reason == "hypotheque"){
-                            mess = "This building has already been hypothecated !";
+                            mess = "This building has been hypothecated !";
                         }
                         else{
                             mess = "This building is in " + reason + " state !";
@@ -421,10 +421,10 @@ SocketMessage CityManager::hypotheque(Player* player, Location location){
                     int gain = mode.applyAdvantage(buildingType.getTotalPurchasePrice() /2);
 					concernedField->getBuilding()->setStatus("hypotheque");
 					player->gainMoney(gain);
-					update.setTopic("hypotheque");
-                    update.set("location", location.toString());
-                    update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
-                    updater->sendUpdateToPlayers(update);
+					//update.setTopic("hypotheque");
+                    //update.set("location", location.toString());
+                    //update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
+                    //updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
                     message.set("reason", "Building has been successfully hypothecated !");
 				}
@@ -471,10 +471,10 @@ SocketMessage CityManager::buyBack(Player* player, Location location){
                     if(player->getMoney() >= lose){
                         concernedField->getBuilding()->setStatus("normal");
                         player->loseMoney(lose);        
-                        update.setTopic("buyback");
-                        update.set("location", location.toString());
-                        update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
-                        updater->sendUpdateToPlayers(update);
+                        //update.setTopic("buyback");
+                        //update.set("location", location.toString());
+                        //update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
+                        //updater->sendUpdateToPlayers(update);
                         message.setTopic("success");
                         message.set("reason", "Building has been successfully bought back !");
                     }

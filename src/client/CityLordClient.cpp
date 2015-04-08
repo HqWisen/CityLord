@@ -201,7 +201,7 @@ void CityLordClient::selectField(){
 		std::cout<<"3 - Upgrade"<<std::endl;
 		std::cout<<"4 - Destroy"<<std::endl;
 		std::cout<<"5 - Offer"<<std::endl;
-		std::cout<<"6 - Hypotheque"<<std::endl;
+		std::cout<<"6 - Hypothecate"<<std::endl;
 		std::cout<<"7 - Buy back"<<std::endl;
 		std::cout<<"8 - Quit"<<std::endl;
 

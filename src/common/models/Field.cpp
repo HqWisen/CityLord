@@ -177,6 +177,16 @@ string Field::toString(float mult){
     }
     if(hasBuilding()){
         result += " # "+building->getType().NAME;
+        std::string buildingStatus = building->getStatus();
+        if(buildingStatus == "hypotheque"){
+            result += "  **Hypothecated**";
+        }
+        else if(buildingStatus == "construction"){
+            result += "  **Being constructed**";
+        }
+        else if(buildingStatus == "destruction"){
+            result += "  **Being destroyed**";
+        }
     }
     return result;
 }
