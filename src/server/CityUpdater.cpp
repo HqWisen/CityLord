@@ -396,11 +396,8 @@ bool CityUpdater::isRoadFree(Road* road){
     return true;
 }
 
-bool CityUpdater::addRoadBlock(Road* toBlock){
+void CityUpdater::addRoadBlock(Road* toBlock){
     pthread_mutex_lock(&visitormutex);
-    if (!isRoadFree(toBlock)){
-        return false;
-    }
     toBlock->setUpBarricade(true, MAXROADBLOCKTURNS);
     //std::cout<<"Blocking "<<toBlock->getLocation().getRow()<<" . "<<toBlock->getLocation().getCol()<<std::endl;
     blockedRoads.push_back(toBlock);
@@ -415,7 +412,6 @@ bool CityUpdater::addRoadBlock(Road* toBlock){
         }
     }
     pthread_mutex_unlock(&visitormutex);
-    return true;
 }
 
 void CityUpdater::freeRoad(){
