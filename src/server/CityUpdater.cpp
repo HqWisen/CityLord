@@ -161,6 +161,19 @@ void CityUpdater::run(){
     generateTimer.start();advanceTimer.start();buildingTimer.start();roadBlockTimer.start();payTimer.start();/*cityTimer.start();*/
     currentTimer.join();
     generateTimer.cancel();advanceTimer.cancel();buildingTimer.cancel();roadBlockTimer.cancel();payTimer.cancel();/*cityTimer.join();*/
+    Player* player;
+    Player* winner = nullptr;
+    for(int i = 0;i<8;i++){
+        player = (*playerVectorPtr)[i];
+        if(winner == nullptr){
+            winner = player;
+        }else if(player != nullptr){
+            winner = player->getMoney() > winner->getMoney() ? player : winner;
+        }
+    }
+    std::cout<<"Winner is "<<(winner != nullptr ? winner->getNickName() : "None")<<std::endl;
+
+
 }
 
 void CityUpdater::runGenerateVisitors(void* object){
