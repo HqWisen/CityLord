@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QTableWidgetItem>
 #include "clientmanagerGUI.h"
+#include "citylordview.h"
 
 namespace Ui {
 class CatalogGui;
@@ -14,7 +15,7 @@ class CatalogGui : public QDialog
     Q_OBJECT
 
 public:
-    explicit CatalogGui(QWidget *,ClientManagerGUI*);
+    explicit CatalogGui(QWidget *,ClientManagerGUI*, CityLordView*, Location*);
     ~CatalogGui();
     void refresh();
 
@@ -30,6 +31,8 @@ private:
     QTableWidgetItem*** tableItemArray;
     QStringList headerLabels;
     int choice;
+    CityLordView* view;
+    Location* lastLocation;
 };
 
 #endif // CATALOGGUI_H
