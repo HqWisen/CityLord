@@ -4,12 +4,12 @@ pthread_mutex_t UpdateSystem::updatemutex(PTHREAD_MUTEX_INITIALIZER);
 
 void UpdateSystem::changeowner(ClientManager* client, SocketMessage update){
     pthread_mutex_lock(&updatemutex);
-		Location location = Location::parse(update.get("location"));
+    Location location = Location::parse(update.get("location"));
     int ownerid = std::stoi(update.get("ownerid"));
     ClientField* field = dynamic_cast<ClientField*>(client->getMap()->getCase(location));
     field->setOwnerID(ownerid);
     client->repaint();
-		pthread_mutex_unlock(&updatemutex);
+    pthread_mutex_unlock(&updatemutex);
 }
 
 
