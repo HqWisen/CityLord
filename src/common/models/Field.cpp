@@ -60,9 +60,6 @@ string BasicField::getImageName(){
             imagename = "grass";
         }
     }
-    if(hasBuilding()){
-        std::cout<<"imagename = |"<<imagename<<"|"<<std::endl;
-    }
     return imagename;
 }
 

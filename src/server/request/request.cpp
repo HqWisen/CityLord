@@ -280,6 +280,7 @@ SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* 
                     update.set("location", field->getLocation().toString());
                     update.set("typeindex", std::to_string(BuildingType::getIndexByType(field->getBuilding()->getType())));
                     update.set("level", std::to_string(field->getBuilding()->getLevel()));
+                    update.set("status", field->getBuilding()->getStatus());
                     userManager->sendUpdate(update);
                 }
             }

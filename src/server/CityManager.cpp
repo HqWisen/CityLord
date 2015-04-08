@@ -231,6 +231,7 @@ SocketMessage CityManager::buildBuilding(Player* player, Location location, Buil
                     update.set("location", location.toString());
                     update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
                     update.set("level", std::to_string(concernedField->getBuilding()->getLevel()));
+                    update.set("status", concernedField->getBuilding()->getStatus());
                     updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
                     message.set("reason", "Building is being built !");
