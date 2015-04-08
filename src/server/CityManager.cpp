@@ -372,18 +372,23 @@ SocketMessage CityManager::offer(Player* player, Location location, int price){
 	if((dynamic_cast<Field*>(cityMap->getCase(location)))){
 		concernedField = dynamic_cast<Field*>(cityMap->getCase(location));
 		if(concernedField->getOwner() == player){
-			if(concernedField->getOfferedPrice() == 0){
-				concernedField->setOfferedPrice(price);
-				catalog.putOnMarket(concernedField);
-				update.setTopic("offer");
-				update.set("location", location.toString());
-				update.set("offerprice", std::to_string(price));
-				updater->sendUpdateToPlayers(update);
-				message.setTopic("success");
-                message.set("reason", "Offer has been successfully registered !");
+			if(!concernedField->hasBuilding() || concernedField->getBuilding()->getStatus() == "normal"){
+				if(concernedField->getOfferedPrice() == 0){
+					concernedField->setOfferedPrice(price);
+					catalog.putOnMarket(concernedField);
+					update.setTopic("offer");
+					update.set("location", location.toString());
+					update.set("offerprice", std::to_string(price));
+					updater->sendUpdateToPlayers(update);
+					message.setTopic("success");
+	                message.set("reason", "Offer has been successfully registered !");
+				}else{
+					message.setTopic("failure");
+	                message.set("reason", "This Field has already been offered !");
+				}
 			}else{
 				message.setTopic("failure");
-                message.set("reason", "This Field has already been offered !");
+            	message.set("reason", "The Building cannot be sold!");
 			}
 		}else{
 			message.setTopic("failure");
@@ -494,7 +499,7 @@ SocketMessage CityManager::buyBack(Player* player, Location location){
                     	update.set("location", location.toString());
                     	updater->sendUpdateToPlayers(update);
                     	message.setTopic("success");
-	                	message.set("reason", "Building is buy back !");
+                        message.set("reason", "Building has been bought back !");
                     }
                     else{
                         message.setTopic("failure");
@@ -523,14 +528,15 @@ SocketMessage CityManager::buyBack(Player* player, Location location){
 	return message;
 }
 
-
 SocketMessage CityManager::roadBlock(Player* player, Location location){
     SocketMessage message, update;
     Road* concernedRoad;
     if((concernedRoad = dynamic_cast<Road*>(cityMap->getCase(location)))){;
         if(!concernedRoad->isBlocked()){
-            if (updater->addRoadBlock(concernedRoad)){
-                player->loseMoney(getRoadBlockPrice());
+            int lose = getRoadBlockPrice();
+            if(player->getMoney() >= lose){
+                updater->addRoadBlock(concernedRoad);
+                player->loseMoney(lose);
                 update.setTopic("roadblock");
                 update.set("location", location.toString());
                 update.set("state", "1");
@@ -540,7 +546,7 @@ SocketMessage CityManager::roadBlock(Player* player, Location location){
             }
             else {
                 message.setTopic("failure");
-                message.set("reason", "Road has already been queued to be blocked !");
+                message.set("reason", "You do not have enough money !");
             }
         }
         else{

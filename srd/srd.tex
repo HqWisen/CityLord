@@ -139,9 +139,11 @@ La partie\index{partie} s'achève lorsqu'il ne reste qu'un seul joueur\index{jou
 \hline
 Date de modification & Version & Modification apportée & Auteur \\
 \hline
-08/04/2015 & 3.4 & \parbox{7cm}{- \\ Diagramme de classe : Correction des compositions et ajout des généralisation de thread. \\} & Hakim \\
+08/04/2015 & 3.7 & \parbox{7cm}{- \\ Diagramme de classe : Correction des compositions et ajout des généralisation de thread. \\} & Hakim \\
 \hline
-08/04/2015 & 3.4 & \parbox{7cm}{- \\ Diagramme d'activité : Version final du diagramme de composant. \\} & Gabriel \\
+08/04/2015 & 3.6 & \parbox{7cm}{- \\ Diagramme de composant : Version final du diagramme de composant. \\} & Gabriel \\
+\hline
+08/04/2015 & 3.5 & \parbox{7cm}{- \\ Mise à jour du Use Case Sabotage. \\} & David \\
 \hline
 08/04/2015 & 3.4 & \parbox{7cm}{- \\ Diagramme d'activité : Version final du diagramme d'activité. \\} & Hakim \\
 \hline
@@ -165,6 +167,12 @@ Date de modification & Version & Modification apportée & Auteur \\
 \hline
 12/03/2015 & 2.6 & \parbox{7cm}{- \\ Correction de fautes d'orthographes. Remplacement des mots de l'index en anglais. \\} & Cédric \\
 \hline
+\end{tabular}
+\newpage
+\begin{tabular}{|c|c|c|c|}
+	\hline
+	Date de modification & Version & Modification apportée & Auteur \\
+	\hline
 07/03/2015 & 2.5 & \parbox{7cm}{- \\ Repositionnement des figures avec leur UseCase. \\} & David \\
 \hline
 20/02/2015 & 2.4 & \parbox{7cm}{- \\ Modification du use case "Login" et modification des exigences non fonctionnelles. \\} & Zakaria \\
@@ -177,12 +185,6 @@ Date de modification & Version & Modification apportée & Auteur \\
 \hline
 06/02/2015 & 2.0 & \parbox{7cm}{-\\Modification du But du projet, ajout au glossaire \& index +précondition "Construire".\\} & David \\
 \hline
-\end{tabular}
-\newpage
-\begin{tabular}{|c|c|c|c|}
-	\hline
-	Date de modification & Version & Modification apportée & Auteur \\
-	\hline
 15/12/2015 & 1.8 & \parbox{7cm}{-\\ Mise à jour des exigences de domaine.\\} &  Cédric \\
 \hline
 14/12/2015 & 1.7 & \parbox{7cm}{-\\ Ajout des descriptions textuelles des use case (Premiers achats,Construire-Améliorer-Détruire,Achats entre joueurs\index{joueur}).\\} & David\\
@@ -583,29 +585,24 @@ Lorsque un joueur\index{joueur} reçoit une offre sur un bâtiment, une fenêtre
 	\caption{Use Case Buid/Upgrade/Destroy}
 \end{figure}
 
-\subsubsection{Choisir Lieu}
+\subsubsection{Activer mode sabotage}
 \paragraph{Préconditions}
 \begin{itemize}
 	\item Le joueur\index{joueur} est dans une partie\index{partie}, sur l'écran de jeu\index{jeu}.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
-	\item Une propriété est sélectionnée.
-	\item Les informations sur cette propriété sont affichées.
-	\item Les boutons <Buy>,<Build>,<Upgrade>,<Sell>,<Demolish> s'activent ou se désactivent selon la propriété sélectionnée.
+	\item Le joueur est en mode sabotage.
 \end{itemize}
 \paragraph{Cas général}
-Le joueur\index{joueur} doit simplement cliquer, sur la carte, sur le terrain exigé.[Exception : Sélection invalide]
-\paragraph{Exceptions}
-\begin{itemize}
-	\item \textit{Sélection invalide:} Si l'emplacement sélectionné n'est pas un terrain/bâtiment (et donc une route ou un obstacle), la sélection n'est pas faite.
-\end{itemize}
+Le joueur\index{joueur} doit simplement cliquer, le bouton <Sabotage>, celui-ci change de couleur. Tous les autres boutons se désactivent, le joueur ne peut plus séléctionné de parcelle. Par contre, maintenant il peut construire des barrages.
+Pour quitter ce mode, il suffit au joueur de cliquer à nouveau sur le bouton <Sabotage>, celui-ci reprendra sa couleur normale et le mode sabotage se désactive.
+\paragraph{Exceptions} Néant.
 
 \subsubsection{Construire Barrage}
 \paragraph{Préconditions}
 \begin{itemize}
-	\item La partie\index{partie} est en cours.
-	\item Le joueur\index{joueur} a sélectionné une route qui est vide.
+	\item Le joueur est en mode sabotage.
 \end{itemize}
 \paragraph{Postconditions}
 \begin{itemize}
@@ -613,10 +610,11 @@ Le joueur\index{joueur} doit simplement cliquer, sur la carte, sur le terrain ex
 	\item Le joueur\index{joueur} a payé le prix de construction du barrage.
 \end{itemize}
 \paragraph{Cas général}
-Lorsque un joueur\index{joueur} veut construire un nouveau barrage, il lui faudra simplement sélectionner une route est vide. Le bouton \og \textit{<Build RoadBlock>} \fg s'activera. Le joueur\index{joueur} devra cliquer dessus, il entre alors en mode Construction; Un tableau s'affichera affichant les informations sur le barrage. Il peut à tout moment quitter ce mode et annuler la construction, en cliquant sur \og \textit{Annuler} \fg. Pour valider l'opération, le joueur\index{joueur} cliquera sur \og \textit{<Ok>} \fg.[Exception : Le joueur\index{joueur} n'as pas assez d'argent] Il devra payer ensuite le prix indiqué.
+Lorsque un joueur\index{joueur} veut construire un nouveau barrage, il lui faudra simplement cliquer sur une route vide. Un barrage se construit imédiatement.[Exception : Le joueur\index{joueur} n'as pas assez d'argent][Exception : Un barrage se trouve déjà sur cette route] Il devra payer ensuite le prix indiqué.
 \paragraph{Exceptions}
 \begin{itemize}
 	\item \textit{Le joueur\index{joueur} n'as pas assez d'argent:}  Une fenêtre s'ouvre indiquant au joueur\index{joueur} qu'il ne possède pas assez d'argent.
+	\item \textit{Un barrage se trouve déjà sur cette route:}  Une fenêtre s'ouvre indiquant au joueur\index{joueur} qu'un barrage s'y trouve déjà.
 \end{itemize}
 
 

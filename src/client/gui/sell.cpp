@@ -32,8 +32,6 @@ void sell::on_putOnDialogButton_clicked()
 
 void sell::on_takeOffDialogButton_clicked()
 {
-    cout<<"row--"<< std::to_string(lastLocation->getRow())<<endl;
-    cout<<"col--"<< std::to_string(lastLocation->getCol())<<endl;
     clientManager->setRequest("offercancel");
     clientManager->addInfo("row", std::to_string(lastLocation->getRow()));
     clientManager->addInfo("col", std::to_string(lastLocation->getCol()));

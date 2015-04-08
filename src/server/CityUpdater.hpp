@@ -75,9 +75,9 @@ class CityUpdater : public Thread{
         void updateCity();
         void generateFullPath(Location start, Location end, std::vector<Location> &path);
         void createPath(Location start, Location end, std::vector<Location> &path);
-		bool isRoadFree(Road*);
-        bool addRoadBlock(Road*);
-		void freeRoad();
+        bool isRoadFree(Road*);
+        void addRoadBlock(Road*);
+        void freeRoad();
         void updateRoadBlocks();
         SocketMessage visitorCreate(int, Location);
         SocketMessage visitorMove(int, Location, Location);
