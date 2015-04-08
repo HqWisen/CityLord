@@ -51,13 +51,25 @@ SocketMessage RequestSystem::choicemap(CityLordServer* server, UserManager* user
     return answer;
 }
 
+SocketMessage RequestSystem::choicemode(CityLordServer* server, UserManager* userManager, SocketMessage message){
+    pthread_mutex_lock(&requestmutex);
+    SocketMessage answer;
+    for (int i = 0; i<Gamemode::typesLength; i++){
+        answer.set(std::to_string(i+1), Gamemode::types[i].NAME);
+    }
+    pthread_mutex_unlock(&requestmutex);
+    return answer;
+}
+
 SocketMessage RequestSystem::createcity(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;
     answer.setTopic("success");
-    int numberOfMap = std::stoi(message.get("number")) - 1;
-    CityManager* cityManager = server->createCity(numberOfMap, userManager->getUser());
-    server->LOG("User "+ userManager->getUserName() + " created a city with map " + cityManager->getMapName() + ", city number is " + std::to_string(cityManager->getID()));
+    int numberOfMap = std::stoi(message.get("mapnumber")) - 1;
+    int numberOfMode = std::stoi(message.get("modenumber")) - 1;
+    Gamemode gm = Gamemode::getTypeByIndex(numberOfMode);
+    CityManager* cityManager = server->createCity(numberOfMap, userManager->getUser(), gm);
+    server->LOG("User "+ userManager->getUserName() + " created a city with map " + cityManager->getMapName() + " in " + gm.NAME + " mode, city number is " + std::to_string(cityManager->getID()));
     // TODO send failure if creation failed*/
     answer.set("cityname", cityManager->getName());
     pthread_mutex_unlock(&requestmutex);
@@ -117,6 +129,7 @@ SocketMessage RequestSystem::selectfield(CityLordServer* server, UserManager* us
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;
     Map<Field>* map = userManager->getActiveCity()->getMap();
+    float mult = userManager->getActiveCity()->getDifficultyMultiplier();
     int row = std::stoi(message.get("row"));
     int col = std::stoi(message.get("col"));
     Field* field;
@@ -133,7 +146,7 @@ SocketMessage RequestSystem::selectfield(CityLordServer* server, UserManager* us
         }else{
 			answer.setTopic("other");
         }
-        answer.set("info", field->toString()); // for terminal
+        answer.set("info", field->toString(mult)); // for terminal
     }else{
         answer.setTopic("notfield");
     }
@@ -144,7 +157,8 @@ SocketMessage RequestSystem::selectfield(CityLordServer* server, UserManager* us
 SocketMessage RequestSystem::selectroad(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;
-    Map<Field>* map = userManager->getActiveCity()->getMap();
+    CityManager* cityManager = userManager->getActiveCity();
+    Map<Field>* map = cityManager->getMap();
     int row = std::stoi(message.get("row"));
     int col = std::stoi(message.get("col"));
     Road* road;
@@ -153,7 +167,7 @@ SocketMessage RequestSystem::selectroad(CityLordServer* server, UserManager* use
             answer.setTopic("roadblocked");
         }else {
             answer.setTopic("road");
-            answer.set("price", std::to_string(CityManager::ROADBLOCKPRICE));
+            answer.set("price", std::to_string(cityManager->getRoadBlockPrice()));
         }
     }else{
         answer.setTopic("notroad");
@@ -178,10 +192,11 @@ SocketMessage RequestSystem::showinfo(CityLordServer* server, UserManager* userM
 SocketMessage RequestSystem::showcatalog(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;
+    float mult = userManager->getActiveCity()->getDifficultyMultiplier();
     std::vector<Field*> fieldVector = userManager->getActiveCity()->getPurchasableFields();
     int i = 0;
     for (std::vector<Field*>::iterator it = fieldVector.begin(); it != fieldVector.end(); it++){
-        answer.set((*it)->getLocation().toString(), (*it)->toString());
+        answer.set((*it)->getLocation().toString(), (*it)->toString(mult));
         i++;
     }
     pthread_mutex_unlock(&requestmutex);
@@ -246,6 +261,7 @@ SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* 
     Map<Field>* map = cityManager->getMap();
     //std::cout<<"getting for getmap"<<std::endl;
     Field* field;
+    Road* road;
     for(int row=0;row<map->getNumberOfRows();row++){
         for(int col=0;col<map->getNumberOfCols();col++){
             //std::cout<<"getting case "<<row<<", "<<col<<" - ";
@@ -266,7 +282,14 @@ SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* 
                     userManager->sendUpdate(update);
                 }
             }
-            //std::cout<<"getted "<<std::endl;
+            if((road = dynamic_cast<Road*>(map->getCase(Location(row, col))))){
+                if(road->isBlocked()){
+                    update.setTopic("roadblock");
+                    update.set("location", road->getLocation().toString());
+                    update.set("state", "1");
+                    userManager->sendUpdate(update);
+                }
+            }
         }
     }
     //std::cout<<"sending timer = "<<cityManager->getStringTimer()<<std::endl;
@@ -345,7 +368,7 @@ SocketMessage RequestSystem::hypotheque(CityLordServer* server, UserManager* use
     SocketMessage answer;
     int row = std::stoi(message.get("row"));
     int col = std::stoi(message.get("col"));
-    BuildingType buildingType = BuildingType::getTypeByIndex(std::stoi(message.get("typeindex")));
+    //BuildingType buildingType = BuildingType::getTypeByIndex(std::stoi(message.get("typeindex")));
     CityManager* cityManager = userManager->getActiveCity();
     Player* player = userManager->getActivePlayer();
     answer = cityManager->hypotheque(player, Location(row, col));
@@ -358,7 +381,7 @@ SocketMessage RequestSystem::buyback(CityLordServer* server, UserManager* userMa
     SocketMessage answer;
     int row = std::stoi(message.get("row"));
     int col = std::stoi(message.get("col"));
-    BuildingType buildingType = BuildingType::getTypeByIndex(std::stoi(message.get("typeindex")));
+    //BuildingType buildingType = BuildingType::getTypeByIndex(std::stoi(message.get("typeindex")));
     CityManager* cityManager = userManager->getActiveCity();
     Player* player = userManager->getActivePlayer();
     answer = cityManager->buyBack(player, Location(row, col));

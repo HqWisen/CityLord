@@ -140,7 +140,7 @@ void CityUpdater::getAdjacencyList() {
 // ======================================================================================
 // ======================================================================================
 
-CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr) : currentTimer(nullptr){ // : timeSender(this){
+CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr, Gamemode gm) : mode(gm), currentTimer(nullptr){ // : timeSender(this){
     cityMap = map;
     spawn = map->getSpawnList();
     playerVectorPtr = pvPtr;
@@ -150,7 +150,7 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr) : currentT
 
 void CityUpdater::run(){
     currentTimer.start();
-    Timer<CityUpdater> generateTimer(this, 1), advanceTimer(this, 0), buildingTimer(this, 10), roadBlockTimer(this, 25), payTimer(this, 86400), cityTimer(this);
+    Timer<CityUpdater> generateTimer(this, 1), advanceTimer(this, 0), buildingTimer(this, 10), roadBlockTimer(this, 20), payTimer(this, 86400), cityTimer(this);
     generateTimer.setFunc(CityUpdater::runGenerateVisitors);
     advanceTimer.setFunc(CityUpdater::runMakeVisitorsAdvance);
     buildingTimer.setFunc(CityUpdater::runUpdateBuidlings);
@@ -260,7 +260,7 @@ void CityUpdater::makeOwnersPay(){
             currentLocation.setCol(col);
             if((concernedField = dynamic_cast<Field*>(cityMap->getCase(currentLocation)))){
                 if(concernedField->hasOwner() && concernedField->hasBuilding()){
-                    concernedField->getOwner()->loseMoney(concernedField->getBuilding()->getDailyCost());
+                    concernedField->getOwner()->loseMoney(mode.applyDifficulty(concernedField->getBuilding()->getDailyCost()));
                 }
             }
         }
@@ -385,14 +385,26 @@ bool CityUpdater::isRoadFree(Road* road){
     return true;
 }
 
-bool CityUpdater::scheduleRoadBlock(Road* toBlock){
-    std::cout<<"derp 1 "<<std::endl;
-    bool res = false;
-    if (isRoadFree(toBlock)){
-        roadsToBlock.push_back(toBlock);
-        res = true;
+bool CityUpdater::addRoadBlock(Road* toBlock){
+    pthread_mutex_lock(&visitormutex);
+    if (!isRoadFree(toBlock)){
+        return false;
     }
-    return res;
+    toBlock->setUpBarricade(true, MAXROADBLOCKTURNS);
+    //std::cout<<"Blocking "<<toBlock->getLocation().getRow()<<" . "<<toBlock->getLocation().getCol()<<std::endl;
+    blockedRoads.push_back(toBlock);
+    getAdjacencyList();
+    Visitor* visitorPtr;
+    std::vector<Location> path;
+    for (int i=0; i<cityMap->getMaxVisitors(); i++){
+        if ((visitorPtr = cityMap->getVisitor(i)) && visitorPtr->passesThrough(toBlock->getLocation())){
+            path.clear();
+            generateFullPath(visitorPtr->getLoc(), visitorPtr->getEndLoc(), path);
+            visitorPtr->setPath(path);
+        }
+    }
+    pthread_mutex_unlock(&visitormutex);
+    return true;
 }
 
 void CityUpdater::freeRoad(){
@@ -415,31 +427,16 @@ void CityUpdater::freeRoad(){
 void CityUpdater::updateRoadBlocks(){
     if (blockedRoads.size() > 0){
         if (blockedRoads[0]->getTurnsLeft() == 0){
+            SocketMessage update;
+            update.setTopic("roadblock");
+            update.set("location", blockedRoads[0]->getLocation().toString());
+            update.set("state", "0");
             freeRoad();
+            sendUpdateToPlayers(update);
         }
         if (blockedRoads.size() > 0){
             for (unsigned int i=0; i<blockedRoads.size(); i++){
                 blockedRoads[i]->decreaseTurnsLeft();
-            }
-        }
-    }
-    if (roadsToBlock.size() > 0){
-        std::cout<<"derp 2 "<<std::endl;
-        while (roadsToBlock.size() > 0){
-            Road* toBlock = roadsToBlock.front();
-            roadsToBlock.pop_front();
-            toBlock->setUpBarricade(true, MAXROADBLOCKTURNS);
-            //std::cout<<"Blocking "<<toBlock->getLocation().getRow()<<" . "<<toBlock->getLocation().getCol()<<std::endl;
-            blockedRoads.push_back(toBlock);
-            getAdjacencyList();
-            Visitor* visitorPtr;
-            std::vector<Location> path;
-            for (int i=0; i<cityMap->getMaxVisitors(); i++){
-                if ((visitorPtr = cityMap->getVisitor(i)) && visitorPtr->passesThrough(toBlock->getLocation())){
-                    path.clear();
-                    generateFullPath(visitorPtr->getLoc(), visitorPtr->getEndLoc(), path);
-                    visitorPtr->setPath(path);
-                }
             }
         }
     }
@@ -526,7 +523,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                 }
                                 else{
                                     //std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
-                                    dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
+                                    dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(mode.applyAdvantage(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome()));
                                     SocketMessage update = visitorRemove(i);
                                     sendUpdateToPlayers(update);
                                     cityMap->deleteVisitor(i);
@@ -550,7 +547,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                         locTest = Location(row,col+1);
                                     } else {
                                         //std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
-                                        dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
+                                        dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(mode.applyAdvantage(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome()));
                                         SocketMessage update = visitorRemove(i);
                                         sendUpdateToPlayers(update);
                                         cityMap->deleteVisitor(i);
@@ -575,7 +572,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                         locTest = Location(row,col-1);
                                     } else {
                                         //std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
-                                        dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
+                                        dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(mode.applyAdvantage(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome()));
                                         SocketMessage update = visitorRemove(i);
                                         sendUpdateToPlayers(update);
                                         cityMap->deleteVisitor(i);
@@ -596,7 +593,7 @@ void CityUpdater::makeVisitorsAdvance(){
                                     enter = cityMap->getVisitor(i)->enter(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding());
                                     if(enter){
                                         //std::cout<<"ENTREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<std::endl;
-                                        dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome());
+                                        dynamic_cast<Field*>(cityMap->getCase(locTest))->getOwner()->gainMoney(mode.applyAdvantage(dynamic_cast<Field*>(cityMap->getCase(locTest))->getBuilding()->getIncome()));
                                         SocketMessage update = visitorRemove(i);
                                         sendUpdateToPlayers(update);
                                         cityMap->deleteVisitor(i);

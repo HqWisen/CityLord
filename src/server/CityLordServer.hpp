@@ -7,6 +7,7 @@
 #include <vector>
 #include <time.h>
 
+#include "Gamemode.hpp"
 #include "../common/socket/ServerSocket.hpp"
 #include "../common/socket/ClientSocket.hpp"
 #include "User.hpp"
@@ -33,7 +34,7 @@ class CityLordServer{
         User* createAccount(std::string, std::string);
 		bool accountExist(std::string);
         bool matchPassword(std::string, std::string);
-        CityManager* createCity(int, User*);
+        CityManager* createCity(int, User*, Gamemode gm = Gamemode::NORMAL);
 		CityManager* getCity(int);
 		int getNumberOfCity();
 		User* getUser(std::string);

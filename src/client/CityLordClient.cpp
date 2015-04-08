@@ -19,7 +19,7 @@ void CityLordClient::runClient(){
 		std::cout<<"4 - Show catalog"<<std::endl;
 		std::cout<<"5 - Show information"<<std::endl;
 		//std::cout<<"5 - Show others players's information"<<std::endl;
-		std::cout<<"6 - Disconnection"<<std::endl;
+		std::cout<<"6 - Disconnect"<<std::endl;
 
 		int choice = makeChoice(1, 6);
 		if(choice == 1){
@@ -128,12 +128,23 @@ void CityLordClient::createCity(){
 		i++;
 		std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
 	}
-	int choice = makeChoice(1, i);
+	int choiceCity = makeChoice(1, i);
+    clientManager->setRequest("choicemode");
+    clientManager->sendRequestAndRecv();
+    std::map<std::string, std::string> mode = clientManager->getMessage().getMap();
+    i = 0;
+    LOG("Choose a difficulty mode");
+    for(std::map<std::string, std::string>::iterator iterator = mode.begin(); iterator != mode.end(); iterator++) {
+        i++;
+        std::cout<<iterator->first<<" - "<<iterator->second<<std::endl;
+    }
+    int choiceMode = makeChoice(1, i);
     clientManager->setRequest("createcity");
-    clientManager->addInfo("number", std::to_string(choice));
+    clientManager->addInfo("mapnumber", std::to_string(choiceCity));
+    clientManager->addInfo("modenumber", std::to_string(choiceMode));
     clientManager->sendRequestAndRecv();
     if(!clientManager->requestFailed()){
-		LOG("The server created a new city with the map "+map[std::to_string(choice)]);
+		LOG("The server created a new city with the map "+map[std::to_string(choiceCity)]+" in "+mode[std::to_string(choiceMode)]);
 	}else{
 		// TODO handle creation failure
 	}
@@ -190,7 +201,7 @@ void CityLordClient::selectField(){
 		std::cout<<"3 - Upgrade"<<std::endl;
 		std::cout<<"4 - Destroy"<<std::endl;
 		std::cout<<"5 - Offer"<<std::endl;
-		std::cout<<"6 - Hypotheque"<<std::endl;
+		std::cout<<"6 - Hypothecate"<<std::endl;
 		std::cout<<"7 - Buy back"<<std::endl;
 		std::cout<<"8 - Quit"<<std::endl;
 

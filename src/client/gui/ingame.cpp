@@ -3,7 +3,7 @@
 
 
 InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
-    DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this, cm)), buildDialog(new build(this, cm)), sellDialog(new sell(this, cm, &lastLocation)), lastLocation(){
+    DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this, cm)), buildDialog(new build(this, cm)), sellDialog(new sell(this, cm, &lastLocation)), catalog(new CatalogGui(this, cm)), lastLocation(){
     ui->setupUi(this);
 
     ui->exitButton->setStyleSheet("background-image: url(src/resources/img/exit40_40.png)");
@@ -289,3 +289,7 @@ void InGame::updateButtons(bool buyable, bool buildable, bool upgradable, bool d
     ui->sellButton->setEnabled(sell);
 }
 
+void InGame::on_catalogButton_clicked()
+{
+    catalog->exec();
+}

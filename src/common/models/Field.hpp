@@ -48,7 +48,7 @@ class Field : public BasicField{
         ~Field(){destroyBuilding();};
         Player* getOwner();
         void setOwner(Player*);
-        string toString();
+        string toString(float mult = 1.0);
         int getOwnerID() override;
         bool hasOwner() override;
         SocketMessage infoHasSocketMessage();

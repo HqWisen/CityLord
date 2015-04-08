@@ -4,6 +4,7 @@
 
 #include "../common/thread/Thread.hpp"
 #include "Catalog.hpp"
+#include "Gamemode.hpp"
 #include <iostream>
 #include "../common/models/Map.hpp"
 #include "Visitor.hpp"
@@ -31,7 +32,7 @@ typedef double weight_t;
  
 const weight_t max_weight = std::numeric_limits<double>::infinity();
 const int MAXFINDATTEMPTS = 3;
-const int MAXROADBLOCKTURNS = 9;
+const int MAXROADBLOCKTURNS = 6;
  
 struct neighbor {
     vertex_t target;
@@ -44,21 +45,21 @@ typedef std::vector<std::vector<neighbor> > adjacency_list_t;
 // ======================================================================================
 
 class CityUpdater : public Thread{
+
+    Gamemode mode;
     Map<Field>* cityMap;
     std::vector<Spawn*> spawn;
     std::vector<Player*>* playerVectorPtr;
     vector<Road*> checkPointsList;
     vector<Road*> buildingsList;
     vector<Road*> roadMap;
-    deque<Road*> roadsToBlock;
     deque<Road*> blockedRoads;
     adjacency_list_t adjacencyList;
     Timer<CityUpdater> currentTimer;
     public:
         static pthread_mutex_t visitormutex;
-        //pthread_mutex_t roadblockmutex;
     public:
-        CityUpdater(Map<Field>*,std::vector<Player*>*);
+        CityUpdater(Map<Field>*,std::vector<Player*>*, Gamemode);
         void run() override;
         static void runGenerateVisitors(void*);
         static void runMakeVisitorsAdvance(void*);
@@ -75,7 +76,7 @@ class CityUpdater : public Thread{
         void generateFullPath(Location start, Location end, std::vector<Location> &path);
         void createPath(Location start, Location end, std::vector<Location> &path);
 		bool isRoadFree(Road*);
-        bool scheduleRoadBlock(Road*);
+        bool addRoadBlock(Road*);
 		void freeRoad();
         void updateRoadBlocks();
         SocketMessage visitorCreate(int, Location);

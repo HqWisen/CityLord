@@ -3,7 +3,7 @@
 
 const int CityManager::DEFAULTMAXPLAYER = 8;
 
-CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), cityMap(new Map<Field>(getMapFileName())), id(cityid), creator(cr), catalog(), nPlayer(0), playerVector(), MAXPLAYER(DEFAULTMAXPLAYER){
+CityManager::CityManager(std::string mn, int cityid, User* cr, Gamemode gm) : mode(gm), mapname(mn), cityMap(new Map<Field>(getMapFileName())), id(cityid), creator(cr), catalog(), nPlayer(0), playerVector(), MAXPLAYER(DEFAULTMAXPLAYER){
     Field* concernedField;
     for(int row = 0; row<cityMap->getNumberOfRows(); row++){
         for(int col = 0; col<cityMap->getNumberOfCols(); col++){
@@ -16,7 +16,7 @@ CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), ci
     for(int i = 0;i<8;i++){
         playerVector.push_back(nullptr);
     }
-    updater = new CityUpdater(getMap(), &playerVector);
+    updater = new CityUpdater(getMap(), &playerVector, mode);
     updater->start();
 }
 
@@ -110,6 +110,14 @@ std::vector<Offer*> CityManager::getOffers(){
 	return catalog.getOffers();
 }
 
+int CityManager::getRoadBlockPrice(){
+    return mode.applyDifficulty(ROADBLOCKPRICE);
+}
+
+float CityManager::getDifficultyMultiplier(){
+    return mode.DIFFICULTYMULTIPLIER;
+}
+
 //-------------------------------
 
 SocketMessage CityManager::visitorMove(Player* player, Location firstLocation, Location lastLocation){
@@ -166,7 +174,7 @@ SocketMessage CityManager::makePurchase(Player* player, Location location){
     if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(catalog.isOnMarket(concernedField)){
 			if(concernedField->getOwner() == nullptr){
-				price = concernedField->getTotalPurchasePrice();
+				price = mode.applyDifficulty(concernedField->getTotalPurchasePrice());
 			}else{
 				price = concernedField->getOfferedPrice();
 			}
@@ -214,8 +222,8 @@ SocketMessage CityManager::buildBuilding(Player* player, Location location, Buil
     if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(concernedField->getOwner() == player){
 			if(!concernedField->hasBuilding()){
-                if(player->getMoney() >= buildingType.getTotalPurchasePrice()){
-                    player->loseMoney(buildingType.getTotalPurchasePrice());
+                if(player->getMoney() >= mode.applyDifficulty(buildingType.getTotalPurchasePrice())){
+                    player->loseMoney(mode.applyDifficulty(buildingType.getTotalPurchasePrice()));
                     player->incBuildingCounter();
 					concernedField->buildBuilding(buildingType);
 					updater->refreshBuildingsList();
@@ -225,7 +233,7 @@ SocketMessage CityManager::buildBuilding(Player* player, Location location, Buil
                     update.set("level", std::to_string(concernedField->getBuilding()->getLevel()));
                     updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
-                    message.set("reason", "Building has been successfully built !");
+                    message.set("reason", "Building is being built !");
 				}else{
 					message.setTopic("failure");
                     message.set("reason", "You do not have enough money !");
@@ -252,8 +260,8 @@ SocketMessage CityManager::upgradeBuilding(Player* player, Location location){
         if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){
 				if(concernedField->getBuilding()->getStatus() == "normal"){
-                	if(player->getMoney() >= concernedField->getBuilding()->getType().UPGRADECOST){
-                    	player->loseMoney(concernedField->getBuilding()->getType().UPGRADECOST);
+                	if(player->getMoney() >= mode.applyDifficulty(concernedField->getBuilding()->getType().UPGRADECOST)){
+                    	player->loseMoney(mode.applyDifficulty(concernedField->getBuilding()->getType().UPGRADECOST));
 						concernedField->getBuilding()->upgrade();
 						message.setTopic("success");
                     	message.set("reason", "Building has been successfully upgraded !");
@@ -264,10 +272,16 @@ SocketMessage CityManager::upgradeBuilding(Player* player, Location location){
 					}
 				}
 				else{
-					message.setTopic("failure");
-					std::string mess = "This building is in ";
-					mess += concernedField->getBuilding()->getStatus();
-                	message.set("reason", mess);
+                    message.setTopic("failure");
+                    std::string mess;
+                    std::string reason = concernedField->getBuilding()->getStatus();
+                    if (reason == "hypotheque"){
+                        mess = "This building has been hypothecated !";
+                    }
+                    else{
+                        mess = "This building is in " + reason + " state !";
+                    }
+                    message.set("reason", mess);
 				}
 			}
 			else{
@@ -293,10 +307,10 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
     if((concernedField = dynamic_cast<Field*>(cityMap->getCase(location)))){;
         if(concernedField->getOwner() == player){
 			if(concernedField->hasBuilding()){
-				if(player->getMoney() >= concernedField->getBuilding()->getDestructionCost()){
+				if(player->getMoney() >= mode.applyDifficulty(concernedField->getBuilding()->getDestructionCost())){
 					if(concernedField->getBuilding()->getStatus() == "normal"){
 						concernedField->getBuilding()->setStatus("destruction");						
-	                    player->loseMoney(concernedField->getBuilding()->getDestructionCost());
+	                    player->loseMoney(mode.applyDifficulty(concernedField->getBuilding()->getDestructionCost()));
 	                    player->decBuildingCounter();
 						//concernedField->destroyBuilding();
 						updater->refreshBuildingsList();
@@ -304,13 +318,19 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
 	                    update.set("location", location.toString());
 	                    updater->sendUpdateToPlayers(update);
 						message.setTopic("success");
-	                    message.set("reason", "Building is in destrcution");
+	                    message.set("reason", "Building is being destroyed !");
 	                }
 	                else{
-	                	message.setTopic("failure");
-						std::string mess = "This building is in ";
-						mess += concernedField->getBuilding()->getStatus();
-                		message.set("reason", mess);
+                        message.setTopic("failure");
+                        std::string mess;
+                        std::string reason = concernedField->getBuilding()->getStatus();
+                        if (reason == "hypotheque"){
+                            mess = "This building has been hypothecated !";
+                        }
+                        else{
+                            mess = "This building is in " + reason + " state !";
+                        }
+                        message.set("reason", mess);
 	                }
 				}else{
 					message.setTopic("failure");
@@ -409,26 +429,32 @@ SocketMessage CityManager::hypotheque(Player* player, Location location){
 			if(concernedField->hasBuilding()){
 				if(concernedField->getBuilding()->getStatus() == "normal"){
 					BuildingType buildingType = concernedField->getBuilding()->getType();
+                    int gain = mode.applyAdvantage(buildingType.getTotalPurchasePrice() /2);
 					concernedField->getBuilding()->setStatus("hypotheque");
-					int gain = buildingType.getTotalPurchasePrice() /2;
 					player->gainMoney(gain);
-					update.setTopic("hypotheque");
-                    update.set("location", location.toString());
-                    update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
-                    updater->sendUpdateToPlayers(update);
+					//update.setTopic("hypotheque");
+                    //update.set("location", location.toString());
+                    //update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
+                    //updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
                     message.set("reason", "Building has been successfully hypothecated !");
 				}
 				else{
                     message.setTopic("failure");
-					std::string mess = "This building is in ";
-					mess += concernedField->getBuilding()->getStatus();
+					std::string mess;
+                    std::string reason = concernedField->getBuilding()->getStatus();
+                    if (reason == "hypotheque"){
+                        mess = "This building has already been hypothecated !";
+                    }
+                    else{
+                        mess = "This building is in " + reason + " state !";
+                    }
                 	message.set("reason", mess);
 				}
 			}
 			else{
 				message.setTopic("failure");
-                message.set("reason", "This Field already has a building !");
+                message.set("reason", "This Field doesn't have a building !");
 			}
 		}
 		else{
@@ -452,24 +478,30 @@ SocketMessage CityManager::buyBack(Player* player, Location location){
 			if(concernedField->hasBuilding()){
 				if(concernedField->getBuilding()->getStatus() == "hypotheque"){
 					BuildingType buildingType = concernedField->getBuilding()->getType();
-					concernedField->getBuilding()->setStatus("normal");
-					int lose = buildingType.getTotalPurchasePrice() /2;
-					player->loseMoney(lose);        
-                    update.setTopic("buyback");
-                    update.set("location", location.toString());
-                    update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
-                    updater->sendUpdateToPlayers(update);
-                    message.setTopic("success");
-                    message.set("reason", "Building has been successfully bought back !");
+                    int lose = mode.applyDifficulty(buildingType.getTotalPurchasePrice() /2);
+                    if(player->getMoney() >= lose){
+                        concernedField->getBuilding()->setStatus("normal");
+                        player->loseMoney(lose);        
+                        //update.setTopic("buyback");
+                        //update.set("location", location.toString());
+                        //update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
+                        //updater->sendUpdateToPlayers(update);
+                        message.setTopic("success");
+                        message.set("reason", "Building has been successfully bought back !");
+                    }
+                    else{
+                        message.setTopic("failure");
+                        message.set("reason", "You do not have enough money !");
+                    }
 				}
 				else{
 					message.setTopic("failure");
-                	message.set("reason", "This building is not in hypothec");					
+                	message.set("reason", "This building has not been hypothecated");					
 				}
 			}
 			else{
 				message.setTopic("failure");
-                message.set("reason", "This Field already has a building !");
+                message.set("reason", "This Field doesn't have a building !");
 			}
 		}
 		else{
@@ -490,11 +522,11 @@ SocketMessage CityManager::roadBlock(Player* player, Location location){
     Road* concernedRoad;
     if((concernedRoad = dynamic_cast<Road*>(cityMap->getCase(location)))){;
         if(!concernedRoad->isBlocked()){
-            if (updater->scheduleRoadBlock(concernedRoad)){
-                int lose = ROADBLOCKPRICE;
-                player->loseMoney(lose);
+            if (updater->addRoadBlock(concernedRoad)){
+                player->loseMoney(getRoadBlockPrice());
                 update.setTopic("roadblock");
                 update.set("location", location.toString());
+                update.set("state", "1");
                 updater->sendUpdateToPlayers(update);
                 message.setTopic("success");
                 message.set("reason", "Roadblock has been successfully set-up !");

@@ -4,6 +4,7 @@ const std::map<std::string, request_ptr> UserManager::requestmap = {
 	{"login", RequestSystem::login},
 	{"createaccount", RequestSystem::createaccount},
 	{"choicemap", RequestSystem::choicemap},
+    {"choicemode", RequestSystem::choicemode},
 	{"createcity", RequestSystem::createcity},
     {"numberofcity", RequestSystem::numberofcity},
     {"cityinfo", RequestSystem::cityinfo},

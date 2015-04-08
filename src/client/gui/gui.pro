@@ -16,7 +16,8 @@ SOURCES += main.cpp\
     signaler.cpp \
     build.cpp \
     sell.cpp \
-    visitorgui.cpp
+    visitorgui.cpp \
+    cataloggui.cpp
 
 HEADERS  += \
     login.h \
@@ -32,7 +33,8 @@ HEADERS  += \
     signaler.h \
     build.h \
     sell.h \
-    visitorgui.h
+    visitorgui.h \
+    cataloggui.h
 
 
 FORMS    += \
@@ -44,7 +46,8 @@ FORMS    += \
     joingame.ui \
     ingame.ui \
     build.ui \
-    sell.ui
+    sell.ui \
+    cataloggui.ui
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic -Wno-write-strings

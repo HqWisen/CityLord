@@ -160,9 +160,10 @@ void Field::setOwner(Player* newOwner){
 }
 
 
-string Field::toString(){
+string Field::toString(float mult){
     string result;
-    result += "Price : " + std::to_string(price);
+    int res = static_cast<int>(price*mult);
+    result += "Price : " + std::to_string(res);
     result += " - ";
     result += "Owner : ";
     if(hasOwner()){
@@ -176,6 +177,16 @@ string Field::toString(){
     }
     if(hasBuilding()){
         result += " # "+building->getType().NAME;
+        std::string buildingStatus = building->getStatus();
+        if(buildingStatus == "hypotheque"){
+            result += "  **Hypothecated**";
+        }
+        else if(buildingStatus == "construction"){
+            result += "  **Being constructed**";
+        }
+        else if(buildingStatus == "destruction"){
+            result += "  **Being destroyed**";
+        }
     }
     return result;
 }
