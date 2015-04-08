@@ -14,6 +14,7 @@ class Case{
         void setLocation(Location);
         virtual ~Case() = default;
         virtual bool isField();
+        virtual bool isRoad();
         virtual std::string print() = 0;
         virtual std::string getImageName() = 0;
 };

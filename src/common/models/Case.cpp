@@ -17,3 +17,7 @@ void Case::setLocation(Location loc){
 bool Case::isField(){
     return false;
 }
+
+bool Case::isRoad(){
+    return false;
+}

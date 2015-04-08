@@ -25,7 +25,7 @@ const QPixmap BASE;
 QGraphicsScene* scene;
 
 public:
-    CityLordView(QWidget*, ClientManagerGUI*);
+    CityLordView(QWidget*, ClientManagerGUI*, bool*);
     virtual ~CityLordView();
     void cleanItemArray();
     void createVisitor(int, Location);
@@ -62,7 +62,7 @@ private:
     QGraphicsPixmapItem*** itemArray;
     std::map<int, VisitorGUI*> visitorItemMap;
     QTimer* qtimer;
-
+    bool* sabotageActive;
 
 };
 

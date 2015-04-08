@@ -5,8 +5,8 @@ const int CityLordView::WIDTH = 1152;
 const int CityLordView::HEIGHT = 804;
 const int CityLordView::DEFAULTZOOMLEVEL = 10;
 
-CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
-    QGraphicsView(parent), px(0), py(0), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(cm), numberOfRows(0),  \
+CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm, bool* sabotage):
+    QGraphicsView(parent), px(0), py(0), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), sabotageActive(sabotage), previousSelectedLocation(-1, -1), clientManager(cm), numberOfRows(0),  \
     numberOfCols(0), itemArray(nullptr), visitorItemMap(), qtimer(new QTimer(this)){
     setGeometry(0, 60, WIDTH, HEIGHT);
     resize(WIDTH, HEIGHT);
@@ -128,18 +128,19 @@ void CityLordView::mousePressEvent(QMouseEvent * e){
     showFieldColor(false, true);
     startMouse = mapToScene(e->pos());
     Location location = isoToLoc(startMouse);
-    /*
-    if(inGame.isSabotageActive()){
-        if(selected is road){
-            clientManager->setRequest("selectroad");
-            clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
-            clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
-            clientManager->sendRequestAndRecv();
-            openMessageBox("RoadBlock");
+    if(*sabotageActive){
+        if(goodLocation(location)){
+            selectField(location);
+            if(clientManager->getMap()->getCase(location)->isRoad()){
+                clientManager->setRequest("roadblock");
+                clientManager->addInfo("row", std::to_string(location.getRow()));
+                clientManager->addInfo("col", std::to_string(location.getCol()));
+                clientManager->sendRequestAndRecv();
+                openMessageBox("RoadBlock");
+            }
         }
     }
-    */
-    //else{
+    else{
         if(goodLocation(location)){
             selectField(location);
             if(clientManager->getMap()->getCase(location)->isField()){
@@ -152,7 +153,7 @@ void CityLordView::mousePressEvent(QMouseEvent * e){
             }
         }
         previousSelectedLocation = location;
-    //}
+    }
     repaintView();
 }
 

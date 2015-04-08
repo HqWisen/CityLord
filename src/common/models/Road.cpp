@@ -25,6 +25,10 @@ void Road::open(direction_type dir){
     this->generateImage();
 }
 
+bool Road::isRoad(){
+    return true;
+}
+
 void Road::generateImage(){
     if (directions[WEST]){
         if (directions[NORTH]){
