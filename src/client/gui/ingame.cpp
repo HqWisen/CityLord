@@ -3,7 +3,7 @@
 
 
 InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
-    DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this, cm)),
+    DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this, cm, &sabotageMode)),
     buildDialog(new build(this, cm)), sellDialog(new sell(this, cm, &lastLocation)),
     catalog(new CatalogGui(this, cm, view, &lastLocation)), lastLocation(), sabotageMode(false){
     ui->setupUi(this);
@@ -307,7 +307,7 @@ void InGame::on_sabotageButton_clicked()
 {
     if(isSabotageActive()){
         sabotageMode = false;
-        ui->sabotageButton->setStyleSheet("background-color: blue");
+        ui->sabotageButton->setStyleSheet("background-color:");
     }
     else{
         sabotageMode = true;

@@ -26,6 +26,7 @@ class Road : public Case{
         void setUpBarricade(bool, int turns = 0);
         int getTurnsLeft();
         void decreaseTurnsLeft();
+        bool isRoad() override;
         bool isBlocked();
 };
 
