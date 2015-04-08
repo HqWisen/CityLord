@@ -705,17 +705,19 @@ simple paramètre de méthode, ce qui permet de faire circuler des données plus
     }
     \caption{Diagramme d'activité}
 \end{figure}
+\subsubsection{Précision concernant l'arret de CityLordServer}
+Le serveur tourne de manière infini, il ne s'arrête donc jamais. Le seul moyen de l'arreter est de le \textit{kill}. Dans ce cas, tous les clients connéctés
+seront également arretés.
+\subsubsection{Précision concernant l'arret de ClientUpdater}
+Le gestionnaire de mise à jour d'un client est arrêté par le \textit{thread} principal de l'application du client, lorsque celui-ci quitte le jeu en fermant la fenêtre.
+\subsection{Diagramme de composant}
 \begin{figure}[ht]
     \makebox[\linewidth]{
        \includegraphics[width=550pt]{uml/compDiagrams/Main.png}
     }
     \caption{Diagramme de composants}
 \end{figure}
-\subsubsection{Précision concernant l'arret de CityLordServer}
-Le serveur tourne de manière infini, il ne s'arrête donc jamais. Le seul moyen de l'arreter est de le \textit{kill}. Dans ce cas, tous les clients connéctés
-seront également arretés.
-\subsubsection{Précision concernant l'arret de ClientUpdater}
-Le gestionnaire de mise à jour d'un client est arrêté par le \textit{thread} principal de l'application du client, lorsque celui-ci quitte le jeu en fermant la fenêtre.
+
 \newpage
 
 \printindex
