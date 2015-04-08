@@ -307,7 +307,7 @@ void InGame::on_sabotageButton_clicked()
 {
     if(isSabotageActive()){
         sabotageMode = false;
-        ui->sabotageButton->setStyleSheet("background-color: blue");
+        ui->sabotageButton->setStyleSheet("background-color:");
     }
     else{
         sabotageMode = true;
