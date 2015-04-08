@@ -139,9 +139,7 @@ La partie\index{partie} s'achève lorsqu'il ne reste qu'un seul joueur\index{jou
 \hline
 Date de modification & Version & Modification apportée & Auteur \\
 \hline
-08/04/2015 & 3.8 & \parbox{7cm}{- \\ Diagramme : Ajout de quelques précisions. \\} & Hakim \\
-\hline
-08/04/2015 & 3.7 & \parbox{7cm}{- \\ Diagramme de classe : Correction des compositions et ajout des généralisations de thread. \\} & Hakim \\
+08/04/2015 & 3.7 & \parbox{7cm}{- \\ Diagramme de classe : Correction des compositions et ajout des généralisation de thread. \\} & Hakim \\
 \hline
 08/04/2015 & 3.6 & \parbox{7cm}{- \\ Diagramme de composant : Version final du diagramme de composant. \\} & Gabriel \\
 \hline
@@ -695,9 +693,7 @@ Sans cela, la communication avec le \textit{serveur}\index{serveur} et entre les
 \subsubsection{Précision du diagramme de classe}
 \paragraph{}
 Une map est une matrice contenant des \textit{Case}. Une \textit{Case} est soit une parcelle (\textit{Field}) qui peut être achetée par un joueur où il pourra y construire des bâtiments, soit une route (\textit{Road}) permettant aux \textit{Visitors} de se déplacer, soit un obstacle (décoration  pour les joueurs), soit une zone d'entré pour les \textit{Visitors}. 
-\subsubsection{Précision concernant les classes sans relation}
-Les classes ne possédant aucune relation avec d'autres classes sont simplement utilisées comme simple attribut dans plusieurs classes ou comme 
-simple paramètre de méthode, ce qui permet de faire circuler des données plus aisément. Par exemple : \texttt{SocketMessage} ou \texttt{Location}.
+
 \subsection{Diagramme d'activité}
 \begin{figure}[ht]
     \makebox[\linewidth]{
@@ -709,13 +705,9 @@ simple paramètre de méthode, ce qui permet de faire circuler des données plus
     \makebox[\linewidth]{
        \includegraphics[width=550pt]{uml/compDiagrams/Main.png}
     }
-    \caption{Diagramme de composants}
+    \caption{Diagramme d'activité}
 \end{figure}
-\subsubsection{Précision concernant l'arret de CityLordServer}
-Le serveur tourne de manière infini, il ne s'arrête donc jamais. Le seul moyen de l'arreter est de le \textit{kill}. Dans ce cas, tous les clients connéctés
-seront également arretés.
-\subsubsection{Précision concernant l'arret de ClientUpdater}
-Le gestionnaire de mise à jour d'un client est arrêté par le \textit{thread} principal de l'application du client, lorsque celui-ci quitte le jeu en fermant la fenêtre.
+
 \newpage
 
 \printindex
