@@ -16,7 +16,9 @@ void UpdateSystem::changeowner(ClientManager* client, SocketMessage update){
 void UpdateSystem::refresh(ClientManager* client, SocketMessage update){
     pthread_mutex_lock(&updatemutex);
     Location location = Location::parse(update.get("location"));
-    //client->repaintView();
+    ClientField* field = dynamic_cast<ClientField*>(client->getMap()->getCase(location));
+    field->getBuilding()->setStatus(update.get("status"));
+    client->repaint();
     pthread_mutex_unlock(&updatemutex);
 }
 
@@ -28,6 +30,8 @@ void UpdateSystem::build(ClientManager* client, SocketMessage update){
     BuildingType type = BuildingType::getTypeByIndex(std::stoi(update.get("typeindex")));
     ClientField* field = dynamic_cast<ClientField*>(client->getMap()->getCase(location));
     field->buildBuilding(type, level);
+    //std::cout<<"updatestatus = "<<update.get("status")<<std::endl;
+    field->getBuilding()->setStatus(update.get("status"));
     client->repaint();
     pthread_mutex_unlock(&updatemutex);
 }

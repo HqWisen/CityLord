@@ -2,6 +2,7 @@
 #include "UserManager.hpp"
 
 pthread_mutex_t CityUpdater::visitormutex(PTHREAD_MUTEX_INITIALIZER);
+pthread_mutex_t CityUpdater::buildingmutex(PTHREAD_MUTEX_INITIALIZER);
 
 
 
@@ -150,7 +151,7 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr, Gamemode g
 
 void CityUpdater::run(){
     currentTimer.start();
-    Timer<CityUpdater> generateTimer(this, 1), advanceTimer(this, 0), buildingTimer(this, 10), roadBlockTimer(this, 20), payTimer(this, 86400), cityTimer(this);
+    Timer<CityUpdater> generateTimer(this, 1), advanceTimer(this, 0), buildingTimer(this, 4), roadBlockTimer(this, 20), payTimer(this, 48), cityTimer(this);
     generateTimer.setFunc(CityUpdater::runGenerateVisitors);
     advanceTimer.setFunc(CityUpdater::runMakeVisitorsAdvance);
     buildingTimer.setFunc(CityUpdater::runUpdateBuidlings);
@@ -164,19 +165,21 @@ void CityUpdater::run(){
 
 void CityUpdater::runGenerateVisitors(void* object){
     pthread_mutex_lock(&visitormutex);
-    //std::cout<<"generatevisitor"<<std::endl;
+    std::cout<<"generatevisitor"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::generateVisitors;
     for(int i = 0;i<3;i++){
         ((static_cast<CityUpdater*>(object))->*func_ptr)();
-    }
+    }    
+    std::cout<<"finish generatevisitor"<<std::endl;
     pthread_mutex_unlock(&visitormutex);
 }
 
 void CityUpdater::runMakeVisitorsAdvance(void* object){
     pthread_mutex_lock(&visitormutex);
-    //std::cout<<"advancevisitors"<<std::endl;
+    std::cout<<"advancevisitors"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::makeVisitorsAdvance;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
+    std::cout<<"finsih advancevisitors"<<std::endl;
     pthread_mutex_unlock(&visitormutex);
 }
 
@@ -189,15 +192,23 @@ void CityUpdater::runUpdateRoadBlocks(void* object){
 }
 
 void CityUpdater::runUpdateBuidlings(void* object){
-    //std::cout<<"updatebuilding"<<std::endl;
+    pthread_mutex_lock(&buildingmutex);
+    std::cout<<"updatebuilding"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::updateBuildings;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
+    std::cout<<"finish updatebuilding"<<std::endl;
+    pthread_mutex_unlock(&buildingmutex);
+
 }
 
 void CityUpdater::runMakeOwnersPay(void* object){
-    //std::cout<<"payowner"<<std::endl;
+    pthread_mutex_unlock(&buildingmutex);
+    std::cout<<"payowner"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::makeOwnersPay;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
+    std::cout<<"finish payowner"<<std::endl;
+    pthread_mutex_unlock(&buildingmutex);
+
 }
 
 void CityUpdater::runUpdateCity(void* object){
@@ -443,6 +454,7 @@ void CityUpdater::updateRoadBlocks(){
 }
 
 void CityUpdater::updateBuildings(){
+    //std::cout<<"updating buldings"<<std::endl;
     Location currentLocation;
     SocketMessage update;
     Field* concernedField;
@@ -453,12 +465,15 @@ void CityUpdater::updateBuildings(){
                 if(concernedField->hasBuilding()){
                     concernedField->getBuilding()->removeVisitor();
                     if(concernedField->getBuilding()->getStatus() == "construction"){
+                        //std::cout<<row<<", "<<col<<"in construction"<<std::endl;
                         int res = concernedField->getBuilding()->getTurnToFinish();
                         if(res == 0){
+                            //std::cout<<row<<", "<<col<<"finish to increase"<<std::endl;
                             concernedField->getBuilding()->setStatus("normal");
                             concernedField->getBuilding()->renitTurnToFinish();
                             refreshBuildingsList();
                             update.setTopic("refresh");
+                            update.set("status", "normal");
                             Location location(row,col);
                             update.set("location", location.toString());
                             sendUpdateToPlayers(update); 
@@ -468,9 +483,11 @@ void CityUpdater::updateBuildings(){
                         }                       
                     }
                     else if(concernedField->getBuilding()->getStatus() == "destruction"){
+                        //std::cout<<row<<", "<<col<<"in destruction"<<std::endl;
                         int res = concernedField->getBuilding()->getTurnToFinish();
                         if(res == 0){                            
-                            concernedField->destroyBuilding();  
+                            //std::cout<<row<<", "<<col<<"finish to increase"<<std::endl;
+                            concernedField->destroyBuilding();
                             refreshBuildingsList();
                             update.setTopic("destroy");
                             Location location(row,col);

@@ -15,8 +15,8 @@ using namespace std;
  * \033[1;46m light blue  \033[1;47m  white
 */
 const int Player::INITIALBUDGET = 1000000;
-const string Player::COLOR[8] = {"\033[1;40m", "\033[1;41m", "\033[1;42m", "\033[1;43m", "\033[1;44m", "\033[1;45m", "\033[1;46m", "\033[1;47m"};
-const string Player::COLORNAME[8] = {"darkgrey", "red", "green", "yellow", "darkblue", "purple", "lightblue", "white"};
+const string Player::COLOR[8] = {"\033[1;41m", "\033[1;45m", "\033[1;42m", "\033[1;43m", "\033[1;44", "\033[1;46m", "\033[1;47m", "\033[1;40m"};
+const string Player::COLORNAME[8] = {"red", "purple",  "green", "yellow", "darkblue", "lightblue", "white", "darkgrey"};
 
 Player::Player(int number, string nn){
     //std::cout<<"setting id for "<<nn<<" = "<<number<<std::endl;

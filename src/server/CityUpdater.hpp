@@ -57,7 +57,7 @@ class CityUpdater : public Thread{
     adjacency_list_t adjacencyList;
     Timer<CityUpdater> currentTimer;
     public:
-        static pthread_mutex_t visitormutex;
+        static pthread_mutex_t visitormutex, buildingmutex;
     public:
         CityUpdater(Map<Field>*,std::vector<Player*>*, Gamemode);
         void run() override;

@@ -42,12 +42,12 @@ void ClientManager::buildMap(std::string filename){
         delete map;
     }
     map = new Map<ClientField>(filename);
-    std::cout<<"setting for full update"<<std::endl;
+    //std::cout<<"setting for full update"<<std::endl;
     setRequest("mapfullupdate");
     /*** Bloqué tant que la map n'est pas totalement construite ***/
-    std::cout<<"try to full update"<<std::endl;
+    //std::cout<<"try to full update"<<std::endl;
     sendRequestAndRecv();
-    std::cout<<"passed"<<std::endl;
+    //std::cout<<"passed"<<std::endl;
     Timer<ClientManager> t = Timer<ClientManager>::parseTimer(getInfo("timer"));
     timer = new Timer<ClientManager>(t);
     timer->setObject(this);
