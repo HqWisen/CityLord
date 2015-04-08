@@ -2,17 +2,25 @@
 #define THREAD_HPP_
 
 #include <pthread.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 class Thread{
 	pthread_t thread;
-	public:
-		Thread() = default;
-		void start();
+    bool running;
+    public:
+        friend void* routine(void*);
+    public:
+        Thread();
+        void start();
 		virtual ~Thread() = default;
         void* join();
         void cancel();
-		virtual void run() = 0;
-		
+        void msleep(unsigned long);
+        bool isRunning();
+        virtual void run() = 0;
+    private:
+        void setRunning(bool);
 };
 
 #endif // THREAD_HPP_

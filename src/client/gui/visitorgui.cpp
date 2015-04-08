@@ -1,77 +1,137 @@
 #include "visitorgui.h"
 
+const int VisitorGUI::MAXSTEP = 100;
 
-VisitorGUI::VisitorGUI(QObject *parent, QGraphicsScene* sc) :
-    QThread(parent), movemutex(), NORTH(getImagePath("car_north")), SOUTH(getImagePath("car_south")), EAST(getImagePath("car_east")), WEST(getImagePath("car_west")), \
-    moving(false), nextLocation(), currentLocation(), scene(sc), item(new QGraphicsPixmapItem){
+VisitorGUI::VisitorGUI(ClientManagerGUI* cm, QGraphicsScene* sc) :
+    QGraphicsPixmapItem(), movemutex(), inmutex(), NORTH(getImagePath("car_north")), SOUTH(getImagePath("car_south")), EAST(getImagePath("car_east")), WEST(getImagePath("car_west")), \
+    moving(false), in(false), nextLocation(), currentLocation(), clientManager(cm), scene(sc){
 
 }
 
 VisitorGUI::~VisitorGUI(){
-    delete item;
 }
 
 
-void VisitorGUI::run(){
-    std::cout<<"RUNNING VISITOR"<<std::endl;
+/*void VisitorGUI::run(){
     bool arrived;
     int counter;
-    while(true){
+    qreal stepx, stepy;
+    QPointF pstart, pend, current;
+    while(!aborting){
         movemutex.lock();
-        /*QPointF pstart(carToIso(currentLocation, NORTH)), pend(carToIso(nextLocation, NORTH));
-        QPointF current(pstart);
-        arrived = false;
-        counter = 0;*/
-        while(moving/* && !arrived*/){
-            /*std::cout<<"start "<<pstart.x()<<", "<<pstart.y()<<"; end "<<pend.x()<<", "<<pend.y()<<std::endl;
-            std::cout<<"current = "<<current.x()<<", "<<current.y()<<std::endl;
-            if(currentLocation.getRow() == nextLocation.getRow()){
-                int step = (pstart.x() - pend.x()) / 100;
-                std::cout<<"stepX "<<step<<std::endl;
-                current.setX(current.x() + step);
-            }
-            else{
-                int step = (pstart.y() - pend.y()) / 100;
-                std::cout<<"stepY "<<step<<std::endl;
-                current.setY(current.y() + step);
-            }
-            item->setOffset(current);
-            msleep(10);
+        if(moving){
+            std::cout<<"gotoMOUVE"<<std::endl;
+            pstart = carToIso(currentLocation, NORTH);
+            pend = carToIso(nextLocation, NORTH);
+            current = pstart;
+            stepx = (pend.x() - pstart.x()) / (fluidity*10);
+            stepy = (pend.y() - pstart.y()) / (fluidity*10);
+            arrived = false;
+            counter = 0;
+        }
+        while(moving && !arrived){
+            current.setX(current.x() + stepx);
+            current.setY(current.y() + stepy);
+            std::cout<<"updating scene to "<<nextLocation.toString()<<".."<<std::endl;
+            clientManager->updateScene(item, current);
+            std::cout<<"advancing to "<<nextLocation.toString()<<".."<<std::endl;
+            msleep(fluidity);
             counter++;
-            arrived = counter == 100;*/
-            item->setOffset(carToIso(nextLocation, NORTH));
+            arrived = counter == (fluidity*10);
+        }
+        if(moving){
+            std::cout<<"OUTMOVING"<<std::endl;
+            currentLocation = nextLocation;
             moving = false;
         }
-        /*if(moving){
-            currentLocation = nextLocation;
-        }*/
-        moving = false;
         movemutex.unlock();
     }
+}*/
+void VisitorGUI::changeImage(Location current, Location next){
+    int diffrow = current.getRow() - next.getRow();
+    int diffcol = current.getCol() - next.getCol();
+    if(diffrow == 0){
+        setPixmap( diffcol > 0 ? WEST : EAST);
+    }else if(diffcol == 0){
+        setPixmap( diffrow > 0 ? NORTH : SOUTH);
+   }else{
+        int crow = current.getRow();
+        int ccol = current.getCol();
+        if(crow == 0 || ccol == 0){
+            setPixmap( crow == 0 ? SOUTH : EAST);
+        }else{
+            setPixmap( crow == 19 ? NORTH : WEST);
+        }
+   }
 }
 
 void VisitorGUI::show(Location location){
     currentLocation = location;
-    scene->addItem(item);
-    item->setPixmap(NORTH);
-    item->setOffset(carToIso(currentLocation, NORTH));
-    //start();
+    scene->addItem(this);
+    changeImage(currentLocation, currentLocation);
+    this->setOffset(carToIso(currentLocation, NORTH));
 }
 
-void VisitorGUI::move(Location location){
-    nextLocation = location;
-    /*movemutex.lock();
-    moving = true;
-    movemutex.unlock();*/
-    item->setOffset(carToIso(nextLocation, NORTH));
+void VisitorGUI::advance(int phase){
+    //std::cout<<"advance => ";
+    if(!moving) return;
+    //inmutex.lock();
+    //std::cout<<"CAN ";
+    currentLocation = nextLocation;
 
+    if(!in){
+       // movemutex.lock();
+        in = true;
+    }
+    //std::cout<<"lock advance"<<std::endl;
+    current.setX(current.x() + stepx);
+    current.setY(current.y() + stepy);
+    //setPos(mapToParent(current));
+    setOffset(current);
+    counter++;
+    arrived = counter >= MAXSTEP;
+    //std::cout<<"arrived = "<<arrived<<std::endl;
+    if(arrived){
+        //std::cout<<"REALEASE LOCK"<<std::endl;
+        moving = false;
+        //movemutex.unlock();
+        in = false;
+        //std::cout<<"unlock advance"<<std::endl;
+    }
+    //inmutex.unlock();
+    //QPointF location = this->pos();
+    //setPos(mapToParent(QPointF(0,-5)));
+    //setPos(mapToParent(0,-(speed)));
+}
+
+
+
+void VisitorGUI::move(Location location){
+    //std::cout<<"ASK TO MOVE TO "<<location.toString()<<std::endl;
+    //movemutex.lock();
+    //std::cout<<"lock move"<<std::endl;
+    nextLocation = location;
+    changeImage(currentLocation, nextLocation);
+    pstart = carToIso(currentLocation, NORTH);
+    pend = carToIso(nextLocation, NORTH);
+    current = pstart;
+    stepx = (pend.x() - pstart.x()) / (MAXSTEP);
+    stepy = (pend.y() - pstart.y()) / (MAXSTEP);
+    arrived = false;
+    counter = 0;
+    moving = true;
+    //movemutex.unlock();
+    //std::cout<<"unlock move"<<std::endl;
 }
 
 void VisitorGUI::remove(){
-
-    //exit();
-    scene->removeItem(item);
+    scene->removeItem(this);
 }
+/*
+void VisitorGUI::abort(){
+    aborting = true;
+    while(isRunning());
+}*/
 
 QPointF VisitorGUI::carToIso(Location location, const QPixmap& pixmap){
     int x, y, lag, isoX, isoY;

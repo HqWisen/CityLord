@@ -1,6 +1,7 @@
 #ifndef SIGNALER_H
 #define SIGNALER_H
 
+#include <QGraphicsPixmapItem>
 #include <QObject>
 #include "../../common/models/Location.hpp"
 #include "../../common/socket/SocketMessage.hpp"
@@ -17,6 +18,7 @@ public:
     void signalCreatingVisitor(int, Location);
     void signalMovingVisitor(int, Location);
     void signalRemovingVisitor(int);
+    void signalUpdatingScene(QGraphicsPixmapItem*, QPointF);
 signals:
     void repaintView();
     void buildViewMap();
@@ -26,6 +28,7 @@ signals:
     void createVisitor(int, QString);
     void moveVisitor(int, QString);
     void removeVisitor(int);
+    void updateScene(QGraphicsPixmapItem*, QPointF);
 public slots:
 
 };

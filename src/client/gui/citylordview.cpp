@@ -7,7 +7,7 @@ const int CityLordView::DEFAULTZOOMLEVEL = 10;
 
 CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
     QGraphicsView(parent), px(0), py(0), BASE(getImagePath("base")), scene(new QGraphicsScene(this)), previousSelectedLocation(-1, -1), clientManager(cm), numberOfRows(0),  \
-    numberOfCols(0), itemArray(nullptr), visitorItemMap(){
+    numberOfCols(0), itemArray(nullptr), visitorItemMap(), qtimer(new QTimer(this)){
     setGeometry(0, 60, WIDTH, HEIGHT);
     resize(WIDTH, HEIGHT);
     setScene(scene);
@@ -17,11 +17,14 @@ CityLordView::CityLordView(QWidget* parent, ClientManagerGUI* cm):
     ZOOMLEVEL=DEFAULTZOOMLEVEL;
     COORDX=1520;
     COORDY=0;
+    connect(qtimer, SIGNAL(timeout()), scene, SLOT(advance()));
+    qtimer->start(8);
 }
 
 CityLordView::~CityLordView(){
     cleanItemArray();
     delete scene;
+    delete qtimer;
 }
 
 void CityLordView::cleanItemArray(){
@@ -36,13 +39,13 @@ void CityLordView::cleanItemArray(){
 }
 
 void CityLordView::createVisitor(int id, Location location){
-    std::cout<<"=> view creating"<<std::endl;
-    visitorItemMap[id] = new VisitorGUI(this, scene);
+    //std::cout<<"=> view creating"<<std::endl;
+    visitorItemMap[id] = new VisitorGUI(clientManager, scene);
     visitorItemMap[id]->show(location);
 }
 
 void CityLordView::moveVisitor(int id, Location location){
-    std::cout<<"=> view moving"<<std::endl;
+    //std::cout<<"=> view moving"<<std::endl;
     if(visitorItemMap.find(id) == visitorItemMap.end()){
         createVisitor(id, location);
     }else{
@@ -51,11 +54,10 @@ void CityLordView::moveVisitor(int id, Location location){
 }
 
 void CityLordView::removeVisitor(int id){
-    std::cout<<"=> view deleting"<<std::endl;
     if(visitorItemMap.find(id) != visitorItemMap.end()){
         visitorItemMap[id]->remove();
-        delete visitorItemMap[id];
         visitorItemMap.erase(id);
+        delete visitorItemMap[id];
     }
 }
 
@@ -219,6 +221,11 @@ void CityLordView::centerMap(){
     px = 0;
     py = 0;
     setSceneRect(-((WIDTH/2)-(BASE.width()/2))+px, py, WIDTH-2, HEIGHT-2);
+}
+
+void CityLordView::updateScene(QGraphicsPixmapItem* item, QPointF point){
+    item->setOffset(point);
+    scene->update();
 }
 
 void CityLordView::repaintView(){

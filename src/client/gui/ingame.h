@@ -35,6 +35,7 @@ public slots:
     void createVisitor(int, QString);
     void moveVisitor(int, QString);
     void removeVisitor(int);
+    void updateScene(QGraphicsPixmapItem*, QPointF);
 private slots:
     void on_buyButton_clicked();
     void on_buildButton_clicked();

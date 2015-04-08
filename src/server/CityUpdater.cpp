@@ -150,7 +150,7 @@ CityUpdater::CityUpdater(Map<Field>* map,std::vector<Player*>* pvPtr) : currentT
 
 void CityUpdater::run(){
     currentTimer.start();
-    Timer<CityUpdater> generateTimer(this, 2), advanceTimer(this, 1), buildingTimer(this, 10), roadBlockTimer(this, 25), payTimer(this, 86400), cityTimer(this);
+    Timer<CityUpdater> generateTimer(this, 1), advanceTimer(this, 0), buildingTimer(this, 10), roadBlockTimer(this, 25), payTimer(this, 86400), cityTimer(this);
     generateTimer.setFunc(CityUpdater::runGenerateVisitors);
     advanceTimer.setFunc(CityUpdater::runMakeVisitorsAdvance);
     buildingTimer.setFunc(CityUpdater::runUpdateBuidlings);
@@ -158,14 +158,17 @@ void CityUpdater::run(){
     cityTimer.setFunc(CityUpdater::runUpdateCity);
     roadBlockTimer.setFunc(CityUpdater::runUpdateRoadBlocks);
     generateTimer.start();advanceTimer.start();buildingTimer.start();roadBlockTimer.start();payTimer.start();/*cityTimer.start();*/
-    generateTimer.join();advanceTimer.join();buildingTimer.join();roadBlockTimer.join();payTimer.join();/*cityTimer.join();*/
+    currentTimer.join();
+    generateTimer.cancel();advanceTimer.cancel();buildingTimer.cancel();roadBlockTimer.cancel();payTimer.cancel();/*cityTimer.join();*/
 }
 
 void CityUpdater::runGenerateVisitors(void* object){
     pthread_mutex_lock(&visitormutex);
     //std::cout<<"generatevisitor"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::generateVisitors;
-    ((static_cast<CityUpdater*>(object))->*func_ptr)();
+    for(int i = 0;i<3;i++){
+        ((static_cast<CityUpdater*>(object))->*func_ptr)();
+    }
     pthread_mutex_unlock(&visitormutex);
 }
 
@@ -359,7 +362,7 @@ void CityUpdater::generateVisitors(){
         generateFullPath(startLocation, endLocation, path);
 
         Visitor* newVisitor = new Visitor(startLocation);
-        std::cout<<"Taille du chemin donné :"<< path.size() <<std::endl;
+        //std::cout<<"Taille du chemin donné :"<< path.size() <<std::endl;
         newVisitor->setPath(path);
         int id = cityMap->addVisitor(newVisitor);  
         SocketMessage update = visitorCreate(id, startLocation);
@@ -490,7 +493,7 @@ void CityUpdater::makeVisitorsAdvance(){
     for(int i = 0; i < cityMap->getMaxVisitors(); i++){
         if(cityMap->getVisitor(i) != nullptr){
             if (cityMap->getVisitor(i)->hasReachedEnd()) {
-                std::cout<<"reached end "<<i<<std::endl;
+                //std::cout<<"reached end "<<i<<std::endl;
                 SocketMessage update = visitorRemove(i);
                 sendUpdateToPlayers(update);
                 cityMap->deleteVisitor(i);
@@ -498,7 +501,7 @@ void CityUpdater::makeVisitorsAdvance(){
                 Location firstLocation = cityMap->getVisitor(i)->getLoc();
                 cityMap->getVisitor(i)->move();
                 Location lastLocation = cityMap->getVisitor(i)->getLoc();
-                std::cout<<"moving "<<i<<" from to "<<lastLocation.toString()<<std::endl;
+                //std::cout<<"moving "<<i<<" from to "<<lastLocation.toString()<<std::endl;
                 SocketMessage update = visitorMove(i, firstLocation, lastLocation);
                 sendUpdateToPlayers(update);
                 bool enter = false;

@@ -24,6 +24,7 @@ InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
     QObject::connect(clientManager->getSignaler(), SIGNAL(createVisitor(int, QString)), this, SLOT(createVisitor(int, QString)));
     QObject::connect(clientManager->getSignaler(), SIGNAL(moveVisitor(int, QString)), this, SLOT(moveVisitor(int, QString)));
     QObject::connect(clientManager->getSignaler(), SIGNAL(removeVisitor(int)), this, SLOT(removeVisitor(int)));
+    QObject::connect(clientManager->getSignaler(), SIGNAL(updateScene(QGraphicsPixmapItem*, QPointF)), this, SLOT(updateScene(QGraphicsPixmapItem*, QPointF)));
 
 }
 
@@ -32,6 +33,10 @@ void InGame::repaintView(){
 }
 
 void InGame::refresh(){
+}
+
+void InGame::updateScene(QGraphicsPixmapItem* item, QPointF point){
+    view->updateScene(item, point);
 }
 
 void InGame::updateMoney(int amount){
@@ -50,17 +55,17 @@ void InGame::updateTime(QString time){
 }
 
 void InGame::createVisitor(int id, QString locstr){
-    std::cout<<"CREATE INGAME VISITOR "<<id<< " in "<<locstr.toStdString()<<std::endl;
+    //std::cout<<"CREATE INGAME VISITOR "<<id<< " in "<<locstr.toStdString()<<std::endl;
     view->createVisitor(id, Location::parse(locstr.toStdString()));
 }
 
 void InGame::moveVisitor(int id, QString locstr){
-    std::cout<<"MOVING INGAME VISITOR "<<id<< " in "<<locstr.toStdString()<<std::endl;
+    //std::cout<<"MOVING INGAME VISITOR "<<id<< " in "<<locstr.toStdString()<<std::endl;
     view->moveVisitor(id, Location::parse(locstr.toStdString()));
 }
 
 void InGame::removeVisitor(int id){
-    std::cout<<"DELETING INGAME VISITOR "<<id<<std::endl;
+    //std::cout<<"DELETING INGAME VISITOR "<<id<<std::endl;
     view->removeVisitor(id);
 }
 

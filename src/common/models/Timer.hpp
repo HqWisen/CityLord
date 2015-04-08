@@ -42,9 +42,9 @@ class Timer : public Thread{
 /*** DEFINITION ***/
 
 template <typename T>
-const int Timer<T>::MINPERSLEEP = 33;
+const int Timer<T>::MINPERSLEEP = 30;
 template <typename T>
-const int Timer<T>::MAXDAY = 15;
+const int Timer<T>::MAXDAY = 18;
 
 template <typename T>
 Timer<T>::Timer(T* obj, int sleepTime, time_t* current) : object(obj), func(nullptr){
@@ -60,7 +60,11 @@ void Timer<T>::run(){
     while(!over()){
         if (func) func(object);
         addMinute(MINPERSLEEP);
-        secsleep(sleepTime);
+        if(sleepTime == 0){
+            usleep(450000); // microsecond
+        }else{
+            secsleep(sleepTime);
+        }
     }
 }
 

@@ -2,6 +2,7 @@
 #define CLIENTMANAGERGUI_H
 
 #include <QStackedWidget>
+#include <QGraphicsPixmapItem>
 #include <QVBoxLayout>
 #include <map>
 #include <string>
@@ -25,7 +26,8 @@ public:
     bool alreadySet(key_type);
     void setCurrentWidget(key_type);
     QVBoxLayout* getLayout();
-    void buildMap(std::string) override;
+    void buildMap(std::string) override;    
+    void updateScene(QGraphicsPixmapItem*, QPointF);
     void updateTime() override;
     void repaint() override;
     void updateMoney(int) override;

@@ -34,3 +34,7 @@ void Signaler::signalMovingVisitor(int id, Location location){
 void Signaler::signalRemovingVisitor(int id){
     emit removeVisitor(id);
 }
+
+void Signaler::signalUpdatingScene(QGraphicsPixmapItem* item, QPointF point){
+    emit updateScene(item, point);
+}

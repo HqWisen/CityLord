@@ -38,6 +38,7 @@ public:
     bool goodLocation(Location);
     void centerMap();
     void repaintView();
+    void updateScene(QGraphicsPixmapItem*, QPointF);
     void buildViewMap();
     Location isoToLoc(QPointF);
     const char* getImagePath(std::string);
@@ -58,6 +59,7 @@ private:
     int numberOfRows, numberOfCols;
     QGraphicsPixmapItem*** itemArray;
     std::map<int, VisitorGUI*> visitorItemMap;
+    QTimer* qtimer;
 
 
 };

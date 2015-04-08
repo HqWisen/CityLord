@@ -62,15 +62,15 @@ void ClientManager::updateTime(){
 }
 
 void ClientManager::createVisitor(int id, Location location){
-    std::cout<<"#creating visitor id "<<id<<" location "<<location.toString()<<std::endl;
+    //std::cout<<"#creating visitor id "<<id<<" location "<<location.toString()<<std::endl;
 }
 
 void ClientManager::moveVisitor(int id, Location location){
-    std::cout<<"#moving visitor id "<<id<<" location "<<location.toString()<<std::endl;
+    //std::cout<<"#moving visitor id "<<id<<" location "<<location.toString()<<std::endl;
 }
 
 void ClientManager::removeVisitor(int id){
-    std::cout<<"#delete visitor id "<<id<<std::endl;
+    //std::cout<<"#delete visitor id "<<id<<std::endl;
 }
 
 std::string ClientManager::getStrTime(){

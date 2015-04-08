@@ -1,5 +1,6 @@
 #include "clientmanagerGUI.h"
 #include "defaultwidget.h"
+#include "ingame.h"
 
 const key_type ClientManagerGUI::LOGIN = 0;
 const key_type ClientManagerGUI::CREATEACCOUNT = 1;
@@ -68,6 +69,10 @@ void ClientManagerGUI::buildMap(std::string filename){
     signaler->signalBuildViewMap();
 }
 
+void ClientManagerGUI::updateScene(QGraphicsPixmapItem* item, QPointF point){
+    signaler->signalUpdatingScene(item, point);
+}
+
 void ClientManagerGUI::updateTime(){
     ClientManager::updateTime();
     signaler->signalUpdatingTime(getStrTime());
@@ -88,7 +93,9 @@ void ClientManagerGUI::createVisitor(int id, Location location){
 
 void ClientManagerGUI::moveVisitor(int id, Location location){
     ClientManager::moveVisitor(id, location);
+    //ynamic_cast<InGame*>(get(ClientManagerGUI::INGAME))->moveVisitor(id, location.toString().c_str());
     signaler->signalMovingVisitor(id, location);
+
 }
 
 void ClientManagerGUI::removeVisitor(int id){
