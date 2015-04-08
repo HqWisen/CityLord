@@ -437,12 +437,13 @@ SocketMessage CityManager::hypotheque(Player* player, Location location){
                     int gain = mode.applyAdvantage((buildingType.getTotalPurchasePrice()) /2);
 					concernedField->getBuilding()->setStatus("hypotheque");
 					player->gainMoney(gain);
-                    //update.setTopic("hypotheque");
-                    //update.set("location", location.toString());
-                    //update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
-                    //updater->sendUpdateToPlayers(update);
+                    updater->refreshBuildingsList();
+                    update.setTopic("refresh");
+                    update.set("status", "hypotheque");
+                    update.set("location", location.toString());
+                    updater->sendUpdateToPlayers(update);
                     message.setTopic("success");
-                    message.set("reason", "Building has been successfully hypothecated !");
+	                message.set("reason", "Building is being destroyed !");
 				}
 				else{
                     message.setTopic("failure");
