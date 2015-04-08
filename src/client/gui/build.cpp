@@ -4,11 +4,11 @@
 build::build(QWidget* parent, ClientManagerGUI* cm) :
     QDialog(parent), ui(new Ui::build), clientManager(cm), tableItemArray(nullptr), headerLabels(), choice(-1){
     ui->setupUi(this);
-    for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
+    /*for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
     {
         ui->tableWidget->horizontalHeader()->setSectionResizeMode(
             c, QHeaderView::Stretch);
-    }
+    }*/
     headerLabels << "Type" << "Price" << "Constr. cost" << "Up. cost" << "Destr. cost"\
                     << "Daily cost" << "Capacity" << "Open time" << "Close time" << "Stay time" << "Income";
     ui->tableWidget->setColumnCount(headerLabels.size());

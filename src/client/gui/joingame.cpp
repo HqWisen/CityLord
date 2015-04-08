@@ -6,11 +6,11 @@ JoinGame::JoinGame(QWidget* parent, ClientManagerGUI* cm) :
     DefaultWidget(parent, cm), ui(new Ui::JoinGame), tableItemArray(nullptr), headerLabels(), choice(-1){
     displayDefaultBackground();
     ui->setupUi(this);
-    for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
+    /*for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
     {
         ui->tableWidget->horizontalHeader()->setSectionResizeMode(
             c, QHeaderView::Stretch);
-    }
+    }*/
     headerLabels << "City" << "Map" << "Creator"<<"Players";
     ui->tableWidget->setColumnCount(headerLabels.size());
     ui->tableWidget->setHorizontalHeaderLabels(headerLabels);

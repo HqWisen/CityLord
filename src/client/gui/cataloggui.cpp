@@ -6,10 +6,10 @@ CatalogGui::CatalogGui(QWidget* parent, ClientManagerGUI* cm, CityLordView* cv, 
 {
     ui->setupUi(this);
     for (int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c)
-    {
+    /*{
         ui->tableWidget->horizontalHeader()->setSectionResizeMode(
             c, QHeaderView::Stretch);
-    }
+    }*/
     //headerLabels << "Location" << "Building" << "Level" << "Owner" << "Price";
     headerLabels << "Location" << "Owner" << "Price";
     ui->tableWidget->setColumnCount(headerLabels.size());
