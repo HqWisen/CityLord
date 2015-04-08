@@ -240,6 +240,7 @@ SocketMessage RequestSystem::upgrade(CityLordServer* server, UserManager* userMa
     return answer;
 }
 
+
 SocketMessage RequestSystem::destroy(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;
@@ -368,7 +369,6 @@ SocketMessage RequestSystem::hypotheque(CityLordServer* server, UserManager* use
     SocketMessage answer;
     int row = std::stoi(message.get("row"));
     int col = std::stoi(message.get("col"));
-    //BuildingType buildingType = BuildingType::getTypeByIndex(std::stoi(message.get("typeindex")));
     CityManager* cityManager = userManager->getActiveCity();
     Player* player = userManager->getActivePlayer();
     answer = cityManager->hypotheque(player, Location(row, col));
