@@ -139,6 +139,10 @@ La partie\index{partie} s'achève lorsqu'il ne reste qu'un seul joueur\index{jou
 \hline
 Date de modification & Version & Modification apportée & Auteur \\
 \hline
+08/04/2015 & 3.3 & \parbox{7cm}{- \\ Diagramme d'activité : Version final du diagramme d'activité. \\} & Hakim \\
+\hline
+08/04/2015 & 3.3 & \parbox{7cm}{- \\ Commentaire du diagramme de classe \\} & Cédric \\
+\hline
 04/04/2015 & 3.2 & \parbox{7cm}{- \\ UseCase de connection et Construction en Fr, ajout de mots dans l'index \\} & David \\
 \hline
 26/03/2015 & 3.1 & \parbox{7cm}{- \\ Index Latex et non plus "manuel", changement de mots anglais en français \\} & David \\
@@ -677,7 +681,17 @@ Sans cela, la communication avec le \textit{serveur}\index{serveur} et entre les
     }
     \caption{Diagramme de classe : Architecture du système}
 \end{figure}
+\begin{figure}[ht]
+    \makebox[\linewidth]{
+       \includegraphics[width=550pt]{uml/activityDiagrams/activityDiagram.png}
+    }
+    \caption{Diagramme d'activité}
+\end{figure}
 
+\newpage
+\subsection{Précision du diagramme de classe}
+\paragraph{}
+Une map est une matrice contenant des \textit{Case}. Une \textit{Case} est soit une parcelle (\textit{Field}) qui peut être achetée par un joueur où il pourra y construire des bâtiments, soit une route (\textit{Road}) permettant aux \textit{Visitors} de se déplacer, soit un obstacle (décoration  pour les joueurs), soit une zone d'entré pour les \textit{Visitors}. 
 
 \newpage
 
