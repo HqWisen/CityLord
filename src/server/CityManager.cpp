@@ -430,13 +430,15 @@ SocketMessage CityManager::hypotheque(Player* player, Location location){
 			if(concernedField->hasBuilding()){
 				if(concernedField->getBuilding()->getStatus() == "normal"){
 					BuildingType buildingType = concernedField->getBuilding()->getType();
-                    int gain = (buildingType.getTotalPurchasePrice()) /2;
+                    int gain = mode.applyAdvantage((buildingType.getTotalPurchasePrice()) /2);
 					concernedField->getBuilding()->setStatus("hypotheque");
 					player->gainMoney(gain);
-					//update.setTopic("hypotheque");
+                    //update.setTopic("hypotheque");
+                    //update.set("location", location.toString());
+                    //update.set("typeindex", std::to_string(BuildingType::getIndexByType(buildingType)));
                     //updater->sendUpdateToPlayers(update);
-                    //message.setTopic("success");
-                    //message.set("reason", "Building has been successfully hypothecated !");
+                    message.setTopic("success");
+                    message.set("reason", "Building has been successfully hypothecated !");
 				}
 				else{
                     message.setTopic("failure");
@@ -477,7 +479,7 @@ SocketMessage CityManager::buyBack(Player* player, Location location){
 			if(concernedField->hasBuilding()){
 				if(concernedField->getBuilding()->getStatus() == "hypotheque"){
 					BuildingType buildingType = concernedField->getBuilding()->getType();
-                    int lose = mode.applyDifficulty(buildingType.getTotalPurchasePrice() /2);
+                    int lose = mode.applyAdvantage(buildingType.getTotalPurchasePrice() /2);
                     if(player->getMoney() >= lose){
                         concernedField->getBuilding()->setStatus("normal");
                         player->loseMoney(lose);        
