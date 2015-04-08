@@ -11,6 +11,7 @@
 #include "defaultwidget.h"
 #include "build.h"
 #include "sell.h"
+#include "cataloggui.h"
 
 namespace Ui {
 class InGame;
@@ -48,6 +49,7 @@ private slots:
     void updateButtons(bool,bool,bool,bool,bool);
     void on_exitButton_clicked();
     void on_sellButton_clicked();
+    void on_catalogButton_clicked();
 
 private:
     Ui::InGame* ui;
@@ -55,7 +57,7 @@ private:
     build* buildDialog;
     sell* sellDialog;
     Location lastLocation;
-
+    CatalogGui* catalog;
 };
 
 #endif // WIDGET_H
