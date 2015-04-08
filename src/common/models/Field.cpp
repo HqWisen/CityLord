@@ -35,45 +35,33 @@ string BasicField::print(){
 string BasicField::getImageName(){
     std::string imagename, buildingName, buildingStatus;
     if(hasBuilding()){
-       buildingName = building->getType().NAME;
-       std::transform(buildingName.begin(), buildingName.end(), buildingName.begin(), ::tolower);
-       imagename = buildingName;
-       buildingStatus = building->getStatus();
-       cout<<buildingStatus<<endl;
-       if(buildingStatus == "hypotheque"){
-            imagename += "_";
-            imagename += "hypotheque";
-        }
-        else if(buildingStatus == "construction"){
-            imagename += "_";
-            imagename += "construction";
-        }
-        else if(buildingStatus == "destruction"){
-            imagename += "_";
-            imagename += "destruction";
-        }
+        buildingStatus = building->getStatus();
+        if(buildingStatus == "hypotheque"){
+             imagename += "hypotheque/";
+         }
+         else if(buildingStatus == "construction"){
+             imagename += "construction/";
+         }
+         else if(buildingStatus == "destruction"){
+             imagename += "destruction/";
+         }
+        buildingName = building->getType().NAME;
+        std::transform(buildingName.begin(), buildingName.end(), buildingName.begin(), ::tolower);
+        imagename += buildingName;
     }
     else{
         imagename = "base";
     }
     if(showOwnerColor){
         if(hasOwner()){
-            if(hasBuilding()){
-                if(buildingStatus == "normal"){
-                    imagename += "_" + Player::COLORNAME[getOwnerID()];
-                }
-                else{
-                    imagename = buildingName;
-                    imagename += "_" + Player::COLORNAME[getOwnerID()];
-                }
-            }
-            else{
-                imagename += "_" + Player::COLORNAME[getOwnerID()];
-            }
-        }          
+            imagename += "_" + Player::COLORNAME[getOwnerID()];
+        }
         else{
             imagename = "grass";
         }
+    }
+    if(hasBuilding()){
+        std::cout<<"imagename = |"<<imagename<<"|"<<std::endl;
     }
     return imagename;
 }
@@ -88,6 +76,7 @@ bool BasicField::isField(){
 
 void BasicField::buildBuilding(BuildingType buildingType, int level){
     building = new Building(buildingType, level);
+    building->setStatus("construction");
 }
 
 

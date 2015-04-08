@@ -312,12 +312,12 @@ SocketMessage CityManager::destroyBuilding(Player* player, Location location){
 						concernedField->getBuilding()->setStatus("destruction");						
 	                    player->loseMoney(mode.applyDifficulty(concernedField->getBuilding()->getDestructionCost()));
 	                    player->decBuildingCounter();
-						//concernedField->destroyBuilding();
-						updater->refreshBuildingsList();
-	                    update.setTopic("refresh");
-	                    update.set("location", location.toString());
-	                    updater->sendUpdateToPlayers(update);
-						message.setTopic("success");
+                        updater->refreshBuildingsList();
+                        update.setTopic("refresh");
+                        update.set("status", "destruction");
+                        update.set("location", location.toString());
+                        updater->sendUpdateToPlayers(update);
+                        message.setTopic("success");
 	                    message.set("reason", "Building is being destroyed !");
 	                }
 	                else{

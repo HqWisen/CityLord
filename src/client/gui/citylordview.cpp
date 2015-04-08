@@ -237,6 +237,7 @@ void CityLordView::repaintView(){
             itemArray[row][col]->setOffset(carToIso(Location(row, col), pixmap));
         }
     }
+    scene->update();
 }
 
 void CityLordView::buildViewMap(){
