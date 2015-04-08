@@ -84,6 +84,7 @@ std::string Road::toString(){
     result +=  directions[SOUTH] ? "S" :"" ;
     result +=  directions[EAST] ? "E" :"" ;
     result +=  directions[WEST] ? "W" :"" ;
+    if(isBlocked()){result="road_right";} // TEMPORARY IMAGE
     return result;
 }
 

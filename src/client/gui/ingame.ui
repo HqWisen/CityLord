@@ -98,6 +98,13 @@ QLabel{font:10pt;}</string>
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="sabotageButton">
+        <property name="text">
+         <string>Sabotage</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
     <widget class="QLabel" name="moneyLabel">
@@ -754,39 +761,6 @@ Selected</string>
      <string>Catalog</string>
     </property>
    </widget>
-   <zorder>fieldTitle</zorder>
-   <zorder>buildingTitle</zorder>
-   <zorder>nicknameLabel</zorder>
-   <zorder>nicknameTitle</zorder>
-   <zorder>idTitle</zorder>
-   <zorder>idLabel</zorder>
-   <zorder>noFieldLabel</zorder>
-   <zorder>colorTitle</zorder>
-   <zorder>colorLabel</zorder>
-   <zorder>typeLabel</zorder>
-   <zorder>levelTitle</zorder>
-   <zorder>levelLabel</zorder>
-   <zorder>timeTitle</zorder>
-   <zorder>openLabel</zorder>
-   <zorder>closeLabel</zorder>
-   <zorder>visitorTitle</zorder>
-   <zorder>visitorLabel</zorder>
-   <zorder>attractivenessTitle</zorder>
-   <zorder>attractivenessLabel</zorder>
-   <zorder>incomeLabel</zorder>
-   <zorder>incomeTitle</zorder>
-   <zorder>dailyCostTitle</zorder>
-   <zorder>dailyCostLabel</zorder>
-   <zorder>buildingPriceTitle</zorder>
-   <zorder>buildingPriceLabel</zorder>
-   <zorder>destructionCostTitle</zorder>
-   <zorder>destructionCostLabel</zorder>
-   <zorder>noBuidlingLabel</zorder>
-   <zorder>verticalLayoutWidget_3</zorder>
-   <zorder>pushButton</zorder>
-   <zorder>pushButton</zorder>
-   <zorder>pushButton</zorder>
-   <zorder>catalogButton</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

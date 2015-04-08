@@ -27,6 +27,7 @@ public:
 private:
     void openMessageBox(std::string);
     void activeButton(std::string);
+    bool isSabotageActive();
 public slots:
     void repaintView();
     void buildViewMap();
@@ -52,6 +53,8 @@ private slots:
     void on_sellButton_clicked();
     void on_catalogButton_clicked();
 
+    void on_sabotageButton_clicked();
+
 private:
     Ui::InGame* ui;
     CityLordView* view;
@@ -59,6 +62,7 @@ private:
     sell* sellDialog;
     Location lastLocation;
     CatalogGui* catalog;
+    bool sabotageMode;
 };
 
 #endif // WIDGET_H

@@ -128,18 +128,31 @@ void CityLordView::mousePressEvent(QMouseEvent * e){
     showFieldColor(false, true);
     startMouse = mapToScene(e->pos());
     Location location = isoToLoc(startMouse);
-    if(goodLocation(location)){
-        selectField(location);
-        if(clientManager->getMap()->getCase(location)->isField()){
-            dynamic_cast<ClientField*>(clientManager->getMap()->getCase(location))->setShowOwnerColor(true);
-       }
-    }
-   if(goodLocation(previousSelectedLocation) && !previousSelectedLocation.isEqual(location)){
-        if(clientManager->getMap()->getCase(previousSelectedLocation)->isField()){
-            dynamic_cast<ClientField*>(clientManager->getMap()->getCase(previousSelectedLocation))->setShowOwnerColor(false);
+    /*
+    if(inGame.isSabotageActive()){
+        if(selected is road){
+            clientManager->setRequest("selectroad");
+            clientManager->addInfo("row", std::to_string(lastLocation.getRow()));
+            clientManager->addInfo("col", std::to_string(lastLocation.getCol()));
+            clientManager->sendRequestAndRecv();
+            openMessageBox("RoadBlock");
         }
     }
-    previousSelectedLocation = location;
+    */
+    //else{
+        if(goodLocation(location)){
+            selectField(location);
+            if(clientManager->getMap()->getCase(location)->isField()){
+                dynamic_cast<ClientField*>(clientManager->getMap()->getCase(location))->setShowOwnerColor(true);
+           }
+        }
+       if(goodLocation(previousSelectedLocation) && !previousSelectedLocation.isEqual(location)){
+            if(clientManager->getMap()->getCase(previousSelectedLocation)->isField()){
+                dynamic_cast<ClientField*>(clientManager->getMap()->getCase(previousSelectedLocation))->setShowOwnerColor(false);
+            }
+        }
+        previousSelectedLocation = location;
+    //}
     repaintView();
 }
 
@@ -261,4 +274,12 @@ void CityLordView::buildViewMap(){
         }
     }
     repaintView();
+}
+
+void CityLordView::openMessageBox(std::string title){
+    if(clientManager->requestFailed()){
+        QMessageBox::critical(this, title.c_str(), clientManager->getReason().c_str());
+    }else{
+        QMessageBox::information(this, title.c_str(), clientManager->getReason().c_str());
+    }
 }

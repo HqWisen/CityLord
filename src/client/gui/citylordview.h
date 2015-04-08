@@ -9,6 +9,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <map>
+#include <QMessageBox>
 #include "signaler.h"
 #include "../../common/models/Case.hpp"
 #include "../../common/models/Map.hpp"
@@ -50,6 +51,7 @@ public:
 private:
     QPointF carToIso(Location, const QPixmap&);
     void showFieldColor(bool, bool);
+    void openMessageBox(std::string);
 private:
     int px, py;
     QPointF lastPos;

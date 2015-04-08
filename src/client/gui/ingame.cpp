@@ -3,7 +3,9 @@
 
 
 InGame::InGame(QWidget* parent, ClientManagerGUI* cm) :
-    DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this, cm)), buildDialog(new build(this, cm)), sellDialog(new sell(this, cm, &lastLocation)), catalog(new CatalogGui(this, cm, view, &lastLocation)), lastLocation(){
+    DefaultWidget(parent, cm), ui(new Ui::InGame), view(new CityLordView(this, cm)),
+    buildDialog(new build(this, cm)), sellDialog(new sell(this, cm, &lastLocation)),
+    catalog(new CatalogGui(this, cm, view, &lastLocation)), lastLocation(), sabotageMode(false){
     ui->setupUi(this);
 
     ui->exitButton->setStyleSheet("background-image: url(src/resources/img/exit40_40.png)");
@@ -294,3 +296,17 @@ void InGame::on_catalogButton_clicked()
     catalog->refresh();
     catalog->exec();
 }
+
+void InGame::on_sabotageButton_clicked()
+{
+    if(isSabotageActive()){
+        sabotageMode = false;
+        ui->sabotageButton->setStyleSheet("background-color: blue");
+    }
+    else{
+        sabotageMode = true;
+        ui->sabotageButton->setStyleSheet("background-color: red");
+    }
+}
+
+bool InGame::isSabotageActive(){return sabotageMode;}
