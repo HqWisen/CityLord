@@ -11,7 +11,8 @@ std::string User::getPassword(){
 }
 
 void User::initPlayer(CityManager* cm, int playerid){
-	if(playerMap.find(cm) == playerMap.end()){
+    //std::cout<<"for "<<username<<" is => "<<playerid<<std::endl;
+    if(playerMap.find(cm) == playerMap.end()){
         playerMap[cm] = new Player(playerid, username);
 		cm->addPlayer(playerMap[cm]);
 	}

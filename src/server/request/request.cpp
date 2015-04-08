@@ -239,20 +239,26 @@ SocketMessage RequestSystem::destroy(CityLordServer* server, UserManager* userMa
 
 SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
+    //std::cout<<"asking for fullupdate"<<std::endl;
     SocketMessage answer, update;
     CityManager* cityManager = userManager->getActiveCity();
+    //std::cout<<"getting citymanager"<<std::endl;
     Map<Field>* map = cityManager->getMap();
+    //std::cout<<"getting for getmap"<<std::endl;
     Field* field;
     for(int row=0;row<map->getNumberOfRows();row++){
         for(int col=0;col<map->getNumberOfCols();col++){
+            //std::cout<<"getting case "<<row<<", "<<col<<" - ";
             if((field = dynamic_cast<Field*>(map->getCase(Location(row, col))))){
                 if(field->hasOwner()){
+                    std::cout<<"has owner"<<std::endl;
                     update.setTopic("changeowner");
                     update.set("ownerid", std::to_string(field->getOwnerID()));
                     update.set("location", field->getLocation().toString());
                     userManager->sendUpdate(update);
                 }
                 if(field->hasBuilding()){
+                    std::cout<<"has building"<<std::endl;
                     update.setTopic("build");
                     update.set("location", field->getLocation().toString());
                     update.set("typeindex", std::to_string(BuildingType::getIndexByType(field->getBuilding()->getType())));
@@ -260,8 +266,10 @@ SocketMessage RequestSystem::mapfullupdate(CityLordServer* server, UserManager* 
                     userManager->sendUpdate(update);
                 }
             }
+            //std::cout<<"getted "<<std::endl;
         }
     }
+    //std::cout<<"sending timer = "<<cityManager->getStringTimer()<<std::endl;
     answer.set("timer", cityManager->getStringTimer());
     pthread_mutex_unlock(&requestmutex);
     return answer;

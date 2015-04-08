@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "../common/models/Location.hpp"
+#include "../common/socket/SocketMessage.hpp"
 
 using namespace std;
 
@@ -38,6 +39,7 @@ public:
     void setConnected(bool);
     UserManager* getUserManager();
     void setUserManager(UserManager*);
+    void sendUpdate(SocketMessage);
     int getNBuilding();
     int getNEmptyField();
 };

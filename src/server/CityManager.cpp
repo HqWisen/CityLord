@@ -13,6 +13,9 @@ CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), ci
 			}
 		}
     }
+    for(int i = 0;i<8;i++){
+        playerVector.push_back(nullptr);
+    }
     updater = new CityUpdater(getMap(), &playerVector);
     updater->start();
 }
@@ -20,6 +23,7 @@ CityManager::CityManager(std::string mn, int cityid, User* cr) : mapname(mn), ci
 CityManager::~CityManager(){
     delete updater;
     delete cityMap;
+
 }
 
 std::string CityManager::getMapFileName(){
@@ -47,6 +51,7 @@ int CityManager::getMaxPlayer(){
 }
 
 int CityManager::getNextID(){
+    //std::cout<<"nextid = "<<getNPlayer()<<std::endl;
     return getNPlayer();
 }
 
@@ -60,9 +65,15 @@ bool CityManager::canJoin(Player* player){
 
 void CityManager::addPlayer(Player* player){
     if(!alreadyInCity(player)){
-        playerVector.push_back(player);
+        playerVector[nPlayer] = player;
         nPlayer++;
     }
+    /*Player* p;
+    for (std::vector<Player*>::iterator it = playerVector.begin(); it != playerVector.end(); it++){
+        p = *it;
+        std::cout<<"playeradd = "<<p<<std::endl;
+        std::cout<<"PLAYER "<<p->getPlayerID()<<" is YES"<<std::endl;
+    }*/
 }
 
 bool CityManager::alreadyInCity(Player* player){

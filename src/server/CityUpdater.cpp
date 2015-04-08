@@ -236,11 +236,15 @@ SocketMessage CityUpdater::visitorRemove(int visitorID){
 
 void CityUpdater::sendUpdateToPlayers(SocketMessage update){
     Player* player;
-    for (std::vector<Player*>::iterator it = playerVectorPtr->begin(); it != playerVectorPtr->end(); it++){
-        player = *it;
-        if(player->isConnected() && player->getUserManager() != nullptr){
-            //std::cout<<"PLAYER "<<player->getPlayerID()<<" is YES"<<std::endl;
-            player->getUserManager()->sendUpdate(update);
+    //for (std::vector<Player*>::iterator it = playerVectorPtr->begin(); it != playerVectorPtr->end(); it++){
+    for(int i = 0;i<8;i++){
+        player = (*playerVectorPtr)[i];
+        if(player != nullptr && player->isConnected() && player->getUserManager() != nullptr){
+            if(player->getPlayerID() > 8){
+                std::cout<<"PROBLEME"<<std::endl;
+            }else{
+                player->getUserManager()->sendUpdate(update);
+            }
         }
     }
 }

@@ -19,7 +19,8 @@ const string Player::COLOR[8] = {"\033[1;40m", "\033[1;41m", "\033[1;42m", "\033
 const string Player::COLORNAME[8] = {"darkgrey", "red", "green", "yellow", "darkblue", "purple", "lightblue", "white"};
 
 Player::Player(int number, string nn){
-	playerID = number;
+    //std::cout<<"setting id for "<<nn<<" = "<<number<<std::endl;
+    playerID = number;
 	nickname = nn;
     money = INITIALBUDGET;
     buildingCounter = 0;
@@ -96,6 +97,10 @@ UserManager* Player::getUserManager(){
 
 void Player::setUserManager(UserManager* um){
     userManager = um;
+}
+
+void Player::sendUpdate(SocketMessage update){
+    userManager->sendUpdate(update);
 }
 
 int Player::getNBuilding(){

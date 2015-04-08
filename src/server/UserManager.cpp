@@ -1,5 +1,5 @@
 #include "UserManager.hpp"
-
+#include <iostream>
 const std::map<std::string, request_ptr> UserManager::requestmap = {
 	{"login", RequestSystem::login},
 	{"createaccount", RequestSystem::createaccount},
@@ -41,8 +41,11 @@ void UserManager::run(){
     SocketMessage request, answer;
     recvRequest(request);
 	while(request.getTopic() != "quit" and !request.getTopic().empty()){
+        //std::cout<<"received "<<request.toString()<< " - ";
         answer = UserManager::requestmap.at(request.getTopic())(server, this, request);
+        //std::cout<<"done executing "<<" - ";
 		sendAnswer(answer);
+        //std::cout<<"answer send"<<std::endl;
 		recvRequest(request);
     }
     //std::cout<<getUserName()<<" QUITING "<<std::endl;
@@ -88,8 +91,8 @@ void UserManager::leaveCity(){
 
 void UserManager::initActivePlayer(int playerid){
     user->initPlayer(cityManager, playerid);
-    user->getPlayer(cityManager)->setConnected(true);
     user->getPlayer(cityManager)->setUserManager(this);
+    user->getPlayer(cityManager)->setConnected(true);
 }
 
 Player* UserManager::getActivePlayer(){

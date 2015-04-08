@@ -143,7 +143,9 @@ void Timer<T>::setSleeptime(int time){
 
 template <typename T>
 Timer<T> Timer<T>::parseTimer(std::string parse){
+    std::cout<<"string to parse = "<<parse<<std::endl;
     time_t now = std::stod(parse);
+    std::cout<<"HELLO"<<std::endl;
     return Timer<T>(nullptr, 1, &now);
 }
 
