@@ -34,47 +34,47 @@ void Road::generateImage(){
         if (directions[NORTH]){
             if (directions[EAST]){
                 if (directions[SOUTH]){
-					image="═╬═";
-				}
-				else {
-					image="═╩═";
-				}
+                    image="═╬═";
+                }
+                else {
+                    image="═╩═";
+                }
             }else if (directions[SOUTH]){
-				image="═╣ ";
-			}else {
-				image="═╝ ";
-			}
+                image="═╣ ";
+            }else {
+                image="═╝ ";
+            }
         }else if (directions[EAST]){
             if (directions[SOUTH]){
-				image="═╦═";
-			}else {
-				image="═══"; 
-			}
+                image="═╦═";
+            }else {
+                image="═══"; 
+            }
         }else if (directions[SOUTH]){
-			image="═╗ ";
-		}else {
-			image="═□ ";
-		}
+            image="═╗ ";
+        }else {
+            image="═□ ";
+        }
     }else if (directions[NORTH]){
         if (directions[EAST]){
             if (directions[SOUTH]){
-				image=" ╠═";
-			}else {
-				image=" ╚═";
-			}
+                image=" ╠═";
+            }else {
+                image=" ╚═";
+            }
         }else if (directions[SOUTH]){
-			image=" ║ ";
-		}else {
-			image=" □ ";
-		}
+            image=" ║ ";
+        }else {
+            image=" □ ";
+        }
     }else if (directions[EAST]){
         if (directions[SOUTH]){
-			image=" ╔═";
-		}else {
-			image=" □═";
-		}
-	}else {
-		image=" □ ";
+            image=" ╔═";
+        }else {
+            image=" □═";
+        }
+    }else {
+        image=" □ ";
     }
 }
 
@@ -88,18 +88,18 @@ std::string Road::toString(){
     result +=  directions[SOUTH] ? "S" :"" ;
     result +=  directions[EAST] ? "E" :"" ;
     result +=  directions[WEST] ? "W" :"" ;
-    if(isBlocked()){result="road_right";} // TEMPORARY IMAGE
+    result +=  blocked ? "_roadblock" :"" ;
     return result;
 }
 
 void Road::setUpBarricade(bool bin, int turns){
-	if (bin){
-		image = " X ";
+    if (bin){
+        image = " X ";
         turnsLeft = turns;
-	}else {
-		this->generateImage();
-	}
-	blocked = bin;
+    }else {
+        this->generateImage();
+    }
+    blocked = bin;
 }
 
 int Road::getTurnsLeft(){
@@ -111,5 +111,5 @@ void Road::decreaseTurnsLeft(){
 }
 
 bool Road::isBlocked(){
-	return blocked;
+    return blocked;
 }
