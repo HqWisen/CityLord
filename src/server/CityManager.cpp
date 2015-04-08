@@ -372,18 +372,23 @@ SocketMessage CityManager::offer(Player* player, Location location, int price){
 	if((dynamic_cast<Field*>(cityMap->getCase(location)))){
 		concernedField = dynamic_cast<Field*>(cityMap->getCase(location));
 		if(concernedField->getOwner() == player){
-			if(concernedField->getOfferedPrice() == 0){
-				concernedField->setOfferedPrice(price);
-				catalog.putOnMarket(concernedField);
-				update.setTopic("offer");
-				update.set("location", location.toString());
-				update.set("offerprice", std::to_string(price));
-				updater->sendUpdateToPlayers(update);
-				message.setTopic("success");
-                message.set("reason", "Offer has been successfully registered !");
+			if(!concernedField->hasBuilding() || concernedField->getBuilding()->getStatus() == "normal"){
+				if(concernedField->getOfferedPrice() == 0){
+					concernedField->setOfferedPrice(price);
+					catalog.putOnMarket(concernedField);
+					update.setTopic("offer");
+					update.set("location", location.toString());
+					update.set("offerprice", std::to_string(price));
+					updater->sendUpdateToPlayers(update);
+					message.setTopic("success");
+	                message.set("reason", "Offer has been successfully registered !");
+				}else{
+					message.setTopic("failure");
+	                message.set("reason", "This Field has already been offered !");
+				}
 			}else{
 				message.setTopic("failure");
-                message.set("reason", "This Field has already been offered !");
+            	message.set("reason", "The Building cannot be sold!");
 			}
 		}else{
 			message.setTopic("failure");
