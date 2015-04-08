@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QTableWidgetItem>
+#include <QMessageBox>
 #include "clientmanagerGUI.h"
 #include "citylordview.h"
 
@@ -26,6 +27,7 @@ private slots:
     void on_buyCatButton_clicked();
 
 private:
+    void openMessageBox(std::string);
     Ui::CatalogGui *ui;
     ClientManagerGUI* clientManager;
     QTableWidgetItem*** tableItemArray;
