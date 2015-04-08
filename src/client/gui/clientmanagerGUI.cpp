@@ -116,3 +116,18 @@ void ClientManagerGUI::setCurrentPlayerID(int newID){
     currentPlayerID = newID;
 }
 
+void ClientManagerGUI::setDifficultyMultiplier(float num){
+    difficultyMult = num;
+}
+
+int ClientManagerGUI::getDifficulty(int num){
+    return static_cast<int>(num*difficultyMult);
+}
+
+void ClientManagerGUI::setAdvantageMultiplier(float num){
+    advantageMult = num;
+}
+
+int ClientManagerGUI::getAdvantage(int num){
+    return static_cast<int>(num*advantageMult);
+}

@@ -118,6 +118,10 @@ float CityManager::getDifficultyMultiplier(){
     return mode.DIFFICULTYMULTIPLIER;
 }
 
+float CityManager::getAdvantageMultiplier(){
+    return mode.ADVANTAGEMULTIPLIER;
+}
+
 //-------------------------------
 
 SocketMessage CityManager::visitorMove(Player* player, Location firstLocation, Location lastLocation){

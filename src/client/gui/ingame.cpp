@@ -35,6 +35,7 @@ void InGame::repaintView(){
 }
 
 void InGame::refresh(){
+    buildDialog->refresh();
 }
 
 void InGame::updateScene(QGraphicsPixmapItem* item, QPointF point){
@@ -113,6 +114,7 @@ void InGame::activeButton(std::string fieldstatus){
 void InGame::selectField(SocketMessage selectmessage, Location location){
     lastLocation = location;
     std::string fieldstatus = selectmessage.getTopic();
+    int price;
 
     // Button activation
     activeButton(fieldstatus);
@@ -124,7 +126,6 @@ void InGame::selectField(SocketMessage selectmessage, Location location){
         ui->ownerLabel->setText("");
         ui->priceLabel->setText("");
         ui->noFieldLabel->setText("No Field\nSelected");
-
     }else{
         std::string ownertext = selectmessage.get("ownername")+" | "\
                         +selectmessage.get("ownerid")+" | "+selectmessage.get("ownercolor");
@@ -132,7 +133,8 @@ void InGame::selectField(SocketMessage selectmessage, Location location){
         ui->ownerTitle->setText("Owner:");
         ui->priceTitle->setText("Price:");
         ui->ownerLabel->setText(ownertext.c_str());
-        ui->priceLabel->setText(ClientManager::strCurrency(selectmessage.get("fieldprice")).c_str());
+        price = clientManager->getDifficulty(stoi(selectmessage.get("fieldprice")));
+        ui->priceLabel->setText(ClientManager::strCurrency(price).c_str());
     }
     if(selectmessage.get("typeindex").empty()){
         ui->typeLabel->setText("");
@@ -168,13 +170,17 @@ void InGame::selectField(SocketMessage selectmessage, Location location){
         tmp = selectmessage.get("visitorcounter")+"/"+selectmessage.get("capacity");
         ui->visitorLabel->setText(tmp.c_str());
         ui->incomeTitle->setText("+                   per visitor");
-        ui->incomeLabel->setText(ClientManager::strCurrency(selectmessage.get("income")).c_str());
+        price = clientManager->getAdvantage(stoi(selectmessage.get("income")));
+        ui->incomeLabel->setText(ClientManager::strCurrency(price).c_str());
         ui->dailyCostTitle->setText("-                    day charges");
-        ui->dailyCostLabel->setText(ClientManager::strCurrency(selectmessage.get("dailycost")).c_str());
+        price = clientManager->getDifficulty(stoi(selectmessage.get("dailycost")));
+        ui->dailyCostLabel->setText(ClientManager::strCurrency(price).c_str());
         ui->buildingPriceTitle->setText("Price:");
-        ui->buildingPriceLabel->setText(ClientManager::strCurrency(selectmessage.get("price")).c_str());
+        price = clientManager->getDifficulty(stoi(selectmessage.get("price")));
+        ui->buildingPriceLabel->setText(ClientManager::strCurrency(price).c_str());
         ui->destructionCostTitle->setText("Destruction cost:");
-        ui->destructionCostLabel->setText(ClientManager::strCurrency(selectmessage.get("destructioncost")).c_str());
+        price = clientManager->getDifficulty(stoi(selectmessage.get("destructioncost")));
+        ui->destructionCostLabel->setText(ClientManager::strCurrency(price).c_str());
         ui->noBuidlingLabel->setText("");
     }
 }

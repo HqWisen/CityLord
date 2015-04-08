@@ -61,6 +61,16 @@ SocketMessage RequestSystem::choicemode(CityLordServer* server, UserManager* use
     return answer;
 }
 
+SocketMessage RequestSystem::getgamemode(CityLordServer* server, UserManager* userManager, SocketMessage message){
+    pthread_mutex_lock(&requestmutex);
+    SocketMessage answer;
+    CityManager* cityManager = userManager->getActiveCity();
+    answer.set("difficulty", std::to_string(static_cast<int>(cityManager->getDifficultyMultiplier()*10)));
+    answer.set("advantage", std::to_string(static_cast<int>(cityManager->getAdvantageMultiplier()*10)));
+    pthread_mutex_unlock(&requestmutex);
+    return answer;
+}
+
 SocketMessage RequestSystem::createcity(CityLordServer* server, UserManager* userManager, SocketMessage message){
     pthread_mutex_lock(&requestmutex);
     SocketMessage answer;

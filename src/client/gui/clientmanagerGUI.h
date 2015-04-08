@@ -37,8 +37,14 @@ public:
     Signaler* getSignaler();
     int getCurrentPlayerID();
     void setCurrentPlayerID(int);
+    void setDifficultyMultiplier(float);
+    int getDifficulty(int);
+    void setAdvantageMultiplier(float);
+    int getAdvantage(int);
     //////////////void updateTime(int) override;
 private:
+    float difficultyMult = 1.0;
+    float advantageMult = 1.0;
     QStackedWidget* stackedWidget;
     QVBoxLayout* layout;
     std::map<key_type, DefaultWidget*> pages;

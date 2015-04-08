@@ -56,6 +56,7 @@ class CityManager{
 		std::vector<Offer*> getOffers();
         int getRoadBlockPrice();
         float getDifficultyMultiplier();
+        float getAdvantageMultiplier();
 		SocketMessage makePurchase(Player*, Location);
 		SocketMessage buildBuilding(Player*, Location, BuildingType);
 		SocketMessage upgradeBuilding(Player*, Location);

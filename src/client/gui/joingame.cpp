@@ -84,6 +84,11 @@ void JoinGame::on_joinButton_clicked(){
         }else{
             clientManager->setCurrentWidget(ClientManagerGUI::INGAME);
             clientManager->buildMap(clientManager->getInfo("filename"));
+            clientManager->setRequest("getgamemode");
+            clientManager->sendRequestAndRecv();
+            clientManager->setDifficultyMultiplier(std::stof(clientManager->getInfo("difficulty"))/10.0);
+            clientManager->setAdvantageMultiplier(std::stof(clientManager->getInfo("advantage"))/10.0);
+            clientManager->get(ClientManagerGUI::INGAME)->refresh();
         }
     }
 

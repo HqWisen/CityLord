@@ -19,6 +19,7 @@ public:
 	static SocketMessage createaccount(CityLordServer*, UserManager*, SocketMessage);
 	static SocketMessage choicemap(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage choicemode(CityLordServer*, UserManager*, SocketMessage);
+    static SocketMessage getgamemode(CityLordServer*, UserManager*, SocketMessage);
 	static SocketMessage createcity(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage cityinfo(CityLordServer*, UserManager*, SocketMessage);
     static SocketMessage numberofcity(CityLordServer*, UserManager*, SocketMessage);

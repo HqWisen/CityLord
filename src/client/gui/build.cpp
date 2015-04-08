@@ -24,6 +24,9 @@ build::~build(){
 
 void build::refresh(){
     if(tableItemArray != nullptr){
+        for (int i=0; i<BuildingType::typesLength; i++){
+            delete[] tableItemArray[i];
+        }
         delete[] tableItemArray;
     }
     /*int constructionCost;
@@ -40,24 +43,30 @@ void build::refresh(){
 
     ui->tableWidget->setRowCount(BuildingType::typesLength);
     tableItemArray = new QTableWidgetItem**[BuildingType::typesLength];
+    int price;
     for (int i=0; i<BuildingType::typesLength; i++) {
         tableItemArray[i] = new  QTableWidgetItem*[headerLabels.size()];
         tableItemArray[i][0] = new QTableWidgetItem(BuildingType::types[i].NAME.c_str());
         tableItemArray[i][0]->setFlags(tableItemArray[i][0]->flags() & ~Qt::ItemIsEditable);
         ui->tableWidget->setItem(i, 0, tableItemArray[i][0]);
-        tableItemArray[i][1] = new QTableWidgetItem(ClientManager::strCurrency(BuildingType::types[i].PRICE).c_str());
+        price = clientManager->getDifficulty(BuildingType::types[i].PRICE);
+        tableItemArray[i][1] = new QTableWidgetItem(ClientManager::strCurrency(price).c_str());
         tableItemArray[i][1]->setFlags(tableItemArray[i][1]->flags() & ~Qt::ItemIsEditable);
         ui->tableWidget->setItem(i, 1, tableItemArray[i][1]);
-        tableItemArray[i][2] = new QTableWidgetItem(ClientManager::strCurrency(BuildingType::types[i].CONSTRUCTIONCOST).c_str());
+        price = clientManager->getDifficulty(BuildingType::types[i].CONSTRUCTIONCOST);
+        tableItemArray[i][2] = new QTableWidgetItem(ClientManager::strCurrency(price).c_str());
         tableItemArray[i][2]->setFlags(tableItemArray[i][2]->flags() & ~Qt::ItemIsEditable);
         ui->tableWidget->setItem(i, 2, tableItemArray[i][2]);
-        tableItemArray[i][3] = new QTableWidgetItem(ClientManager::strCurrency(BuildingType::types[i].UPGRADECOST).c_str());
+        price = clientManager->getDifficulty(BuildingType::types[i].UPGRADECOST);
+        tableItemArray[i][3] = new QTableWidgetItem(ClientManager::strCurrency(price).c_str());
         tableItemArray[i][3]->setFlags(tableItemArray[i][3]->flags() & ~Qt::ItemIsEditable);
         ui->tableWidget->setItem(i, 3, tableItemArray[i][3]);
-        tableItemArray[i][4] = new QTableWidgetItem(ClientManager::strCurrency(BuildingType::types[i].DESTRUCTIONCOST).c_str());
+        price = clientManager->getDifficulty(BuildingType::types[i].DESTRUCTIONCOST);
+        tableItemArray[i][4] = new QTableWidgetItem(ClientManager::strCurrency(price).c_str());
         tableItemArray[i][4]->setFlags(tableItemArray[i][4]->flags() & ~Qt::ItemIsEditable);
         ui->tableWidget->setItem(i, 4, tableItemArray[i][4]);
-        tableItemArray[i][5] = new QTableWidgetItem(ClientManager::strCurrency(BuildingType::types[i].DAILYCOST).c_str());
+        price = clientManager->getDifficulty(BuildingType::types[i].DAILYCOST);
+        tableItemArray[i][5] = new QTableWidgetItem(ClientManager::strCurrency(price).c_str());
         tableItemArray[i][5]->setFlags(tableItemArray[i][5]->flags() & ~Qt::ItemIsEditable);
         ui->tableWidget->setItem(i, 5, tableItemArray[i][5]);
         tableItemArray[i][6] = new QTableWidgetItem(std::to_string(BuildingType::types[i].CAPACITY).c_str());
@@ -72,7 +81,8 @@ void build::refresh(){
         tableItemArray[i][9] = new QTableWidgetItem(std::to_string(BuildingType::types[i].STAYTIME).c_str());
         tableItemArray[i][9]->setFlags(tableItemArray[i][9]->flags() & ~Qt::ItemIsEditable);
         ui->tableWidget->setItem(i, 9, tableItemArray[i][9]);
-        tableItemArray[i][10] = new QTableWidgetItem(ClientManager::strCurrency(BuildingType::types[i].INCOME).c_str());
+        price = clientManager->getAdvantage(BuildingType::types[i].INCOME);
+        tableItemArray[i][10] = new QTableWidgetItem(ClientManager::strCurrency(price).c_str());
         tableItemArray[i][10]->setFlags(tableItemArray[i][10]->flags() & ~Qt::ItemIsEditable);
         ui->tableWidget->setItem(i, 10, tableItemArray[i][10]);
 
