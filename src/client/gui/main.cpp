@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    //QApplication::setStyle("plastique");
+    QApplication::setStyle("plastique");
     QApplication a(argc, argv);
 
     char* hostname;

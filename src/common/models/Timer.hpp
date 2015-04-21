@@ -91,7 +91,7 @@ void Timer<T>::secsleep(int second){
 template <typename T>
 std::string Timer<T>::strtime(){
     char buff[40];
-    strftime(buff, 40, "%d-%m-%Y %H:%M:%S", localtime(&current));
+    strftime(buff, 40, "%d-%m-%Y %H:%M", localtime(&current));
     return buff;
     //return ctime(&current);
 }

@@ -229,22 +229,22 @@ QLabel{background:transparent;color:rgb(0, 220, 0)}</string>
     <widget class="QLabel" name="timeLabel">
      <property name="geometry">
       <rect>
-       <x>810</x>
+       <x>830</x>
        <y>10</y>
-       <width>311</width>
+       <width>281</width>
        <height>51</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>24</pointsize>
+       <pointsize>19</pointsize>
        <weight>75</weight>
        <italic>false</italic>
        <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">QLabel{color:white;background:transparent; font:bold 24pt;}</string>
+      <string notr="true">QLabel{color:white;background:transparent; font:bold 19pt;}</string>
      </property>
      <property name="text">
       <string>16:57 Day 15</string>
