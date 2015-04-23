@@ -178,21 +178,21 @@ void CityUpdater::run(){
 
 void CityUpdater::runGenerateVisitors(void* object){
     pthread_mutex_lock(&visitormutex);
-    std::cout<<"generatevisitor"<<std::endl;
+    //std::cout<<"generatevisitor"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::generateVisitors;
     for(int i = 0;i<3;i++){
         ((static_cast<CityUpdater*>(object))->*func_ptr)();
     }    
-    std::cout<<"finish generatevisitor"<<std::endl;
+    //std::cout<<"finish generatevisitor"<<std::endl;
     pthread_mutex_unlock(&visitormutex);
 }
 
 void CityUpdater::runMakeVisitorsAdvance(void* object){
     pthread_mutex_lock(&visitormutex);
-    std::cout<<"advancevisitors"<<std::endl;
+    //std::cout<<"advancevisitors"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::makeVisitorsAdvance;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
-    std::cout<<"finsih advancevisitors"<<std::endl;
+    //std::cout<<"finsih advancevisitors"<<std::endl;
     pthread_mutex_unlock(&visitormutex);
 }
 
@@ -201,25 +201,26 @@ void CityUpdater::runUpdateRoadBlocks(void* object){
     //std::cout<<"updateRoadBlocks"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::updateRoadBlocks;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
+    //std::cout<<"finish updateRoadBlocks"<<std::endl;
     pthread_mutex_unlock(&visitormutex);
 }
 
 void CityUpdater::runUpdateBuidlings(void* object){
     pthread_mutex_lock(&buildingmutex);
-    std::cout<<"updatebuilding"<<std::endl;
+    //std::cout<<"updatebuilding"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::updateBuildings;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
-    std::cout<<"finish updatebuilding"<<std::endl;
+    //std::cout<<"finish updatebuilding"<<std::endl;
     pthread_mutex_unlock(&buildingmutex);
 
 }
 
 void CityUpdater::runMakeOwnersPay(void* object){
     pthread_mutex_unlock(&buildingmutex);
-    std::cout<<"payowner"<<std::endl;
+    //std::cout<<"payowner"<<std::endl;
     void (CityUpdater::*func_ptr) (void) = &CityUpdater::makeOwnersPay;
     ((static_cast<CityUpdater*>(object))->*func_ptr)();
-    std::cout<<"finish payowner"<<std::endl;
+    //std::cout<<"finish payowner"<<std::endl;
     pthread_mutex_unlock(&buildingmutex);
 
 }
@@ -265,7 +266,7 @@ void CityUpdater::sendUpdateToPlayers(SocketMessage update){
         player = (*playerVectorPtr)[i];
         if(player != nullptr && player->isConnected() && player->getUserManager() != nullptr){
             if(player->getPlayerID() > 8){
-                std::cout<<"PROBLEME"<<std::endl;
+                //std::cout<<"PROBLEME"<<std::endl;
             }else{
                 player->getUserManager()->sendUpdate(update);
             }
@@ -389,7 +390,7 @@ void CityUpdater::generateVisitors(){
         std::vector<Location> path;
         generateFullPath(startLocation, endLocation, path);
 
-        Visitor* newVisitor = new Visitor(startLocation);
+        Visitor* newVisitor = new Visitor(startLocation, endLocation);
         //std::cout<<"Taille du chemin donné :"<< path.size() <<std::endl;
         newVisitor->setPath(path);
         int id = cityMap->addVisitor(newVisitor);  
@@ -428,17 +429,15 @@ void CityUpdater::addRoadBlock(Road* toBlock){
 }
 
 void CityUpdater::freeRoad(){
-    Road* toFree = blockedRoads.front();
-    //std::cout<<"Freeing "<<toFree->getLocation().getRow()<<" . "<<toFree->getLocation().getCol()<<std::endl;
-    blockedRoads.pop_front();
-    toFree->setUpBarricade(false);
+    //std::cout<<"Freeing "<<std::endl;
     getAdjacencyList();
     Visitor* visitorPtr;
     std::vector<Location> path;
     for (int i=0; i<cityMap->getMaxVisitors(); i++){
-        if ((visitorPtr = cityMap->getVisitor(i))){
+        if ((visitorPtr = cityMap->getVisitor(i)) && (visitorPtr->isOnStandby())){
             path.clear();
             generateFullPath(visitorPtr->getLoc(), visitorPtr->getEndLoc(), path);
+            //std::cout<<path.size()<<std::endl;
             visitorPtr->setPath(path);
         }
     }
@@ -446,13 +445,18 @@ void CityUpdater::freeRoad(){
 
 void CityUpdater::updateRoadBlocks(){
     if (blockedRoads.size() > 0){
-        if (blockedRoads[0]->getTurnsLeft() == 0){
-            SocketMessage update;
-            update.setTopic("roadblock");
-            update.set("location", blockedRoads[0]->getLocation().toString());
-            update.set("state", "0");
+        if (blockedRoads[0]->getTurnsLeft() <= 0){
+            do {
+                SocketMessage update;
+                update.setTopic("roadblock");
+                update.set("location", blockedRoads[0]->getLocation().toString());
+                update.set("state", "0");
+                sendUpdateToPlayers(update);
+                Road* toFree = blockedRoads.front();
+                blockedRoads.pop_front();
+                toFree->setUpBarricade(false);
+            } while (blockedRoads.size() > 0 && blockedRoads[0]->getTurnsLeft() <= 0);
             freeRoad();
-            sendUpdateToPlayers(update);
         }
         if (blockedRoads.size() > 0){
             for (unsigned int i=0; i<blockedRoads.size(); i++){

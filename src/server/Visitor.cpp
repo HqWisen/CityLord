@@ -1,8 +1,9 @@
 #include "Visitor.hpp"
 
 
-Visitor::Visitor(Location loc){ //le spawner donne la localistion
-	currentLocation = loc;
+Visitor::Visitor(Location startloc, Location endloc){ //le spawner donne la localistion
+	currentLocation = startloc;
+	endLocation = endloc;
 	int number = rand() % 4;
 	preference = listOfBuildType[number];
 }
@@ -12,7 +13,7 @@ Location Visitor::getLoc(){
 }
 
 Location Visitor::getEndLoc(){
-	return path[path.size()-1];
+	return endLocation;
 }
 
 //void Visitor::displayGUI(){}
@@ -20,6 +21,18 @@ Location Visitor::getEndLoc(){
 void Visitor::setPath(std::vector<Location> way){
 	path.clear();
 	path = way;
+	onStandby = false;
+	if (path.size() >= 1){
+		if (!((currentLocation.getRow()-1 == path[0].getRow()) || (currentLocation.getRow()+1 == path[0].getRow()) || \
+					(currentLocation.getCol()-1 == path[0].getCol()) || (currentLocation.getCol()+1 == path[0].getCol()))) {
+			onStandby = true;
+		}
+	}
+	else if (path.size() == 0){
+		if (!(currentLocation.isEqual(endLocation))) {
+			onStandby = true;
+		}
+	}
 }
 
 bool Visitor::passesThrough(Location location){

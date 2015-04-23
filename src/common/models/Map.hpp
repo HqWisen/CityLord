@@ -51,7 +51,7 @@ class Map{
         vector<Spawn*> getSpawnList();
         Case* getCase(Location);
         int addVisitor(Visitor*);
-        void addVisitor(int, Location);
+        //void addVisitor(int, Location);
         void deleteVisitor(int);
         Visitor* getVisitor(int);
         int getMaxVisitors();
@@ -323,10 +323,10 @@ int Map<FieldType>::addVisitor(Visitor* newVisitor){
     return i;
 }
 
-template <typename FieldType>
+/*template <typename FieldType>
 void Map<FieldType>::addVisitor(int visitorID, Location spawnLocation){
     visitorList[visitorID] = new Visitor(spawnLocation);
-}
+}*/
 
 template <typename FieldType>
 void Map<FieldType>::deleteVisitor(int index){
