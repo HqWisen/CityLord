@@ -8,6 +8,8 @@
 *.toc
 *.synctex.gz
 
+
+
 ## c++ objects:
 *.hpp.gch
 *.o
