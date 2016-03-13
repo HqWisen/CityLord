@@ -12,13 +12,14 @@
 
 class Visitor{
 	Location currentLocation;
+    Location endLocation;
 	std::vector<Location> path;
 	//BuildingType preference;
 	std::string preference;
 	std::vector<std::string> listOfBuildType = {"BAR","MUSEUM","NIGHT CLUB","SHOP"};
 	bool onStandby = false;
 	public:
-		Visitor(Location); //le spawner donne la localistion
+		Visitor(Location, Location); //le spawner donne la localistion
 		Location getLoc();
 		Location getEndLoc();
 		void move();
